@@ -140,6 +140,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <p>Lista de productos</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="javaScript:listarMesas()" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Lista Mesas </p>
+                  </a>
+                </li>
+
               </ul>
             </li>
 
@@ -495,6 +502,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>js/bodegaProducto.js"></script>
   <script src=" <?php echo  base_url();?>js/comprasProductos.js"></script>
   <script src=" <?php echo  base_url();?>js/trasladoProducto.js"></script>
+  <script src=" <?php echo  base_url();?>js/ventaProductos.js"></script>
+  <script src=" <?php echo  base_url();?>js/ordenesPedido.js"></script>
+  
+
 
 
    <!-- stilos css para  combos  y  upload -->

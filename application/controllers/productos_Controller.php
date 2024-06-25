@@ -190,7 +190,7 @@ public function  updatePrecProd (){
                   'precioventa'      => $precioventa,
                   'fechactualizado'  => $fechactualizado                       
                 );
-  var_dump($data); 
+  //var_dump($data); 
   // usamos  una nueva sincronizacin  para probar el  commit              
 
   $this->preciosProducto_Model->updateProductoPrec($data, $productoID);

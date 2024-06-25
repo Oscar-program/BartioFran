@@ -35,6 +35,8 @@
       </div>
       <div class="modal-body">
         <form>
+        <input type="text" class="form-control text-right" id="productoID" name="productoID" readonly>
+
         <div class="form-group text-center">
            <p id="prodDescripcion" style = "color:red; font-weight:bold; font-size:20px;"> </p>
         </div>
@@ -96,7 +98,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-title ="Procesar venta"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+        <button type="button" class="btn btn-danger" data-title ="Procesar venta" onclick="saveVentaProducto()" ><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
         <!-- <button type="button" class="btn btn-primary"> <i class="fa fa-cog" aria-hidden="true"></i> Procesar</button> -->
       </div>
     </div>

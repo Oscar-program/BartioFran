@@ -198,7 +198,7 @@ function addProducto(productoID){
   
    }
      /*funcion para ingresar la venta de nuevo productos  */ 
-  function addVentaProducto(){  
+  /*function addVentaProducto(){  
     var url = base_url('index.php/productos_Controller/addVentaProducto/');
   
   //var url = base_url("index.php/BancosController/bancos");
@@ -207,7 +207,7 @@ function addProducto(productoID){
       });
   
   
-   }
+   }*/
 
    /*Cargando la  vista  de  configuracion de productos */
    function configurarProduct(){  
