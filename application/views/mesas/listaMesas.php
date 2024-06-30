@@ -15,7 +15,7 @@
                     <img class="animation__shake" src="/BartioFran/img/mesa5.png" alt="AdminLTELogo" height="100"
                     width="100" style="border-radius:5%;"> <?php echo  ''. $row->mesNombre?> 
                         <a href="#" class="small-box-footer" title="Agregar orden" style="color:greenyellow;"  onclick="cargar_addordenes(<?php  echo   $row->mesaID ; ?>);" > <i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar Ordenes</a>
-                        <a href="#" class="small-box-footer" title="Ver ordenes sin cobro" style="color:gold;"> <i class="fa fa-search" aria-hidden="true"> </i> Ver ordenes sin cobro</a>
+                        <a href="#" class="small-box-footer" title="Ver ordenes sin cobro" style="color:gold;" onclick="get_OrdenesPendientesCobro(<?php  echo   $row->mesaID ; ?>);"> <i class="fa fa-search" aria-hidden="true"> </i> Ver ordenes sin cobro</a>
                     </div>
                     </div>
 

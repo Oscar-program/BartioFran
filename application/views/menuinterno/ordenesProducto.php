@@ -49,7 +49,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   }
                 ?>
                 <label> ORDEN DE PEDIDO  #</label>
-                <input type="text" class="text-right border-0" name="ordenID" id="ordenID" value="<?php  echo strval($ordenID); ?>  ">
+                <form action="" id="formcabpedido"  name="formcabpedido">
+                <input type="text" class="text-right border-0" name="ordenID" id="ordenID" value="<?php  echo strval($ordenID); ?>" readonly>
+            
+                
                 <div class="table-responsive">
                     <table id="tblFamiliaProd" class="table table-hover">
                         <thead>
@@ -60,14 +63,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <th class="text-right">ACCIONES</th>                                
                             </tr>
                         </thead>
-                        <tbody  id ="detMArcas">                                   
+                        <tbody  id ="detOrdenesPedido">                                   
                                                                 
                         </tbody>
                     </table>
                 </div>
                 <label>           CANCELAR $</label>
-                <input type="text"  class="text-right border-0" name="totalOrden" id="totalOrden" value="">
-                <button type="button" class="btn btn-danger" data-title ="Procesar venta" onclick="saveVentaProducto()" ><i class="fa fa-print" aria-hidden="true"></i></button>
+                <input type="text"  class="text-left border-0" name="totalOrden" id="totalOrden" value="" readonly>
+                <button type="button" class="btn btn-danger" data-title ="Procesar venta" onclick="saveVentaProducto1()" ><i class="fa fa-print" aria-hidden="true"></i></button>
+                </form>
             </div>             
             
     </div>

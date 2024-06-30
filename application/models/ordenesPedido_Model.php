@@ -30,20 +30,60 @@
                 }
     }
     // funcion para agregar el detalle de la orden  de pedido 
-    public function  addDetOrdenPedido($data, $bodegaProductoID){
-        if($bodegaProductoID ==   null){
+    public function  addDetOrdenPedido($data, $detPedID){
+        if($detPedID ==   null){
+           // echo   'llegando al   modelo para   insertar la orden de pedido';
             $this->db->insert("detordenpedido",$data);
             return $this->db->insert_id();
         }else{
             $this->db->set("bodProdDescripcion", $data["bodProdDescripcion"])
                     ->set("establecimientoID",  $data["establecimientoID"])
-                    ->where("bodegaProductoID", $bodegaProductoID)
+                    ->where("detPedID", $detPedID)
                     ->where("bodProdStatus",  1)
                     ->update("detordenpedido");
             return $this->db->affected_rows();   
                
                 }
     }
+    //   funcion para listar  el  detalle  de la orden de pedido del  cliente  
+    public function get_listDetOrden($ordenPedidoID){
+        $query =  $this->db->select("detOr.detPedID, detOr.ordenPedidoID, detOr.detcantidad, prod.prodDescripcion, detOr.dettotal")
+                ->join('producto prod',  'detOr.productoID =  prod.productoID', 'inner')
+                ->where("detOr.ordenPedidoID",  $ordenPedidoID) 
+                ->where("detOr.detstatus",  1)
+                ->get("detordenpedido detOr")
+                ->result();
+        return  $query;          
+    }
+    
+    // funcion para  retornar la sumatoria del detalle de orde3n de producto 
+    public function get_TotalDetOrden($ordenPedidoID){
+        $query =  $this->db->select("sum(dettotal) as dettotal")
+                //->join('producto prod',  'detOr.productoID =  prod.productoID', 'inner')
+                ->where("detOr.ordenPedidoID",  $ordenPedidoID) 
+                ->where("detOr.detstatus",  1)
+                ->get("detordenpedido detOr")
+                ->row();
+        return  $query;          
+    }
+
+    // funcion que  muestra todas las  ordenes pendientes  de cobro 
+    public function get_OrdenesPendientesCobro($mesaID){
+        $query =  $this->db->select("ordp.ordenPedidoID, date_format(ordp.ordPFecha,  '%d-%m-%Y') as ordPFecha,   mesr.meserNombre,  ordp.ordPpenditeCobro ")
+                ->join('mesero  mesr',  'ordp.meseroID = mesr.meseroID ', 'inner')
+                ->where("ordp.mesaID",  $mesaID) 
+                ->where("ordp.ordPpenditeCobro",  1)               
+                ->where("ordp.ordPanulado",  0)
+                ->get("ordenpedido ordp")
+                ->result();
+        return  $query;          
+    }
+
+
+
+
+
+
 
 
 }
