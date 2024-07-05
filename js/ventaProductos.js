@@ -157,6 +157,26 @@ function addVentaProducto(famProdID, id, descripcion, preciocosto){
        
        }
 
+       // funcion para  cargar la  orden seleccionada si esta  pendiente de cobro
+       function ver_ordenePedido(ordenPedidoID){    
+         
+        var url = base_url('index.php/ventaProducto_Controller/ver_ordenePedido/' + ordenPedidoID);   
+        //var url = base_url("index.php/BancosController/bancos");
+          $.get(url, function (data) {
+            $("#principal").html(data);
+            //console.log(data);
+            //document.getElementById('prodDescripcion').innerHTML=descripcion;
+           // $('#addVentaProducto').modal('show');
+            // ponemos el  precio  de  costo del producto 
+            //$("#precioregular").val(preciocosto.toFixed(2));
+            //$("#productoID").val(id);
+          });
+       
+       }
+
+
+
+
 
 
         /*$.ajax({

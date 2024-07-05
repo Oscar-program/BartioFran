@@ -86,6 +86,9 @@ class Menu_internoController extends CI_Controller {
         //return  $ordenID ;
 
      }
+     // funcion para  ver  la orden  pendiente  de cobro 
+      // funcion para cargar la pantalla principal de  ordenes  
+     
      
 
   }

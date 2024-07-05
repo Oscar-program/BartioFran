@@ -45,7 +45,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed" style =  "background-image: url(./img/club-dance1.jpg); background-repeat: no-repeat;background-size: cover;">
 <!-- #region -->
 
 
@@ -76,7 +76,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:dodgerblue; color:aliceblue;">
       <!-- Brand Logo -->
       <a href="index3.html" class="brand-link">
         <img src="/BartioFran/img/nuevostablo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -123,7 +123,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="javaScript:cargarmenu_interno();" class="nav-link">
+                  <a href="javaScript:cargarmenu_interno();" class="nav-link ">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Ventas  <span class="right badge badge-danger">New</span> </p>
                   </a>
@@ -232,8 +232,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <!-- /.content-header -->
 
       <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid" id="principal">
+      <section class="content" style =  "background-image: url(./img/club-dance1.jpg); background-repeat: no-repeat;background-size: cover;">
+        <div class="container-fluid" id="principal" >
           <!-- Small boxes (Stat box) -->
           <div class="row">
             <div class="col-lg-3 col-6">

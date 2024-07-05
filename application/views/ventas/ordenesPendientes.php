@@ -1,22 +1,22 @@
 <div class="container-fluid m-top">
         <div class="row">
-            <div class="col-12 text-left">
-                <H2>  ORDENES PENDIENTES DE COBRO </H2>
+            <div class="col-12 text-center  bg-white rounded">
+                <H3>  ORDENES PENDIENTES DE COBRO </H3>
             </div>
         </div>
 </div> 
 
               
-    <div class="container-fluid m-top">
+    <div class="container-fluid m-top shadow-sm p-3 mb-5 bg-white rounded">
         <div class="row">
-            <!-- <div class="col-1"></div>-->
+            <!-- <div class="col-1"> secondary</div>-->
             <div class="col-12">
                 <div class="table-responsive">
 
 
                     <table id="tblFamiliaProd" class="table table-hover">
                         <thead>
-                            <tr class="thead-dark">
+                            <tr class="thead-secondary" style="background-color:dodgerblue; color:aliceblue;">
                                 <th>#</th>
                                 <th>ORDEN #</th>
                                 <th>FECHA</th>  
@@ -47,7 +47,7 @@
 
                                     <a href='#' class="btn btn-default btn-sm" style="margin:0px;  color:blue; font-weight:bold;"
                                         data-title="detalle de compra"
-                                        onclick="mostrarOrdenes();">
+                                        onclick="ver_ordenePedido( <?php echo $row->ordenPedidoID ?>);">
                                         <i class="fa fa-eye" aria-hidden="true"></i> </a>
 
                                     

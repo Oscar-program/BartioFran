@@ -42,7 +42,7 @@
   <script src="./js/funciones_basica.js"></script>
   
 </head>
-<body class="hold-transition login-page" style =  "background-image: url(./img/club-dance1.jpg); background-repeat: no-repeat;background-size: cover;">
+<body class="hold-transition login-page" style =  "background-image: url(./img/club-dance2.jpg); background-repeat: no-repeat;background-size: cover;">
 <div class="login-box">
   <div class="login-logo">
     <a href="javaScript:carga_principal()" style="font-weight:bold; color:#1D59B0; font-size: 40px; text-shadow:

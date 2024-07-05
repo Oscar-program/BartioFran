@@ -10,6 +10,9 @@ class ventaProducto_Controller extends CI_Controller {
            $this->load->model('PrecioEspecial_Model');
            $this->load->model('ordenesPedido_Model');
            $this->load->model('compraProducto_Model');
+           $this->load->model('familiaProducto_Model');
+           
+
            
            
 
@@ -141,6 +144,45 @@ class ventaProducto_Controller extends CI_Controller {
 
 
     }
+
+    public function ver_ordenePedido($ordenPedidoID){
+      ini_set('display_errors',1);
+      ini_set('display_startup_errors',1);
+      error_reporting(E_ALL);
+     // echo 'llegando al  menu interno de la familia de  productos'. $mesaID .  "<br>";
+      $data['listFamiliaProducto'] = $this->familiaProducto_Model->get_listFamiliaProducto();
+     // var_dump($data['listFamiliaProducto'] );
+     // $data['submenu'] = $this->Producto_Model->get_submenu($famProdID);
+      //var_dump($data['submenu']);
+      //$data['comandas'] = $this->Producto_Model->get_comandas();
+      # segmento para  generar la  cabecera  de la  orden de pedido  
+      //  $meseroID  =  1;
+      // $mesaID    = $mesaID;
+      //$comandaID =  1;
+      //$ordenPedidoID =null;
+      $famProdID = 1;
+
+     /*$dataarr  =  array( 'meseroID' =>$meseroID,
+                          'mesaID' =>$mesaID,
+                          'comandaID' =>$comandaID,
+                      );*/
+     // echo  'llegadno al controlador';                
+     $data['detalleOrden'] =  $this->ordenesPedido_Model->get_listDetOrden($ordenPedidoID); 
+
+     $data['submenu'] = $this->Producto_Model->get_submenu($famProdID);
+      $data['familia']  = 110 ;//$mesaID;
+      $data['datordenID']  =    $ordenPedidoID ;
+       $Rdettotal =  $this->ordenesPedido_Model->get_TotalDetOrden($ordenPedidoID);
+      $data['datTotal']  =   $Rdettotal->dettotal;
+
+
+      //var_dump($data['comandas'] );
+      $this->load->view('menuinterno/ordenesProducto',$data);
+                    
+      //return  $ordenID ;
+
+   }
+
 
 
      
