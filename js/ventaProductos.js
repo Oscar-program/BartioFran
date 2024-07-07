@@ -141,9 +141,9 @@ function addVentaProducto(famProdID, id, descripcion, preciocosto){
      }
 
      // funcion para mostrar las ordenes  pendientes de   cobro 
-     function get_OrdenesPendientesCobro(mesaID){    
+     function get_OrdenesPendientesCobro(){    
          
-        var url = base_url('index.php/ventaProducto_Controller/get_OrdenesPendientesCobro/' + mesaID);   
+        var url = base_url('index.php/ventaProducto_Controller/get_OrdenesPendientesCobro/' );   
         //var url = base_url("index.php/BancosController/bancos");
           $.get(url, function (data) {
             $("#principal").html(data);
@@ -173,6 +173,48 @@ function addVentaProducto(famProdID, id, descripcion, preciocosto){
           });
        
        }
+
+       // funcion  para cerrar la  orden de pedido 
+        /*Funcion para eliminar  un detallle de la  marca */
+  function  delete_PresentacionProductoID(presProdID){
+    // obtenemos  el id de la orden de pedido 
+    var   ordenID = 0;
+     if(Document.getElementById('ordenID')){
+       ordenID =  $("#ordenID").val()
+     }
+    swal({
+      title: "Estas seguro de cerrar la venta y  realizar el  cobro ?",
+      text: "Este proceso generar  un ticke con los  datos de la  compra",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((Delete) => {
+      if (Delete) {
+                  var url = base_url(
+                    "index.php/presentacionProduct_Controller/delete_PresentacionProductoID/" + presProdID
+                  );
+                  $.get(url, function (data) {
+                    if (data == 0) {
+                          swal({
+                          icon: 'error',
+                          title: 'Oops...',
+                          text: 'Surgio un error al  intentar cerrar la  venta',														
+                          });
+                    } else if (data == 1) {
+                      swal("Ticket  realizado correctamente", {
+                        icon: "success",
+                      });
+                      getDetalPresentacion();
+                    }
+  
+                  });				
+      } else {
+        swal("Operacion  cancelada",{
+          icon: "success",
+        });
+      }
+    });
+  }
 
 
 

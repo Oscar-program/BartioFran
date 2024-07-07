@@ -76,7 +76,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:dodgerblue; color:aliceblue;">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4" >
       <!-- Brand Logo -->
       <a href="index3.html" class="brand-link">
         <img src="/BartioFran/img/nuevostablo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -129,9 +129,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="javaScript:get_listFamiliaProducto();" class="nav-link">
+                  <a href="javaScript:get_OrdenesPendientesCobro();" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Familia Productos</p>
+                    <p>Pendientes de cobro</p>
                   </a>
                 </li>
                 <li class="nav-item">

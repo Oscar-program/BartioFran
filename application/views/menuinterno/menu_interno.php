@@ -9,7 +9,7 @@
            <div class="col-lg-3 col-6 " style="float:left; border: with 2px; border-color:orange;" id  =" <?php echo   'familia'.$row->famProdID ?>" 
               name  = 'familia' data-value=="<?php echo $row->famProdID;?>" onclick="cargar_listaProductos(<?php echo $row->famProdID ;?>)">
                     <!-- small box -->
-                    <div class="small-box  border border-info" style="background:linear-gradient(70deg, #1465bb, #2196f3); box-shadow: 0px 0px 3px black; ">
+                    <div class="small-box  border border-info" style="background:linear-gradient(70deg, #1465bb, #2196f3); box-shadow: 0px 0px 3px #21618C; ">
                         <div class="inner">
                         <h3 style = "color:#1465bb; ">.</h3>
 

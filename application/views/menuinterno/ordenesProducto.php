@@ -50,9 +50,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     $ordenID = $datordenID;
                   }
                 ?>
-                <label> ORDEN DE PEDIDO  #</label>
+                
                 <form action="" id="formcabpedido"  name="formcabpedido">
-                <input type="text" class="text-right border-0" name="ordenID" id="ordenID" value="<?php  echo strval($ordenID); ?>" readonly>
+                <label> ORDEN DE PEDIDO  #</label> <input type="text" class="text-left text-warning border-0" name="ordenID" id="ordenID" value="<?php  echo strval($ordenID); ?>" readonly>
             
                 
                 <div class="table-responsive">
@@ -76,11 +76,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   if(isset($datTotal)){
                   //  var_dump($datTotal);
 
-                    $total = $datTotal;
+                    $total =  number_format($datTotal,2);
+                   // echo  'La  variable tiene '. $total; 
                   }
                 ?>
 
-                <input type="number"  class="text-right border-0" name="totalOrden" id="totalOrden" value=" <?php  echo  $total; ?>" readonly>
+                <input type="number"  class="text-right border-0" name="totalOrden" id="totalOrden" value="<?php  echo  $total;?>" readonly>
                 <button type="button" class="btn btn-danger" data-title ="Procesar venta" onclick="saveVentaProducto1()" ><i class="fa fa-print" aria-hidden="true"></i></button>
                 </form>
             </div>             

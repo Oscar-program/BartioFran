@@ -18,6 +18,7 @@
                         <thead>
                             <tr class="thead-secondary" style="background-color:dodgerblue; color:aliceblue;">
                                 <th>#</th>
+                                <th>MESA</th>
                                 <th>ORDEN #</th>
                                 <th>FECHA</th>  
                                 <th>MESERO</th>
@@ -38,6 +39,7 @@
                             <tr>
 
                                 <td><?php echo $c ;?></td>
+                                <td><?php echo $row->mesNombre; ?></td>                                
                                 <td><?php echo $row->ordenPedidoID; ?></td>
                                 <td><?php echo $row->ordPFecha; ?></td>
                                 <td><?php echo $row->meserNombre; ?></td>

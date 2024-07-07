@@ -8,15 +8,18 @@
         foreach($listaMesas as  $row){ 
            
         ?>
-           <div class="col-lg-3 col-6" style="float:left;" id  =" <?php echo   'mesa'.$row->mesaID ?>" 
-              name  = 'familia' data-value=="<?php echo $row->mesaID;?>">
-                    <!-- small box   background-color:#043B5F; class="inner" -->
-                    <div class="small-box justify-content: flex-start"  style="background-color:#000406; color:white;">
-                    <img class="animation__shake" src="/BartioFran/img/mesa5.png" alt="AdminLTELogo" height="100"
-                    width="100" style="border-radius:5%;"> <?php echo  ''. $row->mesNombre?> 
-                        <a href="#" class="small-box-footer" title="Agregar orden" style="color:greenyellow;"  onclick="cargar_addordenes(<?php  echo   $row->mesaID ; ?>);" > <i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar Ordenes</a>
-                        <a href="#" class="small-box-footer" title="Ver ordenes sin cobro" style="color:gold;" onclick="get_OrdenesPendientesCobro(<?php  echo   $row->mesaID ; ?>);"> <i class="fa fa-search" aria-hidden="true"> </i> Ver ordenes sin cobro</a>
+           <div class="col-lg-2 col-2 justify-content-center mt-1 ml-2  border border-info" style="float:left; text-align:justify; display: flex; align-items: center;height:110px; background-color:#21618C; background:linear-gradient(70deg,#1B2631 , #2196f3); box-shadow: 0px 0px 3px #21618C; " id  =" <?php echo   'mesa'.$row->mesaID ?>" 
+              name  = 'familia' data-value=="<?php echo $row->mesaID;?>"  onclick="cargar_addordenes(<?php  echo   $row->mesaID ; ?>);" >
+                    <!-- small box   background-color:#043B5F; class="inner"   <img class="animation__shake" src="/BartioFran/img/mesa5.png" alt="AdminLTELogo" height="100" radial-gradient(black, blue) (70deg,#1B2631 , #2196f3)
+                    width="100" style="border-radius:5%;"> -->
+                    <h4 class="text-center" style="color:lightskyblue;  font-family: 'Homer Simpson UI'"> <?php echo  ''. $row->mesNombre?> </h4>
+                  
+                    <div  >
+                         
+                       
                     </div>
+
+                    
                     </div>
 
                     

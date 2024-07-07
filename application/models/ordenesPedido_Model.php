@@ -68,13 +68,32 @@
     }
 
     // funcion que  muestra todas las  ordenes pendientes  de cobro 
-    public function get_OrdenesPendientesCobro($mesaID){
-        $query =  $this->db->select("ordp.ordenPedidoID, date_format(ordp.ordPFecha,  '%d-%m-%Y') as ordPFecha,   mesr.meserNombre,  ordp.ordPpenditeCobro ")
+    public function get_OrdenesPendientesCobro(){
+        $query =  $this->db->select(" msa.mesNombre, ordp.ordenPedidoID, date_format(ordp.ordPFecha,  '%d-%m-%Y') as ordPFecha,   mesr.meserNombre,  ordp.ordPpenditeCobro ")
                 ->join('mesero  mesr',  'ordp.meseroID = mesr.meseroID ', 'inner')
-                ->where("ordp.mesaID",  $mesaID) 
+                ->join('mesa msa ',  'ordp.mesaID =  msa.mesaID', 'inner')
+                //->where("ordp.mesaID",  $mesaID) 
                 ->where("ordp.ordPpenditeCobro",  1)               
                 ->where("ordp.ordPanulado",  0)
                 ->get("ordenpedido ordp")
+                ->result();
+        return  $query;          
+    }
+    // funcion para  retornar los  datos con los  cuales  se  va  a emitir el  recibo  
+    public function get_datosticket($ordenPedidoID){
+        $query =  $this->db->select(" msa.mesNombre,  mro.meserNombre , detOr.detPedID,
+                                      date_format( ord.ordPFecha,'%d-%m-%Y') as  ordPFecha,  
+                                      detOr.ordenPedidoID, detOr.detcantidad, 
+		                              prod.prodDescripcion, (detOr.detprecioNormal + detOr.detprecioEspecial)  preciounit, 
+                                      detOr.dettotal"
+                                    )
+                ->join('ordenpedido ord',  'ordp.meseroID = mesr.meseroID ', 'inner')
+                ->join('mesero mro ',  'ord.meseroID =  mro.meseroID', 'inner')
+                ->join('mesa msa',  'ord.mesaID =  msa.mesaID', 'inner')
+                ->join('producto prod',  'detOr.productoID =  prod.productoID', 'inner')                
+                ->where("detOr.ordenPedidoID",  $ordenPedidoID)               
+                ->where("detOr.detstatus",  1)
+                ->get("detordenpedido detOr")
                 ->result();
         return  $query;          
     }
