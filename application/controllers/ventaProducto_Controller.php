@@ -1,4 +1,5 @@
 <?php 
+ include getcwd(). "/application/libraries/fpdf/fpdf.php";
 defined('BASEPATH') OR exit('No direct script access allowed');
 class ventaProducto_Controller extends CI_Controller {  
     public function __construct()
@@ -11,6 +12,9 @@ class ventaProducto_Controller extends CI_Controller {
            $this->load->model('ordenesPedido_Model');
            $this->load->model('compraProducto_Model');
            $this->load->model('familiaProducto_Model');
+           $this->load->model('empresa_Model');
+           
+
            
 
            
@@ -190,7 +194,7 @@ class ventaProducto_Controller extends CI_Controller {
         error_reporting(E_ALL);
 
         // include getcwd(). "/application/libraries/fpdf/fpdf.php";
-        $this->pdf = new FPDF('P', 'mm', array(72.1,297));
+        $this->pdf = new FPDF('P', 'mm', array(82.1,297));
         $this->pdf->AddPage();
         $this->pdf->AliasNbPages();
         $this->pdf->SetTitle("Ticket");
@@ -198,10 +202,14 @@ class ventaProducto_Controller extends CI_Controller {
         $this->pdf->SetFont('Arial', 'B', 9);
         $archivo    = 'Ticket01';
          $id_sucursal   =  0;
-         $DatdetalleOrden =  $this->ordenesPedido_Model->get_datosticket($ordenPedidoID);
+         //echo  'antes de  enviar la consulta';
+         $datos_fac =  $this->ordenesPedido_Model->get_datosticket($ordenPedidoID);
+         //echo   'd4espues de la  consuñta     ';
+         //var_dump($datos_fac);
       
         // para  poner los datos del   establecimiento 
-        $datos      = $this->Conf_model->get_info_configuracion($id_sucursal);
+        $datos      = $this->empresa_Model->get_datoEmpresa();
+        //var_dump($datos );
 
          
         // var_dump( $datos_fac);
@@ -211,60 +219,41 @@ class ventaProducto_Controller extends CI_Controller {
         $Cajero     = 0; //Tipo de cajero
         $Ware       = 0; //Warehouse
         $wareouse   = 0; 
-        $Ntiquete   = str_pad($DatdetalleOrden[0]->ordenPedidoID, 10, "0", STR_PAD_LEFT); //Numero de tiquete
+        $Ntiquete   = str_pad($datos_fac[0]->ordenPedidoID, 10, "0", STR_PAD_LEFT); //Numero de tiquete
         
         //$this->pdf->SetFont('Times', '', 5);
          $this->pdf->SetFont('Arial', 'B', 6);
-        $this->pdf->Image('assets/img/star.png', 11);
+        
+        $this->pdf->Image(' C:/xampp/htdocs/BartioFran/img/NuevoStablo.jpg', 11);
+       // $this->pdf->Image('assets/img/star.png', 11);
         $this->pdf->Ln(3);
 
-        $this->pdf->Cell(0, 4, utf8_decode($datos->nameEmpresa), 0, 0, 'C');
+        $this->pdf->Cell(0, 4, utf8_decode($datos->empNombre), 0, 0, 'C');
         $this->pdf->Ln();
         
-        $this->pdf->MultiCell(0, 4,utf8_decode($datos->direccion) , 0, 'C');
+        //$this->pdf->MultiCell(0, 4,utf8_decode($datos->direccion) , 0, 'C');
       
-        $this->pdf->Cell(0, 4, 'NIT: '.utf8_decode($datos->nit), 0, 0, 'C');
+        $this->pdf->Cell(0, 4, 'NIT: '.utf8_decode($datos->empNit), 0, 0, 'C');
         $this->pdf->Ln();
 
-        $this->pdf->Cell(0, 4, 'NCR: '.utf8_decode($datos->ncr) . '120938383-4', 0, 0, 'C');
-        $this->pdf->Ln();
+       // $this->pdf->Cell(0, 4, 'NCR: '.utf8_decode($datos->ncr) . '120938383-4', 0, 0, 'C');
+        //$this->pdf->Ln();
 
         $this->pdf->Cell(0, 4, utf8_decode('GIRO:'), 0, 0, 'C');
         $this->pdf->Ln();
 
          $this->pdf->SetFont('Arial', 'B', 6);
-        $this->pdf->MultiCell(0, 2,utf8_decode($datos->giro),  0, 'C',false);
+        $this->pdf->MultiCell(0, 2,utf8_decode($datos->empGiro),  0, 'C',false);
         $this->pdf->Ln();
 
-         $this->pdf->SetFont('Arial', 'B', 6);
-        $this->pdf->Cell(52, 5, utf8_decode('CAJA: ') .utf8_decode($datos->caja), 'B', 0, 'C');
-        $this->pdf->Ln();
-
-         $this->pdf->SetFont('Arial', 'B', 6);
-        $this->pdf->Cell(0, 3, utf8_decode('No. RESOLUCION:') . utf8_decode($datos->nresolucion), 0, 0, 'C');
-        $this->pdf->Ln();
-
-        $this->pdf->Cell(0, 3, utf8_decode('FECHA DE AUTORIZACION:') . utf8_decode($datos->fautorizacion), 0, 0, 'C');
-        $this->pdf->Ln();
-
-        $this->pdf->Cell(0, 3, utf8_decode('RANGO AUTORIZADO:'), 0, 0, 'C');
-        $this->pdf->Ln();
-
-        $this->pdf->Cell(0, 3, utf8_decode($datos->rango), 0, 0, 'C');
-        $this->pdf->Ln();
-        $this->pdf->Cell(0, 4, utf8_decode('NUMERO DE TIQUETE: ') . $Ntiquete, 0, 0, 'L');
+        
+       // $this->pdf->Cell(0, 3, utf8_decode($datos->rango), 0, 0, 'C');
+        //$this->pdf->Ln();
+        $this->pdf->Cell(0, 4, utf8_decode('NUMERO DE TIQUETE: ') . str_pad($datos_fac[0]->ordenPedidoID, 10, "0", STR_PAD_LEFT), 0, 0, 'L');
         $this->pdf->Ln();
 
         $this->pdf->Cell(0, 4, date('d-m-Y h:i:s'), 0, 0, 'L');
         $this->pdf->Ln();
-
-        $this->pdf->Cell(30, 4, utf8_decode('CAJERO(A): ') . utf8_decode($datos_fac[0]->cajero), 0, 0, 'L');
-        $this->pdf->SetFont('Arial', 'B', '7');
-
-       // $datos_fac =   $this->Importacion_Model->obtener_servicios_facturados($id_enc_Comprobante);
-
-        $this->pdf->Cell(30, 4, utf8_decode('WAREHOUSE: ') . $wareouse, 0, 0, 'C');
-        $this->pdf->Ln(8);
 
         $Cantidad   = 0; //CA 
         $Producto   = 0; //Nombre del producto
@@ -281,7 +270,7 @@ class ventaProducto_Controller extends CI_Controller {
         $this->pdf->SetX(10);
         $this->pdf->SetFont('Arial', 'B', 6);
         $this->pdf->Cell(4, 4, "CA", 'B', 0, 'C');
-        $this->pdf->Cell(24, 4, "PRODUCTO", 'B', 0, 'C');
+        $this->pdf->Cell(39, 4, "PRODUCTO", 'B', 0, 'C');
         $this->pdf->Cell(11, 4, "P/U", 'B', 0, 'C');
         $this->pdf->Cell(15, 4, "TOTAL", 'B', 0, 'C');
         $this->pdf->Ln(8);
@@ -289,123 +278,34 @@ class ventaProducto_Controller extends CI_Controller {
         //$datos_fac =   $this->Importacion_Model->obtener_servicios_facturados($id_enc_Comprobante);
        // var_dump($datos_fac);
         
-          foreach ($datos_fac as $key=> $servicioFact) {
-               $this->pdf->SetFont('Arial', 'B', 6);
+          foreach ($datos_fac as $key=> $datos_fac) {
+               $this->pdf->SetFont('Arial', '', 5);
               // validando quien es el que contiene el  valor 
-             if ($servicioFact->kdx_no_sujeto != 0  ) {
+             if ($datos_fac->detcantidad > 0  ) {
                  $this->pdf->SetX(10);
-                 $this->pdf->Cell(4, 6, number_format($servicioFact->cantidad,0),  0, 0, 'C');//CA
-                $this->pdf->Cell(23, 6, str_replace('STAR SHIP', '',$servicioFact->descripcion), 0, 0, 'L');//Producto
-                $this->pdf->Cell(13, 6, '$' .number_format($servicioFact->kdx_vta_total,2), 0, 0, 'R');//P/U
-                $this->pdf->Cell(8, 6,  '$' .number_format($servicioFact->kdx_vta_total,2), 0, 0, 'R');//Total P/U
+                 $this->pdf->Cell(4, 6, number_format($datos_fac->detcantidad,0),  0, 0, 'C');//CA
+                $this->pdf->Cell(34, 6, str_replace('STAr', '',$datos_fac->prodDescripcion), 0, 0, 'L');//Producto
+                $this->pdf->Cell(13, 6, '$' .number_format($datos_fac->preciounit,2), 0, 0, 'R');//P/U
+                $this->pdf->Cell(8, 6,  '$' .number_format($datos_fac->dettotal,2), 0, 0, 'R');//Total P/U
                 $this->pdf->Cell(4, 6, 'N', 0, 0, 'C');//Exento, No gravado, No sujeto, Cuentas ajenas
                 $this->pdf->Ln(8);
-                $TotalN = $TotalN + $servicioFact->kdx_vta_total;
+                $TotalN += $datos_fac->dettotal;
              }
-             if ($servicioFact->kdx_gravado != 0) {
-                 $this->pdf->SetX(10);
-                 $this->pdf->Cell(4, 6, number_format($servicioFact->cantidad,0),  0, 0, 'C');//CA
-                $this->pdf->Cell(23, 6, str_replace('STAR SHIP','',$servicioFact->descripcion), 0, 0, 'L');//Producto
-                $this->pdf->Cell(13, 6, '$' .number_format($servicioFact->kdx_vta_total,2), 0, 0, 'R');//P/U
-                $this->pdf->Cell(8, 6,  '$' .number_format($servicioFact->kdx_vta_total,2), 0, 0, 'R');//Total P/U
-                $this->pdf->Cell(4, 6, 'G', 0, 0, 'C');//Exento, No gravado, No sujeto, Cuentas ajenas
-                $this->pdf->Ln(8);
-                 $TotalG = $TotalG + $servicioFact->kdx_vta_total;
-             }
-             if ($servicioFact->kdx_cuenta_ajena != 0) {
-                 $this->pdf->SetX(10);
-                 $this->pdf->Cell(4, 6, number_format($servicioFact->cantidad,0),  0, 0, 'C');//CA
-                $this->pdf->Cell(23, 6, str_replace('STAR SHIP','',$servicioFact->descripcion), 0, 0, 'L');//Producto
-                $this->pdf->Cell(13, 6, '$' .number_format($servicioFact->kdx_vta_total,2), 0, 0, 'R');//P/U
-                $this->pdf->Cell(8, 6,  '$' .number_format($servicioFact->kdx_vta_total,2), 0, 0, 'R');//Total P/U
-                $this->pdf->Cell(4, 6, 'A', 0, 0, 'C');//Exento, No gravado, No sujeto, Cuentas ajenas
-                $this->pdf->Ln(8);
-                $TotalA = $TotalA + $servicioFact->kdx_vta_total;
-             }
-             if ($servicioFact->kdx_exento != 0) {
-                 $this->pdf->SetX(10);
-                 $this->pdf->Cell(4, 6, number_format($servicioFact->cantidad,0),  0, 0, 'C');//CA
-                $this->pdf->Cell(23, 6, str_replace('STAR SHIP','',$servicioFact->descripcion), 0, 0, 'L');//Producto
-                $this->pdf->Cell(13, 6, '$' .number_format($servicioFact->kdx_vta_total,2), 0, 0, 'R');//P/U
-                $this->pdf->Cell(8, 6, '$' .number_format($servicioFact->kdx_vta_total,2), 0, 0, 'R');//Total P/U
-                $this->pdf->Cell(4, 6, 'E', 0, 0, 'C');//Exento, No gravado, No sujeto, Cuentas ajenas
-                $this->pdf->Ln(8);
-                 $TotalE = $TotalE + $servicioFact->kdx_vta_total;
-             }
-
-
-               
-            /* if ($servicioFact->id_catalogo_producto != '22' and  $servicioFact->id_catalogo_producto != '34') {
-                 $this->pdf->Cell(30, 12, '', '0', 0, 'L', '0');
-                 $this->pdf->Cell(140, 12, $servicioFact->descripcion, '0', 0, 'L', '0');
-                 $this->pdf->setX($DatosCordenadas['xposition_vgra']);
-                 $this->pdf->Cell(20, 12, $servicioFact->venta_neta, '0', 0, 'L', '0'); // se le agrega el  iva al producto
-                 $this->pdf->setX(10);
-                 $this->pdf->Ln(5);
-             }*/
-             $TotalF = $TotalE + $TotalG + $TotalA + $TotalN;
+             
+             //$TotalF = $TotalE + $TotalG + $TotalA + $TotalN;
 
          }
   
 
-       /* for ($x = 0; $x <= 6; $x++) {
-            $Preciouni = 100;
-            $Total = 110;
-
-            if ($x == 0) {
-                $Tot = 'N';
-                $TotalN = $TotalN + $Total;
-            }
-            if ($x >= 1 && $x <= 4) {
-                $Tot = 'G';
-                $TotalG = $TotalG + $Total;
-            }
-            if ($x == 5) {
-                $Tot = 'A';
-                $TotalA = $TotalA + $Total;
-            }
-            if ($x > 5) {
-                $Tot = 'E';
-                $TotalE = $TotalE + $Total;
-            }
-            $TotalF = $TotalE + $TotalG + $TotalA + $TotalN;
-
-            $this->pdf->SetX(10);
-            $this->pdf->Cell(4, 6, $Cantidad . '1', 0, 0, 'C');//CA
-            $this->pdf->Cell(23, 6, $Producto . 'Tramite Aduanal', 0, 0, 'C');//Producto
-            $this->pdf->Cell(13, 6, '$' . $Preciouni, 0, 0, 'C');//P/U
-            $this->pdf->Cell(8, 6, '$' . $Total, 0, 0, 'C');//Total P/U
-            $this->pdf->Cell(4, 6, $Tot, 0, 0, 'C');//Exento, No gravado, No sujeto, Cuentas ajenas
-            $this->pdf->Ln(8);
-        
-        }*/
+      
 
         //  despues del  detalle de la venta 
-        $this->pdf->SetFont('Arial', 'B', 6);
-        $this->pdf->Cell(20, 6, "VENTA GRAVADA", 'T', 0, 'L');
-        $this->pdf->Cell(21, 6, "", 'T', 0, 'L');
-        $this->pdf->Cell(15, 6, '$' . number_format($TotalG,2), 'T', 0, 'R');//Total Ventas gravadas
-        $this->pdf->Ln();
-
-        $this->pdf->Cell(20, 6, "VENTA EXENTA", 0, 0, 'L');
-        $this->pdf->Cell(21, 6, "", 0, 0, 'L');
-        $this->pdf->Cell(15, 6, '$' . number_format($TotalE,2), 0, 0, 'R');//Total Exenta
-        $this->pdf->Ln();
-
-        $this->pdf->Cell(20, 6, "VENTA NO SUJETA", 0, 0, 'L');
-        $this->pdf->Cell(21, 6, "", 0, 0, 'L');
-        $this->pdf->Cell(15, 6, '$' . number_format($TotalN,2), 0, 0, 'R'); //Total no sujeta
-        $this->pdf->Ln();
-
-        $this->pdf->Cell(22, 6, "COBROS POR CTA. AJENA", 'B', 0, 'L');
-        $this->pdf->Cell(19, 6, "", 'B', 0, 'L');
-        $this->pdf->Cell(14, 6, '$' . number_format($TotalA,2), 'B', 0, 'R');//Total Cuenta ajena
-        $this->pdf->Ln(6);
+        
 
          $this->pdf->SetFont('Arial', 'B', 6);
         $this->pdf->Cell(20, 6, "TOTAL A PAGAR:", 0, 0, 'L');
         $this->pdf->Cell(21, 6, "", 0, 0, 'L');
-        $this->pdf->Cell(14, 6, '$' . number_format($TotalF,2), 0, 0, 'R'); //Total final
+        $this->pdf->Cell(14, 6, '$' . number_format($TotalN,2), 0, 0, 'R'); //Total final
         $this->pdf->Ln();
 
         
@@ -433,15 +333,7 @@ class ventaProducto_Controller extends CI_Controller {
         $this->pdf->Cell(54, 6, "E=EXENTO, G=GRAVADO, N=NO SUJETO, A=CTA.AJENA", 'B', 0, 'C');
         $this->pdf->Ln(10);
         $this->pdf->SetFont('Times', 'B', 6);
-        if($datos_fac[0]->nombrecliente !=  null  || $datos_fac[0]->nombrecliente ='' ){
-                // str_replace('SAL', '', $datos_fac[0]->codigo_cliente) .' '.
-               
-                  $this->pdf->Cell(54, 6, $datos_fac[0]->nombrecliente, 0, 0, 'C');//CLIENTE TICKET
-        }else{
-            $this->pdf->Cell(54, 6, str_replace('SAL', '', $datos_fac[0]->codigo_cliente) .' '. $datos_fac[0]->nombre_cliente, 0, 0, 'C');//CLIENTE TICKET
-
-
-        }
+       
         
         $this->pdf->Ln();
         $this->pdf->Cell(0, 10, "DOCUMENTO: ", 'B', 0, 'L');
@@ -458,26 +350,29 @@ class ventaProducto_Controller extends CI_Controller {
         // $destino = getcwd() . "/" . "FILE.php";
 
         //$this->pdf->Output($archivo  . '.pdf', 'f');
- 
-         $this->Ventas_Model->setimpreso($id_enc_Comprobante);
 
-       $nombrecaja = 'CAJA'.$datos->caja;
+         // poner  bandera  de  cobrado   
+         //$this->Ventas_Model->setimpreso($ordenPedidoID);
+
+       //$nombrecaja = 'CAJA'.$datos->caja;
        
         // SEGMENTO PARA DETERMINAR  LA CARPETA PARA GENERAR LOS COMPROBANTES 
-        $search         =  array('Suc.', 'Plaza Comercial las','Sucursal','Agencia Multicentro', 'C.C. Paseo Venecia',  'Agencia Express CC');
-        $suc_name       =  $_SESSION["nombre_sucursal"] ;
-        $sucursal1       =  trim(str_replace($search, '',$suc_name ));
+        //$search         =  array('Suc.', 'Plaza Comercial las','Sucursal','Agencia Multicentro', 'C.C. Paseo Venecia',  'Agencia Express CC');
+        //$suc_name       =  $_SESSION["nombre_sucursal"] ;
+        //$sucursal1       =  trim(str_replace($search, '',$suc_name ));
 
-        $search1        =  array('_', '',' ');
-        $sucursal       =  trim(str_replace($search1, '', $sucursal1));
+        //$search1        =  array('_', '',' ');
+        //$sucursal       =  trim(str_replace($search1, '', $sucursal1));
+        $impreso =  0;
+
        
         if($impreso ==  1){
             $destino      = getcwd() . "/document/reimpresiones/";
             $desabsoluto  =  "document/reimpresiones/";
 
         }else{
-            $destino      = getcwd() . "/document/tickets/".$sucursal.'/'. $nombrecaja."/";
-            $desabsoluto  =  "document/tickets/". $sucursal.'/'.$nombrecaja."/";
+            $destino      = getcwd() . "/document/tickets/";
+            $desabsoluto  =  "document/tickets/";
 
         }       
         if (!is_dir($destino)) {
@@ -485,40 +380,16 @@ class ventaProducto_Controller extends CI_Controller {
         }
         $nombre_archivo =  'Ticket'.date("Ymd",strtotime(date("Y-m-d"))).$Ntiquete.'.pdf';
         //echo  'el nombre generado es ' . $nombre_archivo ;
+        // 'caja'           =>strval($datos->caja), 
         $this->pdf->Output("F", $destino . $nombre_archivo , true);
         $this->pdf->close();
         $datosretorno  = array('destino'        =>$desabsoluto, 
                                'nombre_archivo' =>$nombre_archivo,
-                               'caja'           =>strval($datos->caja), 
+                              
                                
 
         );
-        //header('Content-type: appliation/json');
-        //echo json_encode($datosretorno);
-        
-        //echo 'lanzando la creacion del DTE';
-        $dato_tipoevento   = $this->Ventas_Model->retorna_tipo_evento_ventas($id_enc_Comprobante) ; // 0=> manual,  1 => importacion,   2=> Exportacion
-        $id_tipo_evento    = $dato_tipoevento->id_tipo_evento;
-        $cod_generacion    = $dato_tipoevento->cod_generacion;
-        $resultadoERR      = '';
-        //echo   'eñ  codigo  de  generacion  es ' .  $cod_generacion;
-        if($cod_generacion ==   null || $cod_generacion ==   null  || $cod_generacion == '') {
-            $proceso  = 1;
-            $facturaelectronica  = new Facturaelectronica();
-            $resulgeneracio      =   $facturaelectronica->generarfacturaelectronica($id_tipo_evento, $id_enc_Comprobante);
-            $resultadoERR =   $facturaelectronica->CtrlError($resulgeneracio, $id_cliente, $proceso, $id_enc_Comprobante);
-
-        }
-
-        //var_dump($resultadoERR);
-
-        /*if ($resultadoERR=='') {
-            echo json_encode($datosretorno);
-
-        } else {
-                echo json_encode($resultadoERR);
-
-        }*/
+       
       //header('Content-type: appliation/json');
         echo json_encode($datosretorno);
         

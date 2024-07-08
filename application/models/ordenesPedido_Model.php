@@ -81,13 +81,10 @@
     }
     // funcion para  retornar los  datos con los  cuales  se  va  a emitir el  recibo  
     public function get_datosticket($ordenPedidoID){
-        $query =  $this->db->select(" msa.mesNombre,  mro.meserNombre , detOr.detPedID,
-                                      date_format( ord.ordPFecha,'%d-%m-%Y') as  ordPFecha,  
-                                      detOr.ordenPedidoID, detOr.detcantidad, 
-		                              prod.prodDescripcion, (detOr.detprecioNormal + detOr.detprecioEspecial)  preciounit, 
-                                      detOr.dettotal"
+        $query =  $this->db->select("msa.mesNombre,  mro.meserNombre , detOr.detPedID, date_format( ord.ordPFecha,'%d-%m-%Y') as  ordPFecha,  detOr.ordenPedidoID, detOr.detcantidad, 
+		prod.prodDescripcion, (detOr.detprecioNormal + detOr.detprecioEspecial)  preciounit, detOr.dettotal"
                                     )
-                ->join('ordenpedido ord',  'ordp.meseroID = mesr.meseroID ', 'inner')
+                ->join('ordenpedido ord',  'detOr.ordenPedidoID =  ord.ordenPedidoID', 'inner')
                 ->join('mesero mro ',  'ord.meseroID =  mro.meseroID', 'inner')
                 ->join('mesa msa',  'ord.mesaID =  msa.mesaID', 'inner')
                 ->join('producto prod',  'detOr.productoID =  prod.productoID', 'inner')                

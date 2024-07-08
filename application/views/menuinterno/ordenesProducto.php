@@ -82,7 +82,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 ?>
 
                 <input type="number"  class="text-right border-0" name="totalOrden" id="totalOrden" value="<?php  echo  $total;?>" readonly>
-                <button type="button" class="btn btn-danger" data-title ="Procesar venta" onclick="saveVentaProducto1()" ><i class="fa fa-print" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-danger" data-title ="Procesar venta" onclick="crear_pdf_ticket()" ><i class="fa fa-print" aria-hidden="true"></i></button>
                 </form>
             </div>             
             

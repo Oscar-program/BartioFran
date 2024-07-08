@@ -179,7 +179,7 @@ function addVentaProducto(famProdID, id, descripcion, preciocosto){
   function  delete_PresentacionProductoID(presProdID){
     // obtenemos  el id de la orden de pedido 
     var   ordenID = 0;
-     if(Document.getElementById('ordenID')){
+     if(document.getElementById('ordenID')){
        ordenID =  $("#ordenID").val()
      }
     swal({
@@ -215,6 +215,41 @@ function addVentaProducto(famProdID, id, descripcion, preciocosto){
       }
     });
   }
+
+  // funcion para  generar el   ticket de venta 
+  //  funcion para lanzar el  pdf del  comprobante de tiket
+function  crear_pdf_ticket(){	
+	var ordenPedidoID 			= 0; 
+  if(document.getElementById('ordenID')){
+    ordenPedidoID =  $("#ordenID").val();
+  }
+  console.log("generando la   opcion de  i,presion de  ticket")
+  
+	//let idCliente 				= $("#idCliente").val();
+	//let id_enc_Comprobante 		= $("#idVenta").val();
+	var url = base_url(
+		"index.php/ventaProducto_Controller/pdfCrearTicket/"  +ordenPedidoID 
+	);
+	$.get(url, function (data) {	
+		 var datos = JSON.parse(data);
+		// var caja             = datos["caja"];
+		 var repositorio      = datos["destino"];
+		 var comprobante      = datos["nombre_archivo"];
+		 var documentomostrar = repositorio + comprobante;		 
+		 //crear_cintaelectronic(caja);
+		 ver_ticketPDF(documentomostrar);
+		
+	});
+} 
+
+function ver_ticketPDF(ruta) {
+	var url = ruta;
+	window.open(
+		base_url(url),
+		"ventana1",
+		"width=600,height=600,scrollbars=no,toolbar=no, titlebar=no, menubar=no"
+	);
+}
 
 
 
