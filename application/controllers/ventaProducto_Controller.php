@@ -223,13 +223,16 @@ class ventaProducto_Controller extends CI_Controller {
         
         //$this->pdf->SetFont('Times', '', 5);
          $this->pdf->SetFont('Arial', 'B', 6);
-        
-        $this->pdf->Image(' C:/xampp/htdocs/BartioFran/img/NuevoStablo.jpg', 11);
-       // $this->pdf->Image('assets/img/star.png', 11);
-        $this->pdf->Ln(3);
+       //  echo 'ubicacion actual' .   getcwd() ;
+//         $dte_ccf->Image(getcwd() . "/qr.png", 103, 30, 25, 25);
 
-        $this->pdf->Cell(0, 4, utf8_decode($datos->empNombre), 0, 0, 'C');
-        $this->pdf->Ln();
+        
+        $this->pdf->Image(getcwd() .'/img/NuevoStablo.jpg', 25, 2, 25, 25);
+       // $this->pdf->Image('assets/img/star.png', 11);
+        $this->pdf->Ln(10);
+
+      //  $this->pdf->Cell(0, 4, utf8_decode($datos->empNombre), 0, 0, 'C');
+        //$this->pdf->Ln();
         
         //$this->pdf->MultiCell(0, 4,utf8_decode($datos->direccion) , 0, 'C');
       
@@ -342,10 +345,10 @@ class ventaProducto_Controller extends CI_Controller {
         $this->pdf->Ln();
         $this->pdf->Cell(0, 10, "FIRMA: ", 'B', 'B', 'L');
         $this->pdf->Ln();
-        $this->pdf->SetFont('Arial', 'B', 6);
-        $this->pdf->Cell(0, 4, utf8_decode('LA MANERA SMART'), 0, 0, 'C');
+      //  $this->pdf->SetFont('Arial', 'B', 6);
+        //$this->pdf->Cell(0, 4, utf8_decode('LA MANERA SMART'), 0, 0, 'C');
         $this->pdf->Ln();
-        $this->pdf->Cell(0, 4, utf8_decode('PARA COMPRAR EN LINEA'), 0, 0, 'C');
+        $this->pdf->Cell(0, 4, utf8_decode('GRACIAS POR TU COMPRA'), 0, 0, 'C');
         
         // $destino = getcwd() . "/" . "FILE.php";
 
