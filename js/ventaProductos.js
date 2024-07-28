@@ -120,7 +120,7 @@ function addVentaProducto(famProdID, id, descripcion, preciocosto){
   
      } 
      // funcion  para  retornar la sumatoria del  detalle de la ord3en de cliente  
-     function calculaTotalVenta(ordenID){
+  function calculaTotalVenta(ordenID){
         //get_TotalDetOrden($ordenPedidoID)
 
        // var valorid  = 0;   
@@ -138,7 +138,7 @@ function addVentaProducto(famProdID, id, descripcion, preciocosto){
 
 
 
-     }
+  }
 
      // funcion para mostrar las ordenes  pendientes de   cobro 
      function get_OrdenesPendientesCobro(){    
@@ -220,15 +220,60 @@ function addVentaProducto(famProdID, id, descripcion, preciocosto){
   //  funcion para lanzar el  pdf del  comprobante de tiket
 function  crear_pdf_ticket(){	
 	var ordenPedidoID 			= 0; 
+  var ordPcomentario      = 'Sin Comentario';
   if(document.getElementById('ordenID')){
     ordenPedidoID =  $("#ordenID").val();
   }
-  console.log("generando la   opcion de  i,presion de  ticket")
+
+  if(document.getElementById('txAcomentario')){
+    
+    ordPcomentario =  $("#txAcomentario").val();
+  //   if($("#txAcomentario").val().leng){
+    //  ordPcomentario =  $("#txAcomentario").val();
+    // }
+   
+  }
+
+    //  ordPcomentario =  $("#txAcomentario").val();
+    // }
+
+
+  //console.log("generando la   opcion de  i,presion de  ticket")
+
+  swal({
+    title: "Estas seguro de cerrar la ordern ?",
+    text: "Este proceso cerrara la oden de pedido y no podra agregar mas  productos",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((Delete) => {
+    if (Delete) {
+      var url = base_url(
+        "index.php/ventaProducto_Controller/pdfCrearTicket/"  + ordenPedidoID  + "/" + ordPcomentario
+      );
+      $.get(url, function (data) {	
+         var datos = JSON.parse(data);
+        // var caja             = datos["caja"];
+         var repositorio      = datos["destino"];
+         var comprobante      = datos["nombre_archivo"];
+         var documentomostrar = repositorio + comprobante;		 
+         //crear_cintaelectronic(caja);
+         ver_ticketPDF(documentomostrar);
+         listarMesas();
+        
+      });			
+    } else {
+      swal("Operacion  cancelada",{
+        icon: "success",
+      });
+    }
+  });
+
   
 	//let idCliente 				= $("#idCliente").val();
 	//let id_enc_Comprobante 		= $("#idVenta").val();
-	var url = base_url(
-		"index.php/ventaProducto_Controller/pdfCrearTicket/"  +ordenPedidoID 
+	/*var url = base_url(
+		"index.php/ventaProducto_Controller/pdfCrearTicket/"  + ordenPedidoID  + "/" + ordPcomentario
 	);
 	$.get(url, function (data) {	
 		 var datos = JSON.parse(data);
@@ -239,7 +284,7 @@ function  crear_pdf_ticket(){
 		 //crear_cintaelectronic(caja);
 		 ver_ticketPDF(documentomostrar);
 		
-	});
+	});*/
 } 
 
 function ver_ticketPDF(ruta) {
@@ -251,6 +296,36 @@ function ver_ticketPDF(ruta) {
 	);
 }
 
+//  funcion para determinar si en la bodega de la cual se quiere vender un  producto   tiene exixtencia 
+function chekStockProduct(){
+
+   var  productoID       = 0 ;
+   var  bodegaProductoID = 0;
+   if(document.getElementById('productoID')){
+    productoID = $('#productoID').val();
+   }
+
+   if(document.getElementById('bodsalida')){
+    bodegaProductoID = $('#bodsalida').val();
+   }
+  // chekStockProduct($productoID,$bodegaProductoID)
+
+  console.log("funcion para determinar si  un  producto tiene existencia");
+  var url = base_url(
+		"index.php/ventaProducto_Controller/chekStockProduct/"  + productoID  + "/" + bodegaProductoID
+	);
+	$.get(url, function (data) {	
+		  if(data<=0){
+        swal("La bodega que ha seleccionado  no  tiene existencia, se sugiere  hacer un traslado de producnto",{
+          icon: "warning",
+        });
+
+          // console.log("El producto no tiene existencia");
+      }
+		
+	});
+
+}
 
 
 

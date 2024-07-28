@@ -22,8 +22,9 @@
             $this->db->set("ordPcomentario", $data["ordPcomentario"])
                     ->set("ordPCantidadPrd", $data["ordPCantidadPrd"])
                     ->set("ordPtotalcancelar", $data["ordPtotalcancelar"])
+                    ->set("ordPpenditeCobro", $data["ordPpenditeCobro"])
                     ->where("ordenPedidoID", $ordenPedidoID)
-                    ->where("ordPanulado",  1)
+                    ->where("ordPanulado",  0)
                     ->update("ordenpedido");
             return $this->db->affected_rows();   
                
@@ -94,7 +95,17 @@
                 ->result();
         return  $query;          
     }
-
+    //  funcion para obtener los  totales de los  productos  de la  venta 
+    public function get_TotalVenta($ordenPedidoID){
+        $query =  $this->db->select("sum(detOr.detcantidad) as cantProd, sum(detOr.dettotal) as ventatotal")
+                //->join('producto prod',  'detOr.productoID =  prod.productoID', 'inner')
+                ->where("detOr.ordenPedidoID",  $ordenPedidoID) 
+                ->where("detOr.detstatus",  1)
+                ->get("detordenpedido detOr")
+                ->row();
+        return  $query;          
+    
+    }
 
 
 

@@ -71,6 +71,8 @@ function saveTraslado(productoID, bodegaProductoID, identificador , bodegaProduc
           //$("#codigoCliente").prop( "disabled", true);
             alertify.set("notifier", "position", "top-right");
             alertify.success("Traslado efectuado correctamente");
+            $("#statusenvio" + identificador).css({ "background-color": "green", "color": "white" });
+           
           },
           complete: function () {
              
@@ -78,4 +80,70 @@ function saveTraslado(productoID, bodegaProductoID, identificador , bodegaProduc
         });
 
 
+}
+
+//  funcion para trasladar productos a  excel  
+function exportTableToExcel1(tableID, filename = ''){
+  var downloadLink;
+  var dataType = 'application/vnd.ms-excel';
+  console.log("el nombre de la  tabla es" +  tableID);
+  
+  var tableSelect = document.getElementById(tableID);
+
+  var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+
+  console.log("LLegando  a la  funcion para  exportar a excel");
+  
+  // Specify file name
+  filename = filename?filename+'.xls':'excel_data.xls';
+  
+  // Create download link element
+  downloadLink = document.createElement("a");
+  
+  document.body.appendChild(downloadLink);
+  
+  if(navigator.msSaveOrOpenBlob){
+      var blob = new Blob(['ufeff', tableHTML], {
+          type: dataType
+      });
+      navigator.msSaveOrOpenBlob( blob, filename);
+  }else{
+      // Create a link to the file
+      downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+  
+      // Setting the file name
+      downloadLink.download = filename;
+      
+      //triggering the function
+      downloadLink.click();
+  }
+}
+
+// Exporta una tabla HTML a excel
+function exportTableToExcel(tableID, filename) {
+  // Tipo de exportación
+  if (!filename) filename = 'excel_data.xls';
+  let dataType = 'application/vnd.ms-excel';
+
+  // Origen de los datos
+  let tableSelect = document.getElementById(tableID);
+  let tableHTML = tableSelect.outerHTML;
+   
+  // Crea el archivo descargable
+  let blob = new Blob([tableHTML], {type: dataType});
+  
+  // Crea un enlace de descarga en el navegador
+  if (window.navigator && window.navigator.msSaveOrOpenBlob) { // Descargar para IExplorer
+    window.navigator.msSaveOrOpenBlob(blob, filename);
+  } else { // Descargar para Chrome, Firefox, etc.
+    let a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style = "display: none";
+    let csvUrl = URL.createObjectURL(blob);
+    a.href = csvUrl;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(a.href)
+    a.remove();
+  }
 }

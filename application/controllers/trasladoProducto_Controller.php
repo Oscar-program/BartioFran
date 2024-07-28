@@ -56,6 +56,7 @@ class trasladoProducto_Controller extends CI_Controller{
         $productoID    = (isset($_POST["productoID"]))?  $_POST["productoID"] : 0;;
         $bodegaOrigen  =(isset($_POST["bodegaProductoID"]))?  $_POST["bodegaProductoID"] : 0;
         $bodegaDest    =(isset($_POST["bodegaDest"]))?  $_POST["bodegaDest"] : 0;   
+      // echo  'la cantidad a trasladar es' .  $_POST["cantidadtrasl"];
         $salida        =(isset($_POST["cantidadtrasl"]))?  $_POST["cantidadtrasl"] : 0;
         $entrada       =(isset($_POST["cantidadtrasl"]))?  $_POST["cantidadtrasl"] : 0;
         $transaccionID =(isset($_POST["idTransac"]))?  $_POST["idTransac"] : 0;
@@ -72,8 +73,9 @@ class trasladoProducto_Controller extends CI_Controller{
                               'impuesto'         => 1,
                               'total'            => 0 
                             );
-                            var_dump($dataSalidaK);  
-                            $this->compraProducto_Model->addMoVKardex( $dataSalidaK, $kardexProdID) ;                        
+                           // var_dump($dataSalidaK);  
+                            //echo 'Inserta la salida en el  kardex' .  '<br>';
+                           $this->compraProducto_Model->addMoVKardex( $dataSalidaK, $kardexProdID) ;                        
         $dataEntradaaK =  array('transaccionID'    => $transaccionID,
                                   'movtipo'          => $movtipo, 
                                   'bodegaProductoID' => $bodegaDest,
@@ -85,18 +87,44 @@ class trasladoProducto_Controller extends CI_Controller{
                                   'impuesto'         => 1,
                                   'total'            => 0 
                                 );
-                            var_dump($dataEntradaaK);   
-        $this->compraProducto_Model->addMoVKardex($dataEntradaaK, $kardexProdID) ;  
+                           // var_dump($dataEntradaaK);   
+                          
+       $this->compraProducto_Model->addMoVKardex($dataEntradaaK, $kardexProdID) ;  
+      // echo 'SE INSERTARON OPREACINES EN  EL  KARDEZ' .  '<br>';
         $resulbInv = $this->inventProducto_Model->get_productoIDInventarios($productoID,$bodegaDest);
         if(Empty($resulbInv)){
+          // indica que  se creara la  linea del   inventario 
           $invProdID = NULL;
-          $data =array('productoID'=>$productoID ,  
+        }else{
+          $invProdID =  $resulbInv->invProdID;
+
+        }  
+       /* invProdFecha
+        productoID
+        bodegaProductoID
+        usuarioID
+        inicialInvProd
+        entradaInvProd
+        salidaInvProd
+        existenciaInvProd*/
+          echo 'SE EXTRAJERON PRODUCTOS DEL  INVENTARIO' .  '<br>';
+          $data =array('productoID'      =>$productoID ,  
                       'bodegaProductoID' =>$bodegaDest,  
-                      'entradaInvProd' =>$entrada 
+                      'entradaInvProd'   =>$entrada, 
+                      'usuarioID'        =>1,
+                      'existenciaInvProd'=>0
                       );
+                      /*$data =array('productoID'      =>$productoID ,  
+                      'bodegaProductoID' =>$bodegaDest,                       
+                      'usuarioID'        =>1,
+                      
+                      );*/
+           
+                      var_dump($data);
+
           $this->inventProducto_Model->addProductoInvent($data, $invProdID);
           //  se tiene que  disparar  un trigger para  actualizar la existencia real en cada bodega
-        }
+      
 
         
 

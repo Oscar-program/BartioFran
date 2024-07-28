@@ -70,6 +70,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 
                         </tbody>
                     </table>
+                    <div> 
+                        <textarea class="form-control" name="txAcomentario" id="txAcomentario" cols="30" rows="3"> Sin Comentario
+                        </textarea>
+                    </div>
                 </div>
                 <label>           CANCELAR $</label>
                 <?php  

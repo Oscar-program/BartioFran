@@ -1,14 +1,18 @@
 <div class="container-fluid m-top">
         <div class="row">
-            <div class="col-10 text-left">
+            <div class="col-9 text-left">
                 <H2> ULTIMOS TRASLADOS  REALIZADOS </H2>
             </div>
             <div class="col-1 text-right">
             <button type="button" class="btn btn-danger  btn-lg rounded-circle" data-toggle="tooltip" data-placement="bottom" data-title="Agregar Traslados" onclick="addTrasladosProducto()"><i class="fa fa-plus" aria-hidden="true"></i></button>
             </div>
             <div class="col-1 text-left">
-            <button type="button" class="btn btn-danger btn-lg rounded-circle" data-toggle="tooltip" data-placement="bottom" data-title="Registrar Traslados" onclick="addCompraProducto()"><i class="fa fa-file-text" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-info btn-lg rounded-circle" data-toggle="tooltip" data-placement="bottom" data-title="Registrar Traslados" onclick="addCompraProducto()"><i class="fa fa-file-text" aria-hidden="true"></i></button>
             </div>
+            <div class="col-1 text-left">
+            <button type="button" class="btn btn-success btn-lg rounded-circle" data-toggle="tooltip" data-placement="bottom" data-title="exportar a excel" onclick="exportTableToExcel('tblFamiliaProd')"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+            </div>
+
 
         </div>
 </div> 
@@ -32,9 +36,9 @@
                 <div class="table-responsive">
 
 
-                    <table id="tblFamiliaProd" class="table table-hover">
+                    <table id="tblFamiliaProd"  name  ='tblFamiliaProd'  class="table table-hover">
                         <thead>
-                            <tr class="thead-dark">
+                            <tr class="thead-secondary" style="background-color:dodgerblue; color:aliceblue;">
                                 <th>#</th>
                                 <th>TIPO MOVIMIENTO</th>  
                                 <th>FECHA</th> 
@@ -108,7 +112,7 @@
         });
         
     $(document).ready(function() {
-        $('#tblFamiliaProd').DataTable({
+       /* $('#tblFamiliaProd').DataTable({
             //para cambiar el lenguaje a español
             "order":[[0, "asc" ]],
             "language": {
@@ -126,6 +130,6 @@
                 },
                 "sProcessing": "Procesando...",
             }
-        });
+        });*/
     });
     </script>

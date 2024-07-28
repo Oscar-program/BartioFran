@@ -13,6 +13,7 @@ class ventaProducto_Controller extends CI_Controller {
            $this->load->model('compraProducto_Model');
            $this->load->model('familiaProducto_Model');
            $this->load->model('empresa_Model');
+           $this->load->model('inventProducto_Model');
            
 
            
@@ -187,11 +188,22 @@ class ventaProducto_Controller extends CI_Controller {
 
    }
    //  funcion para  imprimir el  ticket  de la  venta de producto 
-   public function pdfCrearTicket($ordenPedidoID){
+   public function pdfCrearTicket($ordenPedidoID, $ordPcomentario){
    
     ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
+
+        // segmento para  actualizar la cabecera de la orden  de compra 
+        $RVntaTotal =  $this->ordenesPedido_Model->get_TotalVenta($ordenPedidoID);
+        $data  =  array( 'ordPcomentario'=>$ordPcomentario,
+                          'ordPCantidadPrd'=> $RVntaTotal->cantProd, 
+                          'ordPtotalcancelar'=>$RVntaTotal->ventatotal,
+                          'ordPpenditeCobro'=>0 
+                        );
+                         // var_dump(   $data )
+        $this->ordenesPedido_Model->addOrdenPedido($data, $ordenPedidoID);
+       
 
         // include getcwd(). "/application/libraries/fpdf/fpdf.php";
         $this->pdf = new FPDF('P', 'mm', array(82.1,297));
@@ -402,7 +414,15 @@ class ventaProducto_Controller extends CI_Controller {
 
 
    }
-
+   //   funcion para calcular la existencia de los  productos  
+   public function chekStockProduct($productoID,$bodegaProductoID){
+    $existencia = 0; 
+    $result= $this->inventProducto_Model->chekStockProduct($productoID,$bodegaProductoID); 
+    if(!empty($result)){
+      $existencia = $result->existencia;
+    }     
+    echo  $existencia;   
+   }
 
 
      

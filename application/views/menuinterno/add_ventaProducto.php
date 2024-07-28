@@ -59,7 +59,7 @@
           </div>
           <div class="form-group">
             <label for="bodsalida" class="col-form-label">Bodega de Salida:</label>
-            <select name="bodsalida" id="bodsalida"  class="form-control chosen">                
+            <select name="bodsalida" id="bodsalida"  class="form-control chosen" onchange="chekStockProduct();">                
                  <?php foreach ($bodegas as $row): ?>
                     <option value="<?php echo $row->bodegaProductoID; ?>">
                     <?php echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>

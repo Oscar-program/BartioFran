@@ -195,6 +195,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="javaScript:indicadorExistenciaProd()" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Indicador de  existencias</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
                   <a href="javaScript:preciosProducto()" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Asignar Precios</p>
@@ -504,6 +511,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>js/trasladoProducto.js"></script>
   <script src=" <?php echo  base_url();?>js/ventaProductos.js"></script>
   <script src=" <?php echo  base_url();?>js/ordenesPedido.js"></script>
+  <script src=" <?php echo  base_url();?>js/invProductos.js"></script>
   
 
 

@@ -108,6 +108,7 @@ public function get_ListProductoTrasladar(){
                                 ) 
             ->join('producto  p','k.productoID =  p.productoID','inner')  
             ->join('bodegaproducto bod','k.bodegaProductoID =   bod.bodegaProductoID','inner') 
+            ->where('p.famProdID',1)
             ->group_by('k.productoID') 
             ->group_by('bod.bodegaProductoID')                    
             ->get("kardexproducto k")
