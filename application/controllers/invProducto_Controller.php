@@ -10,9 +10,9 @@ class   invProducto_Controller extends CI_Controller{
 
         //   funcion para  mostra  el indicador del   inventario  
         public function  indicadorExistenciaProd(){
-            ini_set('display_errors',1);
-            ini_set('display_startup_errors',1);
-            error_reporting(E_ALL);
+                ini_set('display_errors',1);
+                ini_set('display_startup_errors',1);
+                error_reporting(E_ALL);
            // echo  'llegando al controlador de la MEDIDA del producto';
             $datos["indicadorExistenciaProd"] =   $this->inventProducto_Model->indicadorExistenciaProd();
             //var_dump($this->datos["datosMArcas"]);

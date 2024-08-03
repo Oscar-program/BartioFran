@@ -54,30 +54,37 @@ function saveTraslado(productoID, bodegaProductoID, identificador , bodegaProduc
                         };  
 	url_destino       = "index.php/trasladoProducto_Controller/saveTraslado/";
 	
-	console.log("Almacenando el  traslado del producto  ##########");
+	console.log("Almacenando el  traslado del producto  ##########" +cantidadtrasl +"$$");
+  if(parseInt(cantidadtrasl)<= 0  || cantidadtrasl=='' ){
+    alertify.set("notifier", "position", "top-right");
+    alertify.error("El campo cantidad no  puede estar vacio");
+  }else{
+    $.ajax({
+      url: base_url(url_destino),
+      type: "POST",
+      data: DJson,
+      // cache: false,
+      //contentType: false,
+      //processData: false,
+      beforeSend: function () {
+        // Show image container
+        $("#loader").css("display", "block");
+      },
+      success: function (data) {
+      //$("#codigoCliente").prop( "disabled", true);
+        alertify.set("notifier", "position", "top-right");
+        alertify.success("Traslado efectuado correctamente");
+        $("#statusenvio" + identificador).val("Enviado")
+        $("#statusenvio" + identificador).css({ "background-color": "green", "color": "white", "opacity":" 0.75", });
+       
+      },
+      complete: function () {
+         
+      }
+    });
+  }
 	
-	$.ajax({
-          url: base_url(url_destino),
-          type: "POST",
-          data: DJson,
-          // cache: false,
-          //contentType: false,
-          //processData: false,
-          beforeSend: function () {
-            // Show image container
-            $("#loader").css("display", "block");
-          },
-          success: function (data) {
-          //$("#codigoCliente").prop( "disabled", true);
-            alertify.set("notifier", "position", "top-right");
-            alertify.success("Traslado efectuado correctamente");
-            $("#statusenvio" + identificador).css({ "background-color": "green", "color": "white" });
-           
-          },
-          complete: function () {
-             
-          }
-        });
+	
 
 
 }

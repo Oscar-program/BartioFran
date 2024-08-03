@@ -193,7 +193,19 @@ class compraProducto_Controller extends CI_Controller {
                                     'total'=>$total
                                  );
             //  insertamos el  detalle de la  compra 
-            $this->compraProducto_Model->adddetcompra($dataDetComp, $detCompraId);                       
+            $this->compraProducto_Model->adddetcompra($dataDetComp, $detCompraId);  
+            
+            # Creamos el segmento  para insertar en el invenrio si  no existe 
+            $datoProducto =  $this->inventProducto_Model->get_productoIDInventarios($productoID,$bodegaProductoID);
+            if(!empty($datoProducto)){
+                // Actualizamos el  inventario  sino Creamos la linea  en el inventario  del producto 
+
+            }else{
+               
+            }
+
+            # fin  del segmento para actualizar el inventario  
+          
 
            //creadno el   array para  el  kardex  
 

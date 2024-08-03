@@ -14,7 +14,7 @@
             <div class="table-responsive">
                 <input type="hidden" id="trasladoID" name="trasladoID">
 
-                <table id="tblListaProd" class="table table-hover">
+                <table id="tblExistProd" class="table table-hover">
                     <thead>
                         <tr class="thead-secondary" style="background-color:dodgerblue; color:aliceblue;">                           
                             <th>PRODUCTO</th>                            
@@ -78,3 +78,30 @@
         
     </div>
 </div>
+<script>
+       
+        
+    $(document).ready(function() {
+        $('#tblExistProd').DataTable({
+            //para cambiar el lenguaje a español
+            "paging":   false,
+            "info":     false,
+            "order":[[0, "asc" ]],
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sSearch": "Buscar:",
+                /*"oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },*/
+                "sProcessing": "Procesando...",
+            }
+        });
+    });
+    </script>

@@ -53,11 +53,11 @@
                                        
                                         <td><input type="number"   class="form-control"  id ="<?php echo  'cantidadtrasl' .  $c; ?>"    name ="<?php echo  'cantidadtrasl' .  $c; ?>"></td>
                                         <td>
-                                        <input type="text"   class="form-control"  style="background-color:yellow; color:black; opacity: 0.5;" id ="<?php echo  'statusenvio' .  $c; ?>" name ="<?php echo  'statusenvio' .  $c; ?>"  value = "Enviado"  readonly> 
+                                        <input type="text"   class="form-control"  style="background-color:orange; color:white; opacity: 0.75; border-radius: 20px;" id ="<?php echo  'statusenvio' .  $c; ?>" name ="<?php echo  'statusenvio' .  $c; ?>"  value = "Pendiente"  readonly> 
                                         </td>   
                                         <td class="text-right">
 
-                                            <a href='#' class="btn btn-danger btn-sm" style="margin:0px;  color:white;"
+                                            <a href='#' class="btn btn-outline-primary" 
                                                 data-title="Procesar Traslado"
                                                 onclick="saveTraslado(<?php echo $row->productoID; ?> , <?php echo $row->bodegaProductoID; ?> ,<?php echo $c; ?>, <?php echo   $lbod->bodegaProductoID; ?> )">
                                                 <i class="fa fa-check-square-o" aria-hidden="true"></i> </a>
