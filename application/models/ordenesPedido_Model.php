@@ -106,6 +106,12 @@
         return  $query;          
     
     }
+    // funcion para  eliminar elemento del detalle de  la orden de pedido  
+    public function deleteDetOrdenPedido($marcProdID) {
+        $this->db->where("marcProdID",$marcProdID)         
+                 ->delete("detordenpedido");                 
+        return  $this->db->affected_rows();          
+    }
 
 
 

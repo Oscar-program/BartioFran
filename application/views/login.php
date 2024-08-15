@@ -40,36 +40,45 @@
   <link rel="stylesheet" href="./plugins/summernote/summernote-bs4.min.css">
   
   <script src="./js/funciones_basica.js"></script>
+  <script src=" <?php echo  base_url();?>js/login.js"></script>
+  <script src = " https://unpkg.com/sweetalert/dist/sweetalert.min.js "> </script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   
 </head>
 <body class="hold-transition login-page" style =  "background-image: url(./img/club-dance2.jpg); background-repeat: no-repeat;background-size: cover;">
-<div class="login-box">
+<div class="login-box" style="background-color:#1D59B0;  box-shadow: 5px 5px 15px #05B9F3 ; border-radius: 20px; opacity: 0.9;">
   <div class="login-logo">
     <a href="javaScript:carga_principal()" style="font-weight:bold; color:#1D59B0; font-size: 40px; text-shadow:
     1px 1px 2px black,
     0 0 1em blue,
     0 0 0.2em blue;
   color: white;"><b>NUEVO </b>ESTABLO</a>
+  <br>
+ 
+
   </div>
   <!-- /.login-logo -->
-  <div class="card" style="box-shadow: 5px 5px 15px #05B9F3 ;">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg" style="color:red; font-weight:bold;">Registrarse para iniciar session</p>
-
-      <form method="post" action="index.php/Welcome/principal/">
+  <div class="card" style="background-color:#1D59B0 ; border-radius:0px 0px 15px 15px;  box-shadow: 5px 5px 15px #05B9F3 ;">
+    <div class="card-body login-card-body" style="background-color:white; border-radius:50px 0px 15px 15px; opacity: 0.9;">
+      <br>
+      <p class="login-box-msg" style="color:white; font-weight:bold;">Registrarse para iniciar session</p>
+     <!--   action="index.php/Welcome/principal/"   action="javascript:validaUser()"  -->
+      <form method="post" action="javascript:validaUser()">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="text"   id   ="user"   name  ="user"  class="form-control" placeholder="usuario" style="border-radius: 20px; background-color:#1D59B0 ; color:white">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fa fa-user" style="color:#1D59B0"></span>
+              
+
             </div>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password"  id  = "pwd" name  = "pwd" class="form-control" placeholder="Password" style="border-radius: 20px; background-color:#1D59B0 ; color:white">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+              <span class="fas fa-lock" style="color:#1D59B0"></span>
             </div>
           </div>
         </div>
@@ -81,7 +90,7 @@
           </div>
           <!-- /.col -->
           <div class="col-2">
-            <button type="submit" class="btn btn-danger btn-block-sm">
+            <button type="submit" class="btn btn-primary btn-block-sm" style="color:#1D59B0; background-color:white;" >
             <i class="fa fa-key" aria-hidden="true"></i>
             </button>
           </div>
@@ -93,10 +102,10 @@
       <!-- /.social-auth-links -->
 
       <p class="mb-1">
-        <a href="forgot-password.html">Reestablecer clave</a>
+        <a href="forgot-password.html" style="color:#1D59B0;">Reestablecer clave</a>
       </p>
       <p class="mb-0">
-        <a href="register.html" class="text-center">Registrar nuevo usuario</a>
+        <a href="javaScript:registerUser()" class="text-center" style="color:#1D59B0;">Registrar nuevo usuario</a>
       </p>
     </div>
     <!-- /.login-card-body -->

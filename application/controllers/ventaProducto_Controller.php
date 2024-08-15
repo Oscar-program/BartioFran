@@ -1,5 +1,6 @@
 <?php 
  include getcwd(). "/application/libraries/fpdf/fpdf.php";
+ include getcwd(). "/application/libraries/operacionInvnt/operacionesInventario.php";
 defined('BASEPATH') OR exit('No direct script access allowed');
 class ventaProducto_Controller extends CI_Controller {  
     public function __construct()
@@ -46,12 +47,10 @@ class ventaProducto_Controller extends CI_Controller {
         //echo  "El id de la transacciones es " .  $idTransac;
         //productoID:productoID, precioregular:precioregular, 
         //comanda:comanda, bodsalida:bodsalida, precincremento:precincremento, cantiadVenta:cantiadVenta,totalVenta:totalVenta 
-        
-        
-        
+        $operacionesInventario  =  new  operacionesInvenatarios();
         //exit;
         $transaccionID   = (isset($_POST["idTransac"]))?  $_POST["idTransac"] : 0;
-        $movtipo         = "VNTA" ;
+        $movtipo         = "VENT" ;
         $productoID      = (isset($_POST["productoID"]))?  $_POST["productoID"] : 0;
         //ordenID
         $ordenID         = (isset($_POST["ordenID"]))?  $_POST["ordenID"] : 0;
@@ -84,9 +83,15 @@ class ventaProducto_Controller extends CI_Controller {
                                       'dettotal' =>$dettotal 
                                       );
                                      // var_dump($dataDelOrdenes); 
-          $this->ordenesPedido_Model->addDetOrdenPedido($dataDelOrdenes, $detPedID);                    
-
+          $this->ordenesPedido_Model->addDetOrdenPedido($dataDelOrdenes, $detPedID); 
+          $operacionesInventario ->actualizarInventario($productoID, $movtipo, $bodegaOrigen,  $bodegaOrigen , $detcantidad ); 
         # Fin del procesamiento del detalle de ordenes 
+
+        # segmento para  trabajar el  descuento en los  inventarios 
+
+        #  fin del  segmento para trabajar las  rebajas  en  los  inventarios  
+
+
         # preparando el algoritmo para  refleja la  salida en  el kardex
         /*$kardexProdID= NULL;
         $dataSalidaK =  array('transaccionID'    => $transaccionID,
@@ -422,6 +427,11 @@ class ventaProducto_Controller extends CI_Controller {
       $existencia = $result->existencia;
     }     
     echo  $existencia;   
+   }
+
+   // funcion para  anular  producto del detalle de  venta 
+   public function  devolucionProducto(){
+    
    }
 
 

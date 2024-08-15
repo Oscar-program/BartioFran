@@ -3,7 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class inventProducto_Model extends CI_Model{
  //   funcion que  identifica  si el  producto ya se  encuentra registrado en la  bodega que se esta  asignando 
  public function get_productoIDInventarios($productoID,$bodegaProductoID) {
-    $query =  $this->db->select("prodinvent.*")
+    $query =  $this->db->select("invProdID,productoID
+                                bodegaProductoID,
+                                coalesce(inicialInvProd,0) as inicialInvProd ,
+                                coalesce(entradaInvProd,0) as entradaInvProd, 
+                                coalesce(salidaInvProd,0)  as salidaInvProd,
+                                coalesce(existenciaInvProd,0) as existenciaInvProd")
              ->where('prodinvent.productoID',$productoID)
              ->where('prodinvent.bodegaProductoID',$bodegaProductoID)
              ->get("inventarioproducto prodinvent")
@@ -13,12 +18,13 @@ class inventProducto_Model extends CI_Model{
 //  funcion para  insertar el  producto en la tabla de inventarios, para que este disponible para agrgar existencias  
     public function  addProductoInvent($data, $invProdID){
         if($invProdID ==   NULL){
-            echo  'INSERTANDO EN EL   INVENTARIO';
+          //  echo  'INSERTANDO EN EL   INVENTARIO';
             $this->db->insert("inventarioproducto",$data);
             return $this->db->insert_id();
         }else{
             echo  'ACTUALIZANDO EN EL   INVENTARIO';
-            $this->db->set("existenciaInvProd", $data["existenciaInvProd"])            
+            $this->db->set("entradaInvProd", $data["entradaInvProd"])
+                      ->set("salidaInvProd", $data["salidaInvProd"])              
                 ->where("productoID", $data["productoID"] )
                 ->where("bodegaProductoID", $data["bodegaProductoID"])        
                 ->update("inventarioproducto");

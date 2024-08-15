@@ -13,4 +13,20 @@ class usuarios_Model extends CI_Model{
                                 ->row();
             return  $query;  
   }
+
+  //funcion para  almacenar los datos del  usuario 
+  protected $table = 'usuario';
+
+    public function insert_user($data, $aes_key)
+    {
+        $builder = $this->db->table( $this->table );
+
+        $builder->set('usrPwd', "AES_ENCRYPT('{$data['usrPwd']}','{$aes_key}')", FALSE);
+        $builder->set('usrNombre', $data['usrNombre'], TRUE);
+        $builder->set('usrLogin', $data['usrLogin'], TRUE);
+
+        $builder->insert();
+    }
+
+
 }

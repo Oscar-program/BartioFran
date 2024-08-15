@@ -92,7 +92,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <img src="/BartioFran/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Usuario Conectado</a>
+            <a href="#" class="d-block"> <?php echo $_SESSION["usuario"]?></a>
           </div>
         </div>
 
@@ -241,6 +241,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <!-- Main content -->
       <section class="content" style =  "background-image: url(./img/club-dance1.jpg); background-repeat: no-repeat;background-size: cover;">
         <div class="container-fluid" id="principal" >
+          <?php  if($_SESSION["usrLogin"]=="admin" ){?>
+                <?php    $this->load->view('mesas/listaMesas'); ?>
+            <?php }else {?>
           <!-- Small boxes (Stat box) -->
           <div class="row">
             <div class="col-lg-3 col-6">
@@ -441,6 +444,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </section>
             <!-- right col -->
           </div>
+          <?php }?>
           <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
       </section>
@@ -512,6 +516,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>js/ventaProductos.js"></script>
   <script src=" <?php echo  base_url();?>js/ordenesPedido.js"></script>
   <script src=" <?php echo  base_url();?>js/invProductos.js"></script>
+  <script src=" <?php echo  base_url();?>js/login.js"></script>
   
 
 

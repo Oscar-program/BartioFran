@@ -2,6 +2,7 @@
 $GLOBALS['idCompra'] = 0;
 $GLOBALS['idCompratmp'] = 0;
 defined('BASEPATH') OR exit('No direct script access allowed');
+include getcwd(). "/application/libraries/operacionInvnt/operacionesInventario.php";
 
 class compraProducto_Controller extends CI_Controller {  
     public function __construct()
@@ -116,6 +117,7 @@ class compraProducto_Controller extends CI_Controller {
          ini_set('display_errors',1);
          ini_set('display_startup_errors',1);
          error_reporting(E_ALL); 
+         $operacionesInventario  =  new  operacionesInvenatarios();
          //echo  'llegando al  controlador para  guardar las  ventas ';
          $empresaID         = 1; 
          $establecimientoID = 2;
@@ -196,20 +198,14 @@ class compraProducto_Controller extends CI_Controller {
             $this->compraProducto_Model->adddetcompra($dataDetComp, $detCompraId);  
             
             # Creamos el segmento  para insertar en el invenrio si  no existe 
-            $datoProducto =  $this->inventProducto_Model->get_productoIDInventarios($productoID,$bodegaProductoID);
-            if(!empty($datoProducto)){
-                // Actualizamos el  inventario  sino Creamos la linea  en el inventario  del producto 
-
-            }else{
-               
-            }
+           
 
             # fin  del segmento para actualizar el inventario  
           
 
            //creadno el   array para  el  kardex  
 
-           $kardexProdID = NULL;
+          /* $kardexProdID = NULL;
       
            $dataDetkardex  = array('transaccionID'=>$transaccionID,
                                     'movtipo'=>$movtipo,  
@@ -222,7 +218,10 @@ class compraProducto_Controller extends CI_Controller {
                                     'total'=>$total
                               );
             // insertamos los  datos del  kardex 
-            $this->compraProducto_Model->addMoVKardex($dataDetkardex, $kardexProdID) ;                    
+            $this->compraProducto_Model->addMoVKardex($dataDetkardex, $kardexProdID) ;*/ 
+            
+            $operacionesInventario ->actualizarInventario($productoID, $movtipo,$bodegaProductoID, $bodegaProductoID, $cantidad ); 
+
          }
 
 

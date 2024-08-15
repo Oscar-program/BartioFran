@@ -6,7 +6,8 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 
 		$this->load->database();
-		
+		$this->load->model("usuarios_Model");
+		$this->load->model('mesas_Model');
 		$this->load->helper('path');
 	}
 
@@ -34,7 +35,46 @@ class Welcome extends CI_Controller {
 	}
 	// funcion para  cargar el  menu principal 
 	public function  principal(){
+		session_start();
 		//echo 'llegando al controlador';
-		$this->load->view('principal');
+		/*$userRerotno = "";
+        $RetornaUser = 1;
+        $usrLogin = 'admin';
+        $usrPwd   = 'Admin2024';
+        $datosUser =   $this->usuarios_Model->getUserpwd($usrLogin, $usrPwd);
+        if(empty($datosUser)){
+            $RetornaUser = 0;
+			echo $RetornaUser ;
+            
+        }else{
+            $this->load->view('principal');
+        }
+       //echo $RetornaUser ; */
+
+       $data['listaMesas'] = $this->mesas_Model->get_listmesas();
+		$this->load->view('principal', $data);
 	}
+	// funcion para  registrar los  usuarios del  sistema  
+	// funcion para  cargar el  menu principal 
+	public function  registerUser(){
+		session_start();
+		//echo 'llegando al controlador';
+		/*$userRerotno = "";
+        $RetornaUser = 1;
+        $usrLogin = 'admin';
+        $usrPwd   = 'Admin2024';
+        $datosUser =   $this->usuarios_Model->getUserpwd($usrLogin, $usrPwd);
+        if(empty($datosUser)){
+            $RetornaUser = 0;
+			echo $RetornaUser ;
+            
+        }else{
+            $this->load->view('principal');
+        }
+       //echo $RetornaUser ; */
+
+      // $data['listaMesas'] = $this->mesas_Model->get_listmesas();
+		$this->load->view('usuarios/registrarUsuario');
+	}
+
 }

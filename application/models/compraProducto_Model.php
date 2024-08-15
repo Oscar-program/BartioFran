@@ -77,7 +77,7 @@ class  compraProducto_Model  extends CI_Model{
      
       public function  addMoVKardex($data, $kardexProdID){      
         if($kardexProdID ==   NULL){
-            echo  'Insertando el  item del  KARDEX' . $kardexProdID;
+           // echo  'Insertando el  item del  KARDEX' . $kardexProdID;
             $this->db->insert("kardexproducto",$data);
             return $this->db->insert_id();
         }else{
