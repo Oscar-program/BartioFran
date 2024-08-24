@@ -1,5 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
+include getcwd(). "/application/libraries/operacionInvnt/aes_encrypt.php";
 class   login_Controller extends CI_Controller{
     public   function  __construct(){
          parent::__construct();
@@ -16,11 +17,14 @@ class   login_Controller extends CI_Controller{
         ini_set('display_startup_errors',1);
         error_reporting(E_ALL);
         session_start();
+        $aes_encrypt  =  new  aes_encrypt();
        // $_SESSION["usuario"] = "";
         $userRerotno = "";
         $RetornaUser = 1;
         $usrLogin    =  (isset($_POST["user"]))?  $_POST["user"] : ""; // 'admin';
-        $usrPwd      =  (isset($_POST["pwd"]))?  $_POST["pwd"] : ""; // 'Admin20241';
+        //$usrPwd      =  (isset($_POST["pwd"]))?  $_POST["pwd"] : ""; // 'Admin20241';
+        $usrPwd      =  (isset($_POST["pwd"]))? $aes_encrypt->aes_encryptAcceso($_POST["pwd"] ,"encrypt"): ""; // 'Admin20241';
+        //$aes_encrypt->aes_encryptAcceso($_POST["Password"] ,"encrypt")
         //echo  'los  valores capturados son ' . $usrLogin . ' ' . $usrPwd   .  '<br>'  ;
         
         $datosUser   =  $this->usuarios_Model->getUserpwd($usrLogin, $usrPwd);
@@ -38,26 +42,44 @@ class   login_Controller extends CI_Controller{
         echo $RetornaUser ; 
       
     }
+    //  segmento para  desemcrptar la clave de usuario  
+    public function  desempcriptar(){
+        $aes_encrypt  =  new  aes_encrypt();
+        $datosUser  = $this->usuarios_Model->allUserSystem();
+
+        foreach ($datosUser as $row) {
+
+            echo  $row->usrLogin . ' '. $aes_encrypt->aes_encryptAcceso($row->usrPwd ,"decrypt") .  ' #'.  '<br>';
+
+            # code...
+        }
+
+        //$aes_encrypt->aes_encryptAcceso($_POST["pwd"] ,"encrypt")
+
+    }
     // funcion para almacenar los  datos de usuarios  
     public function saveUser(){
         ini_set('display_errors',1);
         ini_set('display_startup_errors',1);
         error_reporting(E_ALL);
         session_start();
+        $aes_encrypt  =  new  aes_encrypt();
        
         $aes_key    ='xyz123';
         $Fullname   =  (isset($_POST["Fullname"]))?  $_POST["Fullname"] : "";
         $Email      =  (isset($_POST["Email"]))?  $_POST["Email"] : "";
         $niveluser  =  (isset($_POST["niveluser"]))?  $_POST["niveluser"] : "";
-        $Password   = (isset($_POST["Password"]))?  $_POST["Password"] : "";
+        $Password   = (isset($_POST["Password"]))?  $aes_encrypt->aes_encryptAcceso($_POST["Password"] ,"encrypt") : "";
+        //"AES_ENCRYPT('{$data['usrPwd']}','{$aes_key}')", FALSE);
 
         $data  =  array(
             'usrNombre' =>$Fullname ,
             'usrLogin' => $Email,
-            'usrPwd' =>$Password,
+            'usrPwd' => $Password,
             
         );
-       var_dump($data);
+       // echo  'el valor del  nuevo password es '. $Password  ;
+      // var_dump($data);
        $this->usuarios_Model->insert_user($data, $aes_key);
 
     }

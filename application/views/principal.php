@@ -115,17 +115,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                with font-awesome or any other icon font library -->
             <li class="nav-item menu-open">
               <a href="#" class="nav-link active">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <i class="nav-icon fas  fa-cart-arrow-down"></i>
                 <p>
-                  Productos disponibles
+                 Caja
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="javaScript:cargarmenu_interno();" class="nav-link ">
+                  <a href="javaScript:listarMesas();" class="nav-link ">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Ventas  <span class="right badge badge-danger">New</span> </p>
+                    <p>Registra venta  <span class="right badge badge-danger">New</span> </p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -134,18 +134,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <p>Pendientes de cobro</p>
                   </a>
                 </li>
+               
                 <li class="nav-item">
-                  <a href="javaScript:listarProductos()" class="nav-link">
+                  <a href="" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Lista de productos</p>
+                    <p>Devoluciones </p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="javaScript:listarMesas()" class="nav-link">
+                  <a href="" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Lista Mesas </p>
+                    <p>Cuadre de caja </p>
                   </a>
                 </li>
+
 
               </ul>
             </li>
@@ -154,7 +156,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
               <a href="#" class="nav-link ">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
-                  Operaciones
+                  Administracion
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
@@ -163,29 +165,55 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <li class="nav-item">
                   <a href="javaScript:configurarProduct();" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Catalogos productos</p>
+                    <p>Configura Producto</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="javaScript:listarProductos()" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Lista de productos</p>
                   </a>
                 </li>
 
-                <li class="nav-item">
-                  <a href="javaScript:addCompraProducto();" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Compras</p>
-                  </a>
-                </li>
+               
                 
                 <li class="nav-item">
                 
                 <!-- addTrasladosProducto-->
-                  <a href="javaScript:ListarTraslados()" class="nav-link">
+                  
+                </li>
+                
+                
+
+                <li class="nav-item">
+                  <a href="javaScript:preciosProducto()" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Traslados</p>
+                    <p>Asignar Precios</p>
                   </a>
                 </li>
+
+              </ul>
+            </li>
+
+            <li class="nav-item menu-open">
+              <a href="#" class="nav-link ">
+                <i class="nav-icon fas fa-industry"></i>
+                <p>
+                 Inventarios
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a href="javaScript:get_ListCompras()" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Lista Compras</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                 <a href="javaScript:ListarTraslados()" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Traslados</p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -197,19 +225,34 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <li class="nav-item">
                   <a href="javaScript:indicadorExistenciaProd()" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Indicador de  existencias</p>
+                    <p>Existencia Real</p>
                   </a>
-                </li>
-
-                <li class="nav-item">
-                  <a href="javaScript:preciosProducto()" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Asignar Precios</p>
-                  </a>
-                </li>
-
+                </li> 
               </ul>
-            </li>
+          </li>  
+
+          <li class="nav-item menu-open">
+              <a href="#" class="nav-link ">
+                <i class="nav-icon fas fa-credit-card"></i>
+                <p>
+                 Gastos
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="javaScript:get_ListCompras()" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Gastos Operativos</p>
+                  </a>
+                </li>
+                
+                
+              </ul>
+          </li>
+
+
+
             
           </ul>
           

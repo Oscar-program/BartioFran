@@ -15,7 +15,7 @@ var_dump($datosMArcas);
                                                     
                         <td class="text-right">
 
-                            <a href='#' class="btn btn-default btn-sm" style="margin:0px;  color:blue;"
+                            <a href='#' class="btn btn-default btn-sm" style="margin:0px;  background-color:dodgerblue; color:white;"
                             title="Editar Detalle"                             
                                 onclick="get_marcaxId(<?php  echo   $row->marcProdID; ?>);">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> </a>
@@ -25,7 +25,7 @@ var_dump($datosMArcas);
                         
 
 
-                                <a href='#' class="btn btn-default btn-sm" style="margin:0px;  color:red; font-weight:bold;"
+                                <a href='#' class="btn btn-default btn-sm" style="margin:0px;  background-color:red; color:white; font-weight:bold;"
                                  title="Eliminar registro"
                                 onclick="DeleteMarcar(<?php  echo   $row->marcProdID; ?>);">
                                 <i class="fa fa-trash" aria-hidden="true"></i> </a>    

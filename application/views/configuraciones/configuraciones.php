@@ -12,7 +12,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
   <div class="row"> 
       <div class =  "col-12">
-            <div class="card mt-3 tab-card">
+            <div class="card mt-3 tab-card" style="background-color:AliceBlue;">
             <div class="card-header tab-card-header ">
                 <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
@@ -48,10 +48,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <input type="hidden"  name="marcProdID" id="marcProdID" class="form-control text-left" value ="">
                                     <div class="form-group">
                                         <label for="txtmarca" class="col-form-label">Marca </label>
-                                        <input type="text"  name="txtmarca" id="txtmarca" class="form-control text-left" placeholder="Ingrese marca del producto" required>
+                                        <input type="text"  name="txtmarca" id="txtmarca" class="form-control text-left" placeholder="Ingrese marca del producto" required style="border-radius: 10px; background-color:cornflowerblue; color:white;">
                                     </div>
                                     <div class="form-group">
-                                    <button  type="submit" data-title="Almacena un registro de base de datos" class="btn btn-danger"> Guardar </button>
+                                    <button  type="submit" data-title="Almacena un registro de base de datos" class="btn btn-danger" style="border-radius: 15px;"> Guardar </button>
                                     </div>
 
                                 </form>
@@ -59,12 +59,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </div> 
                         <div class ="col-md 6 shadow-sm p-3 mb-5 bg-white rounded">
                             <div class="table-responsive">
-                                <table id="tblFamiliaProd" class="table table-hover">
+                                <table id="tblFamiliaProd" class="table table-hover" style="border-color:dodgerblue;">
                                     <thead>
-                                        <tr class="thead-dark">
-                                            <th>#</th>
-                                            <th>Marca</th>                                      
-                                            <th class="text-right">ACCIONES</th>                                
+                                        <tr  style="border-color: white; color:honeydew;">
+                                            <th style="  background: linear-gradient(LightSkyBlue 15%, DodgerBlue 60%, CornflowerBlue);">#</th>
+                                            <th style=" background: linear-gradient(LightSkyBlue 15%, DodgerBlue 60%, CornflowerBlue);">Marca</th>                                      
+                                            <th class="text-right" style=" background: linear-gradient(LightSkyBlue 15%, DodgerBlue 60%, CornflowerBlue);">ACCIONES</th>                                
                                         </tr>
                                     </thead>
                                     <tbody  id ="detMArcas">                                   
@@ -304,3 +304,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
     
   </div>
 </div>
+<style>
+        
+          
+          #txtmarca::placeholder {
+            color: white;
+          }
+          
+          #Fullname::placeholder{
+            color: white;
+          }
+
+          #password::placeholder{
+            color: white;
+          }
+
+          #Rpassword::placeholder{
+            color: white;
+          }
+
+      </style>

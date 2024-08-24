@@ -19,6 +19,8 @@ class   invProducto_Controller extends CI_Controller{
              $this->load->view("inventarios/indicadorExistencia", $datos); 
 
         } 
+        //  segmento para procesar los inventarios manuales  
+        
 
      
     }
