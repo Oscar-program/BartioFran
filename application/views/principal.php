@@ -32,6 +32,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
   <link rel="stylesheet" href="/BartioFran/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="/BartioFran/dist/css/personalStyle.css">
   <!-- summernote -->
   <link rel="stylesheet" href="/BartioFran/plugins/summernote/summernote-bs4.min.css">
   <!-- overlayScrollbars -->

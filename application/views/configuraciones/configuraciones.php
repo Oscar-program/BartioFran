@@ -51,7 +51,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                         <input type="text"  name="txtmarca" id="txtmarca" class="form-control text-left" placeholder="Ingrese marca del producto" required style="border-radius: 10px; background-color:cornflowerblue; color:white;">
                                     </div>
                                     <div class="form-group">
-                                    <button  type="submit" data-title="Almacena un registro de base de datos" class="btn btn-danger" style="border-radius: 15px;"> Guardar </button>
+                                    <button  type="submit" data-title="Almacena un registro de base de datos" class="btn btn-danger"> Guardar </button>
                                     </div>
 
                                 </form>
@@ -96,10 +96,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div> 
                             <div class ="col-md 6 shadow-sm p-3 mb-5 bg-white rounded">
                                 <div class="table-responsive">
-                                    <table id="tblFamiliaProd" class="table table-hover">
+                                    <table id="tblFamiliaProd" class="table table-hover headertable">
                                         <thead>
-                                            <tr class="thead-dark">
-                                                <th>#</th>
+                                            <tr>
+                                                <th >#</th>
                                                 <th>Presentacion</th>                                      
                                                 <th class="text-right">ACCIONES</th>                                
                                             </tr>
@@ -132,9 +132,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </div> 
                             <div class ="col-md 6 shadow-sm p-3 mb-5 bg-white rounded">
                                 <div class="table-responsive">
-                                    <table id="tblFamiliaProd" class="table table-hover">
+                                    <table id="tblFamiliaProd" class="table table-hover headertable" >
                                         <thead>
-                                            <tr class="thead-dark">
+                                            <tr>
                                                 <th>#</th>
                                                 <th>Medida</th>                                      
                                                 <th class="text-right">ACCIONES</th>                                
@@ -171,7 +171,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="table-responsive">
                                         <table id="tblFamiliaProd" class="table table-hover">
                                             <thead>
-                                                <tr class="thead-dark">
+                                                <tr>
                                                     <th>#</th>
                                                     <th>Proveedor</th>                                      
                                                     <th class="text-right">ACCIONES</th>                                
@@ -209,7 +209,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="table-responsive">
                                         <table id="tblFamiliaProd" class="table table-hover">
                                             <thead>
-                                                <tr class="thead-dark">
+                                                <tr >
                                                     <th>#</th>
                                                     <th>Bodega</th> 
                                                     <th>Establecimiento</th>                                      
@@ -278,7 +278,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     <div class="table-responsive">
                                         <table id="tblFamiliaProd" class="table table-hover">
                                             <thead>
-                                                <tr class="thead-dark">
+                                                <tr>
                                                     <th style="font-size: 11px;">#</th>
                                                     <th style="font-size: 11px;">Turno</th> 
                                                     <th style="font-size: 11px;" >Familia Prod</th>  

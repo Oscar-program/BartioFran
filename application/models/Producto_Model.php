@@ -38,10 +38,11 @@ class Producto_Model extends CI_Model {
     /*Funcion para cargar los submenu de los productos */
     public function get_submenu($famProdID) {
        // echo 'llegado al  modelo';
-        $query =  $this->db->select("prod.*,prec.precioventa, inv.existenciaInvProd existencia")
+        $query =  $this->db->select("prod.*,prec.precioventa, sum(inv.existenciaInvProd) existencia")
                  ->join('precioproducto prec', 'prec.productoID = prod.productoID', 'inner') 
                  ->join('inventarioproducto inv', 'inv.productoID = prod.productoID', 'inner') 
                  ->where('prod.famProdID',$famProdID)
+                 ->group_by('prod.productoID')
                
                  ->get("producto prod")
                  ->result();

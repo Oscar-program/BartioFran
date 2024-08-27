@@ -1,20 +1,22 @@
-<div class="container-fluid m-top">
-        <div class="row">
-            <div class="col-12 text-left">
-                <H2>  LISTA DE COMPRAS  REALIZADAS </H2>
-            </div>
-        </div>
-</div> 
-
-<div class="container-fluid m-top">
-        <div class="row">
+<div class="container-fluid m-top" style="background-color:white; border-radius:10px;">
+        <div class="row" style="padding-top: 15px;">
             <div class="col-12 text-center">
-            <button type="button" class="btn btn-danger rounded-circle" data-toggle="tooltip" data-placement="bottom" data-title="Ingresar Compras " onclick="addCompraProducto()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <H2 style="color:DodgerBlue;">   LISTA DE COMPRAS  REALIZADAS </H2>
             </div>
         </div>
+<!-- </div> 
+
+<div class="container-fluid m-top">-->
+        <div class="row" >
+            <div class="col-12 text-left" style="margin-left: -15px; margin-bottom:1px;">
+            <button type="button" class="btn btn-primary  btn-md " data-toggle="tooltip" data-placement="bottom" data-title="Ingresar Compras " onclick="addCompraProducto()" ><i class="fa fa-plus" aria-hidden="true"></i> Agregar nueva compra</button>
+            </div>
+        </div>
+        
 </div>  
-<br>              
-    <div class="container-fluid m-top">
+            
+    <div class="container-fluid m-top" style="background-color: white; border-style:outset;border-color:skyblue">
+        <br>
         <div class="row">
             <!-- <div class="col-1"></div>-->
             <div class="col-12">
@@ -23,7 +25,7 @@
 
                     <table id="tblFamiliaProd" class="table table-hover">
                         <thead>
-                            <tr class="thead-dark">
+                            <tr>
                                 <th>#</th>
                                 <th>FECHA</th>  
                                 <th>PROVEEDOR</th>
@@ -54,14 +56,14 @@
                                 <td><?php echo $row->compProdTotal; ?></td>                               
                                 <td class="text-right">
 
-                                    <a href='#' class="btn btn-default btn-sm" style="margin:0px;  color:blue;"
+                                    <a href='#' class="btn btn-primary btn-sm" style="margin:0px;  color:white;"
                                         data-title="detalle de compra"
                                         onclick="mostrar_venta();">
                                         <i class="fa fa-search" aria-hidden="true"></i> </a>
 
                                     
                                         
-                                        <a href='#' class="btn btn-default btn-sm"style="margin:0px;"
+                                        <a href='#' class="btn btn-danger btn-sm"style="margin:0px; background-color:red; color:white;"
                                         data-title="Reporte de compras"
                                         onclick="ver_modalsuccobro();">
                                         <i class="fa fa-file" aria-hidden="true"></i></a> 
@@ -84,6 +86,7 @@
             </div>
            <!-- <div class="col-1"></div>-->
         </div>
+        <br>
     </div>
 
     <script>

@@ -1,0 +1,52 @@
+/*
+ Creamosel stilo para el  herader de la  tabla 
+*/
+.headertable table, th {
+    background: linear-gradient(LightSkyBlue 15%, DodgerBlue 60%, CornflowerBlue);
+    color:white;
+    border-color:rgb(222, 222, 223);
+    font-size: 14px;
+
+}
+/* segmento para redondear el  boton guardar */
+.btnAction {
+    border-radius: 15px;
+    background-color: red;
+    color:white;
+    width: 150px;
+    border-color: aliceblue;
+}
+
+/*para los botones de  accio */
+.btn-edit{
+    margin:0px; 
+     background-color:dodgerblue; 
+     color:white;
+     width: 15%;
+     height: 10%;
+     padding: 4px 6px 5px;
+     margin-left: 15px;
+     margin-right: 5px;
+     margin-top: 30px;
+     margin-bottom: 5pX;
+     border-radius: 5px;
+     text-align: center;
+     
+}
+/*para los botones de  accio */
+.btn-eraser{
+    margin:0px; 
+     background-color:red; 
+     color:white;
+     width: 15%;
+     height: 10%;
+     padding: 4px 8px 5px;
+     margin-left: 2px;
+     margin-right: 5px;
+     margin-top: 30px;
+     margin-bottom: 5pX;
+     border-radius: 5px;
+     text-align: center;
+     
+}
+

@@ -15,7 +15,7 @@ var_dump($datoMedidaPeProd);
                                                     
                         <td class="text-right">
 
-                            <a href='#' class="btn btn-default btn-sm" style="margin:0px;  color:blue;"
+                            <a href='#' class="btn-edit" 
                             title="Editar Detalle"                             
                                 onclick="get_MedidadProductoID(<?php  echo   $row->medProdID; ?>);">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> </a>
@@ -25,7 +25,7 @@ var_dump($datoMedidaPeProd);
                         
 
 
-                                <a href='#' class="btn btn-default btn-sm" style="margin:0px;  color:red; font-weight:bold;"
+                                <a href='#' class="btn-eraser"
                                  title="Eliminar registro"
                                 onclick="delete_MedidaProductoID(<?php  echo   $row->medProdID; ?>);">
                                 <i class="fa fa-trash" aria-hidden="true"></i> </a>    

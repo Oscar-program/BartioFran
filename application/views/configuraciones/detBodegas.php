@@ -16,7 +16,7 @@ var_dump($listBodegaProducto);
                                                     
                         <td class="text-right">
 
-                            <a href='#' class="btn btn-default btn-sm" style="margin:0px;  color:blue;"
+                            <a href='#' class="btn-edit" 
                             title="Editar Detalle"                             
                                 onclick="get_BodegaProductoID(<?php  echo   $row->bodegaProductoID; ?>);">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> </a>
@@ -26,7 +26,7 @@ var_dump($listBodegaProducto);
                         
 
 
-                                <a href='#' class="btn btn-default btn-sm" style="margin:0px;  color:red; font-weight:bold;"
+                                <a href='#' class="btn-eraser" 
                                  title="Eliminar registro"
                                 onclick="delete_BodegaProductoID(<?php  echo   $row->bodegaProductoID; ?>);">
                                 <i class="fa fa-trash" aria-hidden="true"></i> </a>    

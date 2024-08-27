@@ -56,7 +56,7 @@
         <input type="hidden"  id="nameproductotmp"  name="nameproductotmp" >
             
        
-        <div class="form-group">
+        <div class="form-group col-sm">
             <label for="proveedor" class="col-form-label">Producto:</label>
             <select name="producto" id="producto"  class="form-control chosen"> 
             <option value="0"> Selecccione un producto</option>              
@@ -69,16 +69,16 @@
             
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-sm">
             <label for="familia" class="col-form-label">Cantidad:</label>
             <input type="number" class="form-control text-right" id="cantidad"  name="cantidad" step ="any">            
         </div>
 
-        <div class="form-group">
+        <div class="form-group col-sm">
             <label for="tipProducto" class="col-form-label">Precio costo:</label> 
             <input type="number" class="form-control text-right" id="preCosto" name="preCosto" step ="any">  
         </div>
-      <div class="modal-footer">
+      <div class="modal-footer col-sm">
         <button  type="submit" class="btn btn-danger"> Procesar </button>
       </div>
           
