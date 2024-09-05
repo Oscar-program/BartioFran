@@ -23,6 +23,26 @@
   visibility: visible;
 }
 </style>
+<?php  
+$detPedID           = null;
+$ordenPedidoID      = null;
+$productoID         = null;
+$bodSaldID          = null;
+$detcantidad        = 0;
+$detprecioNormal    = 0;
+$detprecioEspecial  = 0;
+$dettotal           = 0;
+ if(isset($DetOrdenpedido)){
+  $detPedID           = $DetOrdenpedido->detPedID;
+  $ordenPedidoID      = $DetOrdenpedido->ordenPedidoID;
+  $productoID         = $DetOrdenpedido->productoID;
+  $bodSaldID          = $DetOrdenpedido->bodSaldID;
+  $detcantidad        = $DetOrdenpedido->detcantidad;
+  $detprecioNormal    = $DetOrdenpedido->detprecioNormal;
+  $detprecioEspecial  = $DetOrdenpedido->detprecioEspecial;
+  $dettotal           = $DetOrdenpedido->dettotal;
+ }
+?>
 
 <div class="modal fade" id="addVentaProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -35,7 +55,12 @@
       </div>
       <div class="modal-body">
         <form>
-        <input type="text" class="form-control text-right" id="productoID" name="productoID" readonly>
+        <input type="hidden" class="form-control text-right" id="productoID" name="productoID"   value ="<?php echo  $productoID   ;?>" readonly>
+        <input type="hidden" class="form-control text-right" id="detPedID" name="detPedID" value ="<?php echo  $detPedID  ;?>" readonly>
+        <input type="hidden" class="form-control text-right" id="ordenPedidoID" name="ordenPedidoID" value ="<?php echo $ordenPedidoID  ;?>" readonly>
+        <input type="hidden" class="form-control text-right" id="bodSaldID" name="bodSaldID" value ="<?php echo $bodSaldID  ;?>" readonly>
+       
+
 
         <div class="form-group text-center">
            <p id="prodDescripcion" style = "color:red; font-weight:bold; font-size:20px;"> </p>
@@ -43,20 +68,20 @@
 
         <div class="form-group">
             <label for="recipient-name" class="col-form-label">Precio regular $:</label>
-            <input type="text" class="form-control text-right" id="precioregular" name="precioregular" readonly>
+            <input type="text" class="form-control text-right" id="precioregular" name="precioregular"   value ="<?php echo  $detprecioNormal  ;?>"  readonly>
         </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="comanda" class="col-form-label">Comanda:</label>
             <select name="comanda" id="comanda"  class="form-control chosen">                
-                 <?php foreach ($comandas as $row): ?>
-                    <option value="<?php echo $row->commandaPedProdID; ?>">
-                    <?php echo $row->commandaPedProdID . " - " .  $row->comPedProdDesc; ?>
+                 <?php //foreach ($comandas as $row): ?>
+                    <option value="<?php //echo $row->commandaPedProdID; ?>">
+                    <?php //echo $row->commandaPedProdID . " - " .  $row->comPedProdDesc; ?>
                     </option>
-                <?php endforeach ?>
+                <?php //endforeach ?>
             </select>
             
-          </div>
+          </div>-->
           <div class="form-group">
             <label for="bodsalida" class="col-form-label">Bodega de Salida:</label>
             <select name="bodsalida" id="bodsalida"  class="form-control chosen" onchange="chekStockProduct();">                
@@ -84,15 +109,15 @@
 
           <div class="form-group">
             <label for="message-text" class="col-form-label">Incremento $:</label>
-            <input type="number" class="form-control text-right" id="precincremento" name="precincremento" step="any">
+            <input type="number" class="form-control text-right" id="precincremento" name="precincremento"  value ="<?php echo  $detprecioEspecial   ;?>"  step="any">
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Cantidad $:</label>
-            <input type="number" class="form-control text-right" id="cantiadVenta"  name="cantiadVenta" step="any" onkeypress="calculartotalVenta(event);" >
+            <input type="number" class="form-control text-right" id="cantiadVenta"  name="cantiadVenta"  value ="<?php echo  $detcantidad   ;?>" step="any" onkeypress="calculartotalVenta(event);" >
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">Total $:</label>
-            <input type="number" class="form-control text-right" id="totalVenta" name="totalVenta"   step="any" readonly>
+            <input type="number" class="form-control text-right" id="totalVenta" name="totalVenta"   value ="<?php echo  $dettotal   ;?>" step="any" readonly>
           </div>
 
         </form>

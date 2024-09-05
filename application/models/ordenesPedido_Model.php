@@ -48,8 +48,9 @@
     }
     //   funcion para listar  el  detalle  de la orden de pedido del  cliente  
     public function get_listDetOrden($ordenPedidoID){
-        $query =  $this->db->select("detOr.detPedID, detOr.ordenPedidoID, detOr.detcantidad, prod.prodDescripcion, detOr.dettotal")
+        $query =  $this->db->select("detOr.detPedID, detOr.ordenPedidoID, detOr.productoID, detOr.detprecioNormal, detOr.detcantidad, prod.prodDescripcion, detOr.dettotal, prod.famProdID")
                 ->join('producto prod',  'detOr.productoID =  prod.productoID', 'inner')
+
                 ->where("detOr.ordenPedidoID",  $ordenPedidoID) 
                 ->where("detOr.detstatus",  1)
                 ->get("detordenpedido detOr")
@@ -111,6 +112,17 @@
         $this->db->where("marcProdID",$marcProdID)         
                  ->delete("detordenpedido");                 
         return  $this->db->affected_rows();          
+    }
+    // funcion para  obtener  el detalla de la orden de pedido  
+    public function get_DetOrden($detPedID){
+        $query =  $this->db->select("detor.*, fam.famProdID, prod.prodDescripcion")
+                 ->join("producto  prod", "prod.productoID =  detor.productoID", "inner")
+                 ->join("familiaproducto fam", "fam.famProdID = prod.famProdID", "inner")
+                ->where("detOr.detstatus",  1)
+                ->where("detOr.detPedID",  $detPedID)
+                ->get("detordenpedido detOr")
+                ->row();
+        return  $query;          
     }
 
 

@@ -2,18 +2,29 @@ function base_url(url){
     return window.location.origin + "/BartioFran/"+ url;
 }
 /*funcion para cargar la modal */
-function addVentaProducto(famProdID, id, descripcion, preciocosto){    
-    var valorid  = 0;   
-    var url = base_url('index.php/ventaProducto_Controller/addVentaProducto/' + famProdID + "/"+  id);   
+function addVentaProducto(famProdID, id, detPedID, prodDescripcion,  preciocosto){    
+    var valorid  = 0;  
+    var bodSaldID  = $("#bodSaldID").val();   
+    
+    var url = base_url('index.php/ventaProducto_Controller/addVentaProducto/' + famProdID + "/"+  detPedID);   
     //var url = base_url("index.php/BancosController/bancos");
       $.get(url, function (data) {
         $("#addVenta").html(data);
         //console.log(data);
-        //document.getElementById('prodDescripcion').innerHTML=descripcion;
+        document.getElementById('prodDescripcion').innerHTML=prodDescripcion;
         $('#addVentaProducto').modal('show');
         // ponemos el  precio  de  costo del producto 
         $("#precioregular").val(preciocosto.toFixed(2));
         $("#productoID").val(id);
+
+        
+
+        $("#bodsalida").val(bodSaldID);
+        $("#bodsalida").change();
+
+
+
+
       });
    
    }
@@ -327,31 +338,22 @@ function chekStockProduct(){
 
 }
 
+// funcion para   mostrar informacion de la venta del producto 
+function editDetaVenta(famProdID, detPedID){    
+  var valorid  = 0;   
+  var url = base_url('index.php/ventaProducto_Controller/addVentaProducto/'+ famProdID + '/'+ detPedID);   
+  //var url = base_url("index.php/BancosController/bancos");
+    $.get(url, function (data) {
+      $("#addVenta").html(data);
+      //console.log(data);
+      //document.getElementById('prodDescripcion').innerHTML=descripcion;
+      $('#addVentaProducto').modal('show');
+      // ponemos el  precio  de  costo del producto 
+      $("#precioregular").val(preciocosto.toFixed(2));
+      $("#productoID").val(id);
+    });
+ 
+ }
 
-
-
-
-        /*$.ajax({
-                    url: base_url(url_destino),
-                    type: "POST",
-                    data: DJson,
-                    // cache: false,
-                    //contentType: false,
-                    //processData: false,
-                    beforeSend: function () {
-                        //$("#loader").css("display", "block");
-                    },
-                    success: function () {
-                        alertify.set("notifier", "position", "top-right");
-                        alertify.success("Traslado efectuado correctamente");
-                    },
-                    complete: function (){    
-                        // $("#loader").css("display", "none");            
-                        // $("#addVentaProducto.close").click();
-                        // $(".modal-backdrop").remove();        
-                        // $("#detOrdenesPedido").html(data);
-                    }
-                });*/
-   
 
   

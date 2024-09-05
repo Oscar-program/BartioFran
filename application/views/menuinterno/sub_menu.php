@@ -9,7 +9,7 @@
            
         ?>
            <div  style="float:left; width:25%; margin-left:3px; shadow p-3 mb-5 bg-white rounded" id  =" <?php echo   'familia'.$row->productoID ?>" 
-              name  = 'familia' data-value=="<?php echo $row->productoID;?>" onclick="addVentaProducto(  <?php echo $row->famProdID ;?>, <?php echo $row->productoID ;?>, <?php echo "' $row->prodDescripcion '" ;?> ,  <?php echo $row->precioventa ;?>)">
+              name  = 'familia' data-value=="<?php echo $row->productoID;?>" onclick="addVentaProducto(<?php echo $row->famProdID ;?>, <?php echo $row->productoID ;?>,  <?php echo $detPedID=0 ;?>, <?php echo "' $row->prodDescripcion '" ;?> ,  <?php echo $row->precioventa ;?>)">
                     <!-- small box -->
                     <div class="small-box bg-danger">
                         <div class="inner">
