@@ -37,6 +37,7 @@ class   invProducto_Controller extends CI_Controller{
                ini_set('display_startup_errors',1);
                error_reporting(E_ALL);
                 echo  'llegando al controlador de la MEDIDA del producto';
+                echo  'modificacion en la captura de existencia ' ;
                 $datos["listaProductos"] =   $this->Producto_Model->get_ListProducto();
                //var_dump($this->datos["datosMArcas"]);
             $this->load->view("inventarios/capturarExistencia", $datos); 
