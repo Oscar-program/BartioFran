@@ -210,6 +210,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <i class="far fa-circle nav-icon"></i>
                     <p>Lista Compras</p>
                   </a>
+                </li> <li class="nav-item">
+                  <a href="javaScript:iniciarInventario()" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Toma fisica</p>
+                  </a>
                 </li>
                 <li class="nav-item">
                  <a href="javaScript:ListarTraslados()" class="nav-link">
@@ -217,6 +222,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <p>Traslados</p>
                   </a>
                 </li>
+
+
+
                 <li class="nav-item">
                   <a href="javaScript:addInventManual()" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>

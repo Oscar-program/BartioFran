@@ -5,6 +5,7 @@ class   invProducto_Controller extends CI_Controller{
          parent::__construct();
          $this->load->database();
          $this->load->model("inventProducto_Model");
+         $this->load->model("Producto_Model");
          $this->load->helper("path");   
          }
 
@@ -20,7 +21,27 @@ class   invProducto_Controller extends CI_Controller{
 
         } 
         //  segmento para procesar los inventarios manuales  
-        
+        public function  iniciarInventario(){
+          ini_set('display_errors',1);
+          ini_set('display_startup_errors',1);
+          error_reporting(E_ALL);
+          // echo  'llegando al controlador de la MEDIDA del producto';
+          // $datos["indicadorExistenciaProd"] =   $this->inventProducto_Model->indicadorExistenciaProd();
+          //var_dump($this->datos["datosMArcas"]);
+       $this->load->view("inventarios/iniciarinventario"); 
+
+  } 
+          //  funcion para  mostrar el  formulario de captura de existencia
+          public function  capturarExistencia(){
+               ini_set('display_errors',1);
+               ini_set('display_startup_errors',1);
+               error_reporting(E_ALL);
+               // echo  'llegando al controlador de la MEDIDA del producto';
+                $datos["listaProductos"] =   $this->Producto_Model->get_ListProducto();
+               //var_dump($this->datos["datosMArcas"]);
+            $this->load->view("inventarios/capturarExistencia", $datos); 
+     
+       } 
 
      
     }
