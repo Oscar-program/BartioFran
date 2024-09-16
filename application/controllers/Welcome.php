@@ -29,8 +29,10 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		//$this->load->view('welcome_message');
+		// Cargamos los  datos para los  establecimientos  
+		$datos["establecimientos"] =  $this->usuarios_Model->lit_establecimientos();
 		
-		$this->load->view('login');
+		$this->load->view('login',$datos);
 		//login.php
 	}
 	// funcion para  cargar el  menu principal 

@@ -53,5 +53,24 @@ function iniciarInventario(){
     });
   
   }
+  // funcion para  mostrar los  traslados manuales 
+  function ingresarTraslados(){
+        
+    /*Determinamos si  los datos del  producto ya existen */
+    //var valorid         = 0;  
+    //var productoID      =  null;  
+    //var idCompratmp     =  $("#idCompra").val();  
+    console.log("Mostrando traslados de   inventarios");
+    var url = base_url('index.php/invProducto_Controller/ingresarTraslados');
+  
+    //var url = base_url("index.php/BancosController/bancos");
+    $.get(url, function (data) {
+        $("#principal").html(data);
+             
+    });
+  
+  }
+
+
 
   

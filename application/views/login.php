@@ -82,6 +82,26 @@
             </div>
           </div>
         </div>
+
+        <div class="input-group mb-3">
+            <select name="establecimiento" id="establecimiento" class="form-control" style="border-radius: 20px;">
+             <?php   foreach($establecimientos as $row): ?>
+              <option value="<?php echo  $row->establecimientoID ?>">
+              <?php echo  $row->establecimientoID .  '-'. $row->estNombre;  ?>  
+              </option>
+              <?php endforeach ?>
+            </select>
+          
+          
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fa fa-filter" style="color:#1D59B0"></span>
+            </div>
+          </div>
+        </div>
+
+       
+
         <div class="row">
           <div class="col-10">
             <div class="icheck-primary">

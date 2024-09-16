@@ -19,11 +19,12 @@ class   login_Controller extends CI_Controller{
         session_start();
         $aes_encrypt  =  new  aes_encrypt();
        // $_SESSION["usuario"] = "";
-        $userRerotno = "";
-        $RetornaUser = 1;
-        $usrLogin    =  (isset($_POST["user"]))?  $_POST["user"] : ""; // 'admin';
+        $userRerotno       = "";
+        $RetornaUser       = 1;
+        $usrLogin          =  (isset($_POST["user"]))?  $_POST["user"] : ""; // 'admin';
         //$usrPwd      =  (isset($_POST["pwd"]))?  $_POST["pwd"] : ""; // 'Admin20241';
-        $usrPwd      =  (isset($_POST["pwd"]))? $aes_encrypt->aes_encryptAcceso($_POST["pwd"] ,"encrypt"): ""; // 'Admin20241';
+        $usrPwd            =  (isset($_POST["pwd"]))? $aes_encrypt->aes_encryptAcceso($_POST["pwd"] ,"encrypt"): ""; // 'Admin20241';
+        $establecimientoID =  (isset($_POST["establecimientoID"]))?  $_POST["establecimientoID"] : ""; // 'admin';
         //$aes_encrypt->aes_encryptAcceso($_POST["Password"] ,"encrypt")
         //echo  'los  valores capturados son ' . $usrLogin . ' ' . $usrPwd   .  '<br>'  ;
         
@@ -34,8 +35,10 @@ class   login_Controller extends CI_Controller{
 
             
         }else{
-            $_SESSION["usuario"] = $datosUser->usrNombre; 
-            $_SESSION["usrLogin"]=  $datosUser->usrLogin; 
+            $_SESSION["usuario"]           = $datosUser->usrNombre; 
+            $_SESSION["usrLogin"]          = $datosUser->usrLogin; 
+            $_SESSION["establecimientoID"] = $datosUser->establecimientoID; 
+
              
             // echo 'la variable de  session contiene' . $_SESSION["usuario"] ; 
         }

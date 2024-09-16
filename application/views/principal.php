@@ -223,6 +223,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </a>
                 </li>
 
+                <li class="nav-item">
+                 <a href="javaScript:ingresarTraslados()" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Traslados indivi</p>
+                  </a>
+                </li>
+
 
 
                 <li class="nav-item">
@@ -591,7 +598,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>js/css/select2-bootstrap4.css">
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>js/css/select2-bootstrap4.min.css" />
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>js/css/upload.css" />
-   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>js/css/titles.css" />
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>js/css/titles.css"/>
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>js/css/allDevice.css"/>
 	
 
  

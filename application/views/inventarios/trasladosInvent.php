@@ -5,57 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body class="m-0 row justify-content-center">
-    <div class ="container-fluid" >
+<!--  container-fluid-->
+<body>
+    <div class="padre">
+    <div class ="allDevice">
         <div class="card">
             <div class="card-header bg-danger">
-                CAPTURAR EXISTENCIA
+               TRASLADO DE PRODUCTOS
             </div>
             
              <div class="card-body">
                 <form action="">
                 <div class="row">
                         <div class="col-sm" style="display: inline-block;">
-                                <label for="producto">producto</label>
+                                <label for="bodOrigen">Bodega origen</label>
                             
 
-                                <select name="producto" id="producto"  class="form-control chosen">                                  
-                                <?php foreach ($listaProductos as $row): ?>
-                                    <option value="<?php echo $row->productoID; ?>">
-                                    <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
-                                    </option>
-                                <?php endforeach ?>
-                                            
-                                </select>      
-                        </div>           
-
-                </div>
-                <div class="row">
-                        <div class="col-sm" style="display: inline-block;">
-                                <label for="producto">unidad medida</label>
-                            
-
-                                <select name="producto" id="producto"  class="form-control chosen">                                  
-                                <?php foreach ($listaProductos as $row): ?>
-                                    <option value="<?php echo $row->productoID; ?>">
-                                    <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
-                                    </option>
-                                <?php endforeach ?>
-                                            
-                                </select>      
-                        </div>           
-
-                </div>
-
-                <div class="row">
-                        <div class="col-sm" style="display: inline-block;">
-                                <label for="producto">Bodega origen</label>
-                            
-
-                                <select name="producto" id="producto"  class="form-control chosen">                                  
-                                <?php foreach ($listaProductos as $row): ?>
-                                    <option value="<?php echo $row->productoID; ?>">
-                                    <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
+                                <select name="bodOrigen" id="bodOrigen"  class="form-control chosen">                                  
+                                <?php foreach ($listBodegaProducto as $row): ?>
+                                    <option value="<?php echo $row->bodegaProductoID; ?>">
+                                    <?php echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
                                     </option>
                                 <?php endforeach ?>
                                             
@@ -64,15 +33,67 @@
 
                     </div>
 
-                    <div class="row">
+                <div class="row">
                         <div class="col-sm" style="display: inline-block;">
-                                <label for="producto">Bodega destino</label>
+                                <label for="producto">Producto</label>
                             
 
                                 <select name="producto" id="producto"  class="form-control chosen">                                  
                                 <?php foreach ($listaProductos as $row): ?>
                                     <option value="<?php echo $row->productoID; ?>">
                                     <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
+                                    </option>
+                                <?php endforeach ?>
+                                            
+                                </select>      
+                        </div>           
+
+                </div>
+                <div class="row">
+                    <div class="col-sm" style="display: inline-block;">
+                            <label for="producto">Existencia en unidades</label>                      
+
+                            <input type="text"  class="form-control" id="existenciaReal" name="existenciaReal" readonly>   
+                    </div>        
+
+                </div>
+
+                <div class="row">
+                        <div class="col-sm" style="display: inline-block;">
+                                <label for="producto">Unidad medida a trasladar</label>
+                            
+
+                                <select name="producto" id="producto"  class="form-control chosen">                                  
+                                <?php foreach ($listaProductos as $row): ?>
+                                    <option value="<?php echo $row->productoID; ?>">
+                                    <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
+                                    </option>
+                                <?php endforeach ?>
+                                            
+                                </select>      
+                        </div>           
+
+                </div>
+                <div class="row">
+                    <div class="col-sm" style="display: inline-block;">
+                            <label for="producto">Unidades que componen la presentacio</label>                      
+
+                            <input type="text"  class="form-control" id="unidadpresenta" name="unidadpresenta" readonly>   
+                    </div>        
+
+                </div>
+
+                    
+
+                    <div class="row">
+                        <div class="col-sm" style="display: inline-block;">
+                                <label for="producto">Bodega destino</label>
+                            
+
+                                <select name="bodDestino" id="bodDestino"  class="form-control chosen">                                  
+                                <?php foreach ($listBodegaProducto as $row): ?>
+                                    <option value="<?php echo $row->bodegaProductoID; ?>">
+                                    <?php echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
                                     </option>
                                 <?php endforeach ?>
                                             
@@ -105,10 +126,11 @@
         </div>
 
     </div>
+    </div>
     
 </body>
 </html>
-><script>
+<script>
     $("#document").ready(  function(){
         $("#producto").select2({
         theme: 'bootstrap4',

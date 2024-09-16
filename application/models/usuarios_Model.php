@@ -34,5 +34,17 @@ class usuarios_Model extends CI_Model{
       return  $query;  
     }
 
+    //  funcion para cargar los  establecimientos
+    public function lit_establecimientos(){
+      $query =  $this->db->select("estb.*" )   
+            
+   
+      ->get("establecimientoempresa estb")
+      ->result();
+      return  $query;  
+    }
+
+
+
 
 }
