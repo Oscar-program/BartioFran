@@ -12,6 +12,7 @@ class trasladoProducto_Controller extends CI_Controller{
         $this->load->model('bodegaProducto_Model');
         $this->load->model('compraProducto_Model');
         $this->load->model('inventProducto_Model');
+        $this->load->model("prodPresentacion_Model");
         
 
         $this->load->helper('path');
@@ -39,7 +40,7 @@ class trasladoProducto_Controller extends CI_Controller{
     $datos['listaProductos']     = $this->Producto_Model->get_ListProductoTrasladar();
     $datos['listBodegaProducto'] = $this->bodegaProducto_Model->get_listBodegaProducto();
  
-    $this->load->view('inventarios/traslado_prodcto', $datos);
+    $this->load->view('traslados/traslado_prodcto', $datos);
   }
 
   
@@ -104,4 +105,31 @@ class trasladoProducto_Controller extends CI_Controller{
         
 
     }
+
+    //  funcion para  mostrar el  formulario de captura de existencia
+    public function  ingresarTraslados(){
+      ini_set('display_errors',1);
+      ini_set('display_startup_errors',1);
+      error_reporting(E_ALL);
+      // echo  'llegando al controlador de la MEDIDA del producto';
+      // echo  'modificacion en la captura de existencia ' ;
+      $datos['listBodegaProducto'] = $this->bodegaProducto_Model->get_listBodegaProducto();
+      $datos["listaProductos"] =   $this->Producto_Model->get_ListProducto();
+      $datos["prodPresentacion"] =   $this->prodPresentacion_Model->get_PresentacionProd();
+      //var_dump($this->datos["datosMArcas"]);
+   $this->load->view("traslados/trasladosInvent", $datos); 
+
+} 
+// funcion para mostrar  lista  en movil 
+public  function Listamovil(){
+  ini_set('display_errors',1);
+  ini_set('display_startup_errors',1);
+  error_reporting(E_ALL);
+  // echo  'llegando al controlador de la presentacion del producto';
+ // $datos["listaTraslados"] =   $this->trasladoProducto_Model->Listamovil();
+  //var_dump($this->datos["datosMArcas"]);
+  $this->load->view("traslados/ultimosTraslados"); 
+ // $this->load->view("traslados/listaTraslados"); 
+}
+
 }

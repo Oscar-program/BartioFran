@@ -11,7 +11,8 @@ class configuracioProd_Controller extends CI_Controller {
            $this->load->model('TipoProducto_Model');
            $this->load->model('MedidaProducto_Model');
            $this->load->model('Marcas_Model');
-           $this->load->model('PresentacioProducto_Model');          
+           $this->load->model('PresentacioProducto_Model');  
+           $this->load->model('equivalenteProducto_Model');             
            
 
            $this->load->helper('path');  
@@ -217,7 +218,12 @@ class configuracioProd_Controller extends CI_Controller {
    //  cramos los set  de  datos para el  turno  y  la  familia de los productos existentes 
    $datos['turnos']          = $this->FamiliaProducto_Model->get_listFamiliaProducto();
    $datos['familiaProducto'] = $this->Producto_Model->get_turnooperacion();  
-     var_dump(  $datos['familiaProducto'] );
+
+   $datos['equivalentes']          = $this->equivalenteProducto_Model->get_listaEquivalentes();
+   var_dump($datos['equivalentes']);
+   $datos["listaProductos"] =   $this->Producto_Model->get_ListProducto(); 
+
+   //  var_dump(  $datos['familiaProducto'] );
 
    $this->load->view('configuraciones/configuraciones',$datos);
 

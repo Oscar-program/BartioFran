@@ -6,15 +6,15 @@
     <title>Document</title>
 </head>
 <body>
-    <div class ="container" >
-    <div class ="m-0 row justify-content-center" >
+    <div class ="padre" >
+    <div class ="allDevice" >
         <div class="card">
             <div class="card-header bg-danger">
               CREACION DE  INVENTARIO 
             </div>
             <div class="card-footer text-muted text-right">
-                <button type="submit" class="btn btn-lg btn-outline-danger" title="Cancelar"> <i class="fa fa-chevron-left" aria-hidden="true"></i> </button>
-                <button type="submit" class="btn btn-lg btn-outline-danger" title="Iniciar toma"  onclick="javaScript:capturarExistencia();"> <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                <button type="submit" class="btn btn-lg btn-outline-danger" title="Cerrar toma de iventario"> <i class="fa fa-hdd-o" aria-hidden="true"></i> </button>
+                <button type="submit" class="btn btn-lg btn-outline-danger" title="Iniciar toma"  onclick="javaScript:capturarExistencia();"> <i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
             </div>
             <div class="card-body">
                 <form action="">

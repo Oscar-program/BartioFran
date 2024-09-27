@@ -17,48 +17,30 @@
     
     .allDevice{
      width: 50%;
-    /* background-color: rgb(126, 89, 98);*/
-    /* align-items: center;*/
-    /* border-width: 1px;*/
-     /*border-style: outset ;
-     margin:25 0 0 25;*/
-
-     
     }
   }
-
 @media (min-width: 1025px) and (max-width: 1200px) {
     .allDevice{
      width: 75%;
-   
-    /*border-style: outset ;
-     background-color: rgb(36, 206, 93);*/
     }
   }
 
 /*para pantallas  pequeñas   y laptops*/
 @media (min-width: 769px) and (max-width: 1024px) {
     .allDevice{
-     width: 75%;
-    
+     width: 75%;    
     }
   }
  /*para  tablet y aipad*/
   @media (min-width: 481px) and (max-width: 768px) {
     .allDevice {
         width: 100%;
-        /*border-width: 1px;
-    border-style: outset ;*/
-       /* background-color: red;*/
-       }
+        }
     }
 /*para dispositivos moviles */
     @media (min-width: 320px ) and (max-width: 480px) {
         .allDevice {
-            width: 100%;
-         /*   border-width: 1px;
-    border-style: outset ;*/
-           /* background-color: yellow;*/
+            width: 100%;         
            }
     }
   

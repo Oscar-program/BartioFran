@@ -35,6 +35,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <a class="nav-link" id="six-tab" data-toggle="tab" href="#six" role="tab" aria-controls="Six" aria-selected="false" onclick="verificarstadotab(this.id)">Lista de precios especiales</a>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="seven" aria-selected="false" onclick="verificarstadotab(this.id)">Equialente de productos</a>
+                    </li>
+
                     
                 </ul>
             </div>
@@ -295,7 +299,74 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 </div>             
                     </div>
                 </div>
+              <!-- segmento para registrar los euivalemtes -->
+              <div class="tab-pane fade  p-3" id="seven" role="tabpanel" aria-labelledby="seven-tab">
+                    <div class="row">
+                                <div class ="col-md 6"> 
+                                    <h4>Configuracion de equivalente de productos </h4>
+                                    <div class ="shadow-sm p-3 mb-5 bg-white rounded">
+                                        <form enctype="multipart/form-data" action="javascript:addPreciosEspProducto()" method="POST" id  = "FormSeventab" class = "FormSeventab" >
+                                        <input type="hidden" class="form-control text-left" id="precioEspecialProdID" name="precioEspecialProdID">
+                                        <input type="hidden" class="form-control text-left" id="turnOperaID" name="turnOperaID">
+                                        <input type="hidden" class="form-control text-left" id="famProdID" name="famProdID">
+                               
+                                        <div class="form-group">
+                                            <label for="prouctoEquivalente" class="col-form-label">Producto:</label>
+                                            <select name="prouctoEquivalente" id="prouctoEquivalente"  class="form-control chosen">                
+                                                <?php foreach ($listaProductos as $row): ?>
+                                                    <option value="<?php echo $row->productoID; ?>">
+                                                    <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
+                                                    </option>
+                                                <?php endforeach ?>
+                                            </select>
+                                            
+                                        </div>
 
+                                        <div class="form-group">
+                                            <label for="equivalente" class="col-form-label">Equivalente:</label>
+                                            <select name="equivalente" id="equivalente"  class="form-control chosen">                
+                                                <?php foreach ($equivalentes as $row): ?>
+                                                    <option value="<?php echo $row->presProdID; ?>">
+                                                    <?php echo $row->presProdID . " - " .  $row->presentacionProd; ?>
+                                                    </option>
+                                                <?php endforeach ?>
+                                            </select>
+                                            
+                                        </div>
+
+                                             
+                                        <div class="form-group">
+                                                <label for="unidadequivalente" class="col-form-label">unidaddes de equivalente </label>
+                                                <input type="number" class="form-control text-right" id="unidadequivalente" name="unidadequivalente" step ="any" required >
+                                            </div>
+                                            <div class="form-group">
+                                            <button  type="submit" data-title="Guardar registro" class="btn btn-danger"> Guardar </button>
+                                            </div>
+
+                                        </form>
+                                    </div>      
+                                </div> 
+                                <div class ="col-md 6 shadow-sm p-3 mb-5 bg-white rounded">
+                                    <div class="table-responsive">
+                                        <table id="tblFamiliaProd" class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="font-size: 11px;">#</th>
+                                                    <th style="font-size: 11px;">Producto</th> 
+                                                    <th style="font-size: 11px;" >Presentacion</th>  
+                                                    <th style="font-size: 11px;">Unidades</th>  
+                                                                                       
+                                                    <th style="font-size: 11px;"  class="text-right">ACCIONES</th>                                
+                                                </tr>
+                                            </thead>
+                                            <tbody id ="detEquivalentes">                                   
+                                                                                   
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>             
+                    </div>
+                </div>   
 
 
             </div>               

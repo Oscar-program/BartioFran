@@ -15,6 +15,8 @@ class productos_Controller extends CI_Controller {
            $this->load->model('bodegaProducto_Model');
            $this->load->model('preciosProducto_Model');
            $this->load->model('inventProducto_Model');
+           $this->load->model('equivalenteProducto_Model');
+           
            //preciosProducto_Model
 
            
@@ -151,6 +153,9 @@ class productos_Controller extends CI_Controller {
    error_reporting(E_ALL); 
    $datos['familiaProducto']          = $this->FamiliaProducto_Model->get_listFamiliaProducto();
    $datos['turnos'] = $this->Producto_Model->get_turnooperacion();  
+   $datos['equivalentes']          = $this->equivalenteProducto_Model->get_listaEquivalentes();
+   //var_dump($datos['equivalentes']);
+   $datos["listaProductos"] =   $this->Producto_Model->get_ListProducto();
   //   var_dump(  $datos['familiaProducto'] );
    $this->load->view('configuraciones/configuraciones', $datos);
 

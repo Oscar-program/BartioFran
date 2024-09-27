@@ -230,6 +230,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </a>
                 </li>
 
+                <li class="nav-item">
+                 <a href="javaScript:Listamovil()" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Lista movil</p>
+                  </a>
+                </li>
+
 
 
                 <li class="nav-item">
@@ -257,12 +264,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="javaScript:get_ListCompras()" class="nav-link">
+                  <a href="javaScript:iniciarGastos()" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Gastos Operativos</p>
+                    <p>Ingresar Gastos</p>
                   </a>
                 </li>
-                
+                <li class="nav-item">
+                  <a href="javaScript:get_ListCompras()" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Listar gastos</p>
+                  </a>
+                </li>
                 
               </ul>
           </li>
@@ -561,6 +573,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>/dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <script src="<?php echo  base_url();?>dist/js/pages/dashboard.js"></script>
+
+  <!--  para  tabla adaptable a  movil -->
+ <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+  <script src=" <?php echo  base_url();?>stacktable/stacktable.js"></script>
+  <link href="<?php echo  base_url();?>stacktable/stacktable.css" rel="stylesheet">
+  <link href="<?php echo  base_url();?>stacktable/css/style.css" rel="stylesheet">
+  <!--  para  tabla adaptable a  movil --> 
   <!-- <script src="/BartioFran/js/funciones_basica.js"></script> -->
   <script src=" <?php echo  base_url();?>js/funciones_basica.js"></script>
   <script src=" <?php echo  base_url();?>js/familiaProducto.js"></script>
@@ -576,6 +595,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>js/ordenesPedido.js"></script>
   <script src=" <?php echo  base_url();?>js/invProductos.js"></script>
   <script src=" <?php echo  base_url();?>js/login.js"></script>
+  <script src=" <?php echo  base_url();?>js/gastosOperativos.js"></script>
+  <script src=" <?php echo  base_url();?>js/prodPresentacion.js"></script>
+  <script src=" <?php echo  base_url();?>js/equivalentes.js"></script>
+  
+
   
 
 

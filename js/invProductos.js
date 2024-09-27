@@ -60,8 +60,8 @@ function iniciarInventario(){
     //var valorid         = 0;  
     //var productoID      =  null;  
     //var idCompratmp     =  $("#idCompra").val();  
-    console.log("Mostrando traslados de   inventarios");
-    var url = base_url('index.php/invProducto_Controller/ingresarTraslados');
+    console.log("Mostrando traslados de   inventarioseew");
+    var url = base_url('index.php/trasladoProducto_Controller/ingresarTraslados');
   
     //var url = base_url("index.php/BancosController/bancos");
     $.get(url, function (data) {

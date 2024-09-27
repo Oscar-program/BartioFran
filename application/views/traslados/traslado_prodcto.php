@@ -1,3 +1,6 @@
+<script>
+      $('#tblListaProd').stacktable();
+ </script>
 <div class="container-fluid m-top">
         <div class="row">
             <div class="col-12 text-center">

@@ -154,3 +154,15 @@ function exportTableToExcel(tableID, filename) {
     a.remove();
   }
 }
+// funcion para  mostrar lista en movil 
+// funcion para listar los  traslados  realizados 
+function  Listamovil(){
+  var url = base_url('index.php/trasladoProducto_Controller/Listamovil/');
+
+  //var url = base_url("index.php/BancosController/bancos");
+      $.get(url, function (data) {
+          $("#principal").html(data);
+      });
+  
+
+}

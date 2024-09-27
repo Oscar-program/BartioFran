@@ -58,6 +58,14 @@ function verificarstadotab(id){
            // $("#txtprecioespecial").val(0);
             console.log('Eligiendo el  form 6');
             break;
+        case 'seven-tab':
+              // Código a ejecutar si la expresión coincide con valor2
+              formData    = new FormData($(".FormSeventab")[0]);
+              mostrarDetalleEquivalente();
+              
+             // $("#txtprecioespecial").val(0);
+              console.log('Eligiendo el  form 7');
+              break;    
         // Más casos...
         default:
           // Código a ejecutar si no coincide con ningún caso anterior

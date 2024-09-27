@@ -21,12 +21,13 @@
                                 <label for="bodOrigen">Bodega origen</label>
                             
 
-                                <select name="bodOrigen" id="bodOrigen"  class="form-control chosen">                                  
-                                <?php foreach ($listBodegaProducto as $row): ?>
-                                    <option value="<?php echo $row->bodegaProductoID; ?>">
-                                    <?php echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
-                                    </option>
-                                <?php endforeach ?>
+                                <select name="bodOrigen" id="bodOrigen"  class="form-control chosen">  
+                                    <option>Seleccione la bodega de origen</option>                                
+                                    <?php foreach ($listBodegaProducto as $row): ?>
+                                        <option value="<?php echo $row->bodegaProductoID; ?>">
+                                        <?php echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
+                                        </option>
+                                    <?php endforeach ?>
                                             
                                 </select>      
                         </div>           
@@ -38,7 +39,8 @@
                                 <label for="producto">Producto</label>
                             
 
-                                <select name="producto" id="producto"  class="form-control chosen">                                  
+                                <select name="producto" id="producto"  class="form-control chosen">  
+                                    <option>Seleccione un producto</option>                                
                                 <?php foreach ($listaProductos as $row): ?>
                                     <option value="<?php echo $row->productoID; ?>">
                                     <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
@@ -60,17 +62,18 @@
 
                 <div class="row">
                         <div class="col-sm" style="display: inline-block;">
-                                <label for="producto">Unidad medida a trasladar</label>
+                                <label for="prodPresentacion">Unidad medida a trasladar</label>
                             
 
-                                <select name="producto" id="producto"  class="form-control chosen">                                  
-                                <?php foreach ($listaProductos as $row): ?>
-                                    <option value="<?php echo $row->productoID; ?>">
-                                    <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
-                                    </option>
-                                <?php endforeach ?>
-                                            
-                                </select>      
+                                <select name="prodPresentacion" id="prodPresentacion"  class="form-control chosen"  onchange="javaScript:getunidadPresentacion()">                                  
+                                  <option value="0">Seleccione una presentacion</option>                                 
+                                    <?php foreach ($prodPresentacion as $row): ?>
+                                        <option value="<?php echo $row->presProdID; ?>">
+                                        <?php echo $row->presProdID . " - " .  $row->presentacionProd; ?>
+                                        </option>
+                                        <?php endforeach ?>
+                                                    
+                                        </select>      
                         </div>           
 
                 </div>
@@ -78,7 +81,7 @@
                     <div class="col-sm" style="display: inline-block;">
                             <label for="producto">Unidades que componen la presentacio</label>                      
 
-                            <input type="text"  class="form-control" id="unidadpresenta" name="unidadpresenta" readonly>   
+                            <input type="text"  class="form-control" id="unidapresentacion" name="unidapresentacion" readonly>   
                     </div>        
 
                 </div>
@@ -90,7 +93,8 @@
                                 <label for="producto">Bodega destino</label>
                             
 
-                                <select name="bodDestino" id="bodDestino"  class="form-control chosen">                                  
+                                <select name="bodDestino" id="bodDestino"  class="form-control chosen">  
+                                    <option>Seleccione bodega destino</option>                                
                                 <?php foreach ($listBodegaProducto as $row): ?>
                                     <option value="<?php echo $row->bodegaProductoID; ?>">
                                     <?php echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
@@ -131,6 +135,16 @@
 </body>
 </html>
 <script>
+    
+    $("#document").ready(  function(){
+        $("#bodOrigen").select2({
+        theme: 'bootstrap4',
+        placeholder: "Select bodega origen",
+        allowClear: true,
+        width: 'resolve',
+    });
+    });
+
     $("#document").ready(  function(){
         $("#producto").select2({
         theme: 'bootstrap4',
@@ -139,4 +153,25 @@
         width: 'resolve',
     });
     });
+    
+    $("#document").ready(  function(){
+         $("#prodPresentacion").select2({
+            theme: 'bootstrap4',
+            placeholder: "Select Presentacion",
+            allowClear: true,
+            width: 'resolve',
+        });
+    });
+  
+    $("#document").ready(  function(){
+         $("#bodDestino").select2({
+            theme: 'bootstrap4',
+            placeholder: "Select Bodega destino",
+            allowClear: true,
+            width: 'resolve',
+        });
+    });
+
+    
+
 </script>
