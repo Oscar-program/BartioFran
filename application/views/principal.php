@@ -236,21 +236,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <p>Lista movil</p>
                   </a>
                 </li>
-
-
-
-                <li class="nav-item">
-                  <a href="javaScript:addInventManual()" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Inventario Manual</p>
-                  </a>
-                </li>
                 <li class="nav-item">
                   <a href="javaScript:indicadorExistenciaProd()" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Existencia Real</p>
                   </a>
                 </li> 
+								<li class="nav-item">
+                  <a href="javaScript:LoadviewInvdiario();" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Inventario Diario</p>
+                  </a>
+                </li>
               </ul>
           </li>  
 
@@ -598,6 +595,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>js/gastosOperativos.js"></script>
   <script src=" <?php echo  base_url();?>js/prodPresentacion.js"></script>
   <script src=" <?php echo  base_url();?>js/equivalentes.js"></script>
+	<script src=" <?php echo  base_url();?>js/InvDiario.js"></script>
   
 
   
