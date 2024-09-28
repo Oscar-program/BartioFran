@@ -19,7 +19,7 @@ error_reporting(E_ALL);
 
                             <a href='#' class="btn-edit"
                             title="Editar Detalle"                             
-                                onclick="get_FamiliaProductoID(<?php  echo   $row->prodPresentID; ?>);">
+                                onclick="get_EquivalenteProductoID(<?php  echo   $row->prodPresentID; ?>);">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> </a>
 
                             
@@ -29,7 +29,7 @@ error_reporting(E_ALL);
 
                                 <a href='#' class="btn-eraser" 
                                  title="Eliminar registro"
-                                onclick="delete_FamiliaProductoID(<?php  echo   $row->prodPresentID; ?>);">
+                                onclick="delete_EquivalenteProductoID(<?php  echo   $row->prodPresentID; ?>);">
                                 <i class="fa fa-trash" aria-hidden="true"></i> </a>    
 
                             

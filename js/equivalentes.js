@@ -43,28 +43,32 @@ function base_url(url){
         // Show image container
         $("#loader").css("display", "none");
         mostrarDetalleEquivalente();
-        // $("#txtmedProdID").val('');
-        // $("#txtmedida").val('');
+         $("#prouctoEquivalente").val(0);
+         $("#prouctoEquivalente").change();
+         $("#equivalente").val(0);
+         $("#equivalente").change();
+         $("#unidadequivalente").val(0);
       }
     });
   
   }
 
   /*funcion para  retornar la  marca seleccionada*/
-  function  get_EquivalenteProductoID(medProdID){
+  function  get_EquivalenteProductoID(prodPresentID){
     console.log('obtener la marca seleccionada');
-    var url = base_url('index.php/medidaProducto_Controller/get_MedidadProductoID/' +medProdID);
+    var url = base_url('index.php/equivalenteProducto_Controller/get_EquivalenteProductoID/' +prodPresentID);
     $.get(url, function (data) {
           // console.log(data);
            var datosMedida  =  JSON.parse(data);           
-          $("#txtmedProdID").val(datosMedida[0].medProdID);
-          $("#txtmedida").val(datosMedida[0].medProdDescripcion);
+          $("#prouctoEquivalente").val(datosMedida[0].productoID);
+          $("#equivalente").val(datosMedida[0].presProdID);
+          $("#unidadequivalente").val(datosMedida[0].unidades); 
                    
       });  
   }
   
   /*Funcion para eliminar  un detallle de la  marca */
-  function delete_EquivalenteProductoID(medProdID){
+  function delete_EquivalenteProductoID(prodPresentID){
     swal({
       title: "Estas seguro de elimnar el  registro ?",
       text: "Este proceso eliminara el  registro de base  de  datos",
@@ -74,7 +78,7 @@ function base_url(url){
     }).then((Delete) => {
       if (Delete) {
                   var url = base_url(
-                    "index.php/medidaProducto_Controller/delete_MedidaProductoID/" + medProdID
+                    "index.php/equivalenteProducto_Controller/delete_EquivalenteProductoID/" + prodPresentID
                   );
                   $.get(url, function (data) {
                     if (data == 0) {
@@ -87,7 +91,7 @@ function base_url(url){
                       swal("Registro eliminado corectamente", {
                         icon: "success",
                       });
-                      mostrarDetalleMedProducto();
+                      mostrarDetalleEquivalente();
                     }
   
                   });				

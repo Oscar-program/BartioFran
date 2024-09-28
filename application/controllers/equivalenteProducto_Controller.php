@@ -34,14 +34,14 @@ $unidades      = (isset($_POST['unidadequivalente'])) ? $_POST['unidadequivalent
 $prodPresentID = ($_POST['prodPresentID']!='') ? $_POST['prodPresentID']: null;
 $data          = array("productoID"=>$productoID, "presProdID"=>$presProdID,"unidades"=>$unidades);
 if($unidades>0){
-  $result       = $this->equivalenteProducto_Model->addMedidaProducto($data, $prodPresentID); 
+  $result       = $this->equivalenteProducto_Model->addEquivalenteProducto($data, $prodPresentID); 
 }
 
 }
 
 /*Funcion para  actualzar el nombre de la marca   */
 public  function get_EquivalenteProductoID($medProdID){
-     $result =  $this->equivalenteProducto_Model->get_MedidaProductoID($medProdID);
+     $result =  $this->equivalenteProducto_Model->get_EquivalenteProductoID($medProdID);
      echo  json_encode($result);
 }
 
