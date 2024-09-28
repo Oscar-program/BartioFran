@@ -305,14 +305,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <div class ="col-md 6"> 
                                     <h4>Configuracion de equivalente de productos </h4>
                                     <div class ="shadow-sm p-3 mb-5 bg-white rounded">
-                                        <form enctype="multipart/form-data" action="javascript:addPreciosEspProducto()" method="POST" id  = "FormSeventab" class = "FormSeventab" >
-                                        <input type="hidden" class="form-control text-left" id="precioEspecialProdID" name="precioEspecialProdID">
-                                        <input type="hidden" class="form-control text-left" id="turnOperaID" name="turnOperaID">
-                                        <input type="hidden" class="form-control text-left" id="famProdID" name="famProdID">
+                                        <form enctype="multipart/form-data" action="javascript:saveEquivalenteProducto()" method="POST" id  = "FormSeventab" class = "FormSeventab" >
+                                        <input type="hidden" class="form-control text-left" id="productoID"    name="productoID">
+                                        <input type="hidden" class="form-control text-left" id="presProdID"    name="presProdID">
+                                        <input type="hidden" class="form-control text-left" id="prodPresentID" name="prodPresentID">
+                                       
+                                       
                                
                                         <div class="form-group">
                                             <label for="prouctoEquivalente" class="col-form-label">Producto:</label>
-                                            <select name="prouctoEquivalente" id="prouctoEquivalente"  class="form-control chosen">                
+                                            <select name="prouctoEquivalente" id="prouctoEquivalente"  class="form-control chosen"> 
+                                                <option value ="0"> Seleccione un producto</option>               
                                                 <?php foreach ($listaProductos as $row): ?>
                                                     <option value="<?php echo $row->productoID; ?>">
                                                     <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
@@ -324,7 +327,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
                                         <div class="form-group">
                                             <label for="equivalente" class="col-form-label">Equivalente:</label>
-                                            <select name="equivalente" id="equivalente"  class="form-control chosen">                
+                                            <select name="equivalente" id="equivalente"  class="form-control chosen">
+                                            <option value ="0"> Seleccione un equivalente</option>                  
                                                 <?php foreach ($equivalentes as $row): ?>
                                                     <option value="<?php echo $row->presProdID; ?>">
                                                     <?php echo $row->presProdID . " - " .  $row->presentacionProd; ?>
