@@ -3,40 +3,101 @@ function base_url(url){
 }
 //  funcion para mostrar la vista  principal para iniciar el  ingreso de  gastos 
 function  iniciarGastos(){
-    console.log("iniciando la funcion de  de ingreso de  gastos");
-    //  creamos una variable de valor  aleatorio para crear el id  de la venta  
-    var gastosID  =  new Date().getTime().toString();
-    var  gastosID = gastosID.slice(-9);
-    console.log('el id  generico es '+gastosID );
-    
     var url = base_url('index.php/gastos_Controller/iniciargastos/');
-    
-    //var url = base_url("index.php/BancosController/bancos");
-    $.get(url, function (data) {
-      $("#principal").html(data);
-      if(document.getElementById('gastosID')){
-        $("#gastosID").val(gastosID);
-    
-      }
+     $.get(url, function (data) {
+      $("#principal").html(data);     
     });
 }
 
 //  funcion para mostrar el  detalle de los  gastos 
-function  detalleGastos(){
-    console.log("iniciando la funcion de  traslado de  productos");
-    //  creamos una variable de valor  aleatorio para crear el id  de la venta  
-    var TrasladoId  =  new Date().getTime().toString();
-    var  resultTrasID = TrasladoId.slice(-9);
-    console.log('el id  generico es '+resultTrasID );
-    
-    var url = base_url('index.php/gastos_Controller/addDetgasto/');
-    
-    //var url = base_url("index.php/BancosController/bancos");
+function  detalleGastos(gastoID){
+    var url = base_url('index.php/gastos_Controller/addDetgasto/'); 
     $.get(url, function (data) {
       $("#principal").html(data);
-      if(document.getElementById('trasladoID')){
-        $("#trasladoID").val(resultTrasID);
-    
+      $("#IdGasto").val(gastoID);
+    });
+}
+//  funcion para guardar la cabecera el inventario 
+ function  guardarGastos(){
+  console.log('llegando a la funcion para almacenar la cabecera de los  gatos')
+  var formData;
+    console.log('Guardando el encabezado de los gastos');
+    if(document.getElementById('FormGastos')) {
+      formData = new FormData($(".FormGastos")[0]);
+      console.log('formulario Creado.......Encabezadeo de gastos');
+    }else{
+        console.log('no existe el formulario');
+    }               
+     url_destino = "index.php/gastos_Controller/guardarGastos/";
+    // console.log('Despues  de la URL');
+  
+     $.ajax({
+      url: base_url(url_destino),
+      type: "POST",
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      beforeSend: function () {
+        // Show image container
+        $("#loader").css("display", "block");
+      },
+      success: function (data) {
+        console.log('El retorno despues de guardar la cabecera es ' + data + ' es id');       
+        alertify.set("notifier", "position", "top-right");
+        alertify.success("Registro guardo correctamente");
+        detalleGastos(data);
+      },
+      complete: function (data) {
+        // Show image container
+        $("#loader").css("display", "none");
       }
     });
+ }
+
+// funcion para guardar el detalle  de gastos 
+function  guardarDetGastos(){
+  var formData;
+   // console.log('Guardando el detalle de los  gastos');
+    if(document.getElementById('FormDetGastos')) {
+      formData = new FormData($(".FormDetGastos")[0]);
+    //  console.log('formulario Creado.......Encabezadeo de gastos');
+    }else{
+      //  console.log('no existe el formulario');
+    }               
+     url_destino = "index.php/gastos_Controller/saveDetGastos/";
+     console.log('Despues  de la URL');
+  
+     $.ajax({
+      url: base_url(url_destino),
+      type: "POST",
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      beforeSend: function () {
+        // Show image container
+        $("#loader").css("display", "block");
+      },
+      success: function (data) {
+        //$("#codigoCliente").prop( "disabled", true);
+        alertify.set("notifier", "position", "top-right");
+        alertify.success("Registro guardo correctamente");
+      },
+      complete: function () {
+   
+        $("#cantidadgasto").val(0);
+        $("#preciogasto").val(0);
+        $("#totalDet").val(0);
+        $("#descripcionDetGast").val("");
+      }
+    });
+ }
+ // listar detalle de gastos 
+ function  listarDetGastos(){
+  var url = base_url('index.php/gastos_Controller/listarDetGastos/'); 
+  $.get(url, function (data) {
+    $("#principal").html(data);
+    //$("#IdGasto").val(gastoID);
+  });
 }

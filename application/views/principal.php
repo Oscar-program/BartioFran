@@ -267,7 +267,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="javaScript:get_ListCompras()" class="nav-link">
+                  <a href="javaScript:listarDetGastos()" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Listar gastos</p>
                   </a>

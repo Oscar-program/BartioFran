@@ -16,23 +16,24 @@
                 
             </div>
             <div  class="card-body">
-                <form action="">
+                <form  method="POST" id  = "FormGastos" class = "FormGastos">
                     <input type="hidden"   id="gastosID" name="gastosID">
+                    <input type="hidden"   id="cerrado" name="cerrado">
                     <div class="row">
                         <div class="col-sm" style="display: inline-block;">
                           <label for="producto"> Fecha deingreso de gastos</label>
-                          <input type="date"   class="form-control"  id ="fechaGasto" value = "fechaGasto" style="border-radius: 20px;">                           
+                          <input type="date"   class="form-control"  id ="fechaGasto" name = "fechaGasto"  style="border-radius: 20px;">                           
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                     <div class="col-sm" style="display: inline-block;">
-                            <label for="bodega">Bodega de ingreso </label>
+                            <label for="sucursalGasto">Sucursal</label>
 
-                            <select name="medida" id="medida"  class="form-control chosen" style="border-radius: 20px;">  
-                                    <option value="1"> Bodega 1 </option>
-                                    <option value="2"> Bodega 2 </option>
-                                    <option value="3"> Bodega 3 </option>
+                            <select name="sucursalGasto" id="sucursalGasto"  class="form-control chosen" style="border-radius: 20px;">  
+                                    <option value="1"> Sucrsal 1 </option>
+                                    <option value="2"> Sucrsal 2</option>
+                                    <option value="3"> Sucrsal 3 </option>
                                
                             </select>      
                         </div>           
@@ -41,14 +42,15 @@
                     <br>
                     <br>                    
 
-                </form>
-                
+               
+                    </form>     
             </div>
             <div class="card-footer text-muted text-right">
-            <button type="submit" class="btn btn-lg btn-outline-danger" title="Cancelar"> <i class="fa fa-chevron-left" aria-hidden="true"></i> </button>
-            <button type="submit" class="btn btn-lg btn-outline-danger" title="Ingresear detalle de gastos"  onclick="javaScript:detalleGastos();"> <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
-                
+            <!-- <button type="submit" class="btn btn-lg btn-outline-danger" title="Cancelar"> <i class="fa fa-chevron-left" aria-hidden="true"></i> </button> -->
+            <button type="submit" class="btn btn-lg btn-outline-danger" title="Ingresear detalle de gastos" onclick="javaScript:guardarGastos()"> <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+              
             </div>
+            
            
         </div>
     </div>

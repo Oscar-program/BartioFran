@@ -47,7 +47,7 @@ public  function get_EquivalenteProductoID($medProdID){
 
 /*Funcion para elminar marca de  producto  */
 public  function  delete_EquivalenteProductoID($medProdID){
-$result =  $this->equivalenteProducto_Model->delete_MedidaProductoID($medProdID);
+$result =  $this->equivalenteProducto_Model->delete_EquivalenteProductoID($medProdID);
 echo  $result;
 }
 
