@@ -52,33 +52,33 @@
                         <div class="row" style="margin-top:20px">
                             <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control   custom-margin" id="invinicial" value="" placeholder="Inv Inicial">
+                                    <input type="text" class="form-control   custom-margin" id="invinicial" value="" placeholder="Qty Inv Inicial">
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" class="form-control custom-margin"  id="conteo" placeholder="Conteo">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control  custom-margin"  id="invfinal" placeholder="Inv Final">
+                                    <input type="text" class="form-control  custom-margin"  id="invfinal" placeholder="Qty Inv Final">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control custom-margin"  id="vnormal" placeholder="Venta Precio Normal">
+                                    <input type="text" class="form-control custom-margin"  id="vnormal" placeholder="Qty Vendidos Precio Normal">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control   custom-margin"  id="pnormal" placeholder="Precio Normal">
+                                    <input type="text" class="form-control   custom-margin"  id="pnormal" placeholder="Monto Precio Normal">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control custom-margin"  id="pespecial" placeholder="Precio Especial">
+                                    <input type="text" class="form-control custom-margin"  id="pespecial" placeholder="Monto Precio Especial">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control  custom-margin"  id="vespecial" placeholder="Venta Especial">
+                                    <input type="text" class="form-control  custom-margin"  id="vespecial" placeholder="Qty Vendidos Precio Especial">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control  custom-margin"  id="totalv" placeholder="Total Items Venta">
+                                    <input type="text" class="form-control  custom-margin"  id="totalv" placeholder="Qty Total Venta (Global)">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control custom-margin"  id="totalamt" placeholder="Monto Total">
+                                    <input type="text" class="form-control custom-margin"  id="totalamt" placeholder="Monto Total venta (Global)">
                                 </div>
 
                                 <a href='#' class="btn btn-danger btn-sm"  data-title="Guardar" onclick="SaveInvDiario()">
@@ -129,7 +129,7 @@
 						<div class="row" style="margin-top:20px" id="detalle">
                             <div class="col-lg-6">
 									<div class="mb-3">
-									<label for="invinicialb" class="col-form-label">Inv Inicial:</label>
+									<label for="invinicialb" class="col-form-label">Qty Inv Inicial:</label>
                                     <input type="text" class="form-control   custom-margin" id="invinicialb" value="" >
                                 </div>
                                 <div class="mb-3">
@@ -137,33 +137,33 @@
                                     <input type="text" class="form-control custom-margin"  id="conteob">
                                 </div>
                                 <div class="mb-3">
-								<label for="invfinalb" class="col-form-label">Inv Final:</label>
+								<label for="invfinalb" class="col-form-label">Qty Inv Final:</label>
                                     <input type="text" class="form-control  custom-margin"  id="invfinalb">
                                 </div>
                                 <div class="mb-3">
-								<label for="vnormalb" class="col-form-label">Venta Normal:</label>
+								<label for="vnormalb" class="col-form-label">Qty Vendidos Precio Normal:</label>
                                     <input type="text" class="form-control custom-margin"  id="vnormalb">
                                 </div>
                                 <div class="mb-3">
-								<label for="pnormalb" class="col-form-label">Precio Normal:</label>
+								<label for="pnormalb" class="col-form-label">Monto Precio Normal:</label>
                                     <input type="text" class="form-control   custom-margin">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="mb-3">
-								<label for="pespecialb" class="col-form-label">Precio Especial:</label>
+								<label for="pespecialb" class="col-form-label">Monto Precio Especial:</label>
                                     <input type="text" class="form-control custom-margin"  id="pespecialb">
                                 </div>
                                 <div class="mb-3">
-								<label for="vespecialb" class="col-form-label">Venta Especial:</label>
+								<label for="vespecialb" class="col-form-label">Qty Vendidos Precio Especial:</label>
                                     <input type="text" class="form-control  custom-margin"  id="vespecialb">
                                 </div>
                                 <div class="mb-3">
-								<label for="totalvb" class="col-form-label">Total Items Especial:</label>
+								<label for="totalvb" class="col-form-label">Qty Total  Venta (Global):</label>
                                     <input type="text" class="form-control  custom-margin"  id="totalvb">
                                 </div>
                                 <div class="mb-3">
-								<label for="totalamtb" class="col-form-label">Monto Total:</label>
+								<label for="totalamtb" class="col-form-label">Monto Total Venta (Global):</label>
                                     <input type="text" class="form-control custom-margin"  id="totalamtb">
                                 </div>
                                 <!-- 
