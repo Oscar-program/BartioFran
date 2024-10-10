@@ -31,9 +31,12 @@
                             <label for="sucursalGasto">Sucursal</label>
 
                             <select name="sucursalGasto" id="sucursalGasto"  class="form-control chosen" style="border-radius: 20px;">  
-                                    <option value="1"> Sucrsal 1 </option>
-                                    <option value="2"> Sucrsal 2</option>
-                                    <option value="3"> Sucrsal 3 </option>
+                             <option value = "0"> Seleccione una sucrusal</option>
+                             <?php foreach( $listaSucursales as  $row): ?>
+                                <option  value="<?php echo $row->establecimientoID; ?>"> <?php echo  $row->estNombre   ?> </option>
+                             
+                                   
+                              <?php endforeach ?>      
                                
                             </select>      
                         </div>           
@@ -58,3 +61,14 @@
     
 </body>
 </html>
+<script>
+$("#document").ready(function(){
+    $("#sucursalGasto").select2({       
+            theme: 'bootstrap4',
+            placeholder: "Select sucursal",
+            width: 'resolve',
+            "searching"    : true,
+    });
+});
+
+</script>
