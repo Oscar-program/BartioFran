@@ -48,4 +48,13 @@ class bodegaProducto_Model extends CI_Model{
         return  $this->db->affected_rows();          
     }
 
+    // funcion para listar las  diferentes  sucuarsales 
+    public function get_Sucursales() {
+        $query =  $this->db->select("*")   
+                           ->where("estStatus",1)         
+                           ->get("establecimientoempresa")
+                           ->result();
+        return  $query;          
+    }
+
 }

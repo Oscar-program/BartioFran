@@ -1,72 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div class ="padre">
-    <div class ="allDevice">
-        <div class="card">
-            <div class="card-header bg-danger">
-              INGRESAR GASTOS 
-            </div>
-            <div>
-                
-            </div>
-            <div  class="card-body">
-                <form action="" method="POST" id  = "FormDetGastos" class = "FormDetGastos">
-                    <input type="hidden"  id ="detgastosID" name ="detgastosID">
-                    <input type="text"  id ="IdGasto" name ="IdGasto">
-                    
+<script>
 
-                    <div class="row">
-                        <div class="col-sm" style="display: inline-block;">
-                          <label for="producto"> Cantidad</label>
-                          <input type="number"   class="form-control"  id ="cantidadgasto" name = "cantidadgasto" style="border-radius: 20px;">                           
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-sm" style="display: inline-block;">
-                        <label for="precio"> precio</label>
-                        <input type="number"   class="form-control"  id ="preciogasto" name = "preciogasto" style="border-radius: 20px;">    
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm" style="display: inline-block;">
-                        <label for="precio"> Total</label>
-                        <input type="number"   class="form-control"  id ="totalDet" name = "totalDet" style="border-radius: 20px;">    
-                        </div>
-                    </div>
+$('#DeGastos').stacktable();
+</script>
+<table id="DeGastos" class="table table-hover" style="border-width: 0px;" >
+                                        <thead>
+                                            <tr>
+                                                <th>#</th> 
+                                                <th>Descripcion</th>
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                                <th>Total</th>
+                                                <th>Accciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> 
+<?php if(isset($listaDetGastos)){
+      if(!empty($listaDetGastos)){
+        $c= 1;
+        foreach($listaDetGastos as  $row) :?>
+        								<tr>
 
-                    <div class="row">
-                        <div class="col-sm" style="display: inline-block;">
-                        <label for="descripcion"> Descripcion</label>
-                         <textarea name="descripcionDetGast" id="descripcionDetGast"  class="form-control" rows="3" ></textarea>    
-                        </div>
-                    </div>
+                        <td><?php  echo   $c; ?></td>
+                       <!-- <td><?php  //echo   $row->establecimientoID; ?></td>
+                        <td><?php    //echo   $row->fecha; ?></td> -->
+                        <td><?php  echo   $row->descDetGasto; ?></td>
+                        <td><?php  echo   $row->cantidad; ?></td>
+                        <td><?php  echo   $row->precio; ?></td>
+                        <td><?php  echo   $row->total; ?></td>
+                     
+                                                    
+                        <td class="text-right">
+
+                            <a href='#' class="btn-edit"
+                            title="Editar Detalle"                             
+                                onclick="editDetGastos(<?php  echo   $row->detgastosID; ?>);">
+                                <i class="fa fa-pencil" aria-hidden="true"></i> </a>
+
+                            
+                                
+                        
 
 
-                    
+                                <a href='#' class="btn-eraser" 
+                                 title="Eliminar registro"
+                                onclick="delete_FamiliaProductoID(<?php  echo   $row->detgastosID; ?>);">
+                                <i class="fa fa-trash" aria-hidden="true"></i> </a>    
+
+                            
 
 
-                    <br>
-                    <br>                    
+                                
+                        </td>
+                        </tr> 
+        
 
-                </form>
-                
-            </div>
-            <div class="card-footer text-muted text-right">
-            <button type="submit" class="btn btn-lg btn-outline-danger" title="Cancelar"> <i class="fa fa-chevron-left" aria-hidden="true"></i> </button>
-            <button type="submit" class="btn btn-lg btn-outline-danger" title="Iniciar toma"  onclick="javaScript:guardarDetGastos();"> <i class="fa fa-chevron-right" aria-hidden="true"></i></button>
-                
-            </div>
-           
-        </div>
-    </div>
-    </div>
-    
-</body>
-</html>
+        <?php  $c+= 1; endforeach ?>
+     <?php }
+   
+  } ?>
+       </tbody>  
+       </table>
