@@ -43,4 +43,13 @@ public function  BuscarInvDiario($FechaB,$TipoMov,$Producto){
 	return  $query;
 }
 
+public function  GetlistaInvdiarios(){
+
+	$query = $this->db->select('*')
+	->get("inventariodiario")
+	->result();
+	
+	return  $query;
+}
+
 }
