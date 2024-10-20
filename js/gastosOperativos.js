@@ -50,7 +50,7 @@ function  detalleGastos(gastoID){
        // Show image container
        $("#loader").css("display", "none");
        $("#btnguardar").css("display", "none");
-       $("#btncerrargasto").css("display", "block");
+       $("#btncerrargasto").css("display", "none");
        document.getElementById('btnsavedet').disabled = false;
        document.getElementById('btnguardar').disabled = true;
 
@@ -95,6 +95,7 @@ function  guardarDetGastos(){
         $("#totalDet").val('');
         $("#descripcionDetGast").val("");
         $("#detgastosID").val(0);
+        $("#btncerrargasto").css("display", "block");
         
       }
     });
@@ -201,4 +202,45 @@ function editDetGastos(detgastosID){
 
 
 }
-// funcion para editar  un detalle de  gastos  
+//  funcion paa elimina un detalle de  gastos  
+function delDetGasto(detgastosID){
+    var gastosIDdet =0;
+   if( document.getElementById('gastosIDdet')){
+    gastosIDdet =$("#gastosIDdet").val();
+   } 
+
+  swal({
+    title: "Estas seguro de elimnar el  registro ?",
+    text: "Este proceso eliminara el  registro de base  de  datos",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((Delete) => {
+    if (Delete) {
+                var url = base_url(
+                  "index.php/gastos_Controller/delDetGasto/" + detgastosID + "/" + gastosIDdet
+                );
+                $.get(url, function (data) {
+                  if (data == 0) {
+                        swal({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Surgio un error al  eliminar el  registro',														
+                        });
+                  } else {
+                    swal("Registro eliminado corectamente", {
+                      icon: "success",
+                    });
+                    document.getElementById('mostrarTabla').innerHTML = '';
+                    $("#mostrarTabla").html(data);
+                  }
+  
+                });				
+    } else {
+      swal("Operacion  cancelada",{
+        icon: "success",
+      });
+    }
+  });
+} 
+

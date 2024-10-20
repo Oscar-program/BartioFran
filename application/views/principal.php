@@ -93,7 +93,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <img src="/BartioFran/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block"> <?php echo $_SESSION["usuario"]?></a>
+            <a href="#" class="d-block"> <?php echo $_SESSION["usuario"] . "numero".  $_SESSION["idDetCompra"] ?></a>
           </div>
         </div>
 

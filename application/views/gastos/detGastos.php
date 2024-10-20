@@ -43,7 +43,7 @@ $('#DeGastos').stacktable();
 
                                 <a href='#' class="btn-eraser" 
                                  title="Eliminar registro"
-                                onclick="delete_FamiliaProductoID(<?php  echo   $row->detgastosID; ?>);">
+                                onclick="delDetGasto(<?php  echo   $row->detgastosID; ?>);">
                                 <i class="fa fa-trash" aria-hidden="true"></i> </a>    
 
                             

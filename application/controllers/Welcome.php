@@ -37,7 +37,7 @@ class Welcome extends CI_Controller {
 	}
 	// funcion para  cargar el  menu principal 
 	public function  principal(){
-		session_start();
+	//	session_start();
 		//echo 'llegando al controlador';
 		/*$userRerotno = "";
         $RetornaUser = 1;

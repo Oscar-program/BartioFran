@@ -16,7 +16,15 @@ class   login_Controller extends CI_Controller{
         ini_set('display_errors',1);
         ini_set('display_startup_errors',1);
         error_reporting(E_ALL);
+      //  session_unset();
+        session_destroy();
         session_start();
+       // $_SESSION["usuario"] ="fhsdjfhjk";
+        //$_SESSION['idDetCompra']='1';
+        //$_SESSION["IdTempComprea"]= rand();
+        //$_SESSION['detlistadecompra']=null;
+        unset($_SESSION['detlistadecompra']);
+
         $aes_encrypt  =  new  aes_encrypt();
        // $_SESSION["usuario"] = "";
         $userRerotno       = "";
@@ -38,6 +46,9 @@ class   login_Controller extends CI_Controller{
             $_SESSION["usuario"]           = $datosUser->usrNombre; 
             $_SESSION["usrLogin"]          = $datosUser->usrLogin; 
             $_SESSION["establecimientoID"] = $datosUser->establecimientoID; 
+            $_SESSION["idDetCompra"]=1;
+            $_SESSION["IdTempComprea"]= rand();
+            $_SESSION["detlistadecompra"]= array();
 
              
             // echo 'la variable de  session contiene' . $_SESSION["usuario"] ; 

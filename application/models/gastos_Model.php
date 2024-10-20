@@ -69,6 +69,13 @@ class gastos_Model extends CI_Model{
     return  $query;          
 } 
 
- # funcion para eliminar detalle de gastos 
+ # funcion para eliminar detalle de gastos
+ public function delDetGasto($detgastosID) {
+    //echo 'el id a eliminar es' .$detgastosID;
+    $this->db->where("detgastosID",$detgastosID)         
+             ->delete("det_gastos");                 
+    return  $this->db->affected_rows();          
+}
+
 
 }

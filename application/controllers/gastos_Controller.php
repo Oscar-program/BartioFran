@@ -104,6 +104,24 @@ class gastos_Controller extends CI_Controller{
          }
       }
 
+      // funcion para eliminar detalle de  gastos  
+      public function delDetGasto($detgastosID, $gastosIDdet){
+      //  $gastosID     = (isset($_POST['gastosIDdet']))? $_POST['gastosIDdet'] : null ; 
+
+        if($detgastosID > 0){
+          $this->gastos_Model->delDetGasto($detgastosID);             
+         //  echo  json_encode($detGasto) ;
+         $datos["listaDetGastos"] =   $this->gastos_Model->listarDetGastos($gastosIDdet);        
+         $this->load->view("gastos/detGastos",$datos); 
+       }else{
+         echo 0 ;
+       }
+    
+
+      }
+     
+
+
 
     
 

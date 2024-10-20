@@ -28,17 +28,42 @@ function base_url(url){
         var productoID      =  null;  
         var idCompratmp =  $("#idCompra").val();  
         console.log("llegando a la funcion para mostrar los produtos que se ingresan a la compra ");
-        var url = base_url('index.php/productos_Controller/addProductoCompra/');
+        //var url = base_url('index.php/productos_Controller/addProductoCompra/');
+        //adddetCompraarr
+        var url = base_url('index.php/compraProducto_Controller/adddetCompraarr/');
     
         //var url = base_url("index.php/BancosController/bancos");
         $.get(url, function (data) {
-            $("#addProductCompra").html(data);
-            // document.getElementById('prodDescripcion').innerHTML=descripcion
+            //  comentado solo para  trabajar con el  array 
+            /*$("#addProductCompra").html(data);
+          
             $('#addProducCompra').modal('show');
-            $("#idCompratmp").val(idCompratmp)        
+            $("#idCompratmp").val(idCompratmp)    */    
         });
    
    }
+   function iniciaArr(){
+        
+    /*Determinamos si  los datos del  producto ya existen */
+    var valorid  = 0;  
+    var productoID      =  null;  
+    var idCompratmp =  $("#idCompra").val();  
+    console.log("llegando a la funcion para mostrar los produtos que se ingresan a la compra ");
+    //var url = base_url('index.php/productos_Controller/addProductoCompra/');
+    //adddetCompraarr
+    var url = base_url('index.php/compraProducto_Controller/createArray/');
+
+    //var url = base_url("index.php/BancosController/bancos");
+    $.get(url, function (data) {
+        //  comentado solo para  trabajar con el  array 
+        /*$("#addProductCompra").html(data);
+      
+        $('#addProducCompra').modal('show');
+        $("#idCompratmp").val(idCompratmp)    */    
+    });
+
+}
+
    /*Funcion para almacena El  producto */
    function saveTmpCompra(){
     var $productoID =  0;

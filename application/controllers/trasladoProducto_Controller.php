@@ -24,6 +24,7 @@ class trasladoProducto_Controller extends CI_Controller{
         ini_set('display_errors',1);
         ini_set('display_startup_errors',1);
         error_reporting(E_ALL);
+       
         // echo  'llegando al controlador de la presentacion del producto';
         $datos["listaTraslados"] =   $this->trasladoProducto_Model->ListarTrasladoProducto();
         //var_dump($this->datos["datosMArcas"]);
@@ -111,6 +112,7 @@ class trasladoProducto_Controller extends CI_Controller{
       ini_set('display_errors',1);
       ini_set('display_startup_errors',1);
       error_reporting(E_ALL);
+     // echo   'variable que  se inicio en compra' . $_SESSION['idDetCompra'];
       // echo  'llegando al controlador de la MEDIDA del producto';
       // echo  'modificacion en la captura de existencia ' ;
       $datos['listBodegaProducto'] = $this->bodegaProducto_Model->get_listBodegaProducto();

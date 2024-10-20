@@ -11,7 +11,7 @@ var_dump($ListTmpCompra);
         								<tr>
 
                         <td><?php  echo   $c; ?></td>
-                        <td><?php  echo   $row->cantidad; ?></td>
+                        <td><?php  echo   strval($row->cantidad); ?></td>
                         <td><?php  echo   $row->descripcion; ?></td>
                        
                         <td><?php  echo   $row->precUnit; ?></td>
@@ -25,12 +25,6 @@ var_dump($ListTmpCompra);
                             title="Editar Detalle"                             
                                 onclick="get_FamiliaProductoID(<?php  echo   $row->idtmp; ?>);">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> </a>
-
-                            
-                                
-                        
-
-
                                 <a href='#' class="btn-eraser" 
                                  title="Eliminar registro"
                                 onclick="delete_FamiliaProductoID(<?php  echo   $row->idtmp; ?>);">

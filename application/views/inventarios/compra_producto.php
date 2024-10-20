@@ -92,7 +92,8 @@
         <!-- telefono -->
         <div class="row mt-0">
         <div class="col-12">
-            <label for="telefono">Direccion </label>
+        <a href="#" class="d-block"> <?php echo $_SESSION["usuario"] . "numero".  $_SESSION["idDetCompra"] ?></a>
+            <label for="telefono">Direccion  <?php echo  $_SESSION["usuario"]?></label>
             <input type="text" id="telefono"  id="telefono" class ="form-control form-control-md"  readonly style="background-color:white;">
         </div>
     </div>
@@ -108,6 +109,7 @@
     <div class="row mt-1 ">
         <div class="col-sm mb-2" style ="padding-top: 25px;  padding-bottom: 0px;">
         <button  data-title ="Guardar registro" class="btn btn-danger" onclick="addProducCompra()"> <i class="fa fa-plus" aria-hidden="true"></i>  Agregar Producto </button> 
+        <button  data-title ="Guardar registro" class="btn btn-danger" onclick="iniciaArr()"> <i class="fa fa-plus" aria-hidden="true"></i>  iniciar Proceso</button> 
         </div>
         <div class="col-sm mb-2" style ="padding-top: 25px;  padding-bottom: 0px;">
         
