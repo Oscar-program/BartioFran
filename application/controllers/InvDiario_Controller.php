@@ -109,6 +109,16 @@ class InvDiario_Controller extends CI_Controller {
 		//return $res;
 	  
 	}
+
+	public function listarInvdiarios(){
+   
+		ini_set('display_errors',1);
+		ini_set('display_startup_errors',1);
+		error_reporting(E_ALL);
+			$data['ListaInvDiario'] = $this->InvDiario_Model->GetlistaInvdiarios();
+			$this->load->view('inventarios/ViewInvDiarioResumen',$data);
+	
+		}
 }
  
 

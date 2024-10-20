@@ -248,6 +248,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <p>Inventario Diario</p>
                   </a>
                 </li>
+								<li class="nav-item">
+                  <a href="javaScript:LoadviewResInvdiario();" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Resumen Inv Diario</p>
+                  </a>
+                </li>
               </ul>
           </li>  
 
