@@ -20,8 +20,8 @@
 /*para los botones de  accio */
 .btn-edit{
     margin:0px; 
-     background-color:dodgerblue; 
-     color:white;
+     background-color:royalblue !important; 
+     color:white !important;
      width: 15%;
      height: 10%;
      padding: 4px 6px 5px;
@@ -36,8 +36,8 @@
 /*para los botones de  accio */
 .btn-eraser{
     margin:0px; 
-     background-color:red; 
-     color:white;
+     background-color:red !important; 
+     color:white !important;
      width: 15%;
      height: 10%;
      padding: 4px 8px 5px;

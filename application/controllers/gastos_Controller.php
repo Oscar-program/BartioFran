@@ -121,7 +121,50 @@ class gastos_Controller extends CI_Controller{
       }
      
 
+     // lista general de gastos  
+     // funcion para eliminar detalle de  gastos  
+     public function ListGastos(){
+        $datos["listaGastos"] =   $this->gastos_Model->ListGastos();        
+        $this->load->view("gastos/cuerpoListaGastos",$datos); 
+    
 
+      } 
+      // segmento para buscar  gasto abierto  por  fecha  
+      public function searGastos(){
+       // echo  'llegando al controlado';
+         $fecha = (isset($_POST['fechaGasto']))? $_POST['fechaGasto']:null ;
+         $datos =   $this->gastos_Model->searchGasto($fecha); 
+        if(!empty( $datos )){
+          echo  json_encode($datos);
+        }else{
+          echo  0;
+        }  
+       // var_dump($datos );     
+       
+          
+
+      }
+      //  funcion  para listar el  detalle de gastos 
+      public function listarDetGastos($gastosID){
+        $datos["listaDetGastos"] =   $this->gastos_Model->listarDetGastos($gastosID);        
+        $this->load->view("gastos/detGastos",$datos);
+      }
+
+      // funcion par   recargar el cuerpo de los  gastos  
+
+
+     
+
+
+      // funcion para  habilitar una cabecera de  gastos  
+      public function habilitarCabeceraGasto($gastosID){
+           $this->gastos_Model->habilitarCabeceraGasto($gastosID);        
+          //$this->load->view("gastos/detGastos",$datos);
+      }
+     
+
+
+      
 
     
 

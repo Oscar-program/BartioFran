@@ -8,10 +8,7 @@
     <script>
       window.addEventListener("beforeunload", (event) => {
         console.log("a punto de avandonar la pagina.");
-      });
-     /* window.addEventListener("unload", (event) => {
-        console.log("I am the 3rd one.");
-      });*/
+      });    
     </script>
     <script>
 
@@ -54,8 +51,8 @@ $('#DeGastos').stacktable();
         <div class="card mt-3 tab-card">
             <div class="card-header tab-card-header ">
                 <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                    <li class="nav-item"> <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true" onclick="verificatabgasto(this.id)">Ingreso de gastos</a> </li>
-                    <li class="nav-item"> <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false" onclick="verificatabgasto(this.id)">Gastos procesados</a> </li>
+                    <li class="nav-item"> <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true" onclick="verificatabgasto(this.id)">Ingresar Traslados</a> </li>
+                    <li class="nav-item"> <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false" onclick="verificatabgasto(this.id)">Traslados procesados</a> </li>
                 </ul>
             </div>
             <div class="tab-content" id="myTabContent">
@@ -70,26 +67,87 @@ $('#DeGastos').stacktable();
                                 </div>
                                 <dIv class="row mt-2">  
                                         <div class="col-lg-8">
-                                        
-                                        
-                                            <form id = "FormGastos" class = "FormGastos" action="javaScript:guardarGastos()" method="post">
-                                            <input type="hidden"   id="gastosID" name="gastosID">
-                                            <input type="hidden"   id="cerrado" name="cerrado">
+                                            <form id = "FormTraslados" name ='FormTraslados' class = "FormTraslados" action="javaScript:savTraslado()" method="post">
+                                                <input type="hidden"   id="trasProdID" name="trasProdID">
+                                                <input type="hidden"   id="cerrado" name="cerrado">
                                                 <div class="mb-3">
-                                                <input type="date"   class="form-control"  id ="fechaGasto" name = "fechaGasto"   required>
-                                                    <!-- <input type="date" name="fechaingb" id="fechaingb" class="form-control" value="<?php  date_default_timezone_set("America/El_Salvador");// echo $date = date("Y-m-d"); ?>"> -->
-                                                   
+                                                <input type="date"   class="form-control"  id ="fechatraslado" name = "fechatraslado"   required> 
                                                 </div>                                                
-                                                <div class="mb-3"> 
-                                                    <select name="sucursalGasto" id="sucursalGasto"  class="form-control chosen" required>  
-                                                        <option value = "0"> Seleccione una sucrusal</option>
-                                                        <?php foreach( $listaSucursales as  $row): ?>
-                                                            <option  value="<?php echo $row->establecimientoID; ?>"> <?php echo  $row->estNombre   ?> </option>
-                                                        <?php endforeach ?>           
-                                                        
-                                                    </select>     
+                                                <div class="mb-3">                                              
+                                                    <select name="bodOrigen" id="bodOrigen"  class="form-control chosen" required >  
+                                                        <option>Seleccione la bodega de origenqq</option>                                
+                                                        <?php foreach ($listBodegaProducto as $row): ?>
+                                                            <option value="<?php echo $row->bodegaProductoID; ?>">
+                                                            <?php echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
+                                                            </option>
+                                                        <?php endforeach ?>
+                                                                
+                                                    </select> 
                                                 </div>
-                                                <div class="mb-3">                                                  
+                                                <div class="mb-3">                                              
+                                                    <select name="bodDestino" id="bodDestino"  class="form-control chosen" required>  
+                                                        <option>Seleccione la bodega de destino</option>                                
+                                                        <?php foreach ($listBodegaProducto as $row): ?>
+                                                            <option value="<?php echo $row->bodegaProductoID; ?>">
+                                                            <?php echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
+                                                            </option>
+                                                        <?php endforeach ?>
+                                                                
+                                                    </select> 
+                                                </div>
+                                                
+                                                    <div class="mb-3">
+                                                            <select name="producto" id="producto"  class="form-control chosen" required>  
+                                                                <option>Seleccione un producto</option>                                
+                                                            <?php foreach ($listaProductos as $row): ?>
+                                                                <option value="<?php echo $row->productoID; ?>">
+                                                                <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
+                                                                </option>
+                                                            <?php endforeach ?>
+                                                                        
+                                                            </select>      
+                                                    </div>                                                                                             
+               
+                                               
+                                                    <div class="mb-3">                                                                                                               
+                                                            <select name="prodPresentacion" id="prodPresentacion"  class="form-control chosen"  onchange="javaScript:getunidadPresentacion()" required>                                  
+                                                            <option value="0">Seleccione una presentacion</option>                                 
+                                                                <?php foreach ($prodPresentacion as $row): ?>
+                                                                    <option value="<?php echo $row->presProdID; ?>">
+                                                                    <?php echo $row->presProdID . " - " .  $row->presentacionProd; ?>
+                                                                    </option>
+                                                                    <?php endforeach ?>
+                                                                                
+                                                                    </select>      
+                                                    </div>           
+
+                                               
+                                               
+                                                    <div class="mb-3">
+                                                        <input type="hidden"   class="form-control "  id ="existenciaprod" name = "existenciaprod" step="any" placeholder="Ingrese la cantidad a trasladar">                           
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                    <input type="number"   class="form-control "  id ="cantidadTrasl" name = "cantidadTrasl" step="any" placeholder="Ingrese la cantidad a trasladar" required>                           
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                   
+                                                   <input type="number"   class="form-control "  id ="cantidadProd" name = "cantidadProd" step="any" placeholder="Ingrese la cantidad a trasladar" required>                           
+                                                   </div>
+                                                   <div class="mb-3 text-right">
+                                                      <button id ="btnsavetraslado" name="btnsavetraslado" type="submit" class="btn btn-lg btn-success" title="Iniciar toma">  <i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                    
+                                                  </div>
+                                                             
+
+                                                                    
+                                                    
+
+                                             
+
+
+                                               <!-- <div class="mb-3">                                                  
                                                     <button id="btnguardar" name="btnguardar" type="submit"  class="form-control btn-primary "><i class="fa fa-save" aria-hidden="true"></i>  Guardar</button>
                                                    
                                                 </div>
@@ -97,7 +155,7 @@ $('#DeGastos').stacktable();
                                                   
                                                    
                                                     <button id="btncerrargasto" name="btncerrargasto" class="form-control btn-danger" onclick="cerrarGastos()"><i class="fa fa-close" aria-hidden="true"></i>  Cerrar gastos</button>
-                                                </div>
+                                                </div> -->
                                                 
                                             </form>    
                                         </div>
@@ -116,22 +174,7 @@ $('#DeGastos').stacktable();
                                         <!-- <input type="hidden"  id ="IdGasto" name ="IdGasto"> -->
 
                                         <input type="hidden"   id="cerrado"  name="cerrado"> 
-                                            <div class="form-group" >                            
-                                                <input type="number"   class="form-control text-right"  id ="cantidadgasto" name = "cantidadgasto" placeholder="Ingresa cantidad fisica" required>                           
-                                                
-                                            </div>
-                                            <div class="form-group">                            
-                                                <input type="number"   class="form-control text-right"  id ="preciogasto" name = "preciogasto" placeholder="Ingresa precio unitario"  onblur="calculartotalDetgasto(event)" required>                           
-                                              
-                                            </div>
-                                            <div class="form-group">                            
-                                            <input type="number"   class="form-control text-right"  id ="totalDet" name = "totalDet"  required >    
-                                              
-                                            </div>
-                                            <div class="form-group">                            
-                                                <textarea name="descripcionDetGast" id="descripcionDetGast"  class="form-control " rows="3"  placeholder="Ingrese la descripcion del  gasto" required></textarea>    
-                                                                                     
-                                            </div>
+                                            
                                             <div class="mb-3 text-right">
                                             <button id ="btnsavedet" name="btnsavedet" type="submit" class="btn btn-lg btn-danger" title="Iniciar toma">  <i class="fa fa-plus" aria-hidden="true"></i></button>
                                                   <!--   <input type="submit"   class="form-control" value="Guardar"> -->
@@ -161,9 +204,10 @@ $('#DeGastos').stacktable();
                                         <tbody > 
                                         </tbody>  
                                     </table> 
-                                    <div class="mb-3 text-right">
-                                          
-                                                  <!--   <input type="submit"   class="form-control" value="Guardar"> -->
+                                    <div class="mb-3">                                
+                                       <button id="btnguardartras" name="btnguardartras" type="submit"  class="form-control btn-primary "><i class="fa fa-save" aria-hidden="true"></i>  Guardar</button>
+                                     
+                                                
                                     </div>
 
                                 <!-- </div>    -->

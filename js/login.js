@@ -5,8 +5,9 @@ function base_url(url){
 function validaUser(){
     //  esto lo pasaremos por  Json para  evitar  mostrar  datos en  la  barra  direccione 
     console.log("Llegando a la funcion para  validar  al  usuarios"); 
-    var user = '';
-    var pwd  = '';
+    var user              = '';
+    var pwd               = '';
+    var  establecimID  ='';
     var url  = base_url('index.php/login_Controller/validaUser/');
 
     if(document.getElementById('user')){
@@ -15,7 +16,13 @@ function validaUser(){
     if(document.getElementById('pwd')){
         pwd =  $("#pwd").val();
     }
-    var DJson = { user: user, pwd:pwd };
+    if(document.getElementById('establecimiento')){
+        establecimID =  $("#establecimiento").val();
+    }
+    //console.log('EL esablecimiento seleccionado es ' + establecimiento  );   
+    alert('EL esablecimiento seleccionado es ' + establecimID )  ; 
+    var DJson = { user:user, pwd:pwd, establecimID:establecimID };
+    alert('los  datos enviados por el  Json son ' + DJson)  ; 
     $.ajax({
         url:url,
         type:"POST",

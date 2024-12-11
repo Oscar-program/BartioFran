@@ -1,6 +1,7 @@
 function base_url(url){
     return window.location.origin + "/BartioFran/"+ url;
 }
+
 //  funcion para mostrar la vista  principal para iniciar el  ingreso de  gastos 
 function  iniciarGastos(){
   var url = base_url('index.php/gastos_Controller/iniciargastos/');
@@ -8,6 +9,7 @@ function  iniciarGastos(){
     $("#principal").html(data);
     $("#btncerrargasto").css("display", "none");
     document.getElementById('btnsavedet').disabled = true;
+    $("#btnguardar").css("display", "none");
   });
 }
 
@@ -51,7 +53,7 @@ function  detalleGastos(gastoID){
        $("#loader").css("display", "none");
        $("#btnguardar").css("display", "none");
        $("#btncerrargasto").css("display", "none");
-       document.getElementById('btnsavedet').disabled = false;
+      // document.getElementById('btnsavedet').disabled = false;
        document.getElementById('btnguardar').disabled = true;
 
      }
@@ -243,4 +245,135 @@ function delDetGasto(detgastosID){
     }
   });
 } 
+// funcion  para calcular el total del  detalle de la compra  
+function calculartotalDetgasto(e){
+  //if(e.keyCode===13){ 
+     console.log("disparando el evento de calculo");
+    var ejecutar      = "S";
+    var totalDet      = 0 ;
+    var cantidadgasto = parseFloat($("#cantidadgasto").val());
+    var preciogasto   = parseFloat($("#preciogasto").val()); 
+    if(cantidadgasto <= 0   || preciogasto <= 0 )  {
+      ejecutar  ="N";
+      alertify.set("notifier", "position", "top-right");
+      alertify.error("Verifique los  valores ingresados, estos tiene que ser mayores de Cero");
+      return false;
+    }
+  
+    if(ejecutar  =="S"){
+      totalDet = cantidadgasto  *  preciogasto;   
+     $("#totalDet").val(parseFloat(totalDet));
+    }
+    
+   // e.preventDefault();
 
+ // }
+ }
+// funcion para  verificar el tab que se esta seleccionando 
+function verificatabgasto(id){  
+  switch (id) {
+                 case 'one-tab':
+                   mostrarDetalles();
+                   break;
+                 case 'two-tab':          
+                 ListGastos();
+                 break;
+               }
+}
+// funcion para cargar la lista de gastos procesados
+function ListGastos(){  
+  var url = base_url('index.php/gastos_Controller/ListGastos/'); 
+  $.get(url, function (data) {
+    $("#cuerpolistagastos").html(data);
+    //$("#IdGasto").val(gastoID);
+  });
+}
+//  funcion para buscar el ultimo gasto que  no se cerrado , si esta abierto 
+// retorna los datos de lo contrario notificara que se encuentra cerrado
+function searGastos(){
+  var fechaGasto ='';  
+  if(document.getElementById('fechaGasto')){
+      fechaGasto = $("#fechaGasto").val();
+    }
+    DJSon ={fechaGasto:fechaGasto};
+  var url_destino = 'index.php/gastos_Controller/searGastos/'; 
+     console.log("enviando  los datos para busca el gasto");
+  $.ajax({
+    url: base_url(url_destino),
+    type: "POST",
+    data: DJSon,
+    dataType : 'json',
+
+   // cache: false,
+   // contentType: false,
+    //processData: false,
+    beforeSend: function () {
+      // Show image container
+      $("#loader").css("display", "block");
+    },
+    success: function (data) {
+      if(data == 0){
+        alert("Este dia  no tiene gastos  registrados,  favor verificar en lista de  gastos");
+      }else{
+        console.log('datos de  gasto abierto ' + data); 
+      //console.log('datos de  gasto abierto ' + data[0].descDetGasto + ' es id'); 
+      //sucursalGasto
+      
+      $("#sucursalGasto").val(data[0].establecimientoID );
+      $("#sucursalGasto").change();
+      $("#gastosID").val(data[0].gastosID );
+      $("#gastosIDdet").val(data[0].gastosID );
+      
+
+      //$("#gastosID").val(data[0].gastosID );
+      if(data[0].cerrado == 0){
+        document.getElementById('btncerrargasto').disabled = false;
+        $("#btncerrargasto").css("display", "block");
+        $("#btnguardar").css("display", "none");
+        listarDetGastos(data[0].gastosID);
+        
+      }else{
+          alert("La cabecera del  gasto ya s encuentra  cerrada,  tiene que  habilitarlo para poderlo  editar");
+      }
+      }
+      
+
+     
+    },
+    complete: function (data) {
+      // Show image container
+      $("#loader").css("display", "none");       
+    }
+  });
+
+    
+  /*$.get(url, function (data) {
+    $("#cuerpolistagastos").html(data);
+    //$("#IdGasto").val(gastoID);
+  });*/
+}
+//  funcion para listar el detalle de  los fastos 
+function listarDetGastos(gastosID){
+  var url = base_url('index.php/gastos_Controller/listarDetGastos/' + gastosID ); 
+  $.get(url, function (data) {
+    document.getElementById('mostrarTabla').innerHTML = '';
+    $("#mostrarTabla").html(data);
+  });
+
+ 
+
+
+}
+// funcion para  habilitar los gastos 
+function habilitarCabeceraGasto(gastosID){
+  var url = base_url('index.php/gastos_Controller/habilitarCabeceraGasto/' + gastosID ); 
+  $.get(url, function (data) {
+    ListGastos();
+    //document.getElementById('mostrarTabla').innerHTML = '';
+    //$("#mostrarTabla").html(data);
+  });
+
+ 
+
+
+}

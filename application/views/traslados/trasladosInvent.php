@@ -19,8 +19,6 @@
                 <div class="row">
                         <div class="col-sm" style="display: inline-block;">
                                 <label for="bodOrigen">Bodega origen</label>
-                            
-
                                 <select name="bodOrigen" id="bodOrigen"  class="form-control chosen">  
                                     <option>Seleccione la bodega de origen</option>                                
                                     <?php foreach ($listBodegaProducto as $row): ?>

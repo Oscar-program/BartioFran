@@ -1,6 +1,22 @@
 <?php  
 defined('BASEPATH') or exit('No direct script access allowed');
 class trasladoProducto_Model extends CI_Model {
+
+    // funcion para  ingresar los traslados  
+     public function insertarTraslado($data, $trasProdID){
+        if($trasProdID== null){
+            $this->db->insert('trasladoproductobodega',$data);
+            return  $this->db->insert_id();
+        }else{
+               $this->db->set('$data', $data['productoID'])
+                     ->where('trasProdID', $trasProdID)
+                     ->update('trasladoproductobodega');
+                 return  $this->db->affected_rows();      
+
+        }       
+
+     }
+
   
     // funcion para cargar las  categorias de los  productos  
     public function ListarTrasladoProducto(){

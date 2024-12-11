@@ -3,7 +3,7 @@ defined('BASEPATH') or  exit('No direct script access allowed');
 include getcwd(). "/application/libraries/fpdf/fpdf.php";
 include getcwd(). "/application/libraries/operacionInvnt/operacionesInventario.php";
 
-class trasladoProducto_Controller extends CI_Controller{
+class TrasladoProducto_Controller extends CI_Controller{
     public function __construct(){
         parent:: __construct();
         $this->load->database();
@@ -54,33 +54,60 @@ class trasladoProducto_Controller extends CI_Controller{
         //echo  'llegando al  controlador para procesar los  traslados';
         //$idTransac     = (isset($_POST["idTransac"]))?  $_POST["idTransac"] : 0;
         //echo  "El id de la transacciones es " .  $idTransac;
-        $operacionesInventario  =  new  operacionesInvenatarios();
+        echo    'llegando al controlador',
+        //$operacionesInventario  =  new  operacionesInvenatarios();
+        // controles del  formulario
+        /*fechatraslado
+            bodOrigen 
+            bodDestino
+            producto
+            prodPresentacion --  indica  si  es una caja o unidad como  tal 
+            existenciaprod
+            cantidadTrasl
+            cantidadProd */
+        // 
+        $productoID       = 0;
+        $bodProdOrigen    = 0;
+        $bodProdDestino   = 0;
+        $unidMeTtrasl     = 0;
+        $cantidadTrasl    = 0;
+        $cantidadProd     = 0;
+        $fechTrasladoProd = 0;
+        $usuarioID        = 0;
+        $nivelUsrID       = 0;
+        try {
+            $result = 0/2;
+        } catch (Exception $e) {
+           log_message('error: ',$e->getMessage());
+           return;
+        }
+
         
-        //exit;
-        $movtipo       ="TRASL" ;
-        $productoID    = (isset($_POST["productoID"]))?  $_POST["productoID"] : 0;;
-        $bodegaOrigen  =(isset($_POST["bodegaProductoID"]))?  $_POST["bodegaProductoID"] : 0;
-        $bodegaDest    =(isset($_POST["bodegaDest"]))?  $_POST["bodegaDest"] : 0;   
-      // echo  'la cantidad a trasladar es' .  $_POST["cantidadtrasl"];
-        $salida        =(isset($_POST["cantidadtrasl"]))?  $_POST["cantidadtrasl"] : 0;
-        $entrada       =(isset($_POST["cantidadtrasl"]))?  $_POST["cantidadtrasl"] : 0;
-        $transaccionID =(isset($_POST["idTransac"]))?  $_POST["idTransac"] : 0;
-        # preparando el algoritmo para  refleja la  salida en  el kardex
-        $kardexProdID= NULL;
-        $dataSalidaK =  array('transaccionID'    => $transaccionID,
-                              'movtipo'          => $movtipo, 
-                              'bodegaProductoID' => $bodegaOrigen,
-                              'productoID'       => $productoID,
-                              'entrada'          => 0,
-                              'salida'           => $salida,
-                              'precio_unit'      => 1,
-                              'subtotal'         => 1,
-                              'impuesto'         => 1,
-                              'total'            => 0 
+        exit;
+        $movtipo        = "TRASL" ;
+        $productoID     = (isset($_POST["producto"]))?  $_POST["producto"] : 0;;
+        $bodProdOrigen  = (isset($_POST["bodOrigen"]))?  $_POST["bodOrigen"] : 0;
+        $bodProdDestino = (isset($_POST["bodDestino"]))?  $_POST["bodDestino"] : 0;  
+        $unidMeTtrasl   = (isset($_POST["prodPresentacion"]))?  $_POST["prodPresentacion"] : 0;
+        $cantidadTrasl  = (isset($_POST["cantidadTrasl"]))?  $_POST["cantidadTrasl"] : 0;        
+        $salida         = (isset($_POST["cantidadProd"]))?  $_POST["cantidadProd"] : 0;
+        $entrada        = (isset($_POST["cantidadProd"]))?  $_POST["cantidadProd"] : 0;
+        //$transaccionID  = (isset($_POST["idTransac"]))?  $_POST["idTransac"] : 0;
+       
+        $trasProdID     = NULL;
+        $dataSalidaTras =  array(
+                                  'productoID'    => $productoID,
+                                  'bodProdOrigen' => $bodProdOrigen, 
+                                  'bodProdDestino'=> $bodProdDestino,
+                                  'unidMeTtrasl'  => $unidMeTtrasl,
+                                  'cantidadTrasl' => $cantidadTrasl,
+                                  'cantidadProd'  => $salida,
+                                  'usuarioID'     => $usuarioID,
+                                  'nivelUsrID'    => $nivelUsrID,                             
                             );
                            // var_dump($dataSalidaK);  
                             //echo 'Inserta la salida en el  kardex' .  '<br>';
-                           $this->compraProducto_Model->addMoVKardex( $dataSalidaK, $kardexProdID) ;  
+                           $this->compraProducto_Model->addMoVKardex( $dataSalidaTras, $trasProdID) ;  
                                                
         $dataEntradaaK =  array('transaccionID'    => $transaccionID,
                                   'movtipo'          => $movtipo, 
@@ -119,7 +146,10 @@ class trasladoProducto_Controller extends CI_Controller{
       $datos["listaProductos"] =   $this->Producto_Model->get_ListProducto();
       $datos["prodPresentacion"] =   $this->prodPresentacion_Model->get_PresentacionProd();
       //var_dump($this->datos["datosMArcas"]);
-   $this->load->view("traslados/trasladosInvent", $datos); 
+    // $this->load->view("traslados/trasladosInvent", $datos);
+    # la sumatoria de todos los  traslados incrementaran el refil de la  toma fisica  
+
+  $this->load->view("traslados/IngresarTraslados", $datos); 
 
 } 
 // funcion para mostrar  lista  en movil 

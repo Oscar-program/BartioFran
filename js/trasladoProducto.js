@@ -37,20 +37,21 @@ function  ListarTraslados(){
 
 
 
-function saveTraslado(productoID, bodegaProductoID, identificador , bodegaProductoIDDes) {
+function saveTraslado() {
+  // capturqamos los  valore del frmulario principal  ;
+  console.log("LLegando a la  funcion para almacenar el traslado");
 
+  var productoID     = (document.getElementById("producto"))?  $("#producto").val() : 0;
+  var bodProdOrigen  = (document.getElementById("bodOrigen"))?  $("#bodOrigen").val() : 0; 
+  var bodProdDestino = (document.getElementById("bodDestino"))?  $("#bodDestino").val() : 0;  
+  var unidMeTtrasl   = (document.getElementById("prodPresentacion"))?  $("#prodPresentacion").val() : 0;
+  var cantidadTrasl  = (document.getElementById("cantidadTrasl"))?  $("#cantidadTrasl").val() : 0;        
+  var cantidadProd   = (document.getElementById("cantidadProd"))?  $("#cantidadProd").val() : 0;
 
-
-    var cantidadtrasl = $("#cantidadtrasl" + identificador).val();
-    var bodegaDest    = bodegaProductoIDDes;// $("#bodegaDest"    +identificador).val();  
-    var  idTransac   = 0; 
-    if(document.getElementById('trasladoID')){
-      idTransac = $("#trasladoID").val();
-
-    }   
+ 
     var DJson         = {
-                         productoID:productoID, bodegaProductoID:bodegaProductoID, 
-                         cantidadtrasl:cantidadtrasl, bodegaDest:bodegaDest, idTransac:idTransac
+                         productoID:productoID, bodProdOrigen:bodProdOrigen, 
+                         bodProdDestino:bodProdDestino, unidMeTtrasl:unidMeTtrasl, cantidadTrasl:cantidadTrasl, cantidadProd:cantidadProd
                         };  
 	url_destino       = "index.php/trasladoProducto_Controller/saveTraslado/";
 	
@@ -74,8 +75,8 @@ function saveTraslado(productoID, bodegaProductoID, identificador , bodegaProduc
       //$("#codigoCliente").prop( "disabled", true);
         alertify.set("notifier", "position", "top-right");
         alertify.success("Traslado efectuado correctamente");
-        $("#statusenvio" + identificador).val("Enviado")
-        $("#statusenvio" + identificador).css({ "background-color": "green", "color": "white", "opacity":" 0.75", });
+       // $("#statusenvio" + identificador).val("Enviado")
+        //$("#statusenvio" + identificador).css({ "background-color": "green", "color": "white", "opacity":" 0.75", });
        
       },
       complete: function () {
@@ -165,4 +166,31 @@ function  Listamovil(){
       });
   
 
+}
+//  funcion para almacenar  nuevo traslado  
+function savTraslado(){
+  // captruamos el formulario que contiene los datos 
+  console.log('LLegando a la funcion para almacenar el traslado');
+  var formData ='';
+    // formData = new FormData($(".FormDetGastos")[0]);    
+     formData =  new FormData($(".formTraslados")[0]);
+
+  // hacemos la peticion ajax  y   enviamos el json con los datos 
+  
+  url_destino = "index.php/TrasladoProducto_Controller/saveTraslado/";
+  
+  $.ajax({
+            url: base_url(url_destino),  
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function() {},
+            success: function(data) {
+              console.log("Guardando los traslados");
+            },
+            complete: function(data) {}  
+
+          });
 }

@@ -35,7 +35,9 @@ class gastos_Model extends CI_Model{
  # funcion para  insertar detalle de gastos
  public function saveDetGastos($data, $detgastosID){
     if($detgastosID ==   null){
-        $this->db->insert("det_gastos",$data);
+        
+        $this->db->insert("det_gastostmp",$data);
+        //$this->db->insert("det_gastos",$data);
         return $this->db->insert_id();
     }else{
         $this->db->set("cantidad", $data["cantidad"])
@@ -54,7 +56,7 @@ class gastos_Model extends CI_Model{
               ->join('gastosOperativos encg','encg.gastosID = deg.gastosID','inner')
               ->where('encg.cerrado',0)
               ->where('deg.gastosID',$gastosID)
-             ->get("det_gastos deg")
+             ->get("det_gastostmp deg")
              ->result();
     return  $query;          
 }
@@ -76,6 +78,43 @@ class gastos_Model extends CI_Model{
              ->delete("det_gastos");                 
     return  $this->db->affected_rows();          
 }
+// segmento para mostra la lista generarl de  gastos  
+public function ListGastos() {
+    $query =  $this->db->select("gt.gastosID , date_format( gt.fecha, '%Y-%m-%d') as fecha ,  estemp.estNombre, sum(coalesce(gt.unidades,0))as unidades, sum(coalesce(gt.total,0)) total, gt.cerrado")   
+              ->join('establecimientoempresa estemp','gt.establecimientoID =  estemp.establecimientoID','inner')
+              //->where('encg.cerrado',0)
+              //->where('deg.detgastosID',$detgastosID)
+              ->group_by('gt.gastosID')
+              ->order_by('gt.gastosID', 'DESC')
+              ->limit(5)
+             ->get("gastosoperativos gt")
+             
+             ->result();
+    return  $query;          
+} 
+// funcion  para  buscar gatos por fecha y  establecimietno
+
+
+public function searchGasto($fecha) {
+  //  echo 'en el modelo la fecha capturada es' . $fecha .  'el id del stablecimiento es ' . $_SESSION["establecimientoID"] . ' $$$' ; 
+    $query =  $this->db->select("*")
+              ->where('gt.establecimientoID',$_SESSION["establecimientoID"] )
+              ->where('date_format(gt.fecha,"%Y-%m-%d")',$fecha)
+              ->where('gt.cerrado',0)
+             ->get("gastosoperativos gt")
+             
+             ->result();
+    return  $query;          
+} 
+//  funcion para  habilitar  cabecera de gasto  
+public function habilitarCabeceraGasto($gastosID){
+        $this->db->set("cerrado",0)
+                 ->where("gastosID", $gastosID)
+                 ->update("gastosoperativos");
+        return $this->db->affected_rows();   
+    
+} 
+
 
 
 }

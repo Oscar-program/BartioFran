@@ -17,26 +17,38 @@ class   login_Controller extends CI_Controller{
         ini_set('display_startup_errors',1);
         error_reporting(E_ALL);
       //  session_unset();
-        session_destroy();
+       session_destroy();
         session_start();
        // $_SESSION["usuario"] ="fhsdjfhjk";
         //$_SESSION['idDetCompra']='1';
         //$_SESSION["IdTempComprea"]= rand();
         //$_SESSION['detlistadecompra']=null;
-        unset($_SESSION['detlistadecompra']);
+        //unset($_SESSION['detlistadecompra']);
 
         $aes_encrypt  =  new  aes_encrypt();
        // $_SESSION["usuario"] = "";
         $userRerotno       = "";
         $RetornaUser       = 1;
-        $usrLogin          =  (isset($_POST["user"]))?  $_POST["user"] : ""; // 'admin';
-        //$usrPwd      =  (isset($_POST["pwd"]))?  $_POST["pwd"] : ""; // 'Admin20241';
-        $usrPwd            =  (isset($_POST["pwd"]))? $aes_encrypt->aes_encryptAcceso($_POST["pwd"] ,"encrypt"): ""; // 'Admin20241';
-        $establecimientoID =  (isset($_POST["establecimientoID"]))?  $_POST["establecimientoID"] : ""; // 'admin';
-        //$aes_encrypt->aes_encryptAcceso($_POST["Password"] ,"encrypt")
-        //echo  'los  valores capturados son ' . $usrLogin . ' ' . $usrPwd   .  '<br>'  ;
+        /*if((isset($_POST['user']))){
+            echo  'el control   fue encontrado####';
+        }else {
+            echo   'no se encuentra el  control';
+        }*/
+
+
+        $usrLogin     =  (isset($_POST["user"]))?  $_POST["user"] : ""; 
+        $establecimID =  (isset($_POST["establecimID"]))?  $_POST["establecimID"] : ""; 
+        //echo  'los  valores capturados son ' . $_POST["user"] . '  ' . $_POST["establecimID"]   .  '<br>'  ;
+     
+        $usrPwd            =  (isset($_POST["pwd"]))? $aes_encrypt->aes_encryptAcceso($_POST["pwd"] ,"encrypt"): ""; 
+       
+
+
+      
+   // echo  'la sucursal seleccionada es ' .  $_POST["user"]  . ' FDSF' ;
         
         $datosUser   =  $this->usuarios_Model->getUserpwd($usrLogin, $usrPwd);
+       // var_dump(  $datosUser);
         if(empty($datosUser)){
             $RetornaUser = 0;
            // echo $RetornaUser ; 
@@ -45,7 +57,7 @@ class   login_Controller extends CI_Controller{
         }else{
             $_SESSION["usuario"]           = $datosUser->usrNombre; 
             $_SESSION["usrLogin"]          = $datosUser->usrLogin; 
-            $_SESSION["establecimientoID"] = $datosUser->establecimientoID; 
+            $_SESSION["establecimientoID"] = $establecimID;
             $_SESSION["idDetCompra"]=1;
             $_SESSION["IdTempComprea"]= rand();
             $_SESSION["detlistadecompra"]= array();
@@ -53,6 +65,7 @@ class   login_Controller extends CI_Controller{
              
             // echo 'la variable de  session contiene' . $_SESSION["usuario"] ; 
         }
+       // echo   'el establecimiento  capturado es ' .  $_SESSION["establecimientoID"];
         echo $RetornaUser ; 
       
     }
