@@ -1,10 +1,10 @@
 <?php 
-$GLOBALS['idCompra'] = 0;
-$GLOBALS['idCompratmp'] = 0;
+$GLOBALS['arrCabecera'] = array();
+$GLOBALS['arrDetalle']  = array();
 defined('BASEPATH') OR exit('No direct script access allowed');
 include getcwd(). "/application/libraries/operacionInvnt/operacionesInventario.php";
 
-class compraProducto_Controller extends CI_Controller {  
+class CompraProducto_Controller extends CI_Controller {  
     public function __construct()
     {
            parent::__construct();     
@@ -16,33 +16,65 @@ class compraProducto_Controller extends CI_Controller {
            $this->load->model('MedidaProducto_Model');
            $this->load->model('Marcas_Model');
            $this->load->model('PresentacioProducto_Model');
-           $this->load->model('compraProducto_Model');        
+           $this->load->model('CompraProducto_Model');   
+           $this->load->model("prodPresentacion_Model");     
 
            $this->load->helper('path');  
         
-    }
-    //  funcion para cargar  la vista principal de  compras 
-    public function get_ListCompras(){ 
-      ini_set('display_errors',1);
-      ini_set('display_startup_errors',1);
-      error_reporting(E_ALL); 
-      //  obtener los  datos de los proveedores  existentes  
-      $datos['listCompras'] =  $this->compraProducto_Model->get_ListCompras();
-      $this->load->view('compras/listaComprasProducto', $datos);
+    }   
 
-   
-    }
-
-     /*funcion para  ingresar el detalle de compra del los  productos*/
+   /*Carga la vista principal para  ingresa las compras */
    public function addCompraProducto(){ 
       ini_set('display_errors',1);
       ini_set('display_startup_errors',1);
       error_reporting(E_ALL); 
       //  obtener los  datos de los proveedores  existentes  
       $datos['proveedores'] =  $this->Proveedor_Model->get_listaProveedores();
+      $this->load->view('compras/procesarCompras', $datos);
 
-      $this->load->view('inventarios/compra_producto', $datos);
+     // $this->load->view('inventarios/compra_producto', $datos);
    }
+   // funcion que carga el detalle de la compra  
+   public function addDetCompra(){ 
+      ini_set('display_errors',1);
+      ini_set('display_startup_errors',1);
+      error_reporting(E_ALL); 
+      
+     // echo  'llegando al  controlador para cargar los productso a la compra';
+      $compraProdID =null;
+      $datos['ListProducto']        = $this->Producto_Model->get_ListProducto();
+      $datos["prodPresentacion"]    = $this->prodPresentacion_Model->get_PresentacionProd();
+      $fecha                        = (isset($_POST['fecha']))? $_POST['fecha']:null;
+      $tipocomprobante              = (isset($_POST['tipocomprobante']))? $_POST['tipocomprobante']:null;
+      $numcomprobante               = (isset($_POST['numcomprobante']))? $_POST['numcomprobante']:null;
+      $proveedor                    = (isset($_POST['proveedor']))? $_POST['proveedor']:null;
+      $data                        = array(
+                                             'empresaID'=> 1,
+                                             'establecimientoID'=>$_SESSION["establecimientoID"],
+                                             'compProdFecha'=>$fecha,                    
+                                             'comprobanteTipo'=>$tipocomprobante,
+                                             'comprobantenum'=>$numcomprobante,
+                                             'proveedorID'=>$proveedor,
+                                              'usuarioID'  =>  $_SESSION["usuarioID"]
+                                          );
+
+     
+     // $_SESSION["EncCompra"]= $arrar ;
+     // Creamos un  arrar vacio 
+     // $_SESSION["detCompra"]= array() ;
+    //  print_r($_SESSION["detlistadecompra"])  ;
+    
+    // insertamos la cabecera y  retornamos el id de la cabecera  
+   // var_dump($data);
+     $compraResultID =  $this->CompraProducto_Model->addCabeceracompra($data, $compraProdID);
+     $datos["compraResultID"]    =$compraResultID;
+      
+
+      $this->load->view('compras/addProcompra', $datos);
+     // echo  'lo qe se  tiene almacenado es' ;
+       
+    }
+
 
     //  funcion  para  insertar el  producto temporal 
     public function addtmpdetcompra(){
@@ -51,13 +83,20 @@ class compraProducto_Controller extends CI_Controller {
         error_reporting(E_ALL);
         /* Creamos una variable para determinar el  modelo  a ejecutar*/
         //
-        //echo 'llegando al  controlador';
-        $idtmp = null;       
-        if($_POST['idtmp']!=''){         
-          $idtmp = $_POST['idtmp'];
-        }
+       // echo 'llegando al  controlador';
+        if(isset( $_SESSION["EncCompra"])){
+          //  var_dump($_SESSION["EncCompra"]);
+         foreach($_SESSION["EncCompra"] as $row){
+            //   echo  'recorriendo arr'. $row->tipocomprobante;
 
-        $idCompra             = (isset($_POST['idCompratmp'])) ? $_POST['idCompratmp']:  null;
+         }
+        }
+        $idtmp = null;       
+       /* if($_POST['idtmp']!=''){         
+          $idtmp = $_POST['idtmp'];
+        }*/
+
+        $idCompra             = (isset($_POST['compraProdID'])) ? $_POST['compraProdID']:  null;
         $productoID           = (isset($_POST['producto'])) ? $_POST['producto']:  null;
         $descripcion          = (isset($_POST['nameproductotmp'])) ? $_POST['nameproductotmp']:  null;
         $cantidad             = (isset($_POST['cantidad'])) ? $_POST['cantidad']:  0;
@@ -65,11 +104,11 @@ class compraProducto_Controller extends CI_Controller {
         $sub_total            =  $cantidad *  $preCosto;
         $impuesto             = 0 ;
         $total                = $sub_total+ $impuesto   ;
-      if($idCompra!=null ){
-            $data =  array("idCompra"=>  $idCompra, 
-                           "productoID"=>$productoID, 
-                           "descripcion"=>$descripcion,  
-                           "productoID"=>$productoID,
+
+
+      //if($idCompra!=null ){
+            $data =  array("compraProdID"=>  $idCompra, 
+                           "productoID"=>$productoID,                           
                            "cantidad"=>$cantidad,
                            "precUnit"=>$preCosto,
                            "sub_total"=>$sub_total,
@@ -79,13 +118,18 @@ class compraProducto_Controller extends CI_Controller {
                            );
          //var_dump($data);                  
          if($productoID !=null   and  $total> 0 ){
-            $result = $this->compraProducto_Model->addtmpdetcompra($data, $idtmp);
+            //echo  'insertando el detalle de la compra ';
+             $this->CompraProducto_Model->addtmpdetcompra($data, $idtmp);
+            //  calculamos    y  retornamos los nuevos valores de total  
+            $datostotaltmp =  $this->CompraProducto_Model->get_sumastotaltmp($idCompra);
+            echo  json_encode($datostotaltmp);
+
          }else{
             //echo   'No se puede almacenar el  productod';
          } 
-      }else{
+      //}else{
          //echo 'el id de la compra es  null  no se  puede  procesar ';
-      }
+     // }
         
       
     }
@@ -93,12 +137,10 @@ class compraProducto_Controller extends CI_Controller {
    public function get_ListTmp($idCompra){ 
         ini_set('display_errors',1);
         ini_set('display_startup_errors',1);
-        error_reporting(E_ALL); 
-        //$idCompra = (isset($_POST['idCompra'])) ? $_POST['idCompra']:  null;
-        //echo  'Se mantiene la valiable globla'.  $idCompra ;
+        error_reporting(E_ALL);  
+        $datos['ListTmpCompra'] =  $this->CompraProducto_Model->get_ListTmp($idCompra);
+       $this->load->view('compras/detTmpCompra', $datos);
         
-        $datos['ListTmpCompra'] =  $this->compraProducto_Model->get_ListTmp( $idCompra);
-        $this->load->view('productos/detTmpCompra', $datos);
       }
       //  funcion  para obtener  los totales   de las compras  
    public function get_sumastotaltmp($idCompra){ 
@@ -108,7 +150,7 @@ class compraProducto_Controller extends CI_Controller {
       //$idCompra = (isset($_POST['idCompra'])) ? $_POST['idCompra']:  null;
       //echo  'Se mantiene la valiable globla'.  $idCompra ;
       
-      $datostotaltmp =  $this->compraProducto_Model->get_sumastotaltmp($idCompra);
+      $datostotaltmp =  $this->CompraProducto_Model->get_sumastotaltmp($idCompra);
       echo   json_encode($datostotaltmp);
       }
       //  segmento para almacenar la compra detalle de  compra   y movimientos en  el kardex  
@@ -278,6 +320,33 @@ class compraProducto_Controller extends CI_Controller {
       var_dump($_SESSION["detlistadecompra"]);  
 
    }
+   
+
+    public function addArrCabecera(){
+      ini_set('display_errors',1);
+      ini_set('display_startup_errors',1);
+      error_reporting(E_ALL); 
+       if(isset($arrCabecera)){
+           // 
+           echo 'se tiene que  agregar elementos a la cabecera del array';
+       }else{
+         echo 'no exisate un array  creado';
+       }
+    } 
+    public function addArrDetalle(){
+      
+    } 
+     // funcion lista las compras      
+     public function get_ListCompras(){ 
+      ini_set('display_errors',1);
+      ini_set('display_startup_errors',1);
+      error_reporting(E_ALL); 
+      //  obtener los  datos de los proveedores  existentes  
+      $datos['listCompras'] =  $this->compraProducto_Model->get_ListCompras();
+      $this->load->view('compras/listaComprasProducto', $datos);
+
+   
+    }
 
       
 }

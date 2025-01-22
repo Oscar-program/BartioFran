@@ -9,25 +9,23 @@ var_dump($ListTmpCompra);
         $c= 1;
         foreach($ListTmpCompra as  $row) :?>
         								<tr>
-
                         <td><?php  echo   $c; ?></td>
                         <td><?php  echo   strval($row->cantidad); ?></td>
-                        <td><?php  echo   $row->descripcion; ?></td>
-                       
+                        <td><?php  echo   $row->prodDescripcion; ?></td>                       
                         <td><?php  echo   $row->precUnit; ?></td>
                         <td><?php  echo   $row->impuesto; ?></td>
-                        <td><?php  echo   $row->total; ?></td>
-                       
+                        <td><?php  echo   $row->total; ?></td>                      
                                                     
                         <td class="text-right">
 
                             <a href='#' class="btn-edit"
                             title="Editar Detalle"                             
-                                onclick="get_FamiliaProductoID(<?php  echo   $row->idtmp; ?>);">
+                                onclick="get_FamiliaProductoID(<?php  echo   $row->detCompraId; ?>);">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> </a>
+                                
                                 <a href='#' class="btn-eraser" 
                                  title="Eliminar registro"
-                                onclick="delete_FamiliaProductoID(<?php  echo   $row->idtmp; ?>);">
+                                onclick="delete_FamiliaProductoID(<?php  echo   $row->detCompraId; ?>);">
                                 <i class="fa fa-trash" aria-hidden="true"></i> </a>    
 
                             

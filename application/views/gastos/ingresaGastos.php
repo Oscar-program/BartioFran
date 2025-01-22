@@ -54,7 +54,7 @@ $('#DeGastos').stacktable();
         <div class="card mt-3 tab-card">
             <div class="card-header tab-card-header ">
                 <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                    <li class="nav-item"> <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true" onclick="verificatabgasto(this.id)">Ingreso de gastos</a> </li>
+                    <li class="nav-item"> <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true" onclick="verificatabgasto(this.id)">Ingreso de gastos!</a> </li>
                     <li class="nav-item"> <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false" onclick="verificatabgasto(this.id)">Gastos procesados</a> </li>
                 </ul>
             </div>

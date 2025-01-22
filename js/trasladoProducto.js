@@ -39,6 +39,7 @@ function  ListarTraslados(){
 
 function saveTraslado() {
   // capturqamos los  valore del frmulario principal  ;
+  var ejecutar  = "S";
   console.log("LLegando a la  funcion para almacenar el traslado");
 
   var productoID     = (document.getElementById("producto"))?  $("#producto").val() : 0;
@@ -55,11 +56,19 @@ function saveTraslado() {
                         };  
 	url_destino       = "index.php/trasladoProducto_Controller/saveTraslado/";
 	
-	console.log("Almacenando el  traslado del producto  ##########" +cantidadtrasl +"$$");
-  if(parseInt(cantidadtrasl)<= 0  || cantidadtrasl=='' ){
-    alertify.set("notifier", "position", "top-right");
-    alertify.error("El campo cantidad no  puede estar vacio");
-  }else{
+	console.log("Almacenando el  traslado del producto  Origen " +bodProdOrigen +"Destino "+ bodProdDestino);
+  if (bodProdOrigen == 0 || bodProdDestino == 0){
+    console.log("Evaluando la suncionalidad de los select $$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+      alertify.set("notifier", "position", "top-right");
+      alertify.error("Tiene que selecionar tanto la bodega de origen y destino ");
+      ejecutar  = "N"
+      return  false;
+  }
+  if(unidMeTtrasl== 0){
+
+  }
+  if(ejecutar  == "S" ){
+   
     $.ajax({
       url: base_url(url_destino),
       type: "POST",
@@ -193,4 +202,30 @@ function savTraslado(){
             complete: function(data) {}  
 
           });
+}
+// funcion que  activa y desactiva el  boton para procesar el tralado de  productos  
+function activaBoton(){
+  console.log("evaluando la funcionalidad del  boton de cantidad a trasladas");
+  ($("#cantidadTrasl").val()>0)? document.getElementById('btnsavetraslado').disabled = false:  document.getElementById('btnsavetraslado').disabled = true;
+ 
+    //btnsavetraslado
+  
+}
+ // Funcion para  inicar la toma   y procesamiento de los traslados 
+ function ingresarTraslados(){
+        
+  /*Determinamos si  los datos del  producto ya existen */
+  //var valorid         = 0;  
+  //var productoID      =  null;  
+  //var idCompratmp     =  $("#idCompra").val();  
+  console.log("Mostrando traslados de   inventarioseew");
+  var url = base_url('index.php/trasladoProducto_Controller/ingresarTraslados');
+
+  //var url = base_url("index.php/BancosController/bancos");
+  $.get(url, function (data) {
+      $("#principal").html(data);
+      document.getElementById('btnsavetraslado').disabled = true
+           
+  });
+
 }

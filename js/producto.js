@@ -174,29 +174,7 @@ function addProducto(productoID){
 
  }
 
-  /*funcion para cargar l formulario principal de la compra   */ 
-  function addCompraProducto(){  
-    //  creamos una variable de valor  aleatorio para crear el id  de la venta  
-    var CompraId  =  new Date().getTime().toString();
-    var  result = CompraId.slice(-9);
-    console.log('el id  generico es '+result );
-    var url = base_url('index.php/compraProducto_Controller/addCompraProducto/');
-  
-  //var url = base_url("index.php/BancosController/bancos");
-      $.get(url, function (data) {
-          $("#principal").html(data);
-          if(document.getElementById('idCompra')){
-            $("#idCompra").val(result);
-            $("#idCompra").change();
-           // $("#txtfamProdID").val(datosFamilia[0].famProdID);
-            console.log('Se hace el cambio de  valor  del control '+ result);
-          }else {
-            console.log('no se   encontro  el control  html ');
-          }
-      });
-  
-  
-   }
+ 
      /*funcion para ingresar la venta de nuevo productos  */ 
   /*function addVentaProducto(){  
     var url = base_url('index.php/productos_Controller/addVentaProducto/');

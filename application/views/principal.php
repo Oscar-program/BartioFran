@@ -322,7 +322,70 @@ defined('BASEPATH') or exit('No direct script access allowed');
           <div class="row">
             <div class="col-lg-3 col-6">
               <!-- small box -->
-              <div class="small-box bg-info">
+              <div id ="compra" class="small-box bg-primary border border-warning border border-3" style="background-color:#1E90FF; opacity:0.7;">
+                <div class="inner">
+                  <h3 style="color:azure;">150</h3>
+
+                  <p style="color:blueviolet;"> Compras</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-cube" style="color:gold; opacity:0.4;"></i>
+                </div>
+                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-dark border border-warning border border-3">
+                <div class="inner">
+                  <h3 style="color:gold">53<sup style="font-size: 20px;color:gold;">%</sup></h3>
+
+                  <p>Rep. de Ventas</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-clipboard" style="color:gold; opacity:0.4;"></i>
+                </div>
+                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>44</h3>
+
+                  <p>Configuraciones</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-settings"></i>
+                </div>
+                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-dark border border-warning border border-3">
+                <div class="inner">
+                  <h3>65</h3>
+
+                  <p>Existencias</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+          </div>
+          <!-- Creamo otro grupo de opciones de panel principal -->
+          <div class="row">
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-dark border border-warning border border-3">
                 <div class="inner">
                   <h3>150</h3>
 
@@ -337,7 +400,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <!-- ./col -->
             <div class="col-lg-3 col-6">
               <!-- small box -->
-              <div class="small-box bg-success">
+              <div class="small-box bg-dark border border-warning border border-3">
                 <div class="inner">
                   <h3>53<sup style="font-size: 20px">%</sup></h3>
 
@@ -367,9 +430,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <!-- ./col -->
             <div class="col-lg-3 col-6">
               <!-- small box -->
-              <div class="small-box bg-danger">
+              <div class="small-box bg-dark border border-warning border border-3">
                 <div class="inner">
-                  <h3>65</h3>
+                  <h3 style="color:gold">65</h3>
 
                   <p>Existencias</p>
                 </div>
@@ -636,6 +699,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>public/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>public/datatables/datatables.min.css" />
 	    <script type="text/javascript" src="<?php echo base_url();?>public/datatables/datatables.min.js"></script>
+    <script>
+       $(document).ready( function(){
+        // definimos el evento click para el primer div 
+        $("#compra").click(function(){
+            console.log("Se ha seleccionado la opcion de compra");
+            addCompraProducto();
+        })
+
+       });
+    </script>
   
 
 

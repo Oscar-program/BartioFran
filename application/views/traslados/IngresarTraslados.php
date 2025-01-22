@@ -67,7 +67,7 @@ $('#DeGastos').stacktable();
                                 </div>
                                 <dIv class="row mt-2">  
                                         <div class="col-lg-8">
-                                            <form id = "FormTraslados" name ='FormTraslados' class = "FormTraslados" action="javaScript:savTraslado()" method="post">
+                                            <form id = "FormTraslados" name ='FormTraslados' class = "FormTraslados" action="javaScript:saveTraslado()" method="post">
                                                 <input type="hidden"   id="trasProdID" name="trasProdID">
                                                 <input type="hidden"   id="cerrado" name="cerrado">
                                                 <div class="mb-3">
@@ -75,7 +75,7 @@ $('#DeGastos').stacktable();
                                                 </div>                                                
                                                 <div class="mb-3">                                              
                                                     <select name="bodOrigen" id="bodOrigen"  class="form-control chosen" required >  
-                                                        <option>Seleccione la bodega de origenqq</option>                                
+                                                        <option value ="0">Seleccione la bodega de origen</option>                                
                                                         <?php foreach ($listBodegaProducto as $row): ?>
                                                             <option value="<?php echo $row->bodegaProductoID; ?>">
                                                             <?php echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
@@ -86,7 +86,7 @@ $('#DeGastos').stacktable();
                                                 </div>
                                                 <div class="mb-3">                                              
                                                     <select name="bodDestino" id="bodDestino"  class="form-control chosen" required>  
-                                                        <option>Seleccione la bodega de destino</option>                                
+                                                        <option value ="0">Seleccione la bodega de destino</option>                                
                                                         <?php foreach ($listBodegaProducto as $row): ?>
                                                             <option value="<?php echo $row->bodegaProductoID; ?>">
                                                             <?php echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
@@ -128,7 +128,7 @@ $('#DeGastos').stacktable();
                                                     </div>
 
                                                     <div class="mb-3">
-                                                    <input type="number"   class="form-control "  id ="cantidadTrasl" name = "cantidadTrasl" step="any" placeholder="Ingrese la cantidad a trasladar" required>                           
+                                                       <input type="number"   class="form-control "  id ="cantidadTrasl" name = "cantidadTrasl" onchange="javaScript:activaBoton();" step="any" placeholder="Ingrese la cantidad a trasladar" required>                           
                                                     </div>
 
                                                     <div class="mb-3">
@@ -136,7 +136,7 @@ $('#DeGastos').stacktable();
                                                    <input type="number"   class="form-control "  id ="cantidadProd" name = "cantidadProd" step="any" placeholder="Ingrese la cantidad a trasladar" required>                           
                                                    </div>
                                                    <div class="mb-3 text-right">
-                                                      <button id ="btnsavetraslado" name="btnsavetraslado" type="submit" class="btn btn-lg btn-success" title="Iniciar toma">  <i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                      <button id ="btnsavetraslado" name="btnsavetraslado" type="submit" class="btn btn-lg btn-danger" title="Iniciar toma">  <i class="fa fa-plus" aria-hidden="true"></i></button>
                                                     
                                                   </div>
                                                              
@@ -176,7 +176,7 @@ $('#DeGastos').stacktable();
                                         <input type="hidden"   id="cerrado"  name="cerrado"> 
                                             
                                             <div class="mb-3 text-right">
-                                            <button id ="btnsavedet" name="btnsavedet" type="submit" class="btn btn-lg btn-danger" title="Iniciar toma">  <i class="fa fa-plus" aria-hidden="true"></i></button>
+                                              <!--  <button id ="btnsavedet" name="btnsavedet" type="submit" class="btn btn-lg btn-danger" title="Iniciar toma">  <i class="fa fa-plus" aria-hidden="true"></i></button>-->
                                                   <!--   <input type="submit"   class="form-control" value="Guardar"> -->
                                                 </div>
 

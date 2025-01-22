@@ -1,5 +1,5 @@
 <?php 
-class usuarios_Model extends CI_Model{
+class Usuarios_Model extends CI_Model{
   // cast(aes_decrypt(usrPwd,'xyz123') as char)
   protected $table = 'usuario';
 

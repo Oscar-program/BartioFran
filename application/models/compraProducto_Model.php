@@ -1,6 +1,6 @@
 <?php  
 defined('BASEPATH') or exit('No direct script access allowed');
-class  compraProducto_Model  extends CI_Model{
+class  CompraProducto_Model  extends CI_Model{
 
     
     // funcion para mostrar todas las   compras   ingresadas 
@@ -104,9 +104,9 @@ class  compraProducto_Model  extends CI_Model{
     # segmento para controlar los  movimiento en la tabla tempora de detalle de compra  
         /*funcion para insertar   datos en la tabla temporal*/
         public function  addtmpdetcompra($data, $idtmp){
-            echo  'el valor temp es ' . $idtmp;
+           // echo  'el valor temp es ' . $idtmp;
             if($idtmp ==   null){
-                $this->db->insert("tmpdetcompra",$data);
+                $this->db->insert("compra_det_producto",$data);
                 return $this->db->insert_id();
             }else{
                 echo  'para  actualizar';
@@ -117,7 +117,7 @@ class  compraProducto_Model  extends CI_Model{
                         ->set("total",    $data["total"])
                         ->where("idtmp", $idtmp)
                         
-                        ->update("tmpdetcompra");
+                        ->update("compra_det_producto");
                 return $this->db->affected_rows();   
                 
                     }
@@ -125,22 +125,24 @@ class  compraProducto_Model  extends CI_Model{
         }
         // funcion para mostrar los productos  registrados de  forma temporal en las compras
         public function get_ListTmp($idCompra) {
-                echo  'el id de  compra es '.  $idCompra;
-            $query =  $this->db->select("tmp.*")   
-                    
-                    ->where("idCompra", $idCompra)
-                    ->get("tmpdetcompra tmp")
+               // echo  'el id de  compra es '.  $idCompra;
+            $query =  $this->db->select("detcomp.detCompraId,detcomp.compraProdID,detcomp.productoID, prod.prodDescripcion, 
+                                         detcomp.cantidad,detcomp.precUnit,detcomp.impuesto, detcomp.sub_total, detcomp.total"
+                                     )
+                    ->join('producto prod','prod.productoID =  detcomp.productoID','inner')
+                    ->where("detcomp.compraProdID", $idCompra)
+                    ->get("compra_det_producto detcomp")
                     ->result();
             return  $query;          
         }  
 
          //  funcion para calcular el total del comprobante de  compra 
         public function get_sumastotaltmp($idCompra) {       
-            $query =  $this->db->select("sum(tmp.sub_total) as  sumas , sum(tmp.impuesto) as  impuestos, sum(tmp.total) as  totalcompra ")   
+            $query =  $this->db->select("tmp.compraProdID,sum(tmp.sub_total) as  sumas , sum(tmp.impuesto) as  impuestos, sum(tmp.total) as  totalcompra ")   
                     
-                    ->where("tmp.idCompra", $idCompra)
-                    ->group_by("tmp.idCompra")
-                    ->get("tmpdetcompra tmp")
+                    ->where("tmp.compraProdID", $idCompra)
+                    ->group_by("tmp.compraProdID")
+                    ->get("compra_det_producto tmp")
                     ->row();
             return  $query;          
         }  

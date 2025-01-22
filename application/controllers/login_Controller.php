@@ -5,7 +5,7 @@ class   login_Controller extends CI_Controller{
     public   function  __construct(){
          parent::__construct();
          $this->load->database();
-         $this->load->model("usuarios_Model");
+         $this->load->model("Usuarios_Model");
          $this->load->model('mesas_Model');
          $this->load->helper("path");    
         // $this->load->library('session');
@@ -38,17 +38,17 @@ class   login_Controller extends CI_Controller{
 
         $usrLogin     =  (isset($_POST["user"]))?  $_POST["user"] : ""; 
         $establecimID =  (isset($_POST["establecimID"]))?  $_POST["establecimID"] : ""; 
-        //echo  'los  valores capturados son ' . $_POST["user"] . '  ' . $_POST["establecimID"]   .  '<br>'  ;
+        echo  'Establecimiento ' . $_POST["user"] . '  ' . $_POST["establecimID"]   .  '<br>'  ;
      
         $usrPwd            =  (isset($_POST["pwd"]))? $aes_encrypt->aes_encryptAcceso($_POST["pwd"] ,"encrypt"): ""; 
        
 
 
       
-   // echo  'la sucursal seleccionada es ' .  $_POST["user"]  . ' FDSF' ;
+       echo  'la sucursal seleccionada es ' .  $_POST["user"]  . ' FDSF' ;
         
-        $datosUser   =  $this->usuarios_Model->getUserpwd($usrLogin, $usrPwd);
-       // var_dump(  $datosUser);
+        $datosUser   =  $this->Usuarios_Model->getUserpwd($usrLogin, $usrPwd);
+        var_dump(  $datosUser);
         if(empty($datosUser)){
             $RetornaUser = 0;
            // echo $RetornaUser ; 
@@ -56,7 +56,9 @@ class   login_Controller extends CI_Controller{
             
         }else{
             $_SESSION["usuario"]           = $datosUser->usrNombre; 
-            $_SESSION["usrLogin"]          = $datosUser->usrLogin; 
+            $_SESSION["usrLogin"]          = $datosUser->usrLogin;
+            $_SESSION["usuarioID"]          = $datosUser->usuarioID; 
+            
             $_SESSION["establecimientoID"] = $establecimID;
             $_SESSION["idDetCompra"]=1;
             $_SESSION["IdTempComprea"]= rand();
@@ -72,7 +74,7 @@ class   login_Controller extends CI_Controller{
     //  segmento para  desemcrptar la clave de usuario  
     public function  desempcriptar(){
         $aes_encrypt  =  new  aes_encrypt();
-        $datosUser  = $this->usuarios_Model->allUserSystem();
+        $datosUser  = $this->Usuarios_Model->allUserSystem();
 
         foreach ($datosUser as $row) {
 
@@ -107,7 +109,7 @@ class   login_Controller extends CI_Controller{
         );
        // echo  'el valor del  nuevo password es '. $Password  ;
       // var_dump($data);
-       $this->usuarios_Model->insert_user($data, $aes_key);
+       $this->Usuarios_Model->insert_user($data, $aes_key);
 
     }
 }

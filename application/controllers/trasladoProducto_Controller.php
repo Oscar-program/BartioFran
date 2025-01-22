@@ -54,7 +54,7 @@ class TrasladoProducto_Controller extends CI_Controller{
         //echo  'llegando al  controlador para procesar los  traslados';
         //$idTransac     = (isset($_POST["idTransac"]))?  $_POST["idTransac"] : 0;
         //echo  "El id de la transacciones es " .  $idTransac;
-        echo    'llegando al controlador',
+       // echo    'llegando al controlador',
         //$operacionesInventario  =  new  operacionesInvenatarios();
         // controles del  formulario
         /*fechatraslado
@@ -75,17 +75,23 @@ class TrasladoProducto_Controller extends CI_Controller{
         $fechTrasladoProd = 0;
         $usuarioID        = 0;
         $nivelUsrID       = 0;
+        $alor ='';
         try {
-            $result = 0/2;
-        } catch (Exception $e) {
-           log_message('error: ',$e->getMessage());
-           return;
+         // echo  'calculadno';  
+          $result = 10/$alor;
+         // echo  'despues del calculo'.  $result;  
+            
+        } catch (error $e) {
+           echo $e->getMessage();
+         //  log_message('error: ',$e->getMessage());
+          // echo   'se ha encontrando un errornen el  calculo';
+          // return;
         }
 
         
         exit;
         $movtipo        = "TRASL" ;
-        $productoID     = (isset($_POST["producto"]))?  $_POST["producto"] : 0;;
+        $productoID     = (isset($_POST["producto"]))?  $_POST["producto"] : 0;
         $bodProdOrigen  = (isset($_POST["bodOrigen"]))?  $_POST["bodOrigen"] : 0;
         $bodProdDestino = (isset($_POST["bodDestino"]))?  $_POST["bodDestino"] : 0;  
         $unidMeTtrasl   = (isset($_POST["prodPresentacion"]))?  $_POST["prodPresentacion"] : 0;
@@ -105,7 +111,8 @@ class TrasladoProducto_Controller extends CI_Controller{
                                   'usuarioID'     => $usuarioID,
                                   'nivelUsrID'    => $nivelUsrID,                             
                             );
-                           // var_dump($dataSalidaK);  
+                           var_dump($dataSalidaTras);
+                           exit ;  
                             //echo 'Inserta la salida en el  kardex' .  '<br>';
                            $this->compraProducto_Model->addMoVKardex( $dataSalidaTras, $trasProdID) ;  
                                                
@@ -143,8 +150,8 @@ class TrasladoProducto_Controller extends CI_Controller{
       // echo  'llegando al controlador de la MEDIDA del producto';
       // echo  'modificacion en la captura de existencia ' ;
       $datos['listBodegaProducto'] = $this->bodegaProducto_Model->get_listBodegaProducto();
-      $datos["listaProductos"] =   $this->Producto_Model->get_ListProducto();
-      $datos["prodPresentacion"] =   $this->prodPresentacion_Model->get_PresentacionProd();
+      $datos["listaProductos"]     = $this->Producto_Model->get_ListProducto();
+      $datos["prodPresentacion"]   = $this->prodPresentacion_Model->get_PresentacionProd();
       //var_dump($this->datos["datosMArcas"]);
     // $this->load->view("traslados/trasladosInvent", $datos);
     # la sumatoria de todos los  traslados incrementaran el refil de la  toma fisica  
@@ -163,5 +170,7 @@ public  function Listamovil(){
   $this->load->view("traslados/ultimosTraslados"); 
  // $this->load->view("traslados/listaTraslados"); 
 }
+// segmento que   cea un array cabecera para insertardatos y modificarlos posterior 
+
 
 }

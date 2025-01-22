@@ -38,9 +38,14 @@
   if(isset($datoproducto)){
 
   }
+  if(isset($compraResultID)){
+    $compraProdID = $compraResultID; 
+  }
+
+
 
   ?>
-<div class="modal fade" id="addProducCompra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="adddetProducCompra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -51,8 +56,8 @@
       </div>
       <div class="modal-body">
         <form  metod="POST"  id ="formAddProducCompra" class="formAddProducCompra" action="javascript:saveTmpCompra()">
-        <input type="hidden"  id="idtmp"  name="idtmp"      value =  "<?php echo $idtmp; ?>"> 
-        <input type="hidden"  id="idCompratmp"  name="idCompratmp" >
+        <input type="text"  id="compraProdID"  name="compraProdID"      value =  "<?php echo $compraProdID; ?>"> 
+        <!--<input type="hidden"  id="$compraResultID"  name="idCompratmp" >-->
         <input type="hidden"  id="nameproductotmp"  name="nameproductotmp" >
             
        
@@ -68,6 +73,21 @@
             </select>
             
         </div>
+        <div class="col-sm" style="display: inline-block;">
+              <label for="prodPresentacion">Presentacion</label>              
+
+              <select name="prodPresentacion" id="prodPresentacion"  class="form-control chosen"  onchange="javaScript:getunidadPresentacion()">                                  
+                <option value="0">Seleccione una presentacion</option>                                 
+                    <?php foreach ($prodPresentacion as $row): ?>
+                    <option value="<?php echo $row->presProdID; ?>">
+                    <?php echo $row->presProdID . " - " .  $row->presentacionProd; ?>
+                    </option>
+                    <?php endforeach ?>
+                                
+                    </select>      
+          </div> 
+
+       
 
         <div class="form-group col-sm">
             <label for="familia" class="col-form-label">Cantidad:</label>
@@ -76,11 +96,13 @@
 
         <div class="form-group col-sm">
             <label for="tipProducto" class="col-form-label">Precio costo:</label> 
-            <input type="number" class="form-control text-right" id="preCosto" name="preCosto" step ="any">  
+            <input type="number" class="form-control text-right" id="preCosto" name="preCosto" step ="any" >  
         </div>
-      <div class="modal-footer col-sm">
-        <button  type="submit" class="btn btn-danger"> Procesar </button>
-      </div>
+        <div class="mb-3 text-right">
+           <!-- <input type="submit" value="Procesar">  <i class="fa fa-cog" aria-hidden="true"></i></button>-->
+           <button  type="submit" id ="btnsavedet" name="btnsavedet"  class="btn btn-lg btn-danger" title="Procesar compra" onclick="">  <i class="fa fa-cog" aria-hidden="true"></i></button>
+          
+        </div>
           
 
         </form>
