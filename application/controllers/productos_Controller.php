@@ -1,6 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-class productos_Controller extends CI_Controller {  
+class Productos_Controller extends CI_Controller {  
     public function __construct()
     {
            parent::__construct();     
@@ -16,10 +16,8 @@ class productos_Controller extends CI_Controller {
            $this->load->model('preciosProducto_Model');
            $this->load->model('inventProducto_Model');
            $this->load->model('equivalenteProducto_Model');
-           
-           //preciosProducto_Model
-
-           
+           $this->load->model('Config_Model');           
+           //preciosProducto_Model           
            $this->load->helper('path');          
     }
     //Creamos la funncion para  agrear el menu  interno 
@@ -31,8 +29,7 @@ class productos_Controller extends CI_Controller {
         $this->load->view('productos/producto',$data);
     }
 
-    /*Funcion para cargar la modal para  registrar los  productos  */
-     /* funcion para cargar la modal  para  procesar la venta del producto */
+    /*Funcion para cargar la modal para  registrar los  productos  */    
      public function addProducto($productoID){ 
         ini_set('display_errors',1);
         ini_set('display_startup_errors',1);
@@ -43,7 +40,10 @@ class productos_Controller extends CI_Controller {
         $data['medidaProducto']      = $this->MedidaProducto_Model->get_listaMedidaProducto();
         $data['MarcaProducto']       = $this->Marcas_Model->get_listaMarcaProducto();
         $data['prsentacionProducto'] = $this->PresentacioProducto_Model->get_listaPresentacionProducto();
-        $data['datoproducto'] = $this->Producto_Model->get_productoID($productoID);
+        $data['datoproducto']        = $this->Producto_Model->get_productoID($productoID);
+        $data['TipoMovInvnt']        = $this->Config_Model->get_listTipoMovInvnt();
+        $data['Presentacion_inv']    = $this->Config_Model->get_listPresentacion_inv();
+
 
         $this->load->view('productos/addProducto',$data);
      }
@@ -58,7 +58,10 @@ class productos_Controller extends CI_Controller {
       $data['medidaProducto']      = $this->MedidaProducto_Model->get_listaMedidaProducto();
       $data['MarcaProducto']       = $this->Marcas_Model->get_listaMarcaProducto();
       $data['prsentacionProducto'] = $this->PresentacioProducto_Model->get_listaPresentacionProducto();
-      $data['datoproducto'] = $this->Producto_Model->get_productoID($productoID);
+      $data['datoproducto']        = $this->Producto_Model->get_productoID($productoID);
+      $data['TipoMovInvnt']        = $this->Config_Model->get_listTipoMovInvnt();
+      $data['Presentacion_inv']    = $this->Config_Model->get_listPresentacion_inv();
+
 
       $this->load->view('productos/addProducto',$data);
    }
@@ -68,35 +71,43 @@ class productos_Controller extends CI_Controller {
         ini_set('display_errors',1);
         ini_set('display_startup_errors',1);
         error_reporting(E_ALL); 
-        /*determinamos si  el producto ya  existe   */        
-        $productoID       = NULL;
-        $rIdProd          = 0;
-        $bodegaProductoID = 1;
-
-        $proveedorID     = (isset($_POST['proveedor'])) ? $_POST['proveedor']: NULL;
-        $famProdID       = (isset($_POST['familia'])) ? $_POST['familia']: NULL;
-        $tipProdID       = (isset($_POST['tipProducto'])) ? $_POST['tipProducto']: NULL;
-        $marcProdID      = (isset($_POST['marca'])) ? $_POST['marca']: NULL; 
-        $presProdID      = (isset($_POST['presentacion'])) ? $_POST['presentacion']: NULL;
-        $medProdID       = (isset($_POST['medida'])) ? $_POST['medida']: NULL;
-        $prodDescripcion = (isset($_POST['descripcion'])) ? $_POST['descripcion']: NULL;
-
+        /*determinamos si  el producto ya  existe   */    
+          
+       // $productoID       = NULL;
+        $rIdProd            = 0;
+        $bodegaProductoID   = 1;
+        $productoID         = (isset($_POST['productoID'])) ? $_POST['productoID']: NULL; 
+        $proveedorID        = (isset($_POST['proveedor'])) ? $_POST['proveedor']: NULL;
+        $famProdID          = (isset($_POST['familia'])) ? $_POST['familia']: NULL;
+        $tipProdID          = (isset($_POST['tipProducto'])) ? $_POST['tipProducto']: NULL;
+        $marcProdID         = (isset($_POST['marca'])) ? $_POST['marca']: NULL; 
+        $presProdID         = (isset($_POST['presentacion'])) ? $_POST['presentacion']: NULL;
+        $medProdID          = (isset($_POST['medida'])) ? $_POST['medida']: NULL;
+        $prodDescripcion    = (isset($_POST['descripcion'])) ? $_POST['descripcion']: NULL;
+        $tipomovinvtId      = (isset($_POST['tipomovinvent'])) ? $_POST['tipomovinvent']: NULL;
+        $presentacion_invId = (isset($_POST['presentacioninvent'])) ? $_POST['presentacioninvent']: NULL;
+        
         $dataProd = array('prodDescripcion'=>$prodDescripcion,
                           'famProdID'=>$famProdID,
                           'presProdID'=>$presProdID,
                           'tipProdID'=>$tipProdID,
                           'marcProdID'=>$marcProdID,
                           'medProdID'=>$medProdID,
-                          'proveedorID'=>$proveedorID
+                          'proveedorID'=>$proveedorID,
+                          'tipomovinvtId'=>$tipomovinvtId,
+                          'presentacion_invId'=>$presentacion_invId
+
                           
                         );
-       // var_dump($dataProd);
-       //  hacemos la  insercion en la tabla de precios 
+        // var_dump($dataProd);
+        //  hacemos la  insercion en la tabla de precios 
+        echo    'el id del producto que se va actualizar es '. $productoID . '#'.'<br>';
         $rIdProd  = $this->Producto_Model->addProducto( $dataProd,$productoID);
         if($rIdProd!=0){
           $resulbPrec =  $this->preciosProducto_Model->get_productoIDPrecios($rIdProd);
             if(Empty( $resulbPrec )){
               $precProdID = NULL;
+             echo 'Creano los  precios del controlador';
               $data =array('productoID'=>$rIdProd ,  
                           'preciocosto' =>0,  
                           'precioventa' =>0);
@@ -105,27 +116,15 @@ class productos_Controller extends CI_Controller {
             // hacemos la  insercion en  el   inventario
           $resulbInv = $this->inventProducto_Model->get_productoIDInventarios($rIdProd,$bodegaProductoID) ;
             if(Empty($resulbInv)){
+              echo 'creando la linea en el   inventario';
               $invProdID = NULL;
-              $data =array('productoID'=>$rIdProd ,  
+              $data =array('productoID'      =>$rIdProd ,  
                           'bodegaProductoID' =>$bodegaProductoID,  
+                          'usuarioID'        => $_SESSION["usuarioID"],
                           'existenciaInvProd' =>0);
               $this->inventProducto_Model->addProductoInvent($data, $invProdID);
             }
         }
-        
-
-
-       
-
-        //  hacemos la  insercion en la tabla de precios 
-       // $precProdID = NULL;
-       //$resulb =  $this->preciosProducto_Model->get_productoIDPrecios($productoID)
-
-       // addProductoPrec($data, $precProdID){
-        //inventarioproducto 
-          // hacemos la  insercion en  el   inventario
-
-
      }
      /*Funcion paramostrar la  vista para  agregar datos del   invetario manual */
   public function addInventManual(){ 

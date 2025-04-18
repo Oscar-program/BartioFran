@@ -1,8 +1,12 @@
 <?php 
+ ini_set('display_errors',1);
+ ini_set('display_startup_errors',1);
+ error_reporting(E_ALL);
 $GLOBALS['arrCabecera'] = array();
 $GLOBALS['arrDetalle']  = array();
 defined('BASEPATH') OR exit('No direct script access allowed');
 include getcwd(). "/application/libraries/operacionInvnt/operacionesInventario.php";
+include getcwd(). "/application/libraries/operacionInvnt/calculaPrecioProduc.php";
 
 class CompraProducto_Controller extends CI_Controller {  
     public function __construct()
@@ -23,87 +27,160 @@ class CompraProducto_Controller extends CI_Controller {
         
     }   
 
-   /*Carga la vista principal para  ingresa las compras */
-   public function addCompraProducto(){ 
+   # CARGA LA VISTA PRINCIPAL PARA HACER EL INGRESO DE LAS COMPRAS 
+      public function addCompraProducto(){ 
+         ini_set('display_errors',1);
+         ini_set('display_startup_errors',1);
+         error_reporting(E_ALL); 
+         //  obtener los  datos de los proveedores  existentes  
+         $datos['proveedores'] =  $this->Proveedor_Model->get_listaProveedores();
+         $this->load->view('compras/procesarCompras', $datos);
+      // $this->load->view('inventarios/compra_producto', $datos);
+      }
+   # CARGA LA VISTA PRINCIPAL PARA HACER EL INGRESO DE LAS COMPRAS 
+   
+   # FUNCION QUE  RETORNA LA INFORMACION DEL PROVEEDOR  
+      public function getInfoProveedor(){
+         ini_set('display_errors',1);
+         ini_set('display_startup_errors',1);
+         error_reporting(E_ALL);
+         //echo  'llegando al  controlador';
+         $infoProveedor = null;
+         $proveedorID = (isset($_POST['proveedorID'])) ?  $_POST['proveedorID'] : 0;
+          //echo  'dato del proveedor' . $proveedorID ;  
+         if($proveedorID > 0){ 
+            $infoProveedor  = $this->Proveedor_Model->get_infoProveedor($proveedorID);
+         }
+         echo  json_encode($infoProveedor);
+        // echo  json_encode($datostotaltmp);
+
+      }
+   # FIN  DE FUNCION QUE  RETORNA LA INFORMACION DEL PROVEEDOR 
+
+
+   # FUNCION RETONA LA INFORMACION DEL PRODUCTO (PRODUCTO-SERVICIO) (GRAVADO, EXCENTO, NO SUJETO)
+   public function get_InfoProducto(){ 
       ini_set('display_errors',1);
       ini_set('display_startup_errors',1);
       error_reporting(E_ALL); 
-      //  obtener los  datos de los proveedores  existentes  
-      $datos['proveedores'] =  $this->Proveedor_Model->get_listaProveedores();
-      $this->load->view('compras/procesarCompras', $datos);
-
-     // $this->load->view('inventarios/compra_producto', $datos);
-   }
-   // funcion que carga el detalle de la compra  
-   public function addDetCompra(){ 
-      ini_set('display_errors',1);
-      ini_set('display_startup_errors',1);
-      error_reporting(E_ALL); 
+      echo  'llegando al controlador';
+      $InfoProducto =  null;
+      $productoID =  (isset($_POST['productoID']))? $_POST['productoID'] : null;
+      if($productoID >0 ){
+         $InfoProducto =  $this->Producto_Model->get_InfoProducto($productoID);
+      }      
+      echo  json_encode($InfoProducto );
+      //$this->load->view('compras/detTmpCompra', $datos);
       
-     // echo  'llegando al  controlador para cargar los productso a la compra';
-      $compraProdID =null;
-      $datos['ListProducto']        = $this->Producto_Model->get_ListProducto();
-      $datos["prodPresentacion"]    = $this->prodPresentacion_Model->get_PresentacionProd();
-      $fecha                        = (isset($_POST['fecha']))? $_POST['fecha']:null;
-      $tipocomprobante              = (isset($_POST['tipocomprobante']))? $_POST['tipocomprobante']:null;
-      $numcomprobante               = (isset($_POST['numcomprobante']))? $_POST['numcomprobante']:null;
-      $proveedor                    = (isset($_POST['proveedor']))? $_POST['proveedor']:null;
-      $data                        = array(
-                                             'empresaID'=> 1,
-                                             'establecimientoID'=>$_SESSION["establecimientoID"],
-                                             'compProdFecha'=>$fecha,                    
-                                             'comprobanteTipo'=>$tipocomprobante,
-                                             'comprobantenum'=>$numcomprobante,
-                                             'proveedorID'=>$proveedor,
-                                              'usuarioID'  =>  $_SESSION["usuarioID"]
-                                          );
-
-     
-     // $_SESSION["EncCompra"]= $arrar ;
-     // Creamos un  arrar vacio 
-     // $_SESSION["detCompra"]= array() ;
-    //  print_r($_SESSION["detlistadecompra"])  ;
-    
-    // insertamos la cabecera y  retornamos el id de la cabecera  
-   // var_dump($data);
-     $compraResultID =  $this->CompraProducto_Model->addCabeceracompra($data, $compraProdID);
-     $datos["compraResultID"]    =$compraResultID;
-      
-
-      $this->load->view('compras/addProcompra', $datos);
-     // echo  'lo qe se  tiene almacenado es' ;
-       
     }
+   # FINFUNCION RETONA LA INFORMACION DEL PRODUCTO 
+
+   # FUNCION ALMACENA LA CABERA DE LA COMPRA, RETORNA EL ID DE  LA COMPRA y CARGA MODAL PARA AGREGAR LOS PRODUCTOS   
+      public function addDetCompra(){ 
+         ini_set('display_errors',1);
+         ini_set('display_startup_errors',1);
+         error_reporting(E_ALL);      
+        // echo  'llegando al  controlador para cargar los productso a la compra';
+         $compraProdID =null;
+         $datos['ListProducto']        = $this->Producto_Model->get_ListProducto();
+         $datos["prodPresentacion"]    = $this->prodPresentacion_Model->get_PresentacionProd();
+         $proveedorID                  = (isset($_POST['proveedor']))? $_POST['proveedor']:null;
+
+         // conseguimos la informacion del proveedor
+        // $infoProveedor  = $this->Proveedor_Model->get_infoProveedor($proveedorID);
+         // clasf.clasfiscalID,  tipc.tipoContribID
+         //$clasfiscalID  =  $infoProveedor->clasfiscalID;// (isset($_POST['clasfiscalID']))? $_POST['clasfiscalID']:null;
+         //$tipoContribID =  $infoProveedor->tipoContribID;// (isset($_POST['tipoContribID']))? $_POST['tipoContribID']:null;
 
 
-    //  funcion  para  insertar el  producto temporal 
-    public function addtmpdetcompra(){
+         
+         $fecha                        = (isset($_POST['fechaCompra']))? $_POST['fechaCompra']:null;
+         $tipocomprobante              = (isset($_POST['tipocomprobante']))? $_POST['tipocomprobante']:null;
+         $numcomprobante               = (isset($_POST['numcomprobante']))? $_POST['numcomprobante']:null;
+        
+         
+         $data                        = array(
+                                                'empresaID'=> 1,
+                                                'establecimientoID'=>$_SESSION["establecimientoID"],
+                                                'compProdFecha'=>$fecha,                    
+                                                'comprobanteTipo'=>$tipocomprobante,
+                                                'comprobantenum'=>$numcomprobante,
+                                                'proveedorID'=>$proveedorID,
+                                                'usuarioID'  =>  $_SESSION["usuarioID"]
+                                             );
+                                             $datosprov=  array('tipocomprobante'=>$tipocomprobante,'proveedorID'=>$proveedorID );
+
+         //var_dump($data );
+         //exit ;
+         $compraResultID =  $this->CompraProducto_Model->addCabeceracompra($data, $compraProdID);
+         $datos["datosProvedor"] = $datosprov ;
+        // var_dump($datos["datosProvedor"]);
+         $datos["compraResultID"]    =$compraResultID;
+         $this->load->view('compras/addProcompra', $datos);
+         // echo  'lo qe se  tiene almacenado es' ;       
+      }
+   # FIN FUNCION ALMACENA LA CABERA DE LA COMPRA Y RETORNA EL ID DE  LA COMPRA
+
+
+
+    //  FUNCION PARA ALMACENAR EL DETALLE DE LA COMPRA addDetCompra 
+     public function saveDetCompra(){
         ini_set('display_errors',1);
         ini_set('display_startup_errors',1);
         error_reporting(E_ALL);
-        /* Creamos una variable para determinar el  modelo  a ejecutar*/
-        //
-       // echo 'llegando al  controlador';
-        if(isset( $_SESSION["EncCompra"])){
-          //  var_dump($_SESSION["EncCompra"]);
-         foreach($_SESSION["EncCompra"] as $row){
-            //   echo  'recorriendo arr'. $row->tipocomprobante;
+        $idtmp                   = null;  
+        $proceso                 = 1;
+       // datos para la configuracion del calculo de   costo del producto  
+        
+        $idCompra                = (isset($_POST['compraProdID'])) ? $_POST['compraProdID']:  null;
+        $productoID              = (isset($_POST['producto'])) ? $_POST['producto']:  null;
+        $proveedorID             = (isset($_REQUEST['proveedorID'])) ? $_REQUEST['proveedorID']:  null;
+        $descripcion             = (isset($_POST['nameproductotmp'])) ? $_POST['nameproductotmp']:  null;
+        $cantidad                = (isset($_POST['cantidad'])) ? $_POST['cantidad']:  0;
+        $preCosto                = (isset($_POST['preCosto'])) ? $_POST['preCosto']:  0;
+        $comprobanteTipo         = (isset($_POST['tipocomprobante'])) ? $_POST['tipocomprobante']:  0;
+        //echo  'El producto Capturado es ' .   $productoID  ; 
+        $InfoProducto            =  $this->Producto_Model->get_InfoProducto($productoID);
+        //var_dump($InfoProducto  );
+        $tipomovinvtId           =  $InfoProducto->tipomovinvtId; 
+        $presentacion_invId      =  $InfoProducto->presentacion_invId; 
+        $infoProveedor           =  $this->Proveedor_Model->get_infoProveedor($proveedorID);     
+        $provClasfiscalID        =  $infoProveedor[0]->clasfiscalID;
+        $provTipoContribID       =  $infoProveedor[0]->tipoContribID;
+        $tipocomprobante_INPUT  =  $comprobanteTipo;
 
-         }
-        }
-        $idtmp = null;       
-       /* if($_POST['idtmp']!=''){         
-          $idtmp = $_POST['idtmp'];
-        }*/
+        $datosPrecalculo         = array( 'proceso'=>$proceso,
+                                          'provClasfiscalID'=> $provClasfiscalID ,
+                                          'provTipoContribID'=> $provTipoContribID, 
+                                          'tipomovinvtId'=> $tipomovinvtId,
+                                          'presentacion_invId'=> $presentacion_invId,
+                                          'tipomovinvtId'=> $tipomovinvtId,
+                                          'tipocomprobante_INPUT'=> $tipocomprobante_INPUT,
+                                          'cantidad' => $cantidad, 
+                                          'preCosto'=> $preCosto  
+                                       );
+        
+                                       //echo 'echo  datos precalculo  ' . '<br>';
+                                      // var_dump($datosPrecalculo);
 
-        $idCompra             = (isset($_POST['compraProdID'])) ? $_POST['compraProdID']:  null;
-        $productoID           = (isset($_POST['producto'])) ? $_POST['producto']:  null;
-        $descripcion          = (isset($_POST['nameproductotmp'])) ? $_POST['nameproductotmp']:  null;
-        $cantidad             = (isset($_POST['cantidad'])) ? $_POST['cantidad']:  0;
-        $preCosto             = (isset($_POST['preCosto'])) ? $_POST['preCosto']:  0;
-        $sub_total            =  $cantidad *  $preCosto;
-        $impuesto             = 0 ;
-        $total                = $sub_total+ $impuesto   ;
+       // intaciamos la clase para realizar el calculo del precio del prodducto  
+         $CalculaPrecioProduc  =  new calculaPrecioProduc();
+         $datosCalculados      =  $CalculaPrecioProduc->calculaPrecio($datosPrecalculo) ; 
+         
+         $datosCalculados = json_decode( $datosCalculados, true );
+        // echo  'valor de iva Retornado'. $datosCalculados['subtotal']. '<br>';
+
+         //$datosCalculados      = $datosCalculados;
+        // var_dump($datosCalculados);
+        // exit ; 
+         
+         //$sub_total             =  $cantidad *  $preCosto;
+          //$impuesto              = 0 ;
+         // $total                 = $sub_total+ $impuesto   ;
+         $subtotal = 1400;
+         $compProdIva = 10;
+         $total = 230;
+
 
 
       //if($idCompra!=null ){
@@ -111,12 +188,12 @@ class CompraProducto_Controller extends CI_Controller {
                            "productoID"=>$productoID,                           
                            "cantidad"=>$cantidad,
                            "precUnit"=>$preCosto,
-                           "sub_total"=>$sub_total,
-                           "impuesto"=>$impuesto,
+                           "sub_total"=>$subtotal,
+                           "impuesto"=>$compProdIva,
                            "total"=>$total,
 
                            );
-         //var_dump($data);                  
+        // var_dump($data);                  
          if($productoID !=null   and  $total> 0 ){
             //echo  'insertando el detalle de la compra ';
              $this->CompraProducto_Model->addtmpdetcompra($data, $idtmp);
@@ -125,11 +202,8 @@ class CompraProducto_Controller extends CI_Controller {
             echo  json_encode($datostotaltmp);
 
          }else{
-            //echo   'No se puede almacenar el  productod';
+            echo   'No se puede almacenar el  productod';
          } 
-      //}else{
-         //echo 'el id de la compra es  null  no se  puede  procesar ';
-     // }
         
       
     }
@@ -347,6 +421,26 @@ class CompraProducto_Controller extends CI_Controller {
 
    
     }
+    //  funcion  para obtener la  informacion del  proveedor  al  momento de seleccionarlo  
+
+    public function addArrDetalle1(){
+      
+    } 
+     // funcion lista las compras      
+     public function get_infoProveedor(){ 
+      ini_set('display_errors',1);
+      ini_set('display_startup_errors',1);
+      error_reporting(E_ALL); 
+      //  obtener los  datos de los proveedores  existentes  
+      $datos_provedor=  $this->Proveedor_Model->get_infoProveedor();
+       echo  json_encode($datos_provedor);
+    
+
+   
+    }
+    // funcion para obtener la informacion del producto (GRAVADO -- SERVICIO  O PRODUCTO COMO TAL)
+     // funcion lista las compras      
+    
 
       
 }

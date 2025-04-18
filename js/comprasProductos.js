@@ -1,28 +1,15 @@
 function base_url(url){
     return window.location.origin + "/BartioFran/"+ url;
 }
- /*funcion para cargar l formulario principal de la compra   */ 
+ /*funcion para cargar l formulario principal de la compra, selecciona, fecha, tipo comprobantye  y proveedor    */ 
  function addCompraProducto(){  
-  //  creamos una variable de valor  aleatorio para crear el id  de la venta  
-  //var CompraId  =  new Date().getTime().toString();
-  //var  result = CompraId.slice(-9);
-  //console.log('el id  generico es '+result );
+  
   var url = base_url('index.php/compraProducto_Controller/addCompraProducto/');
 
-//var url = base_url("index.php/BancosController/bancos");
     $.get(url, function (data) {
         $("#principal").html(data);
-       // $("#btnSaveCompra").css("display", "none");
+    
         document.getElementById('btnSaveCompra').disabled = true;
-        
-       /* if(document.getElementById('idCompra')){
-          $("#idCompra").val(result);
-          $("#idCompra").change();
-         // $("#txtfamProdID").val(datosFamilia[0].famProdID);
-          console.log('Se hace el cambio de  valor  del control '+ result);
-        }else {
-          console.log('no se   encontro  el control  html ');
-        }*/
     });
 
 
@@ -31,43 +18,61 @@ function base_url(url){
 
    // funcion  para  cargar la modal de ingreso de producto en  factura de compra  
    function addDetCompra(){
+    //console.log("Almacenando el detalle de la compra ");
         
         /*Determinamos si  los datos del  producto ya existen */
-        console.log("llegando a la funcion para mostrar los produtos que se ingresan a la compra##### ");       
+       // console.log("llegando a la funcion para mostrar los produtos que se ingresan a la compra##### ");       
        var url             = base_url('index.php/compraProducto_Controller/addDetCompra/');
-        var fecha           = (document.getElementById('fechaCompra'))? $("#fechaCompra").val():null;
-        var tipocomprobante = (document.getElementById('tipocomprobante'))? $("#tipocomprobante").val():null;
-        var numcomprobante  = (document.getElementById('numcomprobante'))? $("#numcomprobante").val():0;
-        var proveedor       = (document.getElementById('proveedor'))? $("#proveedor").val():null;
-        var jSON            = {fecha:fecha, tipocomprobante:tipocomprobante,  numcomprobante:numcomprobante, proveedor:proveedor };
-        $.ajax({
-               url: url ,
-               type: "POST",
-               data: jSON,
-               //cache: false,
-               //contentType: false,
-               //processData: false,
-               beforeSend: function(){},
-               success:function(data){
-               // console.log(data);
-                $("#conteModalDetCompra").html(data);          
-                $('#adddetProducCompra').modal('show');
-               },
-               complete:function(){}
-        }) ; 
-        /*//var idCompratmp =  $("#idCompra").val();  
-        console.log("llegando a la funcion para mostrar los produtos que se ingresan a la compra##### ");
-        //var url = base_url('index.php/productos_Controller/addProductoCompra/');
-        //adddetCompraarr*/
-        /*var url = base_url('index.php/compraProducto_Controller/addDetCompra/');
-    
-        //var url = base_url("index.php/BancosController/bancos");
-        $.get(url, function (data) {
-            //  comentado solo para  trabajar con el  array 
-            $("#conteModalDetCompra").html(data);          
-            $('#adddetProducCompra').modal('show');
-           // $("#idCompratmp").val(idCompratmp)    *   
-        });*/
+       var writeInTable  = true;
+
+       /*if($("#producto").val()==0){
+          alertify.set("notifier", "position", "top-right");
+          alertify.error("Tiene que seleccionar un producto");
+          writeInTable  = false;
+          return false; 
+        }
+
+        if($("#prodPresentacion").val()==0){
+          alertify.set("notifier", "position", "top-right");
+          alertify.error("Tiene que seleccionar una presenta de  producto");
+          writeInTable  = false;
+          return false;
+        }
+
+        if($("#cantidad").val()=0){
+          alertify.set("notifier", "position", "top-right");
+          alertify.error("Tiene ingresar una cantida mayor a cero");
+          writeInTable  = false;
+          return false;
+        }
+
+        if($("#preCosto").val()=0){
+          alertify.set("notifier", "position", "top-right");
+          alertify.error("Tiene ingresar un precio costo mayor  a cero");
+          writeInTable  = false;
+          return false;
+        }*/
+
+                           
+        if(writeInTable  == true){
+          $.ajax({
+                        url: url ,
+                        type: "POST",
+                        data: $("#FormCompras").serialize(),
+                        //cache: false,
+                        //contentType: false,
+                        //processData: false,
+                        beforeSend: function(){},
+                        success:function(data){
+                        // console.log(data);
+                        $("#conteModalDetCompra").html(data);          
+                        $('#adddetProducCompra').modal('show');
+                        },
+                        complete:function(){}
+                }) ;
+
+
+        }
    
    }
    //   funcion ára  mostrar la  lista general  de  compras 
@@ -87,6 +92,12 @@ function base_url(url){
   });
 
 }
+
+
+
+
+
+
    function iniciaArr(){
         
     /*Determinamos si  los datos del  producto ya existen */
@@ -111,24 +122,55 @@ function base_url(url){
 
    /*Funcion para almacena El  producto */
    function saveTmpCompra(){
-    var $productoID =  0;
+    var idCompra       = 0;
+    var productoID     = 0;
+    var writeInTable   = true;   
+    var formData;
+
+       if($("#producto").val()==0){
+          alertify.set("notifier", "position", "top-right");
+          alertify.error("Tiene que seleccionar un producto");
+          writeInTable  = false;
+          return false; 
+        }
+
+        if($("#prodPresentacion").val()==0){
+          alertify.set("notifier", "position", "top-right");
+          alertify.error("Tiene que seleccionar una presenta de  producto");
+          writeInTable  = false;
+          return false;
+        }
+
+        if($("#cantidad").val()=0){
+          alertify.set("notifier", "position", "top-right");
+          alertify.error("Tiene ingresar una cantida mayor a cero");
+          writeInTable  = false;
+          return false;
+        }
+
+        if($("#preCosto").val()=0){
+          alertify.set("notifier", "position", "top-right");
+          alertify.error("Tiene ingresar un precio costo mayor  a cero");
+          writeInTable  = false;
+          return false;
+        }
+
   
     console.log('almacenando el detalle de la compra');
-      var formData;
-      var idCompra = 0;
-    
-      url_destino = "index.php/CompraProducto_Controller/addtmpdetcompra/";
-      formData    = new FormData($(".formAddProducCompra")[0]);
+    if(writeInTable   == true){
+      url_destino = "index.php/CompraProducto_Controller/saveDetCompra/";
+      //formData    = new FormData($(".formAddProducCompra")[0]);
+      formData    =$("#formAddProducCompra");
       $.ajax({
             url: base_url(url_destino),
             type: "POST",
-            data: formData,
-            cache: false,
-            contentType: false,
-            processData: false,
+            data: formData.serialize(),
+            // cache: false,
+            //contentType: false,
+            //processData: false,
             beforeSend: function () {
               // Show image container
-              $("#loader").css("display", "block");
+             // $("#loader").css("display", "block");
             },
             success: function (data) {
               console.log(data);
@@ -161,7 +203,12 @@ function base_url(url){
              // $("#btnSaveCompra").css("display", "block");
             }
           });
-      
+
+
+    }   
+
+     
+            
    }
      
     function get_ListTmp(compraProdID){
@@ -264,6 +311,7 @@ function base_url(url){
            // cache: false,
            // contentType: false,
            // processData: false,
+            dataType:'json',
             beforeSend: function () {
               // Show image container
               $("#loader").css("display", "block");
@@ -294,5 +342,7 @@ function base_url(url){
     
 
     }
+    // funcion que  obtiene la  informacion del proveedor 
+    
    
 

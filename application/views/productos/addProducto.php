@@ -24,7 +24,7 @@
 }
 </style>
 <?php 
-  $productoID      = 0;
+  $productoID      = NULL;
   $prodDescripcion = '';
   $prodClasfInvent = 0;
   $famProdID       = 1;
@@ -33,22 +33,28 @@
   $marcProdID      = 1;
   $medProdID       = 1;
   $proveedorID     = 1;
+  $presentacion_invId = 1;
+  $tipomovinvtId      = 1;
 
   if(isset($datoproducto)){ 
     if(!empty($datoproducto)){
       echo 'setiendo datos del  producto';
-      $productoID      = $datoproducto->productoID;
-      $prodDescripcion = $datoproducto->prodDescripcion;
-      $prodClasfInvent = $datoproducto->prodClasfInvent;
-      $famProdID       = $datoproducto->famProdID;
-      $presProdID      = $datoproducto->presProdID;
-      $tipProdID       = $datoproducto->tipProdID;
-      $marcProdID      = $datoproducto->marcProdID;
-      $medProdID       = $datoproducto->medProdID;
-      $proveedorID     = $datoproducto->proveedorID;
+      $productoID         = $datoproducto->productoID;
+      $prodDescripcion    = $datoproducto->prodDescripcion;
+      $prodClasfInvent    = $datoproducto->prodClasfInvent;
+      $famProdID          = $datoproducto->famProdID;
+      $presProdID         = $datoproducto->presProdID;
+      $tipProdID          = $datoproducto->tipProdID;
+      $marcProdID         = $datoproducto->marcProdID;
+      $medProdID          = $datoproducto->medProdID;
+      $proveedorID        = $datoproducto->proveedorID;
+      $presentacion_invId = $datoproducto->presentacion_invId;
+      $tipomovinvtId      = $datoproducto->tipomovinvtId;
     }
 
   }
+  
+  
 
   ?>
 <div class="modal fade" id="addProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -70,6 +76,9 @@
         <input type="hidden"  id="tipProdID"       name="tipProdID"       value =  "<?php echo $tipProdID; ?>">
         <input type="hidden"  id="medProdID"       name="medProdID"       value =  "<?php echo $medProdID;  ?>">
         <input type="hidden"  id="proveedorID"     name="proveedorID"     value =  "<?php echo $proveedorID; ?>">
+        <input type="hidden"  id="presentacion_invId" name="presentacion_invId" value =  "<?php echo $presentacion_invId;  ?>">
+        <input type="hidden"  id="tipomovinvtId"      name="tipomovinvtId"      value =  "<?php echo $tipomovinvtId; ?>">
+
         <div class="form-group">
             <label for="proveedor" class="col-form-label">Proveedor:</label>
             <select name="proveedor" id="proveedor"  class="form-control chosen">                
@@ -133,6 +142,27 @@
                  <?php foreach ($medidaProducto as $row): ?>
                     <option value="<?php echo $row->medProdID; ?>">
                     <?php echo $row->medProdID . " - " .  $row->medProdDescripcion; ?>
+                    </option>
+                <?php endforeach ?>
+            </select>            
+          </div>
+
+          <div class="form-group">
+            <label for="tipomovinvent" class="col-form-label">Tipo Mov Invt:</label>
+            <select name="tipomovinvent" id="tipomovinvent"  class="form-control chosen">                
+                 <?php foreach ($TipoMovInvnt as $row): ?>
+                    <option value="<?php echo $row->tipomovinvtId; ?>">
+                    <?php echo $row->tipomovinvtId . " - " .  $row->tipomovimientoinvt; ?>
+                    </option>
+                <?php endforeach ?>
+            </select>            
+          </div>
+          <div class="form-group">
+            <label for="presentacioninvent" class="col-form-label">Producto/servicio:</label>
+            <select name="presentacioninvent" id="presentacioninvent"  class="form-control chosen">                
+                 <?php foreach ($Presentacion_inv as $row): ?>
+                    <option value="<?php echo $row->presentacion_invId; ?>">
+                    <?php echo $row->presentacion_invId . " - " .  $row->presentacion_inv; ?>
                     </option>
                 <?php endforeach ?>
             </select>            

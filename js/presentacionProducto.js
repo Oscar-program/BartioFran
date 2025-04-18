@@ -22,6 +22,7 @@ function  savePresentacionProduc(){
       cache: false,
       contentType: false,
       processData: false,
+     
       beforeSend: function () {
         // Show image container
         $("#loader").css("display", "block");

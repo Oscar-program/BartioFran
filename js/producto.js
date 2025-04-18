@@ -24,55 +24,28 @@ function listarProductos(){
   }
 
   /*funcion para cargar la modal para  registrar los productos */
-function addProducto(productoID){
-    
+function addProducto(productoID){    
     /*Determinamos si  los datos del  producto ya existen */
     var valorid  = 0;  
     //var productoID      =  null;
  
-    var famProdID       =  1;
-    var presProdID      =  1;
-    var tipProdID       =  1;
-    var marcProdID      =  1;
-    var medProdID       =  1;
-    var proveedorID     =  1;
-   /* if(productoID!=0){
-      console.log("Cargando id de  composicion de  productos");
-        if(document.getElementById('famProdID')){
-          famProdID = $("#famProdID").val();
-        }
-        if(document.getElementById('presProdID')){
-          presProdID = $("#presProdID").val();
-        }
-        if(document.getElementById('tipProdID')){
-          tipProdID = $("#tipProdID").val();
-        }
-    
-        if(document.getElementById('marcProdID')){
-          marcProdID = $("#marcProdID").val();
-        }
-    
-        if(document.getElementById('medProdID')){
-          medProdID = $("#medProdID").val();
-        }
-    
-        if(document.getElementById('proveedorID')){
-          proveedorID = $("#proveedorID").val();
-        }
+    var famProdID          =  1;
+    var presProdID         =  1;
+    var tipProdID          =  1;
+    var marcProdID         =  1;
+    var medProdID          =  1;
+    var proveedorID        =  1;
+    var presentacion_invId =  0;
+    var tipomovinvtId      =  0;
 
-    }*/
-
-    
-
-      console.log("se ha hecho  click"+ productoID  + " capturado");
+    console.log("se ha hecho  click"+ productoID  + " capturado");
     var url = base_url('index.php/productos_Controller/addProducto/' + productoID);
    
     //var url = base_url("index.php/BancosController/bancos");
       $.get(url, function (data) {
         $("#vmodaladdProducto").html(data);
-      //  document.getElementById('prodDescripcion').innerHTML=descripcion      
+        //  document.getElementById('prodDescripcion').innerHTML=descripcion      
         $('#addProducto').modal('show');
-
         if(document.getElementById('famProdID')){
           famProdID = $("#famProdID").val();
         }
@@ -81,57 +54,51 @@ function addProducto(productoID){
         }
         if(document.getElementById('tipProdID')){
           tipProdID = $("#tipProdID").val();
-        }
-    
+        }    
         if(document.getElementById('marcProdID')){
           marcProdID = $("#marcProdID").val();
-        }
-    
+        }    
         if(document.getElementById('medProdID')){
           medProdID = $("#medProdID").val();
-        }
-    
+        }    
         if(document.getElementById('proveedorID')){
           proveedorID = $("#proveedorID").val();
           console.log( 'los  datos del  proveedor id  son ' + proveedorID);
         }else{
           console.log( 'no se encontro el  control del  proveedor ');
         }
-      
-        
+        if(document.getElementById('presentacion_invId')){
+          presentacion_invId = $("#presentacion_invId").val();
+        }
+        if(document.getElementById('tipomovinvtId')){
+          tipomovinvtId = $("#tipomovinvtId").val();
+        }         
         $("#proveedor").val(proveedorID);
-        $("#proveedor").change();
-  
+        $("#proveedor").change();  
         $("#familia").val(famProdID);
-        $("#familia").change();
-  
-     
+        $("#familia").change();       
         $("#tipProducto").val(tipProdID);
-        $("#tipProducto").change();
-  
+        $("#tipProducto").change();  
         $("#marca").val(marcProdID);
-        $("#marca").change();
-  
+        $("#marca").change();  
         $("#presentacion").val();
-        $("#presentacion").change();
-  
+        $("#presentacion").change();  
         $("#medida").val(medProdID);
         $("#medida").change();
-      
+        $("#tipomovinvent").val(presentacion_invId);
+        $("#tipomovinvent").change();
+        $("#presentacioninvent").val(tipomovinvtId);
+        $("#presentacioninvent").change();      
       });
    
    }
  /*Funcion para almacena El  producto */
  function saveProducto(){
   var $productoID =  0;
-
   console.log('llegando a la  funcion para almacenar el producto');
-  var formData;
-  
+  var formData;  
 	url_destino = "index.php/productos_Controller/saveProducto/";
-	formData    = new FormData($(".formAddProducto")[0]);
-	
-	
+	formData    = new FormData($(".formAddProducto")[0]);	
 	$.ajax({
           url: base_url(url_destino),
           type: "POST",
@@ -158,8 +125,7 @@ function addProducto(productoID){
 
             listarProductos();
           }
-        });
-	
+        });	
  } 
  /*funcion para cargar el  inventario manual de   productos  */ 
  function addInventManual(){

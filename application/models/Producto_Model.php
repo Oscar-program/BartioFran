@@ -6,19 +6,21 @@ class Producto_Model extends CI_Model {
   public function  addProducto($data, $productoID){
      
     if($productoID ==   NULL){
-        echo  'Ingresando Producto' . $productoID;
+    //    echo  'Ingresando Producto' . $productoID;
         $this->db->insert("producto",$data);
         return $this->db->insert_id();
     }else{
-        echo  'Actualizando Producto';
+      //  echo  'Actualizando Producto';
         $this->db->set("prodDescripcion", $data["prodDescripcion"])
                 ->set("famProdID",        $data["famProdID"])
                 ->set("presProdID",       $data["presProdID"])                     
                 ->set("tipProdID",        $data["tipProdID"])                    
                 ->set("marcProdID",       $data["marcProdID"])
                 ->set("medProdID",        $data["medProdID"])
-                ->set("proveedorID",      $data["proveedorID"])                
-                ->where("compraProdID",    $productoID)
+                ->set("proveedorID",      $data["proveedorID"])
+                ->set("prodClasfInvent",  $data["prodClasfInvent"])
+                ->set("tipomovinvtId",    $data["tipomovinvtId"])                 
+                ->where("productoID",     $productoID)
                 ->where("prodStatus",  1 )
                 ->update("producto");
         return $this->db->affected_rows();   
@@ -57,7 +59,7 @@ class Producto_Model extends CI_Model {
                  ->join('tipoproducto tipPro', 'tipPro.tipProdID  = prod.tipProdID', 'inner') 
                  ->join('marcaproducto marc', ' marc.marcProdID  = prod.marcProdID', 'inner') 
                  ->join('medidaproducto med', 'med.medProdID  = prod.medProdID', 'inner') 
-                 ->join('proveedor prov', 'prov.proveedorID  = prod.proveedorID', 'inner') 
+                 ->join('proveedores prov', 'prov.proveedorID  = prod.proveedorID', 'inner') 
 
                 
                
@@ -116,6 +118,15 @@ public function get_ListProductoTrasladar(){
             ->result();
     return  $query;          
 }
+//  funcio  retona la  informacion del producto (Producto/servicio) - (gravado, excento,  no sujeto) 
+ public function get_InfoProducto($productoID){
+    $query =  $this->db->select("productoID,  tipomovinvtId,  presentacion_invId") 
+            ->where("productoID", $productoID)                                
+            ->get("producto")
+            ->row();
+    return  $query;
+
+ }
 
 
 }

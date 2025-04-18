@@ -42,7 +42,7 @@
   <script src="./js/funciones_basica.js"></script>
   <script src=" <?php echo  base_url();?>js/login.js"></script>
   <script src = " https://unpkg.com/sweetalert/dist/sweetalert.min.js "> </script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src ="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   
 </head>
 <body class="hold-transition login-page" style =  "background-image: url(./img/club-dance2.jpg); background-repeat: no-repeat;background-size: cover;">

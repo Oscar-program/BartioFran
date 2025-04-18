@@ -29,7 +29,7 @@ class  CompraProducto_Model  extends CI_Model{
     public function  addCabeceracompra($data, $compraProdID){
      
         if($compraProdID ==   NULL){
-            echo  'Agregando la  cabecera de la  compra' . $compraProdID;
+            //echo  'Agregando la  cabecera de la  compra' . $compraProdID;
             $this->db->insert("compraproducto",$data);
             return $this->db->insert_id();
         }else{
