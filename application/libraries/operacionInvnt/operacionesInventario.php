@@ -9,9 +9,11 @@ class operacionesInvenatarios{
         /*
             Tipos de  movimientos sobre  un inventario
             'COMP'   =======> copra de producto 
-            "TRASL"  =======> traslado de producto 
+            "TRASL"  =======> traslado de producto  los traslados no generan movimiento en los inventarios, ya  que el producto sigue en el inventario solo se mueve de bodega
+                   /// wn caso que se haga  un tralado y este sea en diferencte sucursal ese si genera  movimiento en los   inventarios  
             "VENT"   =======> venta de producto 
             "AJUST"  =======> ajuste de producto
+            "DESPERD"  =======> Salida por desperdicio
         */
 
         $CI = & get_instance();
@@ -24,16 +26,17 @@ class operacionesInvenatarios{
         $newEntradaInvProd =  0; 
         $newSalidaInvProd  =  0; 
         $newExistencia     =  0;
+        $result            =  0;
        
                 if($movtipo == "COMP"){                 
                  // $existencia     +=  ($entradaInvProd -  $salidaInvProd ) ;  
                  $resulbInv = $CI->inventProducto_Model->get_productoIDInventarios($productoID,$bodegaDest);        
                  if(Empty($resulbInv)){
                      // indica que  se creara la  linea del   inventario 
-                     echo  'Se tiene que insertar el registro en el inventario or  compra' . '<br>';                  
+                    // echo  'Se tiene que insertar el registro en el inventario or  compra' . '<br>';                  
                      $invProdID = NULL;
                  }else{
-                     echo  'se encontro el producto  y la bodega';
+                     //echo  'se encontro el producto  y la bodega';
                      $invProdID      =  $resulbInv->invProdID;
                      $entradaInvProd =  $resulbInv->entradaInvProd; 
                      $salidaInvProd  =  $resulbInv->salidaInvProd; 
@@ -41,14 +44,17 @@ class operacionesInvenatarios{
                  }
                  $entradaInvProd += $cantidad; // capturamos el  valor de  entrada                   
 
-                  $dataComp =array( 'productoID'        =>$productoID ,  
+                  $dataComp =array( 'productoID'       =>$productoID ,  
                                     'bodegaProductoID' =>$bodegaDest,  
-                                    'entradaInvProd'   => $entradaInvProd, 
+                                    'entradaInvProd'   =>$entradaInvProd, 
                                     'salidaInvProd'    =>$salidaInvProd,
-                                    'usuarioID'        =>1,                                    
+                                    'usuarioID'        =>$_SESSION["usuarioID"] ,                                    
                                   );
-                  $CI->inventProducto_Model->addProductoInvent($dataComp, $invProdID);                
-                 // var_dump($dataComp);                  
+                $result =  $CI->inventProducto_Model->addProductoInvent($dataComp, $invProdID); 
+               /* if(!empty($result)){
+                     var_dump($result); 
+                    } */              
+                                  
                 }else if($movtipo == "TRASL"){
 
                   #  hacemos la salida para la bodega
@@ -106,7 +112,7 @@ class operacionesInvenatarios{
                                           'usuarioID'        =>1,
                                           //'existenciaInvProd'=>$existencia , 
                                         );
-                    var_dump( $dataTrasEnt);                    
+                   // var_dump( $dataTrasEnt);                    
                                        $CI->inventProducto_Model->addProductoInvent($dataTrasEnt , $invProdID);
 
                   # fin del  ingreso  para la bodega 
@@ -156,7 +162,7 @@ class operacionesInvenatarios{
        
            
                   
-
+        return  $result ;
         // $CI->inventProducto_Model->addProductoInvent($data, $invProdID);
       
 

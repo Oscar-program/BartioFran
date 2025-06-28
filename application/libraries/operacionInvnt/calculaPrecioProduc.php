@@ -17,8 +17,8 @@ class calculaPrecioProduc{
         $provTipoContribID      = $datos['provTipoContribID']; // provedor pequeno, medianmo  y gran contribuyente
         $tipomovinvtId          = $datos['tipomovinvtId'];    // si el producto es gravado
         $presentacion_invId     = $datos['presentacion_invId']; // producto o sservicio 
-        $cantidad               = $datos['cantidad'];
-        $preCosto               = $datos['preCosto']; 
+        $cantidad               = $datos['cantidad']; //   catidad  cantidad * por unidades de la presentacion  
+        $preCosto               = $datos['preCosto']; //  precio costo  
         $tipocomprobanteID      = $datos['tipocomprobante_INPUT']; 
         $ivaCalculado           = 0;
         $compNoSujeto           = 0;
@@ -82,11 +82,11 @@ class calculaPrecioProduc{
             $total         =  ($cantidad *  $preCosto );
         }  
         // subtotal valor usado solamente para mostrar en  la gria que muestra los prodctos  ingresados       
-        $dataResult = array('compNoSujeto'=>$compNoSujeto,
-                            'compGravado' =>$compGravado,
+        $dataResult = array('compGravado' =>$compGravado,
+                            'compNoSujeto'=>$compNoSujeto,                            
                             'compExcento' =>$compExcento,
                             'compProdIva' =>$ivaCalculado,
-                            'subtotal'    =>$subtotal,
+                            'subtotal'   =>$subtotal,                           
                             'total'       =>$total                            
                         );
         return   json_encode($dataResult)   ;  

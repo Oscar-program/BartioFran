@@ -1,6 +1,6 @@
 <?php  
 defined('BASEPATH') or exit('No direct script access allowed');
-class bodegaProducto_Model extends CI_Model{
+class BodegaProducto_Model extends CI_Model{
 
     // funcion para cargar las las bodegas de producto existentes
   

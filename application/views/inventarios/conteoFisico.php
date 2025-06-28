@@ -14,39 +14,36 @@
                         <div class="container-fluid m-top">
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <H2> INGRESO INVENTARIO DIARIO</H2>
+                                    <H4 style="color:#5DADE2; font-weight:bold;"> CONTEO FISICO</H4>
                                 </div>
-                                <!-- <div class="col-3">
-                              <input type="date"  name="fechab" id="fechab" class ="form-control" value="<?php echo date('Y-m-d'); ?>"> 
-                                      </div>
-                              -->
-                                <!-- <a href='#' class="btn btn-success btn-sm" style="margin:0px;  color:white;"
-                              data-title="Procesar Traslado"
-                              onclick="BuscarInvDiario()">
-                              <i class="fa  fa-search" aria-hidden="true">
-                              </i> </a> -->
-                                <!-- <div class="col-3" style="margin-left:30px">
-                              <input type="date"   class="form-control"  name="fechaing" id="fechaing" value="<?php  date_default_timezone_set("America/El_Salvador"); echo $date = date("Y-m-d"); ?>"> 
-                           </div> -->
-                                <div class="col-lg-3">
+                                <br>
+                                <br>
+                              
+                                <div class="col-lg-5">
                                     <div class="mb-3">
-                                        <input type="date" name="fechaingb" id="fechaingb" class="form-control" value="<?php  date_default_timezone_set("America/El_Salvador"); echo $date = date("Y-m-d"); ?>"> </div>
+                                        <input type="date" name="fecha" id="fecha" class="form-control" value="<?php  date_default_timezone_set("America/El_Salvador"); echo $date = date("Y-m-d"); ?>"> 
+                                    </div>
                                     <div class="mb-3">
-                                        <select class="form-control  custom-margin" name="TipoMov" id="TipoMov" selected="this.selectedText">
-                                            <option value="Apertura" selected>Turno Mañana</option>
-                                            <option value="Cierre">Turno tarde</option>
-                                             <option value="Cierre">Turno noche</option>
+                                        <select class="form-control  custom-margin" name="turno" id="turno" selected="this.selectedText">
+                                            <option value="Apertura" selected>Seleccione un turno</option>
+                                            <?php  foreach( $turnos as  $row): ?>
+                                                    <option value="<?php  echo  $row->turnOperaID ?>"> <?php echo  $row->turnOperaDescripcion;  ?></option>
+                                             <?php endforeach; ?>      
+                                            
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <select class="form-control  custom-margin" name="Bodega" id="Bodega" selected="this.selectedText">
-                                            <option value="Apertura" selected>Bodega1 </option>
-                                            <option value="Cierre">Bodega 2</option>
+                                       <select class="form-control  custom-margin" name="bodega" id="bodega" selected="this.selectedText">
+                                            <option value="Apertura" selected>Seleccione una bodega</option>
+                                            <?php  foreach( $bodegas as  $row): ?>
+                                                    <option value="<?php  echo  $row->bodegaProductoID ?>"> <?php echo  $row->bodProdDescripcion;  ?></option>
+                                             <?php endforeach; ?>      
+                                            
                                         </select>
                                     </div>
 
                                     <div class="mb-3">
-                                        <select class="form-control custom-margin" name="nProducto" id="nProducto" selected="this.selectedValue">
+                                        <select class="form-control custom-margin chosen" name="producto" id="producto" selected="this.selectedValue">
                                             <?php foreach ($listaProductos as $row){?>
                                                 <option value="<?=$row->productoID?>" <?php if($row->productoID == 1) echo " selected" ?>>
                                                     <?=$row->prodDescripcion?>
@@ -54,46 +51,55 @@
                                                 <?php }?>
                                         </select>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-top:20px">
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <input type="text" class="form-control   custom-margin" id="invinicial" value="" placeholder="Total cierre">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control custom-margin"  id="exitenciafisica" placeholder="Existencia física">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control  custom-margin"  id="invfinal" placeholder="Aberías">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control custom-margin"  id="vnormal" placeholder="Refíl">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control   custom-margin"  id="pnormal" placeholder="Existencia Real">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <input type="text" class="form-control custom-margin"  id="pespecial" placeholder="Monto Precio Especial">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control  custom-margin"  id="vespecial" placeholder="Qty Vendidos Precio Especial">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control  custom-margin"  id="totalv" placeholder="Qty Total Venta (Global)">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control custom-margin"  id="totalamt" placeholder="Monto Total venta (Global)">
-                                </div>
+                                   
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control   custom-margin" id="tcierreant" name ="tcierreant" value="" placeholder="Total cierre anterior">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control custom-margin"  id="existenciaF"  name="existenciaF"   placeholder="Existencia física">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control  custom-margin"  id="aberia"   name="aberia" placeholder="Aberías">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control custom-margin"  id="refil" name="refil"  placeholder="Refíl">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control   custom-margin"  id="stockf"  name="stockf"  placeholder="Existencia Real">
+                                    </div>
+                                    <div class="mb-3 text-right">
+                                                        <button  id ="btnSaveConteo" name="btnSaveConteo"  class="btn btn-lg btn-primary"  style="background-color: #5DADE2 ;  border-color:aliceblue; border-width:1px;"  title="Procesar Conteo físico" onclick="saveCompraproducto()">  <i class="fa fa-database" aria-hidden="true"></i> Guardar Conteo </button>
+                                                        <!-- <button id ="btnSaveCompra" name="btnSaveCompra"  class="btn btn-lg btn-primary"  style="background-color: #5DADE2 ;  border-color:aliceblue; border-width:1px;"  title="Procesar compra" onclick="saveCompraproducto()">  <i class="fa fa-database" aria-hidden="true"></i> Guardar compra </button> -->
+                                                        <button id ="btnVerModalDetComp" name="btnVerModalDetComp"  class="btn btn-lg btn-primary" style="background-color: #5DADE2; border-color:aliceblue; border-width:1px;" title="Agregar detalle de conteo" onclick="addDetCompra()">  <i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                        
+                                     </div>
+                               </div>
 
-                                <a href='#' class="btn btn-danger btn-sm"  data-title="Guardar" onclick="SaveInvDiario()">
-									Guardar
-                                </a>
+                            
+                                <div class="col-lg-7">
+                                <table  class="table table-hover" style="border-width: 1px; border-color:#5DADE2 ;" >
+                                        <thead>
+                                            <tr style="font-size: 9px;">
+                                                <th style="font-size: 10px;">#</th>                                                
+                                                <th style="font-size: 10px;">Cantidad</th>
+                                                <th style="font-size: 10px;">Descripcion</th>
+                                                <th style="font-size: 10px;"> T. Cierre</th>
+                                                <th style="font-size: 10px;">Existencia</th>
+                                                <th style="font-size: 10px;">Aberias</th>
+                                                <th style="font-size: 10px;">Refil</th>
+                                                <th style="font-size: 10px;">Existencia Real</th>
+                                                 <th style="font-size: 10px;">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="detConteo" > 
+                                        </tbody>  
+                                    </table> 
+                                    <div class="mb-3 text-right">
+                                          
+                                                 
+                                    </div>
 
-                            </div>
+                                </div>
                         </div>
                     </form>
                 </div>
@@ -188,13 +194,24 @@
         </div>
     </div>
 </div>
+<script>
+     $(document).ready( function(){
+       $("#btnSaveConteo").prop("disabled",true);
+     });
+
+</script>
 
 <script>
+
 $(document).ready(function()
 {
+ $("#Producto").select2({
+                                        theme: 'bootstrap4',
+                                        placeholder: "Select producto",
+                                        allowClear: true,
+                                        width: 'resolve',
+                                    });
 
-//$("#nProducto").prop("selectedIndex", 0); // here 0 means select first option
-//$('#nProducto').removeAttr('selected').find('option:first').attr('selected', 'selected');
 
 });
 </script>

@@ -6,17 +6,23 @@ class InvDiario_Controller extends CI_Controller {
            parent::__construct();     
            $this->load->database();                  
            $this->load->model('InvDiario_Model');
+		   $this->load->model('Turnos_Model');
+		   $this->load->model('BodegaProducto_Model');
+
+
+		   //Turnos_Model
+		   //BodegaProducto_Model
+
            $this->load->helper('path');          
     }
   
 
 	/*Funcion paramostrar la  vista para  agregar datos del   invetario manual */
 	public function LoadViewInvDiario(){ 
-
-	ini_set('display_errors',1);
-	ini_set('display_startup_errors',1);
-	error_reporting(E_ALL); 
-	$this->load->view('inventarios/view_InventarioDiario');  
+		ini_set('display_errors',1);
+		ini_set('display_startup_errors',1);
+		error_reporting(E_ALL); 
+		$this->load->view('inventarios/view_InventarioDiario');  
 
 	}
    
@@ -25,8 +31,12 @@ class InvDiario_Controller extends CI_Controller {
 	ini_set('display_errors',1);
 	ini_set('display_startup_errors',1);
 	error_reporting(E_ALL);
-		$data['listaProductos'] = $this->InvDiario_Model->get_ListProducto();
-		$this->load->view('inventarios/view_InventarioDiario',$data);
+	
+	$data['listaProductos'] = $this->InvDiario_Model->get_ListProducto();
+	$data['turnos']         = $this->Turnos_Model->get_listaTurnos();
+	$data['bodegas']        = $this->BodegaProducto_Model->get_listBodegaProducto() ; // get_listBodegaProducto
+
+	$this->load->view('inventarios/conteoFisico',$data);
 
 	}
 

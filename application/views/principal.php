@@ -243,7 +243,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </a>
                 </li> 
 								<li class="nav-item">
-                  <a href="javaScript:LoadviewInvdiario();" class="nav-link">
+                  <a href="javaScript:LoadviewConteoFisico();" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Inventario Diario</p>
                   </a>
@@ -665,6 +665,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>js/prodPresentacion.js"></script>
   <script src=" <?php echo  base_url();?>js/equivalentes.js"></script>
 	<script src=" <?php echo  base_url();?>js/InvDiario.js"></script>
+  <script src=" <?php echo  base_url();?>js/conteoFisico.js"></script>
   
 
   

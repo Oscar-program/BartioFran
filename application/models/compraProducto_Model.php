@@ -3,10 +3,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class  CompraProducto_Model  extends CI_Model{
 
     
-    // funcion para mostrar todas las   compras   ingresadas 
-    public function get_ListCompras(){
-          //  echo  'el id de  compra es '.  $idCompra;
-        $query =  $this->db->select("date_format(cmp.compProdFecha, '%d-%m-%Y') as fecha , prov.provDescripcion,
+   
+     public function get_ListComprasFiltrada($fechaInicial, $fechaFinal){
+       // echo     $fechaInicial . "   " .  $fechaFinal ;
+        if(strlen($fechaInicial)>0 && strlen($fechaFinal)>0){
+           // echo  'filtrando en el modelo  por la compra ';
+            $this->db->where("date_format(cmp.compProdFecha, '%Y-%m-%d')>=",$fechaInicial);
+            $this->db->where("date_format(cmp.compProdFecha, '%Y-%m-%d')<=",$fechaFinal);
+
+        }else{
+           // echo  'MOSTRANDO GENERALES DE LA  compra ';
+             $this->db->where("cmp.compProdFecha>= DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH) and cmp.compProdFecha<=CURRENT_DATE()");
+        }
+         $query =  $this->db->select("cmp.compraProdID, date_format(cmp.compProdFecha, '%d-%m-%Y') as fecha , prov.provDescripcion,
                                         (case
                                         when  cmp.comprobanteTipo = 1  then   'CCF'
                                         when  cmp.comprobanteTipo = 2  then   'FC' 
@@ -16,32 +25,38 @@ class  CompraProducto_Model  extends CI_Model{
                                         cmp.comprobantenum , usr.usrNombre,
                                      cmp.compProdNoSujeto ,cmp.compProdIva, cmp.compProdTotal"
                                     )   
-                        ->join('proveedor prov', 'cmp.proveedorID  =  prov.proveedorID', 'inner')
-                        ->join('usuario usr', 'cmp.usuarioID =   usr.usuarioID', 'inner')                
-                      // ->where("idCompra", $idCompra)
+                        ->join('proveedores prov', 'cmp.proveedorID  =  prov.proveedorID', 'inner')
+                        ->join('usuario usr', 'cmp.usuarioID =   usr.usuarioID', 'inner')  
+                         ->where("cmp.compProdStatus",1)
+                       ->order_by('cmp.compProdFecha', 'DESC')
                        ->get("compraproducto as  cmp")
                        ->result();
-        return  $query;          
-    }
+        return  $query;  
+
+     }
 
 
     //   funcion para  insertar la  cabecera de las compras 
     public function  addCabeceracompra($data, $compraProdID){
      
+       //->where('empresaID',$_SESSION["empresaID"])
+        //->where('establecimientoID',$_SESSION["establecimientoID"])
         if($compraProdID ==   NULL){
             //echo  'Agregando la  cabecera de la  compra' . $compraProdID;
             $this->db->insert("compraproducto",$data);
             return $this->db->insert_id();
         }else{
-            echo  'para  actualizar Cabecera de la compra';
-            $this->db->set("empresaID",        $data["empresaID"])
-                    ->set("establecimientoID", $data["precUnit"])
-                    ->set("proveedorID",       $data["sub_total"])                     
+           // echo  'para  actualizar Cabecera de la compra';
+            $this->db->set("empresaID",        $_SESSION["empresaID"])
+                    ->set("establecimientoID", $_SESSION["establecimientoID"])
+                    ->set("proveedorID",       $data["proveedorID"])                     
                     ->set("comprobanteTipo",   $data["comprobanteTipo"])                    
                     ->set("comprobantenum",    $data["comprobantenum"])
-                    ->set("usuarioID",         $data["usuarioID"])
+                    ->set("usuarioID",         $_SESSION["usuarioID"])
                     ->set("compProdNoSujeto",  $data["compProdNoSujeto"])
+                    ->set("compProdGravado",   $data["compProdGravado"]) 
                     ->set("compProdIva",       $data["compProdIva"])
+                    ->set("compProdExcento",   $data["compProdExcento"])  
                     ->set("compProdTotal",     $data["compProdTotal"]) 
                     ->where("compraProdID",    $compraProdID)
                     
@@ -55,11 +70,11 @@ class  CompraProducto_Model  extends CI_Model{
     public function  adddetcompra($data, $detCompraId){
       
         if($detCompraId==   NULL){
-            echo  'Insertando el  item del  detalle de la compra ' . $detCompraId;
+           // echo  'Insertando el  item del  detalle de la compra ' . $detCompraId;
             $this->db->insert("compra_det_producto",$data);
             return $this->db->insert_id();
         }else{
-            echo  'para  actualizar';
+           // echo  'para  actualizar';
             $this->db->set("cantidad",     $data["cantidad"])
                     ->set("precUnit",      $data["precUnit"])
                     ->set("sub_total",     $data["sub_total"])                     
@@ -138,14 +153,36 @@ class  CompraProducto_Model  extends CI_Model{
 
          //  funcion para calcular el total del comprobante de  compra 
         public function get_sumastotaltmp($idCompra) {       
-            $query =  $this->db->select("tmp.compraProdID,sum(tmp.sub_total) as  sumas , sum(tmp.impuesto) as  impuestos, sum(tmp.total) as  totalcompra ")   
-                    
+            $query =  $this->db->select("tmp.compraProdID, 
+                                        sum(case  
+                                        WHEN prod.tipomovinvtId = 1    then   tmp.sub_total  else  0   
+                                        end) as gravado ,
+                                        sum(case  
+                                        WHEN prod.tipomovinvtId = 2   then   tmp.sub_total  else  0   
+                                        end) as excento ,
+                                        sum(case  
+                                        WHEN prod.tipomovinvtId = 3   then   tmp.sub_total  else  0   
+                                        end) as nosujeto ,
+                                        sum(tmp.impuesto) as  impuestos, sum(tmp.total) as  totalcompra"
+                                        ) 
+                     ->join("producto prod", "prod.productoID = tmp.productoID", "inner")                      
                     ->where("tmp.compraProdID", $idCompra)
                     ->group_by("tmp.compraProdID")
                     ->get("compra_det_producto tmp")
                     ->row();
             return  $query;          
-        }  
+        } 
+        
+        // funcion para poner anulada la compra 
+
+        public  function del_compras($compraProdID){
+            //echo  'llegando a la anulacion' . $compraProdID . " ";
+              $this->db->set("compProdStatus", 0)
+                        ->where("compraProdID",$compraProdID)         
+                        ->update("compraproducto");                 
+        return  $this->db->affected_rows();   
+
+        }
 
     # fin de segmento para controlar los  movimiento en la tabla tempora de detalle de compra   
 

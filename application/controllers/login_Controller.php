@@ -52,17 +52,24 @@ class   login_Controller extends CI_Controller{
         if(empty($datosUser)){
             $RetornaUser = 0;
            // echo $RetornaUser ; 
+           
 
             
         }else{
             $_SESSION["usuario"]           = $datosUser->usrNombre; 
             $_SESSION["usrLogin"]          = $datosUser->usrLogin;
             $_SESSION["usuarioID"]          = $datosUser->usuarioID; 
+            $_SESSION["empresaID"]          = $datosUser->empresaID; 
+             
             
             $_SESSION["establecimientoID"] = $establecimID;
             $_SESSION["idDetCompra"]=1;
             $_SESSION["IdTempComprea"]= rand();
             $_SESSION["detlistadecompra"]= array();
+
+          
+
+
 
              
             // echo 'la variable de  session contiene' . $_SESSION["usuario"] ; 

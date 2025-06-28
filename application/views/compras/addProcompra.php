@@ -83,6 +83,7 @@
   $idtmp           = '';
   $tipocomprobante = 0;
   $proveedorID     = 0;
+  $unidadesPresenta= 0;
 
   
   if(isset($datoproducto)){
@@ -111,7 +112,7 @@
 
 <div class="loader"></div>
 
-<div class="modal fade" id="adddetProducCompra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="adddetProducCompra" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
@@ -121,8 +122,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <form  metod="POST"  id ="formAddProducCompra" class="formAddProducCompra" action="javascript:saveTmpCompra()">
-        <input type="hidden"   id="compraProdID"  name="compraProdID"      value =  "<?php echo $compraProdID; ?>"> 
+        <form  metod="POST"  id ="formAddProducCompra" class="formAddProducCompra" action="javascript:saveDetCompra()">
+        
+        <input type="hidden"   id="unidadespresentacion"  name="unidadespresentacion"      value =  "<?php echo $unidadesPresenta; ?>"> 
+        <input type="text"   id="compraProdID"  name="compraProdID"      value =  "<?php echo $compraProdID; ?>"> 
        
         
 
@@ -170,7 +173,7 @@
         </div>
 
         <div class="form-group col-sm">
-            <label for="tipProducto" class="col-form-label">Precio costo:</label> 
+            <label for="tipProducto" class="col-form-label">Precio costo por unidad:</label> 
             <input type="number" class="form-control text-right" id="preCosto" name="preCosto" step ="any" >  
         </div>
         <div class="mb-3 text-right">

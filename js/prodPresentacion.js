@@ -20,7 +20,7 @@ function base_url(url){
       $.get(url, function (data) {
          // $("#detPresentacion").html(data);
          if(data!=0){
-            $("#unidapresentacion").val(data)
+            $("#unidadespresentacion").val(data)
          }else{
             swal("La presentacion que ha selecciondo no  tiene  unidades equivalentes",{
                 icon: "error",
