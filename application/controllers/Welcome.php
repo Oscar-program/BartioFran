@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+//include  "C:/xampp/htdocs/EnlaceConexion/BAR.php";
 
 class Welcome extends CI_Controller {
 	public function __construct() {	
@@ -78,5 +79,27 @@ class Welcome extends CI_Controller {
       // $data['listaMesas'] = $this->mesas_Model->get_listmesas();
 		$this->load->view('usuarios/registrarUsuario');
 	}
+	public function testConexion(){
+		echo 'llegandfo a conexion'  .'<br>' ;  
+		//var_dump($conexion);
+
+		$stmt = $GLOBALS['db']->query("SELECT *  FROM fasdfds ");
+       $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        var_dump($fila);
+		echo  '<br>';
+
+		echo  '<br>';
+
+		$stmt = $GLOBALS['db']->query("SELECT *  FROM marcaproducto ");
+       $fila = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        var_dump($fila);
+
+
+		
+
+
+
+		//var_dump($conexion);
+	} 
 
 }
