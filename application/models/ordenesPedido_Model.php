@@ -16,9 +16,11 @@
     //funcion para insert nueva medida de  producto 
     public function  addOrdenPedido($data, $ordenPedidoID){
         if($ordenPedidoID ==   null){
+            ECHO  "INSERTANDO UNA NUEVA ORDEN DE PEDIDO  \n" ;
             $this->db->insert("ordenpedido",$data);
             return $this->db->insert_id();
         }else{
+             ECHO  "actualizando  UNA NUEVA ORDEN DE PEDIDO  \n" ;
             $this->db->set("ordPcomentario", $data["ordPcomentario"])
                     ->set("ordPCantidadPrd", $data["ordPCantidadPrd"])
                     ->set("ordPtotalcancelar", $data["ordPtotalcancelar"])
@@ -37,10 +39,13 @@
             $this->db->insert("detordenpedido",$data);
             return $this->db->insert_id();
         }else{
-            $this->db->set("bodProdDescripcion", $data["bodProdDescripcion"])
-                    ->set("establecimientoID",  $data["establecimientoID"])
+            $this->db->set("detcantidad", $data["detcantidad"])
+                    ->set("detprecioNormal",  $data["detprecioNormal"])
+                    ->set("dettotal",  $data["dettotal"])
+                    
+
                     ->where("detPedID", $detPedID)
-                    ->where("bodProdStatus",  1)
+                    ->where("detstatus",  1)
                     ->update("detordenpedido");
             return $this->db->affected_rows();   
                
@@ -48,10 +53,12 @@
     }
     //   funcion para listar  el  detalle  de la orden de pedido del  cliente  
     public function get_listDetOrden($ordenPedidoID){
+        //  echo  "la orden del pedido es  " . $ordenPedidoID ;
         $query =  $this->db->select("detOr.detPedID, detOr.ordenPedidoID, detOr.productoID, detOr.detprecioNormal, detOr.detcantidad, prod.prodDescripcion, detOr.dettotal, prod.famProdID")
-                ->join('producto prod',  'detOr.productoID =  prod.productoID', 'inner')
-
+                           ->join('producto prod',  'detOr.productoID =  prod.productoID', 'inner')        
+                           ->join('ordenpedido ordp',  'detOr.ordenPedidoID =  ordp.ordenPedidoID', 'inner')
                 ->where("detOr.ordenPedidoID",  $ordenPedidoID) 
+                 ->where("ordp.ordPanulado",  0)
                 ->where("detOr.detstatus",  1)
                 ->get("detordenpedido detOr")
                 ->result();
@@ -124,7 +131,23 @@
                 ->row();
         return  $query;          
     }
+    //  funcion para anular  la orden de pedido  
+    public function  anularOrden($ordenID){
+           echo  "anulando la  orden de pedido   \n";
+               $this->db->set("ordPanulado", 1) 
+                 ->where("ordenPedidoID", $ordenID)
+                 ->update("ordenpedido");
+        return $this->db->affected_rows();  
 
+    }
+   // funcion para eliminar el detalle de la venta 
+   public function  anularDetOrden($detPedID){
+      echo  "eliminando la orden de pedido   \n";
+               $this->db->where("detPedID", $detPedID)
+                 ->delete("detordenpedido");
+        return $this->db->affected_rows();  
+
+   }
 
 
 

@@ -103,6 +103,23 @@ class ConteoFisico_Model extends CI_Model{
              ->delete("det_conteofisico");                 
         return  $this->db->affected_rows();   
  }
+ /*Select  cnfis.conteoID, cnfis.fecha, estb.estNombre, turn.turnOperaDescripcion,
+(Select  count( distinct  det1.bodegaProductoID) from    det_conteofisico det1 where det1.conteoID) as bodegasInventariadas ,
+(select  count( distinct  det2.productoID)    from    det_conteofisico det2  where det2.conteoID) as productosContados ,
+(select  sum( distinct  det3.tcierreant) from    det_conteofisico det3  where det3.conteoID) as CierreAnterior, 
+(select  sum( distinct  det4.existenciaF) from    det_conteofisico det4  where det4.conteoID) as existenciaFisica,
+(select  sum( distinct  det5.aberia) from    det_conteofisico det5  where det5.conteoID) as averias, 
+(select  sum( distinct  det6.refil) from    det_conteofisico det6  where det6.refil) as refil,
+(select  sum( distinct  det7.stockf) from    det_conteofisico det7  where det7.conteoID) as existenciaActual
+From  conteofisico cnfis 
+Inner  Join  establecimientoempresa estb 
+on  cnfis.establecimientoID =  estb.establecimientoID  
+Inner join turnooperacion  turn 
+ on   turn.turnOperaID =  cnfis.turnOperaID
+Inner join   usuario usr   
+on    usr.usuarioID =  cnfis.usuarioID
+-- inner  join  det_conteofisico dtcf on dtcf.conteoID = cnfis.conteoID
+Where cnfis.anulado =  0  order  by conteoID desc limit  20    ;*/
 
 
 

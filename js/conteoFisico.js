@@ -196,7 +196,6 @@ function  detDetalleConteoFisico(detConteoID){
           $("#detConteo").html(data);  
             get_listaDetConteo(conteoID);                    
         });
-
 }
 
 function getDetConteoPorID(detConteoID){
@@ -213,6 +212,65 @@ function getDetConteoPorID(detConteoID){
         });
 }
 // funcion que  actualiza la toma de  inventario
+function  updateDetConteoFisico(){
+    var  url  =     base_url("index.php/ConteoFisico_Controller/insertar_conteo/");
+    if( $("#producto").val()==0){
+         alertify.set("notifier", "position", "bottom-center");
+         alertify.error("Tiene que seleccionar  un producto");
+        return false;
+    }
+    if(parseInt($("#tcierreant").val())==0){
+         alertify.set("notifier", "position", "bottom-center");
+         alertify.error("El cierre anterior tiene que ser mayor a cero");
+        return false;
+    }
+    if( ($("#existenciaF").val().length)==0){
+          alertify.set("notifier", "position", "bottom-center");
+         alertify.error("La exitencia fisica tiene que ser mayor o igual acero");
+        return false;
+    }
+   
+    var  conteoID  = $("#conteoID").val() ;
+
+    var  detConteoID  = $("#detConteoID").val();
+    console.log("conteo"  + conteoID  + "detConteo " + detConteoID
+         
+    );
+    
+   
+
+    $.ajax({           
+          url: url,
+          type:"POST",
+          data: $("#FormConteoFisico").serialize(),          
+          datatype:"json",
+          beforeSend: function(){
+
+          },  
+          success: function(data){             
+             if(data["nError"]=="200"){                
+                 alertify.set("notifier", "position", "bottom-center");
+                 alertify.warning("Compra procesada correctamente");
+                 get_listaDetConteo(data["conteoID"]) ;
+                 $("#conteoID").val(data["conteoID"]); 
+                 $("#detConteoID").val(data["detConteoID"]);
+
+                 $("#producto").val(0);
+                 $("#producto").change();
+                 $("#tcierreant").val(null);
+                 $("#existenciaF").val(null);
+                 $("#aberia").val(null);
+                 //$("#aberia").val(null);
+                 $("#refil").val(null);
+                 $("#stockf").val(null);
+             }else {
+                alertify.set("notifier", "position", "bottom-center");
+                alertify.error("Surgio un error  al momento de almacenar los datos ");
+                 
+             }           
+          }
+    });
+}
 
 
 

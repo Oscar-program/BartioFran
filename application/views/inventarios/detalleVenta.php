@@ -22,7 +22,7 @@ error_reporting(E_ALL);
 
                                 <a href='#' class="btn btn-default btn-sm" style="margin:0px;  color:red; font-weight:bold;"
                                  title="Eliminar venta"
-                                onclick="delete_FamiliaProductoID(<?php  echo   $row->detPedID; ?>);">
+                                onclick="anularDetOrden(<?php  echo   $row->detPedID; ?>);">
                                 <i class="fa fa-trash" aria-hidden="true"></i> </a>
 
                         </td>

@@ -16,5 +16,17 @@ class mesa_Controller extends CI_Controller{
         //var_dump($data['comandas'] );
         $this->load->view('mesas/listaMesas',$data);
      }
+     // funcion  que lista las mesas que tiene ordenes pendientes de cobro
+
+     public function listaMesasPendienteCobro(){
+
+         $data['listaMesasPendientesCobro'] = $this->mesas_Model->listaMesasPendienteCobro();
+        //var_dump($data['submenu']);
+        //  $data['comandas'] = $this->Producto_Model->get_comandas();
+        //$data['familia']  = $famProdID;
+        //var_dump($data['comandas'] );
+        $this->load->view('mesas/ordenesPendientes',$data);
+
+     }
 
 }

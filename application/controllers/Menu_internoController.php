@@ -1,5 +1,8 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(E_ALL);
 class Menu_internoController extends CI_Controller {  
     public function __construct()
     {
@@ -20,7 +23,7 @@ class Menu_internoController extends CI_Controller {
         ini_set('display_errors',1);
         ini_set('display_startup_errors',1);
         error_reporting(E_ALL);
-        
+        echo "mostrando el  menu principal" ;
                 $data['sds'] = $this->Producto_Model->get_producto();
                 //var_dump($data['sds'] );
          
@@ -29,12 +32,11 @@ class Menu_internoController extends CI_Controller {
         $this->load->view('menuinterno/menu_interno',$data);
     }
     public function cargar_submenu($famProdID){
-        ini_set('display_errors',1);
-        ini_set('display_startup_errors',1);
-        error_reporting(E_ALL);
-       // echo 'llegando al  menu interno de la familia de  productos'. $famProdID .  "<br>";
+        
+        //echo 'llegando al  menu interno de la familia de  productos'. $famProdID .  "<br>";
         $data['submenu'] = $this->Producto_Model->get_submenu($famProdID);
         //var_dump($data['submenu']);
+        //echo  "mostrando los resultados de buscar submenu";
         $data['comandas'] = $this->Producto_Model->get_comandas();
         $data['familia']  = $famProdID;
         //var_dump($data['comandas'] );
@@ -54,31 +56,31 @@ class Menu_internoController extends CI_Controller {
      }
      // funcion para cargar la pantalla principal de  ordenes  
      public function cargar_addordenes($mesaID){
-        ini_set('display_errors',1);
-        ini_set('display_startup_errors',1);
-        error_reporting(E_ALL);
-       // echo 'llegando al  menu interno de la familia de  productos'. $mesaID .  "<br>";
+       
+       //echo 'llegando al  menu interno de la familia de  productos'. $mesaID .  "<br>";
         $data['listFamiliaProducto'] = $this->familiaProducto_Model->get_listFamiliaProducto();
        // var_dump($data['listFamiliaProducto'] );
        // $data['submenu'] = $this->Producto_Model->get_submenu($famProdID);
         //var_dump($data['submenu']);
         //$data['comandas'] = $this->Producto_Model->get_comandas();
         # segmento para  generar la  cabecera  de la  orden de pedido  
-        $meseroID  =  1;
-        $mesaID    = $mesaID;
-        $comandaID =  1;
-        $ordenPedidoID =null;
+        $meseroID       =  1;
+        $mesaID         = $mesaID;
+        $comandaID      =  1;
+        $ordenPedidoID  = null;
 
-       $dataarr  =  array( 'meseroID' =>$meseroID,
+       $datosMEsa  =  array( 'meseroID' =>$meseroID,
                             'mesaID' =>$mesaID,
                             'comandaID' =>$comandaID,
+                            
                         );
        // echo  'llegadno al controlador';                
-       $ordenID  =  $this->ordenesPedido_Model->addOrdenPedido($dataarr, $ordenPedidoID); 
+       $ordenID  =  $this->ordenesPedido_Model->addOrdenPedido($datosMEsa, $ordenPedidoID); 
 
        
-        $data['familia']  = $mesaID;
-        $data['datordenID']  =    $ordenID ;
+        $data['familia']     = $mesaID;
+        $data['datordenID']  = $ordenID ;
+        $data['mesaID']      = $mesaID ;
 
         //var_dump($data['comandas'] );
         $this->load->view('menuinterno/ordenesProducto',$data);

@@ -44,12 +44,13 @@ function cargar_listaProductos(id){
   //valorid = document.getElementById('familia'+id).dataset.value;
  // valorid = $('familia'+id).attr('data-value');
 // valorid      = $("#familia").val();
- console.log("se ha hecho  click"+ valorid  + " capturado");
+ console.log("se ha hecho  click"+ id  + " capturado");
  var url = base_url('index.php/Menu_internoController/cargar_submenu/' + id);
 
  //var url = base_url("index.php/BancosController/bancos");
    $.get(url, function (data) {
-     $("#listaProductos").html(data);
+    document.getElementById("lista"+id).innerHTML = "";
+     $("#lista"+id).html(data);
    });
 
 }

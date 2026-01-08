@@ -148,6 +148,31 @@ class ConteoFisico_Controller extends CI_Controller{
     echo  json_encode($DetConteo);
 
    }
+   //  funcion para 
+   public function  updateDetConteoFisico(){
+            $detConteoID       = (isset($_POST['detConteoID']) &&  $_POST['detConteoID']> 0) ? $_POST['detConteoID']: null;
+           // $conteoID          = (isset($_POST['conteoID']) &&  $_POST['conteoID']> 0)?  $_POST['conteoID']: null;
+            $bodegaProductoID  =  (isset($_POST['bodega']) && strlen($_POST['bodega']) > 0) ? $_POST['bodega'] : null;
+            $productoID        =  (isset($_POST['producto']) && strlen($_POST['producto']) > 0) ? $_POST['producto'] : null;   
+            $tcierreant        =  (isset($_POST['tcierreant']) && strlen($_POST['tcierreant']) > 0) ? $_POST['tcierreant'] : null;
+            $existenciaF       =  (isset($_POST['existenciaF']) && strlen($_POST['existenciaF']) > 0) ? $_POST['existenciaF'] : 0;  
+            $aberia            =  (isset($_POST['aberia']) && strlen($_POST['aberia']) > 0) ? $_POST['aberia'] : 0;  '' ; 
+            $refil             =  (isset($_POST['refil']) && strlen($_POST['refil']) > 0) ? $_POST['refil'] : 0;  
+           // $stockf          =  (isset($_POST['stockf']) && strlen($_POST['stockf']) > 0) ? $_POST['stockf'] : null;
+           $dataDetconteo  =  array('detConteoID'        =>$detConteoID,  
+                                    'bodegaProductoID'=>$bodegaProductoID, 
+                                    'productoID'      =>$productoID,  
+                                    'tcierreant'      =>$tcierreant  ,
+                                    'existenciaF'     =>$existenciaF,
+                                    'aberia'          =>$aberia,
+                                    'refil'           =>$refil
+                                     );
+           
+        $insertaDetalle= $this->ConteoFisico_Model->insertar_detconteofisico($dataDetconteo, $detConteoID);
+        $retorno  = array('nError'=>"200",  'msgError'=>"Resgistro almacenado con éxito", 'conteoID'=>$detConteoID, 'detConteoID'=> 0 );  
+       header("Content-Type: application/json");   
+        echo  json_encode($retorno);
+   }
 
    // funcion para buscar el  conteo  realizado  y  poder modificarlo  
 

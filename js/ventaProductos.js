@@ -2,10 +2,12 @@ function base_url(url){
     return window.location.origin + "/BartioFran/"+ url;
 }
 /*funcion para cargar la modal */
-function addVentaProducto(famProdID, id, detPedID, prodDescripcion,  preciocosto){    
+function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  preciocosto){
+ // modal que carga el producto y el  precio    
+  console.log("los datos de los productos son Familia  " + famProdID + "idProducto" + idProducto +  "detallePedido" +  detPedID  + "Descripcion"+  prodDescripcion + "PrecioCosto"+ preciocosto  )  
     var valorid  = 0;  
     var bodSaldID  = $("#bodSaldID").val();   
-    
+    console.log("funcion para mostrar los productos " + idProducto +   " idDetallePedido" +detPedID  ) ;
     var url = base_url('index.php/ventaProducto_Controller/addVentaProducto/' + famProdID + "/"+  detPedID);   
     //var url = base_url("index.php/BancosController/bancos");
       $.get(url, function (data) {
@@ -14,36 +16,29 @@ function addVentaProducto(famProdID, id, detPedID, prodDescripcion,  preciocosto
         document.getElementById('prodDescripcion').innerHTML=prodDescripcion;
         $('#addVentaProducto').modal('show');
         // ponemos el  precio  de  costo del producto 
-        $("#precioregular").val(preciocosto.toFixed(2));
-        $("#productoID").val(id);
-
-        
-
+        $("#productoID").val(idProducto); 
         $("#bodsalida").val(bodSaldID);
+         $("#precioregular").val(preciocosto.toFixed(2));
         $("#bodsalida").change();
-
-
-
-
       });
    
    }
    // funcion para calcular el total de la venta  
-   function calculartotalVenta(e){
-    if(e.keyCode===13){
+   function calculartotalVenta(){
+    //if(e.keyCode===13){
   
   
-      var precioregular    = parseFloat($("#precioregular").val());
-      var  precincremento  = parseFloat($("#precincremento").val());
-      var  cantiadVenta    = $("#cantiadVenta").val();
+      var precioregular    = (document.getElementById("precioregular"))  ? parseFloat($("#precioregular").val())  : 0;
+      var  precincremento  = (document.getElementById("precincremento")) ? parseFloat($("#precincremento").val()) : 0;
+      var  cantiadVenta    = (document.getElementById("cantidadVenta"))   ? $("#cantidadVenta").val()               : 0;
       var total   = (precioregular + precincremento) *  cantiadVenta; 
-     // console.log(precioregular + " "+ precincremento + " "+   cantiadVenta);
+      console.log("calculando el total del detalle de la venta " + precioregular + " "+ precincremento + " "+   cantiadVenta);
   
-      //console.log("Se ha precionado enter sobr el control" + parseFloat(total));
+      console.log("Se ha precionado enter sobr el control" + parseFloat(total));
       $("#totalVenta").val(parseFloat(total));
-      e.preventDefault();
+      //e.preventDefault();
   
-    }
+    //}
    }
    // funion para  registrar la  venta saveVentaProducto
    function saveVentaProducto(){
@@ -81,20 +76,28 @@ function addVentaProducto(famProdID, id, detPedID, prodDescripcion,  preciocosto
     if(document.getElementById("precincremento")){
         precincremento= parseFloat($("#precincremento").val());
     }
-    if(document.getElementById("cantiadVenta")){
-        cantiadVenta= $("#cantiadVenta").val();
+    if(document.getElementById("cantidadVenta")){
+        cantidadVenta= $("#cantidadVenta").val();
     }
     if(document.getElementById("totalVenta")){
         totalVenta= parseFloat($("#totalVenta").val());
     }
+    if(document.getElementById("detPedID")){
+        detPedID= $("#detPedID").val();
+    }
+
+
+    //detPedID
+
     //ordenID:ordenID, 
     var DJson  = { ordenID:ordenID, 
+                   detPedID:detPedID,
                     productoID:productoID, 
                     precioregular:precioregular, 
                     comanda:comanda,
                     bodegaOrigen:bodegaOrigen,
                     precincremento:precincremento, 
-                    cantiadVenta:cantiadVenta,
+                    cantidadVenta:cantidadVenta,
                     totalVenta:totalVenta, 
                     };  
         url_destino       = "index.php/ventaProducto_Controller/saveVentaProducto/";
@@ -113,8 +116,8 @@ function addVentaProducto(famProdID, id, detPedID, prodDescripcion,  preciocosto
             },
             success: function (data) {
             //$("#codigoCliente").prop( "disabled", true);
-              alertify.set("notifier", "position", "top-right");
-              alertify.success("Precio actualizado correctamente");
+              //alertify.set("notifier", "position", "top-right");
+              //alertify.success("Precio actualizado correctamente");
                
               $("#detOrdenesPedido").html(data);
               calculaTotalVenta(ordenID);
@@ -138,12 +141,15 @@ function addVentaProducto(famProdID, id, detPedID, prodDescripcion,  preciocosto
         var url = base_url('index.php/ventaProducto_Controller/get_TotalDetOrden/' + ordenID);   
         //var url = base_url("index.php/BancosController/bancos");
           $.get(url, function (data) {
+             console.log("El nuevo total a cancelar es  " +  data ) ;
+
            // $("#addVenta").html(data);
-            console.log("El dato retornado es "+data);
-            //document.getElementById('prodDescripcion').innerHTML=descripcion;
+            console.log("EL total a cancelar es  "+ data   +" sdnlksd");
+            document.getElementById('lbTotal').innerHTML= "";
+            document.getElementById('lbTotal').innerHTML= "Total a cancelar $" + parseFloat(data);
           //  $('#addVentaProducto').modal('show');
             // ponemos el  precio  de  costo del producto 
-            $("#totalOrden").val(data);
+            //$("#totalOrden").val(data);
             //$("#productoID").val(id);
           });
 
@@ -169,12 +175,13 @@ function addVentaProducto(famProdID, id, detPedID, prodDescripcion,  preciocosto
        }
 
        // funcion para  cargar la  orden seleccionada si esta  pendiente de cobro
-       function ver_ordenePedido(ordenPedidoID){    
+       function ver_ordenePedido(ordenPedidoID, mesaID){    
          
-        var url = base_url('index.php/ventaProducto_Controller/ver_ordenePedido/' + ordenPedidoID);   
+        var url = base_url('index.php/ventaProducto_Controller/ver_ordenePedido/' + ordenPedidoID + "/" + mesaID);   
         //var url = base_url("index.php/BancosController/bancos");
           $.get(url, function (data) {
             $("#principal").html(data);
+             calculaTotalVenta(ordenPedidoID);
             //console.log(data);
             //document.getElementById('prodDescripcion').innerHTML=descripcion;
            // $('#addVentaProducto').modal('show');
@@ -353,6 +360,66 @@ function editDetaVenta(famProdID, detPedID){
       $("#productoID").val(id);
     });
  
+ }
+
+ // funcion para anular la orden de pedido 
+ function  anularOrden(){
+    const  ordenID  =   document.getElementById('ordenID').value ;
+    const mesaID   =   document.getElementById('ctrlmesaID').value ; 
+    url  =  base_url('index.php/ventaProducto_Controller/anularOrden/');
+    console.log("anulando la  orden de pedido la mesa es " +  mesaID + "la orden es  " + ordenID  );
+    var obJSON = {ordenID : ordenID } ;
+    $.ajax({
+            url: url,
+            type: "POST",
+            data: obJSON,
+            beforeSend: function (){
+
+            }, 
+            success: function(data){                
+              //console.log("modificando orden" );
+               cargar_addordenes(mesaID) ;
+              // ver_ordenePedido(ordenID, mesaID) ;
+               $("#totalVenta").val(parseFloat(0));
+               document.getElementById('bannerMesaPedido').innerHTML = "";
+               document.getElementById('bannerMesaPedido').innerHTML = "MESA W" + mesaID + "         ORDEN #" + "" ;
+              //console.log("Datos  Modificados" );
+                 
+
+            }
+
+    });
+
+ }
+ // funcion que elimina el detalle de la venta  
+ function anularDetOrden(detPedID){
+    const  ordenID  =   document.getElementById('ordenID').value ;
+    const mesaID   =   document.getElementById('ctrlmesaID').value ; 
+    url  =  base_url('index.php/ventaProducto_Controller/anularDetOrden/');
+    console.log("anulando la  orden de pedido la mesa es " +  mesaID + "la orden es  " + ordenID  );
+    var obJSON = {detPedID : detPedID } ;
+    $.ajax({
+            url: url,
+            type: "POST",
+            data: obJSON,
+            beforeSend: function (){
+
+            }, 
+            success: function(data){                
+              //console.log("modificando orden" );
+               //cargar_addordenes(mesaID) ;
+               ver_ordenePedido(ordenID, mesaID) ;
+               //calculaTotalVenta(ordenID);
+               //$("#totalVenta").val(parseFloat(0));
+               //document.getElementById('bannerMesaPedido').innerHTML = "";
+               //document.getElementById('bannerMesaPedido').innerHTML = "MESA W" + mesaID + "         ORDEN #" + "" ;
+              //console.log("Datos  Modificados" );
+                 
+
+            }
+
+    });
+
  }
 
 

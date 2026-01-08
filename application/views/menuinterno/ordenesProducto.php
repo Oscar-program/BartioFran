@@ -1,58 +1,62 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+$ordenID = isset($datordenID) ? $datordenID : 0 ; 
+$mesaID  = isset($mesaID) ? $mesaID : 0 ; 
+$total   = 0; 
+$datTotal = 0;
 ?>
-<?php  $ordenID = 0;  ?>
-<?php  $total  = 0;  ?>
-<div class = "container-fluid">   
-    <div class="row">    
-            <div  class="shadow-lg p-3 mb-5 bg-white rounded" style ="width:15%;"> 
-                <div class="table-responsive">
-                    <table id="tblFamiliaProd" class="table table-hover" style ="width:100%;">
-                        <thead>
-                            <tr class="thead-danger"  style="background-color:darkred; color:aliceblue;">
-                               
-                                <th>Familia</th>                                      
-                                                               
-                            </tr>
-                        </thead>
-                        <tbody  id ="detMArcas">
-                            <?php
+
+
+
+<div class = "container-fluid"> 
+<div class="row"> 
+      
+
+   <div  class="col-md 12 shadow-sm p-3 mb-1 bg-white rounded text-end">
+      <label  id="bannerMesaPedido" name ="bannerMesaPedido">  <?php echo  "MESA " . $mesaID . "         ORDEN #" .   strval($ordenID); ?></label> 
+        
+
+    </div> 
+  <input type="hidden" class="text-left text-warning border-0" name="ordenID" id="ordenID" value="<?php  echo strval($ordenID); ?>" readonly>
+   <input type="hidden" class="text-left text-warning border-0" name="ctrlmesaID" id="ctrlmesaID" value="<?php  echo $mesaID; ?>" readonly>
+</div>  
+    <div class="row"> 
+          <!-- carga las categorias de los productos style ="width:15%;" -->           
+            <div  class="col-md 6 shadow-sm p-3 mb-5 bg-white rounded" > 
+                <div class="accordion" id="accordionExample">
+                          <?php
                         if(isset($listFamiliaProducto)){
                             if(!empty($listFamiliaProducto)){
                                 $c= 1;
                                 foreach($listFamiliaProducto as  $row) :?>
-        								<tr>
-
-                                         
-                                            <td  onclick="cargar_listaProductos(<?php echo $row->famProdID ;?>)"> <i class="fa fa-book "aria-hidden="true" style="color:brown;"></i> <?php  echo   $row->famProdDescripcion; ?></td>
-                                                                        
+                                    <div class="card-header" id=" <?php echo 'headin'. $row->famProdID ;?>">
+                                        <input type="hidden" id  ="" name  ="">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block text-left" type="button"
+                                             data-toggle="collapse" data-target="<?php echo '#collapse'. $row->famProdID ;?>"
+                                              aria-expanded="true" aria-controls="<?php echo 'collapse'. $row->famProdID ;?>" 
+                                              id="<?php echo 'btnFam'. $row->famProdID ;?>" 
+                                              onclick="cargar_listaProductos(<?php echo $row->famProdID ;?>)">
+                                            <?php  echo   $row->famProdDescripcion; ?>
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="<?php echo 'collapse'. $row->famProdID ;?>" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="card-body"  id  ="<?php echo 'lista'. $row->famProdID ;?>">
                                            
-                                            </tr> 
-        
-
-                                <?php  $c+= 1; endforeach ?>
-     <?php }}?>
-   
-                                   
-                                                                
-                        </tbody>
-                    </table>
-                </div>     
-            </div> 
-            <div id="listaProductos" class ="col-md 9 shadow-sm p-3 mb-5 bg-white rounded" style="margin-left: 3px;">  
-            <?php   $this->load->view('menuinterno/sub_menu');?>            
-                    
-            </div> 
-            <div class ="col-md 2 shadow-sm p-3 mb-5 bg-white rounded" style="margin-left: 3px;">
-                <?php  
-                  if(isset($datordenID)){
-                    $ordenID = $datordenID;
-                  }
-                ?>
+                                        </div>
+                                    </div>
+                                 <?php  $c+= 1; endforeach ?>
+                        <?php }}?>   
+                </div>
+            </div>
+            <!-- segmento para  cargar el detalle de la orden de pedido -->           
+            <div class ="col-md 6 shadow-sm p-3 mb-5 bg-white rounded" style="margin-left: 3px;">
+                
+              
                 
                 <form action="" id="formcabpedido"  name="formcabpedido">
-                <label> ORDEN DE PEDIDO  #</label> <input type="text" class="text-left text-warning border-0" name="ordenID" id="ordenID" value="<?php  echo strval($ordenID); ?>" readonly>
+                <!-- <label> ORDEN DE PEDIDO  #</label> <input type="text" class="text-left text-warning border-0" name="ordenID" id="ordenID" value="<?php  //echo strval($ordenID); ?>" readonly> -->
             
                 
                 <div class="table-responsive">
@@ -70,27 +74,61 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                                 
                         </tbody>
                     </table>
-                    <div> 
+                    <label id ="lbTotal" > Total a cancelar $  <?php  number_format($datTotal,2) ?>   </label>
+                
+                 <div> 
                         <textarea class="form-control" name="txAcomentario" id="txAcomentario" cols="30" rows="3"> Sin Comentario
                         </textarea>
                     </div>
-                </div>
-                <label>           CANCELAR $</label>
-                <?php  
-                  if(isset($datTotal)){
-                  //  var_dump($datTotal);
-
-                    $total =  number_format($datTotal,2);
-                   // echo  'La  variable tiene '. $total; 
-                  }
-                ?>
-
-                <input type="number"  class="text-right border-0" name="totalOrden" id="totalOrden" value="<?php  echo  $total;?>" readonly>
-                <button type="button" class="btn btn-danger" data-title ="Procesar venta" onclick="crear_pdf_ticket()" ><i class="fa fa-print" aria-hidden="true"></i></button>
-                </form>
+                </div> 
+                
+              <div class="container-fluid">
+                <div class="row">
+                <!--  <input type="number"  class="text-right border-0" name="totalOrden" id="totalOrden" value="<?php  //echo  $total;?>" readonly>  -->
+                <button type="button" id="btnDelOrden"  data-title ="Eliminar Orden" class="form-control btn-lg " style="width: 25%; color:lightslategrey ; font-size:40px; font-weight:bold; border-style:dotted; "><i class="fa fa-trash" aria-hidden="true"></i></button>
+                <button type="button" id="btnAddOrden"  data-title ="Agregar  Orden en la mesa" class="form-control  btn-lg" style="width: 25%; color:lightslategrey ; font-size:40px; font-weight:bold; border-style:dotted; " ><i class="fa fa-plus" aria-hidden="true"></i></button>
+                <button type="button" class="form-control   btn-lg" data-title ="Procesar venta" onclick="crear_pdf_ticket()" style="width: 25%; color:lightslategrey ; font-size:40px; font-weight:bold; border-style:dotted;" ><i class="fa fa-print" aria-hidden="true"></i></button>
+             </div>  
+            </div>    
+            </form>
             </div>             
             
     </div>
     
  
 </div>
+<!-- segmento para cargar la modal  para ingresar el detalle del pedido  -->
+<div  id = "addVenta">
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    const btnAdOrden  =  document.getElementById("btnAddOrden");
+    const btnDelOrden  =  document.getElementById("btnDelOrden");
+   
+
+  btnAdOrden.addEventListener("click", function(){
+    var ctrlmesaID  =  document.getElementById("ctrlmesaID").value ;
+     console.log("Los datos de la mesa actual   son  "  + ctrlmesaID)
+      cargar_addordenes(ctrlmesaID) ;
+  });
+
+
+   btnDelOrden.addEventListener("click", function(){
+    //var ctrlmesaID  =  document.getElementById("ctrlmesaID").value ;
+     //console.log("Los datos de la mesa actual   son  "  + ctrlmesaID)
+      anularOrden();
+  });
+
+
+})
+</script>
+
+<script>
+     function cargarProductosCategoria(idCategoria){
+        console.log("la categoria Cargada es" + idCategoria );
+       
+
+     } 
+
+</script>

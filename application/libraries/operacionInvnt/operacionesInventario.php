@@ -58,7 +58,7 @@ class operacionesInvenatarios{
                 }else if($movtipo == "TRASL"){
 
                   #  hacemos la salida para la bodega
-                  echo   'se  esta ejecutando  un traslado'; 
+                  //echo   'se  esta ejecutando  un traslado'; 
                       $resulbInv = $CI->inventProducto_Model->get_productoIDInventarios($productoID,$bodegaOrigen);        
                       if(Empty($resulbInv)){
                           // indica que  se creara la  linea del   inventario 
@@ -66,7 +66,7 @@ class operacionesInvenatarios{
                        
                           $invProdID = NULL;
                       }else{
-                        echo  'se encontro el producto  y la bodega';
+                        //echo  'se encontro el producto  y la bodega';
                          $invProdID      =  $resulbInv->invProdID;
                           $entradaInvProd =  $resulbInv->entradaInvProd; 
                           $salidaInvProd  =  $resulbInv->salidaInvProd; 
@@ -88,7 +88,7 @@ class operacionesInvenatarios{
                   # fin de la salida para la bodega 
 
                   #  hacemos el ingreso  para la bodega 
-                  echo  "PROCESANDO LA  SALIDA DE LA BODEGA" . '<br>';
+                  //echo  "PROCESANDO LA  SALIDA DE LA BODEGA" . '<br>';
                   $resulbInv = $CI->inventProducto_Model->get_productoIDInventarios($productoID,$bodegaDest);        
                   if(Empty($resulbInv)){
                       // indica que  se creara la  linea del   inventario 
@@ -96,7 +96,7 @@ class operacionesInvenatarios{
                    
                       $invProdID = NULL;
                   }else{
-                    echo  'eN LA saLIDA  se encontro el producto  y la bodega' . '<br>';
+                    //echo  'eN LA saLIDA  se encontro el producto  y la bodega' . '<br>';
                      $invProdID      =  $resulbInv->invProdID;
                       $entradaInvProd =  $resulbInv->entradaInvProd; 
                       $salidaInvProd  =  $resulbInv->salidaInvProd; 
@@ -126,7 +126,7 @@ class operacionesInvenatarios{
                    
                       $invProdID = NULL;
                   }else{
-                    echo  'eN LA saLIDA  se encontro el producto  y la bodega' . '<br>';
+                    //echo  'eN LA saLIDA  se encontro el producto  y la bodega' . '<br>';
                      $invProdID      =  $resulbInv->invProdID;
                       $entradaInvProd =  $resulbInv->entradaInvProd; 
                       $salidaInvProd  =  $resulbInv->salidaInvProd; 

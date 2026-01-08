@@ -11,7 +11,7 @@
            <div  style="float:left; width:25%; margin-left:3px; shadow p-3 mb-5 bg-white rounded" id  =" <?php echo   'familia'.$row->productoID ?>" 
               name  = 'familia' data-value=="<?php echo $row->productoID;?>" onclick="addVentaProducto(<?php echo $row->famProdID ;?>, <?php echo $row->productoID ;?>,  <?php echo $detPedID=0 ;?>, <?php echo "' $row->prodDescripcion '" ;?> ,  <?php echo $row->precioventa ;?>)">
                     <!-- small box -->
-                    <div class="small-box bg-danger">
+                    <div class="small-box bg-info" >
                         <div class="inner">
                         <h6> <?php echo '$ '.$row->precioventa ?></h6>
 
@@ -35,8 +35,8 @@
  
           <!-- /.row (main row) -->
 </div><!-- /.container-fluid -->
-<div  id = "addVenta">
-</div>
+<!-- <div  id = "addVenta">
+</div> -->
 
 <script>
    // $("#familia").on("click", function(){

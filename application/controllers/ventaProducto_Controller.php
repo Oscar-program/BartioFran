@@ -1,4 +1,8 @@
 <?php 
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(E_ALL); 
+
  include getcwd(). "/application/libraries/fpdf/fpdf.php";
  include getcwd(). "/application/libraries/operacionInvnt/operacionesInventario.php";
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -15,6 +19,8 @@ class ventaProducto_Controller extends CI_Controller {
            $this->load->model('familiaProducto_Model');
            $this->load->model('empresa_Model');
            $this->load->model('inventProducto_Model');
+           $this->load->model('mesas_Model');
+           
            
 
            
@@ -48,9 +54,9 @@ class ventaProducto_Controller extends CI_Controller {
      }
      // funcion para  guardar la  venta del producto 
      public  function saveVentaProducto(){
-        ini_set('display_errors',1);
-        ini_set('display_startup_errors',1);
-        error_reporting(E_ALL); 
+        //ini_set('display_errors',1);
+        //ini_set('display_startup_errors',1);
+        //  error_reporting(E_ALL); 
         //echo  'llegando al  controlador Ventas ';
         //$idTransac     = (isset($_POST["idTransac"]))?  $_POST["idTransac"] : 0;
         //echo  "El id de la transacciones es " .  $idTransac;
@@ -65,13 +71,14 @@ class ventaProducto_Controller extends CI_Controller {
         $ordenID         = (isset($_POST["ordenID"]))?  $_POST["ordenID"] : 0;
         // $bodegaOrigen    = (isset($_POST["bodegaProductoID"]))?  $_POST["bodegaProductoID"] : 0; 
         $comanda         = (isset($_POST["comanda"]))?  $_POST["comanda"] : 0;
-        $bodegaOrigen    = (isset($_POST["bodegaOrigen"]))?  $_POST["bodegaOrigen"] : 0;
+        $bodegaOrigen    = 1; //(isset($_POST["bodegaOrigen"]))?  $_POST["bodegaOrigen"] : 1;
         $bodegaDest      =  10;// por defecto sera la bodega de  ventas  (isset($_POST["bodegaDest"]))?  $_POST["bodegaDest"] : 0;
         $precioregular   = (isset($_POST["precioregular"]))?  $_POST["precioregular"] : 0; 
         $precincremento  = (isset($_POST["precincremento"]))?  $_POST["precincremento"] : 0;   
-        $salida          = (isset($_POST["cantiadVenta"]))?  $_POST["cantiadVenta"] : 0;
-        $entrada         = (isset($_POST["cantiadVenta"]))?  $_POST["cantiadVenta"] : 0;
+        $salida          = (isset($_POST["cantidadVenta"]))?  $_POST["cantidadVenta"] : 0;
+        $entrada         = (isset($_POST["cantidadVenta"]))?  $_POST["cantidadVenta"] : 0;
         $totalVenta      = (isset($_POST["totalVenta"]))?  $_POST["totalVenta"] : 0;
+        $detPedID        = (isset($_POST["detPedID"]) && $_POST["detPedID"]!=null )?  $_POST["detPedID"] : null;
      
 
         # procesamos la venta en el detalle de ordenes  
@@ -82,8 +89,9 @@ class ventaProducto_Controller extends CI_Controller {
             $detprecioNormal   = $precioregular;
             $detprecioEspecial = $precincremento;
             $dettotal          = $totalVenta; 
-            $detPedID         =null;
+           // $detPedID         =null;
             $dataDelOrdenes  =  array('ordenPedidoID' =>$ordenPedidoID , 
+                                      'detPedID'=> $detPedID,
                                       'productoID' =>$productoID ,
                                       'bodSaldID' =>$bodSaldID,
                                       'detcantidad' =>$detcantidad,
@@ -91,8 +99,12 @@ class ventaProducto_Controller extends CI_Controller {
                                       'detprecioEspecial' =>$detprecioEspecial,
                                       'dettotal' =>$dettotal 
                                       );
-                                     // var_dump($dataDelOrdenes); 
-          $this->ordenesPedido_Model->addDetOrdenPedido($dataDelOrdenes, $detPedID); 
+                            var_dump($dataDelOrdenes); 
+                            //exit ;
+                              // echo  'modificando el inventario1245' . $dataDelOrdenes . 'detalle ' . $detPedID . "<br>";
+
+          $this->ordenesPedido_Model->addDetOrdenPedido($dataDelOrdenes, $detPedID);  
+          //echo  'modificando el inventario' . "<br>";
           $operacionesInventario ->actualizarInventario($productoID, $movtipo, $bodegaOrigen,  $bodegaOrigen , $detcantidad ); 
         # Fin del procesamiento del detalle de ordenes 
 
@@ -139,9 +151,9 @@ class ventaProducto_Controller extends CI_Controller {
           $this->inventProducto_Model->addProductoInvent($data, $invProdID);
           //  se tiene que  disparar  un trigger para  actualizar la existencia real en cada bodega
         }*/
-        //echo 'antes de la consulta';  
+       // echo 'antes de la consulta';  
         $data['detalleOrden'] = $this->ordenesPedido_Model->get_listDetOrden($ordenPedidoID);
-       // var_dump(  $data['detalleOrden']);
+     //  var_dump(  $data['detalleOrden']);
         $this->load->view('inventarios/detalleVenta',$data);
 
         
@@ -157,14 +169,25 @@ class ventaProducto_Controller extends CI_Controller {
       ini_set('display_errors',1);
       ini_set('display_startup_errors',1);
       error_reporting(E_ALL); 
-      $data['OrdenesPendientesCobro'] = $this->ordenesPedido_Model->get_OrdenesPendientesCobro();
-      // var_dump(  $data['detalleOrden']);
-       $this->load->view('ventas/ordenesPendientes',$data);
+      //$data['OrdenesPendientesCobro'] = $this->ordenesPedido_Model->get_OrdenesPendientesCobro();
+      $data['listaMesasPendientesCobro'] = $this->mesas_Model->listaMesasPendienteCobro();
+       //var_dump(  $data['listaMesasPendientesCobro']);
+      // $this->load->view('ventas/ordenesPendientes',$data);
+       $this->load->view('ventas/ordenesDespacho', $data);
+
+         // $data['listaMesasPendientesCobro'] = $this->mesas_Model->listaMesasPendienteCobro();
+        //var_dump($data['submenu']);
+        //  $data['comandas'] = $this->Producto_Model->get_comandas();
+        //$data['familia']  = $famProdID;
+        //var_dump($data['comandas'] );
+       // $this->load->view('mesas/ordenesPendientes',$data);
+
+       //ordenesDespacho
 
 
     }
 
-    public function ver_ordenePedido($ordenPedidoID){
+    public function ver_ordenePedido($ordenPedidoID, $mesaID){
       ini_set('display_errors',1);
       ini_set('display_startup_errors',1);
       error_reporting(E_ALL);
@@ -191,6 +214,7 @@ class ventaProducto_Controller extends CI_Controller {
      $data['submenu'] = $this->Producto_Model->get_submenu($famProdID);
       $data['familia']  = 110 ;//$mesaID;
       $data['datordenID']  =    $ordenPedidoID ;
+      $data['mesaID']  =    $mesaID ;
        $Rdettotal =  $this->ordenesPedido_Model->get_TotalDetOrden($ordenPedidoID);
       $data['datTotal']  =   $Rdettotal->dettotal;
 
@@ -201,6 +225,19 @@ class ventaProducto_Controller extends CI_Controller {
       //return  $ordenID ;
 
    }
+   // funcion para anular la orden de pedido  
+
+   public function  anularOrden(){
+     $ordenID =  isset($_REQUEST['ordenID']) ? $_REQUEST['ordenID']:  0;
+     $this->ordenesPedido_Model->anularOrden($ordenID) ;
+   }
+   public function  anularDetOrden(){
+     $detPedID =  isset($_REQUEST['detPedID']) ? $_REQUEST['detPedID']:  0;
+     $this->ordenesPedido_Model->anularDetOrden($detPedID) ;
+   }
+
+   // funcion  para  eliminar detalle de orden de pedido  
+
    //  funcion para  imprimir el  ticket  de la  venta de producto 
    public function pdfCrearTicket($ordenPedidoID, $ordPcomentario){
    

@@ -48,17 +48,25 @@ $dettotal           = 0;
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h5 class="modal-title text-center" id="exampleModalLabel">    Registrar Venta</h5>
+        <h5 class="modal-title text-center" id="exampleModalLabel">    Registrar Ventafdf</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <form>
-        <input type="hidden" class="form-control text-right" id="productoID" name="productoID"   value ="<?php echo  $productoID   ;?>" readonly>
-        <input type="hidden" class="form-control text-right" id="detPedID" name="detPedID" value ="<?php echo  $detPedID  ;?>" readonly>
+        <input type="hidden" class="form-control text-right" id="productoID"    name="productoID"   value ="<?php echo  $productoID   ;?>" readonly>
+        <input type="hidden" class="form-control text-right" id="detPedID"      name="detPedID" value ="<?php echo  $detPedID  ;?>" readonly>
         <input type="hidden" class="form-control text-right" id="ordenPedidoID" name="ordenPedidoID" value ="<?php echo $ordenPedidoID  ;?>" readonly>
-        <input type="hidden" class="form-control text-right" id="bodSaldID" name="bodSaldID" value ="<?php echo $bodSaldID  ;?>" readonly>
+
+        <input type="hidden" class="form-control text-right" id="precioregular" name="precioregular" value ="">
+         <input type="hidden" class="form-control text-right" id="totalVenta" name="totalVenta" value ="">
+
+        
+
+
+
+        <!-- <input type="hidden" class="form-control text-right" id="bodSaldID"    name="bodSaldID" value ="<?php //echo $bodSaldID  ;?>" readonly> -->
        
 
 
@@ -66,10 +74,10 @@ $dettotal           = 0;
            <p id="prodDescripcion" style = "color:red; font-weight:bold; font-size:20px;"> </p>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
             <label for="recipient-name" class="col-form-label">Precio regular $:</label>
-            <input type="text" class="form-control text-right" id="precioregular" name="precioregular"   value ="<?php echo  $detprecioNormal  ;?>"  readonly>
-        </div>
+            <input type="text" class="form-control text-right" id="precioregular" name="precioregular"   value ="<?php //echo  $detprecioNormal  ;?>"  readonly>
+        </div> -->
 
           <!-- <div class="form-group">
             <label for="comanda" class="col-form-label">Comanda:</label>
@@ -82,14 +90,14 @@ $dettotal           = 0;
             </select>
             
           </div>-->
-          <div class="form-group">
+         <!--  <div class="form-group">
             <label for="bodsalida" class="col-form-label">Bodega de Salida:</label>
             <select name="bodsalida" id="bodsalida"  class="form-control chosen" onchange="chekStockProduct();">                
-                 <?php foreach ($bodegas as $row): ?>
-                    <option value="<?php echo $row->bodegaProductoID; ?>">
-                    <?php echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
+                 <?php //foreach ($bodegas as $row): ?>
+                    <option value="<?php //echo $row->bodegaProductoID; ?>">
+                    <?php //echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
                     </option>
-                <?php endforeach ?>
+                <?php //endforeach ?>
             </select>
             
           </div>
@@ -97,28 +105,28 @@ $dettotal           = 0;
             <label for="precioespecial" class="col-form-label">Precio Especial:</label>
             <select name="precioespecial" id="precioespecial"  class="form-control chosen" onchange="get_PreciosEspParaventa();"> 
             <option value="0">Seleccione Precio especial   </option>              
-                 <?php foreach ($precioespporfamilia as $row): ?>
-                    <option value="<?php echo $row->precioEspecialProdID; ?>">
-                    <?php echo $row->precioEspecialProdID . " - " .  $row->descPrecioEspecial; ?>
+                 <?php // foreach ($precioespporfamilia as $row): ?>
+                    <option value="<?php //echo $row->precioEspecialProdID; ?>">
+                    <?php //echo $row->precioEspecialProdID . " - " .  $row->descPrecioEspecial; ?>
                     </option>
-                <?php endforeach ?>
+                <?php //endforeach ?>
             </select>
             
-          </div>
+          </div> -->
 
 
-          <div class="form-group">
+          <!--<div class="form-group">
             <label for="message-text" class="col-form-label">Incremento $:</label>
-            <input type="number" class="form-control text-right" id="precincremento" name="precincremento"  value ="<?php echo  $detprecioEspecial   ;?>"  step="any">
-          </div>
+            <input type="number" class="form-control text-right" id="precincremento" name="precincremento"  value ="<?php //echo  $detprecioEspecial   ;?>"  step="any">
+          </div> -->
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Cantidad $:</label>
-            <input type="number" class="form-control text-right" id="cantiadVenta"  name="cantiadVenta"  value ="<?php echo  $detcantidad   ;?>" step="any" onkeypress="calculartotalVenta(event);" >
-          </div>
-          <div class="form-group">
+            <label for="message-text" class="col-form-label">Cantidad:</label>
+            <input type="number" class="form-control text-right" id="cantidadVenta"  name="cantidadVenta"  value ="<?php echo  $detcantidad   ;?>" step="any">
+          </div> 
+          <!-- <div class="form-group">
             <label for="message-text" class="col-form-label">Total $:</label>
-            <input type="number" class="form-control text-right" id="totalVenta" name="totalVenta"   value ="<?php echo  $dettotal   ;?>" step="any" readonly>
-          </div>
+            <input type="number" class="form-control text-right" id="totalVenta" name="totalVenta"   value ="<?php //echo  $dettotal   ;?>" step="any" readonly>
+          </div> -->
 
         </form>
       </div>
@@ -129,4 +137,17 @@ $dettotal           = 0;
     </div>
   </div>
 </div>
+<script>
+  $(document).ready(function(){
+    const txtCantidad = document.getElementById("cantidadVenta");
+
+    txtCantidad.addEventListener("blur", function(){
+      console.log("El control Esta cambiando ") ;
+      calculartotalVenta();
+
+    })
+
+  });
+
+</script>
 
