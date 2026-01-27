@@ -28,5 +28,17 @@ class mesa_Controller extends CI_Controller{
         $this->load->view('mesas/ordenesPendientes',$data);
 
      }
+     // muestra las  ordenes que estan pendientes de despacho  
+      public  function listaOrdenesPendienteDespacho(){
+         $mesaID=  (isset($_POST['mesaID']) AND  strlen($_POST['mesaID'])>0) ? $_POST['mesaID'] : "0" ;
+          // echo  "la mesa capturada antes de la peticion es  " . $mesaID .  "\n" ;
+         $data['lstPendDespCabecera'] = $this->mesas_Model->listaOrdenesPendienteDespacho($mesaID);
+         //var_dump($data['listaOrdenesPendienteDespachoCabecera']);
+
+         $this->load->view('ventas/ordenesPendientDespachoCabecera',$data);
+
+
+      }
+
 
 }

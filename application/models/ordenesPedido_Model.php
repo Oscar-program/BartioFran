@@ -148,6 +148,25 @@
         return $this->db->affected_rows();  
 
    }
+   // funcion para  mostrar el detalle de la orden pendiente de despacho  
+    public function  listaDetOrdenPendienteDespacho($ordenPedidoID){
+         // echo  "llegando al  modelo  " . $ordenPedidoID ;
+     $query =  $this->db->select(" prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo,  ped.detcantidad as catidad")
+                 ->join("producto prod", "prod.productoID =  ped.productoID", "inner")
+                 ->join("presentacionproducto presen", "presen.presProdID = prod.presProdID", "inner")
+                 ->join(" nuevoestablo.presentacionprod pre", "pre.presProdID = prod.presProdID", "inner")
+                ->where("ped.detstatus",  1)
+                ->where("ped.ordenPedidoID",  $ordenPedidoID)
+                ->get("detordenpedido ped")
+                ->result();
+        return  $query;     
+
+   }
+
+
+
+  
+
 
 
 

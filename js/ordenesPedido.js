@@ -37,3 +37,82 @@ function cargar_addordenes(mesaID){
   
   }
 
+  // funcion para mostrar el total d ordenes por mesa 
+  function mostrarPendientesDespacho(mesaID){
+    console.log("El detalle de la mesa a mostrar es  " + mesaID ) ;   
+    var url = base_url('index.php/mesa_Controller/listaOrdenesPendienteDespacho/');
+    obJson = { mesaID:mesaID};
+    $.ajax({
+           url: url, 
+           type:"POST",
+           data:obJson, 
+           beforeSend: function(){
+
+           }, success:function(data){
+           // console.log(data) ; 
+            $("#ordenesPendientesDespacho").html(data);
+               
+
+           }
+
+    });
+
+    
+  
+  }
+
+  //   funcion muestra el detalle de las ordenes pendientes de despacho  
+  /* function listaDetOrdenPendienteDespacho(ordenPedidoID){
+    console.log("El detalle de la mesa a mostrar es  " + mesaID ) ;   
+    var url = base_url('index.php/Ordenes_Controller/listaDetOrdenPendienteDespacho/ ' + ordenPedidoID);
+    obJson = { mesaID:mesaID};
+    $.ajax({
+           url: url, 
+           type:"POST",
+           data:obJson, 
+           beforeSend: function(){
+
+           }, success:function(data){
+           // console.log(data) ; 
+            $("#ordenesPendientesDespacho").html(data);
+               
+
+           }
+
+    });
+
+    
+  
+  }*/
+
+  // funcion para  mostrar el detalle de la orden pendiente a despachar  
+  function mostrarDetalleORden(ordenPedidoIDCab){
+  
+     //'OrdenID'.  $row->ordenPedidoID?>
+    //OrdenID = (document.getElementById('OrdenID' + ordenPedidoID )) ? $("#OrdenID" + ordenPedidoID).val() : "0" ;
+
+      console.log("mostrando  el detalle de la orden " + ordenPedidoIDCab  ) ;
+       // return  false  ;
+
+    var url = base_url('index.php/Ordenes_Controller/listaDetOrdenPendienteDespacho/' );
+    obJson = { ordenPedidoIDCab:ordenPedidoIDCab};
+    $.ajax({
+           url: url, 
+           type:"POST",
+           data:obJson, 
+           beforeSend: function(){
+
+           }, success:function(data){
+           // console.log(data) ; 
+            $("#detallePendienteDespacho").html(data);
+            $('#DetallePendienteDespacho').modal('show');
+            
+               
+
+           }
+
+    });
+
+  } 
+
+
