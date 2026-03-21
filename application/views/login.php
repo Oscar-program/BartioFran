@@ -45,7 +45,7 @@
   <script src ="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   
 </head>
-<body class="hold-transition login-page" style =  "background-image: url(./img/club-dance2.jpg); background-repeat: no-repeat;background-size: cover;">
+<body class="hold-transition login-page" style =  "background-image: url(./img/logoCentral.png); background-repeat: no-repeat;background-size: cover;">
 <div class="login-box" style="background-color:#1D59B0;  box-shadow: 5px 5px 15px #05B9F3 ; border-radius: 20px; opacity: 0.9;">
   <div class="login-logo">
     <a href="javaScript:carga_principal()" style="font-weight:bold; color:#1D59B0; font-size: 40px; text-shadow:

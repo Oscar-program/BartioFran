@@ -16,11 +16,11 @@
     //funcion para insert nueva medida de  producto 
     public function  addOrdenPedido($data, $ordenPedidoID){
         if($ordenPedidoID ==   null){
-            ECHO  "INSERTANDO UNA NUEVA ORDEN DE PEDIDO  \n" ;
+          //  ECHO  "INSERTANDO UNA NUEVA ORDEN DE PEDIDO  \n" ;
             $this->db->insert("ordenpedido",$data);
             return $this->db->insert_id();
         }else{
-             ECHO  "actualizando  UNA NUEVA ORDEN DE PEDIDO  \n" ;
+            // ECHO  "actualizando  UNA NUEVA ORDEN DE PEDIDO  \n" ;
             $this->db->set("ordPcomentario", $data["ordPcomentario"])
                     ->set("ordPCantidadPrd", $data["ordPCantidadPrd"])
                     ->set("ordPtotalcancelar", $data["ordPtotalcancelar"])
@@ -133,7 +133,7 @@
     }
     //  funcion para anular  la orden de pedido  
     public function  anularOrden($ordenID){
-           echo  "anulando la  orden de pedido   \n";
+          // echo  "anulando la  orden de pedido   \n";
                $this->db->set("ordPanulado", 1) 
                  ->where("ordenPedidoID", $ordenID)
                  ->update("ordenpedido");
@@ -142,7 +142,7 @@
     }
    // funcion para eliminar el detalle de la venta 
    public function  anularDetOrden($detPedID){
-      echo  "eliminando la orden de pedido   \n";
+     // echo  "eliminando la orden de pedido   \n";
                $this->db->where("detPedID", $detPedID)
                  ->delete("detordenpedido");
         return $this->db->affected_rows();  
@@ -162,6 +162,17 @@
         return  $query;     
 
    }
+   // funcion que pone como despachada una orden 
+    //  funcion para anular  la orden de pedido  
+    public function  despacharOrden($ordenID){
+          //echo  "anulando la  orden de pedido".$ordenID.   "\n";
+               $this->db->set("ordPpenditeDespacho", 0) 
+                 ->where("ordenPedidoID", $ordenID)
+                 ->update("ordenpedido");
+        return $this->db->affected_rows();  
+
+    }
+
 
 
 

@@ -48,7 +48,7 @@ $dettotal           = 0;
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h5 class="modal-title text-center" id="exampleModalLabel">    Registrar Ventafdf</h5>
+        <h5 class="modal-title text-center" id="exampleModalLabel">    Registrar Venta</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -71,7 +71,7 @@ $dettotal           = 0;
 
 
         <div class="form-group text-center">
-           <p id="prodDescripcion" style = "color:red; font-weight:bold; font-size:20px;"> </p>
+           <p id="prodDescripcion" style = "color:darkblue; font-weight:bold; font-size:20px;"> </p>
         </div>
 
         <!-- <div class="form-group">
@@ -120,9 +120,26 @@ $dettotal           = 0;
             <input type="number" class="form-control text-right" id="precincremento" name="precincremento"  value ="<?php //echo  $detprecioEspecial   ;?>"  step="any">
           </div> -->
           <div class="form-group">
-            <label for="message-text" class="col-form-label">Cantidad:</label>
+            <!-- <label for="message-text" class="col-form-label">Cantidad:</label> -->
             <input type="number" class="form-control text-right" id="cantidadVenta"  name="cantidadVenta"  value ="<?php echo  $detcantidad   ;?>" step="any">
           </div> 
+            <div class="form-group">
+               <button type="button" id ="btn0" value ="0" class="btn btn-danger btnActionVenta " data-title ="Procesar venta" onclick="escribeCantidad(this)" >0</button>
+                <button type="button" id ="btn1"  value ="1"  class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >1</i></button>
+                 <button type="button" id ="btn2" value ="2"  class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >2</i></button>
+                  <button type="button"  id ="btn3"  value ="3" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >3</button>
+                  <button type="button" id ="btn4"  value ="4" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >4</button>
+                  <button type="button" id ="btn4" value ="5" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >5</button>
+                  <button type="button" id ="btn6"  value ="6" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >6</button>
+                  <button type="button" id ="btn7" value ="7" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >7</i></button>
+                  <button type="button" id ="btn8" value ="8" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >8</i></button>
+                  <button type="button" id ="btn9"  value ="9" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >9</button>
+                  <button type="button" id ="btnce" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="limpiaCantidad()" >CE</i></button>
+                  
+
+
+            </div> 
+
           <!-- <div class="form-group">
             <label for="message-text" class="col-form-label">Total $:</label>
             <input type="number" class="form-control text-right" id="totalVenta" name="totalVenta"   value ="<?php //echo  $dettotal   ;?>" step="any" readonly>
@@ -150,4 +167,22 @@ $dettotal           = 0;
   });
 
 </script>
+
+<script>
+  $(document).ready(function(){
+    const btn0 = document.getElementById("btn0").value;
+    const btn1 = document.getElementById("btn0").value;
+
+
+    txtCantidad.addEventListener("blur", function(){
+      console.log("El control Esta cambiando ") ;
+      calculartotalVenta();
+
+    })
+
+  });
+
+</script>
+
+
 

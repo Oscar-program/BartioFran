@@ -64,10 +64,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color:#004aad;"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="index3.html" class="nav-link">Principal</a>
+          <a href="index3.html" class="nav-link"  style="color:#004aad;">Principal</a>
         </li>
         
       </ul>
@@ -77,19 +77,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4" >
+     <!-- se personaliza wl color de fonde de lateral derecho  -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#243458 !important ;" >
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+     <!--  <a href="index3.html" class="brand-link">
         <img src="/BartioFran/img/nuevostablo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
           style="opacity: .8">
         <span class="brand-text font-weight-light">Nuevo Establo</span>
-      </a>
+      </a> -->
 
       <!-- Sidebar -->
       <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div class="image">
+           <div class="image">
             <img src="/BartioFran/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
@@ -112,11 +113,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
-              <a href="#" class="nav-link active">
-                <i class="nav-icon fas  fa-cart-arrow-down"></i>
+            
+             <!-- menu para la toma de ordenes -->
+                <li class="nav-item menu-open">
+                  <a href="#" class="nav-link active">
+                    <i class="nav-icon fas  fa-cart-arrow-down"></i>
+                    <p>
+                    Ordenes 
+                      <i class="right fas fa-angle-left"></i>
+                    </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                      <a href="javaScript:listarMesas();" class="nav-link ">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Toma de Ordenes  <span class="right badge badge-warning">New</span> </p>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="javaScript:get_OrdenesPendientesCobro();" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Pend. despachar</p>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+
+           <!--  <li class="nav-item menu-open">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                  Caja
                   <i class="right fas fa-angle-left"></i>
@@ -126,7 +151,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <li class="nav-item">
                   <a href="javaScript:listarMesas();" class="nav-link ">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Registra venta  <span class="right badge badge-danger">New</span> </p>
+                    <p>Registra venta </p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -151,7 +176,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
               </ul>
-            </li>
+            </li> -->
+           
+
 
             <li class="nav-item menu-open">
               <a href="#" class="nav-link ">
@@ -196,7 +223,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
               </ul>
             </li>
 
-            <li class="nav-item menu-open">
+             <li class="nav-item menu-open">
               <a href="#" class="nav-link ">
                 <i class="nav-icon fas fa-industry"></i>
                 <p>
@@ -320,129 +347,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <?php }else {?>
           <!-- Small boxes (Stat box) -->
           <div class="row">
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div id ="compra" class="small-box bg-primary border border-warning border border-3" style="background-color:#1E90FF; opacity:0.7;">
-                <div class="inner">
-                  <h3 style="color:azure;">150</h3>
+                <div class="container-fluid ">
+                  <img src="C:\xampp\htdocs\BartioFran\img\logoCentral.png" alt="">
+                </div>
 
-                  <p style="color:blueviolet;"> Compras</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-cube" style="color:gold; opacity:0.4;"></i>
-                </div>
-                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-dark border border-warning border border-3">
-                <div class="inner">
-                  <h3 style="color:gold">53<sup style="font-size: 20px;color:gold;">%</sup></h3>
-
-                  <p>Rep. de Ventas</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-clipboard" style="color:gold; opacity:0.4;"></i>
-                </div>
-                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-warning">
-                <div class="inner">
-                  <h3>44</h3>
-
-                  <p>Configuraciones</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-settings"></i>
-                </div>
-                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-dark border border-warning border border-3">
-                <div class="inner">
-                  <h3>65</h3>
-
-                  <p>Existencias</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-          </div>
+            
           <!-- Creamo otro grupo de opciones de panel principal -->
           <div class="row">
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-dark border border-warning border border-3">
-                <div class="inner">
-                  <h3>150</h3>
-
-                  <p>Ordenes del  dia</p>
+              <div class="container-fluid justify-content-center te">
+                
+                  <img src="/BartioFran/img/logoCentral.png" alt="">
                 </div>
-                <div class="icon">
-                  <i class="ion ion-bag"></i>
-                </div>
-                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-dark border border-warning border border-3">
-                <div class="inner">
-                  <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                  <p>Reportes de Ventas</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-stats-bars"></i>
-                </div>
-                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-warning">
-                <div class="inner">
-                  <h3>44</h3>
-
-                  <p>Configuraciones</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-person-add"></i>
-                </div>
-                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-dark border border-warning border border-3">
-                <div class="inner">
-                  <h3 style="color:gold">65</h3>
-
-                  <p>Existencias</p>
-                </div>
-                <div class="icon">
-                  <i class="ion ion-pie-graph"></i>
-                </div>
-                <a href="#" class="small-box-footer">Mas detalles <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
           </div>
           <!-- /.row -->
           <!-- Main row -->
@@ -450,35 +365,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <!-- Left col -->
             <section class="col-lg-7 connectedSortable">
               <!-- Custom tabs (Charts with tabs)-->
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">
-                    <i class="fas fa-chart-pie mr-1"></i>
-                    Ventas por Mes
-                  </h3>
-                  <div class="card-tools">
-                    <ul class="nav nav-pills ml-auto">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#sales-chart" data-toggle="tab">Circular</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div><!-- /.card-header -->
-                <div class="card-body">
-                  <div class="tab-content p-0">
-                    <!-- Morris chart - Sales -->
-                    <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-                      <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
-                    </div>
-                    <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
-                      <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
-                    </div>
-                  </div>
-                </div><!-- /.card-body -->
-              </div>
+             
               <!-- /.card -->
 
               <!-- DIRECT CHAT -->
@@ -524,55 +411,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
               <!-- /.card -->
 
               <!-- solid sales graph -->
-              <div class="card bg-gradient-info">
-                <div class="card-header border-0">
-                  <h3 class="card-title">
-                    <i class="fas fa-th mr-1"></i>
-                    Grafico de ventas
-                  </h3>
-
-                  <div class="card-tools">
-                    <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <canvas class="chart" id="line-chart"
-                    style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-                <!-- /.card-body -->
-                <div class="card-footer bg-transparent">
-                  <div class="row">
-                    <div class="col-4 text-center">
-                      <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                        data-fgColor="#39CCCC">
-
-                      <div class="text-white">Mail-Orders</div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-4 text-center">
-                      <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
-                        data-fgColor="#39CCCC">
-
-                      <div class="text-white">Online</div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-4 text-center">
-                      <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                        data-fgColor="#39CCCC">
-
-                      <div class="text-white">In-Store</div>
-                    </div>
-                    <!-- ./col -->
-                  </div>
-                  <!-- /.row -->
-                </div>
-                <!-- /.card-footer -->
-              </div>
+             
               <!-- /.card -->
 
               <!-- Calendar -->
@@ -645,6 +484,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>stacktable/stacktable.js"></script>
   <link href="<?php echo  base_url();?>stacktable/stacktable.css" rel="stylesheet">
   <link href="<?php echo  base_url();?>stacktable/css/style.css" rel="stylesheet">
+  
   <!--  para  tabla adaptable a  movil --> 
   <!-- <script src="/BartioFran/js/funciones_basica.js"></script> -->
   <script src=" <?php echo  base_url();?>js/funciones_basica.js"></script>
@@ -666,6 +506,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>js/equivalentes.js"></script>
 	<script src=" <?php echo  base_url();?>js/InvDiario.js"></script>
   <script src=" <?php echo  base_url();?>js/conteoFisico.js"></script>
+  <script src=" <?php echo  base_url();?>js/mesas.js"></script>
   
 
   
@@ -692,6 +533,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>js/css/upload.css" />
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>js/css/titles.css"/>
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>js/css/allDevice.css"/>
+   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>dist/css/tablaStyle.css"/>
 	
 
  

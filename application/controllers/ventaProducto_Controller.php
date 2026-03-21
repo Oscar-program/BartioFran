@@ -19,13 +19,7 @@ class ventaProducto_Controller extends CI_Controller {
            $this->load->model('familiaProducto_Model');
            $this->load->model('empresa_Model');
            $this->load->model('inventProducto_Model');
-           $this->load->model('mesas_Model');
-           
-           
-
-           
-
-           
+           $this->load->model('mesas_Model');         
            
 
            $this->load->helper('path');  
@@ -164,30 +158,9 @@ class ventaProducto_Controller extends CI_Controller {
       echo $total->dettotal;
 
     }
-    //  funcion para  retornar las   ordenes que estan  pendientes de cobro   por mesa 
-    public function get_OrdenesPendientesCobro(){
-      ini_set('display_errors',1);
-      ini_set('display_startup_errors',1);
-      error_reporting(E_ALL); 
-      //$data['OrdenesPendientesCobro'] = $this->ordenesPedido_Model->get_OrdenesPendientesCobro();
-      $data['listaMesasPendientesCobro'] = $this->mesas_Model->listaMesasPendienteCobro();
-       //var_dump(  $data['listaMesasPendientesCobro']);
-      // $this->load->view('ventas/ordenesPendientes',$data);
-       $this->load->view('ventas/ordenesDespacho', $data);
+   
 
-         // $data['listaMesasPendientesCobro'] = $this->mesas_Model->listaMesasPendienteCobro();
-        //var_dump($data['submenu']);
-        //  $data['comandas'] = $this->Producto_Model->get_comandas();
-        //$data['familia']  = $famProdID;
-        //var_dump($data['comandas'] );
-       // $this->load->view('mesas/ordenesPendientes',$data);
-
-       //ordenesDespacho
-
-
-    }
-
-    public function ver_ordenePedido($ordenPedidoID, $mesaID){
+    public function ver_ordenePedido1($ordenPedidoID, $mesaID){
       ini_set('display_errors',1);
       ini_set('display_startup_errors',1);
       error_reporting(E_ALL);
@@ -289,8 +262,8 @@ class ventaProducto_Controller extends CI_Controller {
        //  echo 'ubicacion actual' .   getcwd() ;
 //         $dte_ccf->Image(getcwd() . "/qr.png", 103, 30, 25, 25);
 
-        
-        $this->pdf->Image(getcwd() .'/img/NuevoStablo.jpg', 25, 2, 25, 25);
+         //url(./img/logoCentral.png)
+        $this->pdf->Image(getcwd() .'/img/logoCentral.png', 25, 2, 20, 20);
        // $this->pdf->Image('assets/img/star.png', 11);
         $this->pdf->Ln(10);
 

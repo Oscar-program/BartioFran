@@ -11,14 +11,14 @@
            <div  style="float:left; width:25%; margin-left:3px; shadow p-3 mb-5 bg-white rounded" id  =" <?php echo   'familia'.$row->productoID ?>" 
               name  = 'familia' data-value=="<?php echo $row->productoID;?>" onclick="addVentaProducto(<?php echo $row->famProdID ;?>, <?php echo $row->productoID ;?>,  <?php echo $detPedID=0 ;?>, <?php echo "' $row->prodDescripcion '" ;?> ,  <?php echo $row->precioventa ;?>)">
                     <!-- small box -->
-                    <div class="small-box bg-info" >
-                        <div class="inner">
+                    <div class="small-box bg-info btnMenu">
+                        <div class="inner btnMenu">
                         <h6> <?php echo '$ '.$row->precioventa ?></h6>
 
                         <p style = "color:white; font-weight:bold; font-size:10px;"><?php echo $row->prodDescripcion?></p>
                         </div>
                        
-                        <a href="#" class="small-box-footer" style = "color:white; font-weight:bold; font-size:10px; background: linear-gradient(darkred, pink);"> <?php echo 'Existencia'. $row->existencia?></a>
+                        <a href="#" class="small-box-footer" style = "color:white; font-weight:bold; font-size:10px; background-color:slategray"> <?php echo 'Existencia'. $row->existencia?></a>
                     </div>
                     </div>
 

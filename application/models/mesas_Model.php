@@ -14,11 +14,13 @@ class mesas_Model extends CI_Model {
     }
     // funcion que muestra las mesas que tienen  ordenes pendientes de cobro  
     public function listaMesasPendienteCobro(){
-        $this->db->distinct();         
+       //  $this->db->distinct();         
         $query = $this->db->select("msa.mesaID, msa.mesNombre ")
                     ->join('ordenpedido as  ordenp',  'ordenp.mesaID = msa.mesaID', 'inner')
+                     ->join('detordenpedido dt',  'dt.ordenPedidoID =  ordenp. ordenPedidoID', 'inner')
                    
                  ->where("ordenp.ordPpenditeDespacho",  1)
+                 ->group_by("msa.mesaID")
                 ->order_by("ordenp.ordPFecha", "DESC")
                  ->get("mesa as  msa")
                  ->result();
@@ -28,8 +30,8 @@ class mesas_Model extends CI_Model {
     // funcion para listar todas las ordenes que estan pendientes de cobro  por mesa 
     // diseñando para ordenes  por mesas  
      public function listaOrdenesPendienteDespacho($mesaID){
-       // $this->db->distinct();         
-        $query = $this->db->select(" ordenp.ordenPedidoID, ordenp.ordPFecha ")
+        $this->db->distinct();         
+        $query = $this->db->select("ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora,  MINUTE(ordenp.ordPFecha) as minuto,  upper(trim(ordenp.ordPcomentario)) as cliente ")
                     ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
                     ->join('detordenpedido dt',  ' dt.ordenPedidoID =  ordenp. ordenPedidoID', 'inner')
                    

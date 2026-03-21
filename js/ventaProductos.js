@@ -158,21 +158,7 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
   }
 
      // funcion para mostrar las ordenes  pendientes de   cobro 
-     function get_OrdenesPendientesCobro(){    
-         
-        var url = base_url('index.php/ventaProducto_Controller/get_OrdenesPendientesCobro/' );   
-        //var url = base_url("index.php/BancosController/bancos");
-          $.get(url, function (data) {
-            $("#principal").html(data);
-            //console.log(data);
-            //document.getElementById('prodDescripcion').innerHTML=descripcion;
-           // $('#addVentaProducto').modal('show');
-            // ponemos el  precio  de  costo del producto 
-            //$("#precioregular").val(preciocosto.toFixed(2));
-            //$("#productoID").val(id);
-          });
-       
-       }
+    
 
        // funcion para  cargar la  orden seleccionada si esta  pendiente de cobro
        function ver_ordenePedido(ordenPedidoID, mesaID){    

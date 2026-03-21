@@ -8,11 +8,11 @@
         foreach($listaMesas as  $row){ 
            
         ?>
-           <div class="col-lg-2 col-2 justify-content-center mt-1 ml-2  border border-info" style="float:left; text-align:justify; display: flex; align-items: center;height:110px; background-color:#21618C; background:linear-gradient(70deg,#1B2631 , #2196f3); box-shadow: 0px 0px 3px #21618C; " id  =" <?php echo   'mesa'.$row->mesaID ?>" 
+           <div class="col-lg-2 col-2 justify-content-center mt-1 ml-2  border border-info" style="float:left; text-align:justify; display: flex; align-items: center;height:110px; background-color: #5DADE2 ;  border-color:aliceblue; border-width:1px; box-shadow: 0px 0px 3px #21618C; " id  =" <?php echo   'mesa'.$row->mesaID ?>" 
               name  = 'familia' data-value=="<?php echo $row->mesaID;?>"  onclick="cargar_addordenes(<?php  echo   $row->mesaID ; ?>);" >
                     <!-- small box   background-color:#043B5F; class="inner"   <img class="animation__shake" src="/BartioFran/img/mesa5.png" alt="AdminLTELogo" height="100" radial-gradient(black, blue) (70deg,#1B2631 , #2196f3)
                     width="100" style="border-radius:5%;"> -->
-                    <h4 class="text-center" style="color:lightskyblue;  font-family: 'Homer Simpson UI'"> <?php echo  ''. $row->mesNombre?> </h4>
+                    <h4 class="text-center tituloBotones"> <?php echo  ''. $row->mesNombre?> </h4>
                   
                     <div  >
                          

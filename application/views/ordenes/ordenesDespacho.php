@@ -65,39 +65,25 @@
         .btn-elegante {
             width: 40%;
             height: 15%;
-  background: linear-gradient(
-    70deg,#1B2631 , #2196f3
-    
-
-    /*135deg,
-    background-color:#21618C; 
-    background:linear-gradient(70deg,#1B2631 , #2196f3)
-    rgba(101, 171, 245, 0.95),
-    rgba(13, 26, 46, 0.95)*/
-  );
-  color: #fff !important;
-  border: 2px solid rgba(5, 45, 110, 0.95);
-  border-radius: 50rem; /* estilo Bootstrap pill */
-  padding: 0.55rem 1.6rem;
-  font-weight: 500;
-  box-shadow:
-    0 0.5rem 1rem rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: all 0.25s ease-in-out;
-}
+            background-color: #b4c555 ;  border-color:aliceblue; border-width:1px;
+            color: #f5f5f5;
+            border-radius: 50rem; /* estilo Bootstrap pill */
+            padding: 0.55rem 1.6rem;
+            font-weight: 500;
+            box-shadow:
+            0 0.5rem 1rem rgba(0, 0, 0, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+          transition: all 0.25s ease-in-out;
+        }
 
 /* Hover */
 .btn-elegante:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(101, 171, 245, 0.95),
-    rgba(221, 232, 248, 0.95)
-  );
-  border-color: rgba(4, 40, 100, 1);
+ background-color: #ffffff;
+  border-color: rgb(4, 38, 100);
   transform: translateY(-2px);
   box-shadow:
-    0 0.75rem 1.25rem rgba(0, 0, 0, 0.35);
-  color: #494343;
+    0 0.75rem 1.25rem rgba(67, 130, 202, 0.35);
+  color: #18191d;
 }
 
 /* Focus (accesibilidad Bootstrap) */
@@ -109,16 +95,16 @@
 }
 
 /* Active */
-.btn-elegante:active {
+/*.btn-elegante:active {
   background: linear-gradient(
     135deg,
     rgba(8, 80, 180, 0.95),
-    rgba(5, 45, 110, 0.95)
+    rgba(237, 239, 241, 0.95)
   );
   transform: translateY(0);
   box-shadow:
     0 0.4rem 0.8rem rgba(0, 0, 0, 0.3);
-}
+}*/
 
     </style>
  	 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"></script> 
@@ -131,18 +117,24 @@
    </head>
    <body>
 <!--  style="float:left; text-align:justify; display: flex; align-items: center;height:75px; background-color:#21618C; background:linear-gradient(70deg,#1B2631 , #2196f3); box-shadow: 0px 0px 3px #21618C; "-->
-    <div class ="container-fluid">
+    <div class ="container-fluid justify-content-center;" style="background-color:  #59b9cc;">
+      
         
-        <div class ="row" style="background-color: #ffffff;">
+        <div class ="row ml-50" style="background-color: #6ba7de;  display: flex;
+    justify-content: flex-start;
+    margin-left: 10px; ">
+            <?php // var_dump($listaMesasPendientesCobro)?>   
             <?php  if(isset($listaMesasPendientesCobro)){
                 if(!empty($listaMesasPendientesCobro)){
                     foreach($listaMesasPendientesCobro as  $row){ ?>
-                    <div class="col-lg-2 col-2 justify-content-center mt-1 ml-2  border border-info btn btn-elegante"  id  =" <?php echo   'mesa'.$row->mesaID ?>" 
-                            name  = 'familia' data-value=="<?php echo $row->mesaID;?>"  onclick="mostrarPendientesDespacho(<?php  echo   $row->mesaID ; ?>);" >
+                   
+                    <div class="col-lg-1 col-1 justify-content-center mt-1 ml-1 border border-info btn btn-elegante"  id  =" <?php echo   'mesa'.$row->mesaID ?>" 
+                            name  = 'familia' data-value="<?php echo $row->mesaID;?>"  onclick="mostrarPendientesDespacho(<?php  echo   $row->mesaID ; ?>);" >
                                 <!-- small box   background-color:#043B5F; class="inner"   <img class="animation__shake" src="/BartioFran/img/mesa5.png" alt="AdminLTELogo" height="100" radial-gradient(black, blue) (70deg,#1B2631 , #2196f3)
                                 width="100" style="border-radius:5%;"> -->
-                                <h4 class="text-center" style=" font-family: 'Homer Simpson UI'"> <?php echo  ''. $row->mesNombre?> </h4>
+                                <h5 class="text-center tituloBotones" > <?php echo  ''. $row->mesNombre?> </h5>
                         </div>
+                       
 
                                 
                 
@@ -150,9 +142,9 @@
                     <?php } ?>
             <?php } ?>
         </div>
-         <div  id="ordenesPendientesDespacho" name="ordenesPendientesDespacho"  >
+         <div  class ="row" id="ordenesPendientesDespacho" name="ordenesPendientesDespacho"  >
             
-           
+         
          </div>
          <div  id="detallePendienteDespacho" name="detallePendienteDespacho"  >
             

@@ -1,7 +1,7 @@
 <div class="container-fluid m-top">
         <div class="row">
             <div class="col-12 text-center">
-                <H2>  Asignar precios productos </H2>
+                <H2 style="color:#5DADE2">  Asignar precios productos </H2>
             </div>
         </div>
 </div> 
@@ -13,9 +13,9 @@
             <div class="table-responsive">
                 <input type="hidden" id="trasladoID" name="trasladoID">
 
-                <table id="tblListaProd" class="table table-hover">
-                    <thead>
-                        <tr class="thead-dark">
+                <table id="tblListaProd" class="table table-hover" style="border-style:inherit; border-color:cyan">
+                    <thead style="border-style: none !important;">
+                        <tr class="thead-dark" style="border-style: none !important;">
                             <th>#</th>
                             <th>NOMBRE DEL  PRODUCTO</th>
                             <th>EXISTENCIA</th>
@@ -43,7 +43,7 @@
                                         <td><input type="number"   class="form-control text-right"  id ="<?php echo  'precioventa' .  $c; ?>"    name ="<?php echo  'precioventa' .  $c; ?>"></td>
                                         <td class="text-right">
 
-                                            <a href='#' class="btn btn-danger btn-sm" style="margin:0px;  color:white;"
+                                            <a href='#' class="btn btn-info btn-sm" style="margin:0px;  color:white;  background-color: #5DADE2  !important ;"
                                                 data-title="Actualizar precio"
                                                 onclick="updatePrecProd(<?php echo $row->productoID; ?>, <?php echo $c; ?>)">
                                                 <i class="fa fa-refresh" aria-hidden="true"></i> </a>

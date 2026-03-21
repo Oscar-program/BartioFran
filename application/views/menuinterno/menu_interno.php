@@ -6,11 +6,11 @@
         foreach($sds as  $row){ 
            
         ?>
-           <div class="col-lg-3 col-6 " style="float:left; border: with 2px; border-color:orange;" id  =" <?php echo   'familia'.$row->famProdID ?>" 
+           <div class="col-lg-3 col-6 " style="float:left; border: with 2px; border-color:lightslategray;" id  =" <?php echo   'familia'.$row->famProdID ?>" 
               name  = 'familia' data-value=="<?php echo $row->famProdID;?>" onclick="cargar_listaProductos(<?php echo $row->famProdID ;?>)">
                     <!-- small box -->
-                    <div class="small-box  border border-info" style="background:linear-gradient(70deg, #1465bb, #2196f3); box-shadow: 0px 0px 3px #21618C; ">
-                        <div class="inner">
+                    <div class="small-box  border border-info" style="background-color: #5DADE2 ;  border-color:aliceblue; border-width:1px; box-shadow: 0px 0px 3px #9fcff0; ">
+                        <div class="inner" style="background-color: #5DADE2 ;  border-color:aliceblue; border-width:1px; box-shadow: 0px 0px 3px #9fcff0; ">
                         <h3 style = "color:#1465bb; ">.</h3>
 
                         <h4 style = "color:white;"><?php echo $row->famProdDescripcion;?></h4>

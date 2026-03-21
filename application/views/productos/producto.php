@@ -1,3 +1,6 @@
+<style>
+
+   </style>
 <div class="container-fluid m-top">
         <div class="row">
             <div class="col-12 text-left">
@@ -8,22 +11,20 @@
 
 <div class="container-fluid m-top">
         <div class="row">
-            <div class="col-12 text-center">
-            <button type="button" class="btn btn-danger rounded-circle" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom" onclick="addProducto(<?php echo 0 ;?>);"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <div class="col-4 text-start">
+            <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom" onclick="addProducto(<?php echo 0 ;?>);"  style="background-color: #5DADE2 ;"> Ingreso de productos  <i class="fa fa-plus" aria-hidden="true"></i></button>
             </div>
         </div>
 </div>  
 <br>              
 <div class="container-fluid m-top">
-    <div class="row">
-        
+    <div class="row">        
         <div class="col-12">
-            <div class="table-responsive">
-
-
-                <table id="tblListaProd" class="table table-hover">
+            <div class="contenedor-tabla">
+                <div class ="tabla-responsive">
+                   <table id="tblListaProd" class="tabla-estilo">
                     <thead>
-                        <tr class="thead-dark">
+                        <tr>
                             <th>#</th>
                             <th>NOMBRE DEL  PRODUCTO</th>
                             <th>FAMILIA</th>
@@ -56,14 +57,14 @@
                                                         
                             <td class="text-right">
 
-                                <a href='#' class="btn btn-default btn-sm" style="margin:0px;  color:blue;"
+                                <a href='#' class="btn btn-default btn-sm" style="margin:0px;    color: #5DADE2 ;"
                                     title="Consultar venta"
-                                    onclick="addProducto(<?php echo $row->productoID ;?>);">
+                                    onclick="addProducto(<?php echo $row->productoID ;?>);" >
                                     <i class="fa fa-pencil" aria-hidden="true"></i></a>
 
                                 
                                     
-                                    <a href='#' class="btn btn-default btn-sm"style="margin:0px; color:red;"
+                                    <a href='#' class="btn btn-default btn-sm"style="margin:0px;  color: #5DADE2 ;"
                                     title="Asignar sucursal de cobro"
                                     onclick="ver_modalsuccobro();">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i></a> 
@@ -80,11 +81,10 @@
                         <?php  $c +=1; 
                         endforeach ?>
                     </tbody>
-                </table>
-
+                   </table>
+                </div>
             </div>
-        </div>
-        
+        </div>        
     </div>
 </div>
 

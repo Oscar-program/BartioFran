@@ -58,29 +58,31 @@ $datTotal = 0;
                 <form action="" id="formcabpedido"  name="formcabpedido">
                 <!-- <label> ORDEN DE PEDIDO  #</label> <input type="text" class="text-left text-warning border-0" name="ordenID" id="ordenID" value="<?php  //echo strval($ordenID); ?>" readonly> -->
             
-                
-                <div class="table-responsive">
-                    <table id="tblFamiliaProd" class="table table-hover">
-                        <thead>
-                            <tr class="thead-danger"  style="background-color:darkred; color:aliceblue;  background: linear-gradient(darkred, pink);" >
-                                <th>Cantidad</th>
-                                <th>Descripcion</th> 
-                                <th>Total</th>                                      
-                                <th class="text-right">ACCIONES</th>                                
-                            </tr>
-                        </thead>
-                        <tbody  id ="detOrdenesPedido">   
-                          <?php  $this->load->view('inventarios/detalleVenta'); ?>                           
-                                                                
-                        </tbody>
-                    </table>
-                    <label id ="lbTotal" > Total a cancelar $  <?php  number_format($datTotal,2) ?>   </label>
-                
-                 <div> 
-                        <textarea class="form-control" name="txAcomentario" id="txAcomentario" cols="30" rows="3"> Sin Comentario
-                        </textarea>
-                    </div>
-                </div> 
+                <!-- div para cargar el detalle de la orden que se esta tomando -->
+                    <div class="contenedor-tabla">
+                        <div class="tabla-responsive">
+                            <table id="tblFamiliaProd" class="tabla-estilo">
+                                <thead>
+                                    <tr>
+                                        <th>Cantidad</th>
+                                        <th>Descripcion</th> 
+                                        <th>Total</th>                                      
+                                        <th class="text-right">ACCIONES</th>                                
+                                    </tr>
+                                </thead>
+                                <tbody  id ="detOrdenesPedido">   
+                                 <?php  $this->load->view('inventarios/detalleVenta'); ?>  
+                                </tbody>
+                            </table>
+                            <br>
+                            <label id ="lbTotal" > Total a cancelar $  <?php  number_format($datTotal,2) ?>   </label>
+                    
+                            <div> 
+                                <textarea class="form-control" name="txAcomentario" id="txAcomentario" cols="30" rows="3"> Sin Comentario
+                                </textarea>
+                            </div>
+                        </div>
+                    </div> 
                 
               <div class="container-fluid">
                 <div class="row">

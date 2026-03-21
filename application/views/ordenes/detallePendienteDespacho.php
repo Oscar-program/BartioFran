@@ -21,29 +21,31 @@
         <div class="modal fade" id="DetallePendienteDespacho" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-              <div class="modal-header text-center">
-                <h5 class="modal-title text-center" id="exampleModalLabel">    Detalle de la orden</h5>
+              <div class="modal-header text-center" style="text-align: center;">
+                <h5 class="modal-title" id="exampleModalLabel" style="text-align: center;">             Detalle de la orden</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <table  class="table">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th>Número</th>
-                        <th>Descripción</th>
-                        <th>Presentación</th>
-                        <th>Tipo</th>
-                        <th>Cantidad</th>
+                <table  class="table"  style=" border-width:0px; margin-top:1px;">
+                    <thead style="background-color:chocolate; color:red;" >
+                    <tr class="header-blue">
+                        <th style="color:aliceblue;">Número</th>
+                        <th style ="color:aliceblue;">Descripción</th>
+                        <th style ="color:aliceblue;">Presentación</th>
+                        <th style ="color:aliceblue;">Tipo</th>
+                        <th style ="color:aliceblue;">Cantidad</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <?php  if(isset($listaDespachoPendiente)){
+                        <?php 
+                        $c=1; 
+                        if(isset($listaDespachoPendiente)){
                                 if(!empty($listaDespachoPendiente)){
                                 foreach($listaDespachoPendiente as  $row){ ?>                              
                                           <tr>
-                                            <td data-label="Número">1</td>
+                                            <td data-label="Número"><?php echo $c; ?></td>
                                             <td data-label="Descripción"><?php  echo  $row->prodDescripcion; ?></td>
                                             <td data-label="Presentación"><?php  echo  $row->Presentacion; ?></td>
                                             <td data-label="Tipo"><?php  echo  $row->tipo; ?></td>
@@ -51,7 +53,9 @@
                                           </tr>     
       
                 
-                                <?php } ?>
+                                <?php 
+                                $c =$c+1;
+                                } ?>
                                 <?php } ?>
                         <?php } ?>
                     </tbody>
