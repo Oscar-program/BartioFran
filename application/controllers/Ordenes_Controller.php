@@ -21,12 +21,14 @@ class Ordenes_Controller extends CI_Controller{
 
     // 2- muestra las  ordenes que estan pendientes de despacho agrupadas por numero de orden    
       public  function listaOrdenesPendienteDespacho(){
+               //echo  "el nivel de usuario " . $_SESSION["nivelUsuaio"]; 
          $mesaID =  (isset($_POST['mesaID']) AND  strlen($_POST['mesaID'])>0) ? $_POST['mesaID'] : "0" ;        
          $data['lstPendDespCabecera'] = $this->mesas_Model->listaOrdenesPendienteDespacho($mesaID);        
          $this->load->view('ordenes/ordenesPendientDespachoCabecera',$data);
       }
     // 3- lista el detalle interno de la lista de ordenes pendientes de despacho 
-     public function listaDetOrdenPendienteDespacho(){       
+     public function listaDetOrdenPendienteDespacho(){   
+           // echo  "el nivel de usuario " . $_SESSION["nivelUsuaio"];    
         $ordenPedidoIDCab = (isset($_POST['ordenPedidoIDCab']) &&  $_POST['ordenPedidoIDCab'] !=0) ? $_POST['ordenPedidoIDCab'] :  0;   
         $data['listaDespachoPendiente'] = $this->ordenesPedido_Model->listaDetOrdenPendienteDespacho($ordenPedidoIDCab);
         $this->load->view('ordenes/detallePendienteDespacho',$data);

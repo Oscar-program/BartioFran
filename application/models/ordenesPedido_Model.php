@@ -151,10 +151,23 @@
    // funcion para  mostrar el detalle de la orden pendiente de despacho  
     public function  listaDetOrdenPendienteDespacho($ordenPedidoID){
          // echo  "llegando al  modelo  " . $ordenPedidoID ;
-     $query =  $this->db->select(" prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo,  ped.detcantidad as catidad")
+
+          // condicionamos  los datos a mostrar solo para cuado sea nivel usuario diferente de  1   mostrar  solo los productos de comedor 
+           // -3 Boquitas,  4- platos,  10- tipicos
+          // echo  "el nivel de usuario " . $_SESSION["nivelUsuaio"];
+           if($_SESSION["nivelUsuaio"] = "2"){             
+              $condicion  = "prod.famProdID = 3 or  prod.famProdID = 4 or   prod.famProdID  =  5";
+              $this->db->where($condicion );
+           }
+            $this->db->distinct();
+           $query =  $this->db->select(" prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo,  ped.detcantidad as catidad,  prod.famProdID")
                  ->join("producto prod", "prod.productoID =  ped.productoID", "inner")
                  ->join("presentacionproducto presen", "presen.presProdID = prod.presProdID", "inner")
-                 ->join(" nuevoestablo.presentacionprod pre", "pre.presProdID = prod.presProdID", "inner")
+                 ->join("nuevoestablo.presentacionprod pre", "pre.presProdID = prod.presProdID", "inner")
+                 ->join("nuevoestablo.familiaproducto fam", "fam.famProdID = prod.famProdID", "left")
+               
+             
+
                 ->where("ped.detstatus",  1)
                 ->where("ped.ordenPedidoID",  $ordenPedidoID)
                 ->get("detordenpedido ped")

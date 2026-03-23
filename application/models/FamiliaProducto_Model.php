@@ -4,9 +4,13 @@ class FamiliaProducto_Model extends CI_Model {
   
     // funcion para cargar las  categorias de los  productos  
     public function get_listFamiliaProducto() {
-        $query =  $this->db->select("*")   
-                 ->where("famProdStatus",  1)
-                 ->get("familiaproducto")
+                  $this->db->distinct();
+        $query =  $this->db->select("fam.famProdID, fam.famProdDescripcion, fam.famProdImagen, fam.famProdStatus")   
+                 ->join("producto prd", "prd.famProdID =  fam.famProdID", "inner")
+                 ->join("presentacion_inv  presinv", "presinv.presentacion_invId =  prd.presentacion_invId", "inner")
+                  ->where("prd.presentacion_invId",  1)
+                 ->where("fam.famProdStatus",  1)
+                 ->get("familiaproducto fam")
                  ->result();
         return  $query;          
     }

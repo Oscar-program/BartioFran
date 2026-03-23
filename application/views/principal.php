@@ -115,29 +115,51 @@ defined('BASEPATH') or exit('No direct script access allowed');
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             
              <!-- menu para la toma de ordenes -->
-                <li class="nav-item menu-open">
-                  <a href="#" class="nav-link active">
-                    <i class="nav-icon fas  fa-cart-arrow-down"></i>
-                    <p>
-                    Ordenes 
-                      <i class="right fas fa-angle-left"></i>
-                    </p>
-                  </a>
-                  <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                      <a href="javaScript:listarMesas();" class="nav-link ">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Toma de Ordenes  <span class="right badge badge-warning">New</span> </p>
-                      </a>
-                    </li>
-                    <li class="nav-item">
-                      <a href="javaScript:get_OrdenesPendientesCobro();" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Pend. despachar</p>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
+
+                 <?php if( $_SESSION["nivelUsuaio"] =="2"){?> 
+                          <li class="nav-item menu-open">
+                          <a href="#" class="nav-link active">
+                            <i class="nav-icon fas  fa-cart-arrow-down"></i>
+                            <p>
+                            Ordenes 
+                              <i class="right fas fa-angle-left"></i>
+                            </p>
+                          </a>
+                          <ul class="nav nav-treeview">                  
+                            <li class="nav-item">
+                              <a href="javaScript:get_OrdenesPendientesCobro();" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pend. despachar</p>
+                              </a>
+                            </li>
+                          </ul>
+                        </li>
+                 <?php  }else {?>
+                          <li class="nav-item menu-open">
+                          <a href="#" class="nav-link active">
+                            <i class="nav-icon fas  fa-cart-arrow-down"></i>
+                            <p>
+                            Ordenes 
+                              <i class="right fas fa-angle-left"></i>
+                            </p>
+                          </a>
+                          <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                              <a href="javaScript:get_listAreasEstablecimiento(<?php  echo $_SESSION["establecimientoID"]  ?>);" class="nav-link ">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Toma de Ordenes  <span class="right badge badge-warning">New</span> </p>
+                              </a>
+                            </li>
+                            <li class="nav-item">
+                              <a href="javaScript:get_OrdenesPendientesCobro();" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pend. despachar</p>
+                              </a>
+                            </li>
+                          </ul>
+                        </li>
+                 <?php  } ?>
+               
 
            <!--  <li class="nav-item menu-open">
               <a href="#" class="nav-link">
@@ -178,8 +200,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
               </ul>
             </li> -->
            
-
-
+            
+        <?php if( $_SESSION["nivelUsuaio"] !="2" ){?> 
             <li class="nav-item menu-open">
               <a href="#" class="nav-link ">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -282,7 +304,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </a>
                 </li>
               </ul>
-          </li>  
+           </li>  
 
           <li class="nav-item menu-open">
               <a href="#" class="nav-link ">
@@ -308,6 +330,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 
               </ul>
           </li>
+          <?php }?> 
 
 
 
@@ -507,6 +530,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<script src=" <?php echo  base_url();?>js/InvDiario.js"></script>
   <script src=" <?php echo  base_url();?>js/conteoFisico.js"></script>
   <script src=" <?php echo  base_url();?>js/mesas.js"></script>
+   <script src=" <?php echo  base_url();?>js/listarAreasEstablecimiento.js"></script>
   
 
   

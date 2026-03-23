@@ -21,7 +21,6 @@ $c= 1;
              }
              if( $row->hora>12){
                 $acronimo =" PM";
-
              }
             
             ?>
@@ -33,13 +32,23 @@ $c= 1;
                               
                                 <button  type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" onclick="mostrarDetalleORden( <?php echo $row->ordenPedidoID?>);"
                                     style="background-color: #ffffff; color: #1e6fd9; font-weight: 500;  text-decoration: none; border-width:0px; width:75%;text-align:left;" >
-                                    <?php echo  "Orden #".$row->ordenPedidoID ." Hora Pedido " . $row->hora. ":" . $row->minuto .  $acronimo. " ". $comentario ; ?>           
+                                    <?php echo  "Orden #".$row->ordenPedidoID . " Area: " . strtoupper($row->area ). " Hora Pedido " . $row->hora. ":" . $row->minuto .  $acronimo. " ". $comentario ; ?>           
                                 </button>
                               
-                                  
-                            <!-- </h2> -->
-                            <input type="checkbox" name ='<?php echo "Anular" .$c ;?>'  id ='<?php echo "Anular" .$c ;?>' style="background-color: chocolate; width:40px; height:20px ;margin-top:8px;" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->ordenPedidoID?> );">  <span style="color:black">Despachar</span> 
-                        
+                                  <?php //echo "el nivel del usuario es " . $_SESSION["nivelUsuaio"] ?>  
+                       
+                                  <?php  if($_SESSION["nivelUsuaio"] == "2"){ ?>
+                                     <input type="checkbox" name ='<?php echo "Anular" .$c ;?>'  id ='<?php echo "Anular" .$c ;?>' style="background-color: chocolate; width:40px; height:20px ;margin-top:8px;" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->ordenPedidoID?> );">  <span style="color:black">Despachar</span> 
+                                  <?php } else {?>
+                                       <?php  if ($row->ordPpenditeDespacho == 1){?>
+                                       <input type="checkbox" name ='<?php echo "Anular" .$c ;?>'  id ='<?php echo "Anular" .$c ;?>' style="background-color: chocolate; width:40px; height:20px ;margin-top:8px;" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->ordenPedidoID?> );" disabled >  <span style="color:black">Pendiente </span> 
+
+                                      
+                                       <?php  }else{ ?>
+                                           <input type="checkbox" name ='<?php echo "Anular" .$c ;?>'  id ='<?php echo "Anular" .$c ;?>' style="background-color: chocolate; width:40px; height:20px ;margin-top:8px;" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->ordenPedidoID?> );"  <?php echo ($row->ordPpenditeDespacho == 0) ? 'checked disabled' : ''; ?>>  <span style="color:black">Procesado</span>
+                                      <?php }?> 
+
+                                 <?php  }?>
                         </div>   
                              
                     </div>

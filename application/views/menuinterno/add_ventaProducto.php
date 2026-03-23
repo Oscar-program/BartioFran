@@ -58,75 +58,20 @@ $dettotal           = 0;
         <input type="hidden" class="form-control text-right" id="productoID"    name="productoID"   value ="<?php echo  $productoID   ;?>" readonly>
         <input type="hidden" class="form-control text-right" id="detPedID"      name="detPedID" value ="<?php echo  $detPedID  ;?>" readonly>
         <input type="hidden" class="form-control text-right" id="ordenPedidoID" name="ordenPedidoID" value ="<?php echo $ordenPedidoID  ;?>" readonly>
-
         <input type="hidden" class="form-control text-right" id="precioregular" name="precioregular" value ="">
-         <input type="hidden" class="form-control text-right" id="totalVenta" name="totalVenta" value ="">
-
-        
-
-
-
-        <!-- <input type="hidden" class="form-control text-right" id="bodSaldID"    name="bodSaldID" value ="<?php //echo $bodSaldID  ;?>" readonly> -->
-       
-
-
+        <input type="hidden" class="form-control text-right" id="totalVenta" name="totalVenta" value ="">
         <div class="form-group text-center">
            <p id="prodDescripcion" style = "color:darkblue; font-weight:bold; font-size:20px;"> </p>
         </div>
 
-        <!-- <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Precio regular $:</label>
-            <input type="text" class="form-control text-right" id="precioregular" name="precioregular"   value ="<?php //echo  $detprecioNormal  ;?>"  readonly>
-        </div> -->
-
-          <!-- <div class="form-group">
-            <label for="comanda" class="col-form-label">Comanda:</label>
-            <select name="comanda" id="comanda"  class="form-control chosen">                
-                 <?php //foreach ($comandas as $row): ?>
-                    <option value="<?php //echo $row->commandaPedProdID; ?>">
-                    <?php //echo $row->commandaPedProdID . " - " .  $row->comPedProdDesc; ?>
-                    </option>
-                <?php //endforeach ?>
-            </select>
-            
-          </div>-->
-         <!--  <div class="form-group">
-            <label for="bodsalida" class="col-form-label">Bodega de Salida:</label>
-            <select name="bodsalida" id="bodsalida"  class="form-control chosen" onchange="chekStockProduct();">                
-                 <?php //foreach ($bodegas as $row): ?>
-                    <option value="<?php //echo $row->bodegaProductoID; ?>">
-                    <?php //echo $row->bodegaProductoID . " - " .  $row->bodProdDescripcion; ?>
-                    </option>
-                <?php //endforeach ?>
-            </select>
-            
-          </div>
+        
           <div class="form-group">
-            <label for="precioespecial" class="col-form-label">Precio Especial:</label>
-            <select name="precioespecial" id="precioespecial"  class="form-control chosen" onchange="get_PreciosEspParaventa();"> 
-            <option value="0">Seleccione Precio especial   </option>              
-                 <?php // foreach ($precioespporfamilia as $row): ?>
-                    <option value="<?php //echo $row->precioEspecialProdID; ?>">
-                    <?php //echo $row->precioEspecialProdID . " - " .  $row->descPrecioEspecial; ?>
-                    </option>
-                <?php //endforeach ?>
-            </select>
-            
-          </div> -->
-
-
-          <!--<div class="form-group">
-            <label for="message-text" class="col-form-label">Incremento $:</label>
-            <input type="number" class="form-control text-right" id="precincremento" name="precincremento"  value ="<?php //echo  $detprecioEspecial   ;?>"  step="any">
-          </div> -->
-          <div class="form-group">
-            <!-- <label for="message-text" class="col-form-label">Cantidad:</label> -->
             <input type="number" class="form-control text-right" id="cantidadVenta"  name="cantidadVenta"  value ="<?php echo  $detcantidad   ;?>" step="any">
           </div> 
             <div class="form-group">
-               <button type="button" id ="btn0" value ="0" class="btn btn-danger btnActionVenta " data-title ="Procesar venta" onclick="escribeCantidad(this)" >0</button>
-                <button type="button" id ="btn1"  value ="1"  class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >1</i></button>
-                 <button type="button" id ="btn2" value ="2"  class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >2</i></button>
+                  <button type="button" id ="btn0" value ="0" class="btn btn-danger btnActionVenta " data-title ="Procesar venta" onclick="escribeCantidad(this)" >0</button>
+                  <button type="button" id ="btn1"  value ="1"  class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >1</i></button>
+                  <button type="button" id ="btn2" value ="2"  class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >2</i></button>
                   <button type="button"  id ="btn3"  value ="3" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >3</button>
                   <button type="button" id ="btn4"  value ="4" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >4</button>
                   <button type="button" id ="btn4" value ="5" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >5</button>
@@ -135,22 +80,15 @@ $dettotal           = 0;
                   <button type="button" id ="btn8" value ="8" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >8</i></button>
                   <button type="button" id ="btn9"  value ="9" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="escribeCantidad(this)" >9</button>
                   <button type="button" id ="btnce" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="limpiaCantidad()" >CE</i></button>
-                  
-
-
+                  <button type="button" class="btn btn-danger btnActionVenta1" data-title ="Procesar venta" onclick="saveVentaProducto()">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
             </div> 
-
-          <!-- <div class="form-group">
-            <label for="message-text" class="col-form-label">Total $:</label>
-            <input type="number" class="form-control text-right" id="totalVenta" name="totalVenta"   value ="<?php //echo  $dettotal   ;?>" step="any" readonly>
-          </div> -->
-
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-title ="Procesar venta" onclick="saveVentaProducto()" ><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-        <!-- <button type="button" class="btn btn-primary"> <i class="fa fa-cog" aria-hidden="true"></i> Procesar</button> -->
-      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-danger btnActionVenta" data-title ="Procesar venta" onclick="saveVentaProducto()" ><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+        
+      </div> -->
     </div>
   </div>
 </div>
@@ -161,8 +99,7 @@ $dettotal           = 0;
     txtCantidad.addEventListener("blur", function(){
       console.log("El control Esta cambiando ") ;
       calculartotalVenta();
-
-    })
+    });
 
   });
 

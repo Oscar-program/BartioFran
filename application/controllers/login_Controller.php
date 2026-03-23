@@ -58,8 +58,9 @@ class   login_Controller extends CI_Controller{
         }else{
             $_SESSION["usuario"]           = $datosUser->usrNombre; 
             $_SESSION["usrLogin"]          = $datosUser->usrLogin;
-            $_SESSION["usuarioID"]          = $datosUser->usuarioID; 
-            $_SESSION["empresaID"]          = $datosUser->empresaID; 
+            $_SESSION["usuarioID"]         = $datosUser->usuarioID; 
+            $_SESSION["empresaID"]         = $datosUser->empresaID; 
+            $_SESSION["nivelUsuaio"]       = $datosUser->nivelUsuarioID; 
              
             
             $_SESSION["establecimientoID"] = $establecimID;

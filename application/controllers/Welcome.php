@@ -53,8 +53,9 @@ class Welcome extends CI_Controller {
             $this->load->view('principal');
         }
        //echo $RetornaUser ; */
+	   $areasEstablecimientoID = 1;
 
-       $data['listaMesas'] = $this->mesas_Model->get_listmesas();
+       $data['listaMesas'] = $this->mesas_Model->get_listmesas($areasEstablecimientoID);
 		$this->load->view('principal', $data);
 	}
 	// funcion para  registrar los  usuarios del  sistema  

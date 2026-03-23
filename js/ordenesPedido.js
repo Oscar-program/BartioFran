@@ -80,9 +80,7 @@ function cargar_addordenes(mesaID){
            beforeSend: function(){
 
            }, success:function(data){
-           // console.log(data) ; 
-           // $("#detallePendienteDespacho").html(data);
-            //$('#DetallePendienteDespacho').modal('show');
+           
             
                
 
@@ -96,24 +94,19 @@ function cargar_addordenes(mesaID){
   }
 
   // funcion para escribir la cantidad de  productos  
-  function escribeCantidad(ValBoton){
-    // ontenemos objeto texto para contener las cantoidades  
+  function escribeCantidad(ValBoton){    
     const objTexCantidadVenta  =   document.getElementById('cantidadVenta');
     if(objTexCantidadVenta.value =="0"){
-      objTexCantidadVenta.value ="";
+       objTexCantidadVenta.value ="";
     }
-    console.log("Objeto seleccionado" + ValBoton.value  );
     objTexCantidadVenta.select();
     objTexCantidadVenta.value =  objTexCantidadVenta.value +  ValBoton.value ;
   }
   // funcio para  limpiar la caja de texto  
   function limpiaCantidad(){
-    // ontenemos objeto texto para contener las cantoidades  
     const objTexCantidadVenta  =   document.getElementById('cantidadVenta');
-   // console.log("Objeto seleccionado" + ValBoton.value  );
-   
     objTexCantidadVenta.value = "" ;
-     objTexCantidadVenta.select();
+    objTexCantidadVenta.select();
   }
 
 

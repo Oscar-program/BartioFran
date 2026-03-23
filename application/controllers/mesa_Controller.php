@@ -8,8 +8,8 @@ class mesa_Controller extends CI_Controller{
         $this->load->helper('path');
     }
     //   funcion para  mostrar las mesas en el menu  principal   para que se le   pueda  agregar  una  o  varias  ordenes
-     public function listarMesas(){
-        $data['listaMesas'] = $this->mesas_Model->get_listmesas();
+     public function listarMesas($areasEstablecimientoID){
+        $data['listaMesas'] = $this->mesas_Model->get_listmesas($areasEstablecimientoID);
         //var_dump($data['submenu']);
         //  $data['comandas'] = $this->Producto_Model->get_comandas();
         //$data['familia']  = $famProdID;
@@ -28,6 +28,21 @@ class mesa_Controller extends CI_Controller{
         $this->load->view('ordenes/ordenesPendientes',$data);
 
      }
+ public function insertarMesaEstablecimiento(){
+        $mesaID                   = (isset($_POST['mesaID']) && strlen($_POST['mesaID'])> 0 ) ? $_POST['mesaID']: NULL;   
+        $establecimientoID        = (isset($_POST['establecimientoID'])) ? $_POST['establecimientoID']: NULL; 
+        $areasEstablecimientoID   = (isset($_POST['areasEstablecimientoID'])) ? $_POST['areasEstablecimientoID']: NULL; 
+        $mesNombre                = (isset($_POST['mesNombre'])) ? $_POST['mesNombre']: NULL;
+        $mescapacidad             = (isset($_POST['mescapacidad'])) ? $_POST['mescapacidad']: NULL;
+        
+        $dataMesa = array('establecimientoID'=>$establecimientoID,
+                          'areasEstablecimientoID'=>$areasEstablecimientoID,
+                          'mesNombre'=>$mesNombre,
+                          'mescapacidad'=>$mescapacidad,
+                        );
+      $this->mesas_Model->insertarMesaEstablecimiento($dataMesa, $mesaID);
+ }
+
      
 
 
