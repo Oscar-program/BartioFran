@@ -211,11 +211,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 </p>
               </a>
               <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                  <a href="javaScript:configurarProduct();" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Mesas</p>
+                  </a>
+                </li>
+
 
                 <li class="nav-item">
                   <a href="javaScript:configurarProduct();" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Configura Producto</p>
+                    <p>Producto</p>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -238,9 +245,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <li class="nav-item">
                   <a href="javaScript:preciosProducto()" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Asignar Precios</p>
+                    <p>Precios</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="javaScript:preciosProducto()" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Usuarios</p>
+                  </a>
+                </li>
+
 
               </ul>
             </li>
