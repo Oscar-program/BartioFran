@@ -14,6 +14,7 @@ class mesas_Model extends CI_Model {
     }
     // funcion que muestra las mesas que tienen  ordenes pendientes de cobro  
     public function listaMesasPendienteCobro(){
+        //  echo  "llegando al modelo" . "<br>" ;
        //  $this->db->distinct();         
         $query = $this->db->select("msa.mesaID, msa.mesNombre ")
                     ->join('ordenpedido as  ordenp',  'ordenp.mesaID = msa.mesaID', 'inner')
@@ -62,17 +63,18 @@ class mesas_Model extends CI_Model {
     }
 
     public function listaOrdenesPendienteDespacho($mesaID){
+       // echo  "filtrando el modelo  " .  "<br>" ; 
           // echo  "El nivel del usuario esModelo " .  $_SESSION["nivelUsuaio"] .  "<br>" ;
             // echo  "llegando al  modelo  " . $ordenPedidoID ;
 
           // condicionamos  los datos a mostrar solo para cuado sea nivel usuario diferente de  1   mostrar  solo los productos de comedor 
            // -3 Boquitas,  4- platos,  10- tipicos
            /*echo  "el nivel de usuario Model" . $_SESSION["nivelUsuaio"];*/
-           if($_SESSION["nivelUsuaio"] == "2"){
+          /* if($_SESSION["nivelUsuaio"] == "2"){
                // echo  "aplicando condicion" ;
               $condicion  = "ordenp.ordPpenditeDespacho = 1";
               $this->db->where( $condicion );
-           }
+           }*/
 
               // si el usuario es cocinero mostrar  solo las  ordenes que estan pendiente despachar 
               /*inner join mesa as  msa on    msa.mesaID = ordenp.mesaID
@@ -86,23 +88,24 @@ class mesas_Model extends CI_Model {
 
 
         $this->db->distinct();         
-        $query = $this->db->select("ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora,  MINUTE(ordenp.ordPFecha) as minuto,  
-                      upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho, 
-                      prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo,  ped.detcantidad as catidad,  prod.famProdID")
-                    
+        $query = $this->db->select("ordenp.mesaID,msa.mesNombre as mesa,   ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora, 
+                                    MINUTE(ordenp.ordPFecha) as minuto,  
+                                    upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho, ordenp.ordPtotalcancelar, 
+                                    prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo, 
+                                    ped.detPedID ,ped.detcantidad as catidad,  prod.famProdID,  ped.dettotal, ped.cobrar,ped.despachar")                    
                       ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
-                      ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
-                      ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
-                      ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
+                      ->join('areasestablecimiento areEst',  'areEst.areasEstablecimientoID =  msa. areasEstablecimientoID', 'inner')
+                      ->join('detordenpedido ped',  ' ped.ordenPedidoID =  ordenp.ordenPedidoID', 'inner')
+                      ->join('producto prod',  'prod.productoID =  ped.productoID', 'inner')
+                      ->join('presentacionproducto presen',  'presen.presProdID = prod.presProdID', 'inner')
+                      ->join('presentacionprod pre',  'pre.presProdID = prod.presProdID', 'inner')
+                      ->join('familiaproducto fam',  'fam.famProdID = prod.famProdID', 'inner')
 
                     
-                      ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
-                    ->join('detordenpedido dt',  ' dt.ordenPedidoID =  ordenp. ordenPedidoID', 'inner')
-                    ->join('areasestablecimiento areEst',  ' areEst.areasEstablecimientoID =  msa. areasEstablecimientoID', 'inner')
                    
                  ->where("ordenp.mesaID",  $mesaID)
-                  // ->where("ordenp.ordPpenditeDespacho",  1)
-                   ->where("ordenp.ordPanulado",  0)
+                 ->where(" ordenp.ordPpenditeCobro",  1)
+                   ->where(" ped.detstatus",  1)
                 ->order_by("ordenp.ordPFecha", "DESC")
                  ->get("nuevoestablo.ordenpedido ordenp")
                  ->result();

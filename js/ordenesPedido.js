@@ -3,14 +3,25 @@ function base_url(url){
 }
 
 
-
- function get_OrdenesPendientesCobro(){   
-        var url = base_url('index.php/Ordenes_Controller/get_OrdenesPendientesCobro/' );         
+// muestra la lista de la mesas para seleccionar la ordenes procesadas
+ function get_OrdenesPendientesDespachar(){ 
+         console.log("mostrando mesas con ordenes pendientes Despacho /cobro") ; 
+        var url = base_url('index.php/Ordenes_Controller/get_OrdenesPendientesDespachar/' );         
           $.get(url, function (data) {
             $("#principal").html(data);         
           });
        
        }
+  // funcion para mosytrar la  lista de  ordenes pendientes de cobro 
+  function get_OrdenesPendientesCobro(){   
+     console.log("lista mesas pendientes de cobro") ;
+        var url = base_url('index.php/Ordenes_Controller/get_OrdenesPendientesCobro/' );         
+          $.get(url, function (data) {
+            $("#principal").html(data);         
+          });
+        //  ocultarMenu();
+       
+       }       
 
 
 // funcion para cargar la  venta principal de ordenes 
@@ -25,7 +36,7 @@ function cargar_addordenes(mesaID){
 
   // funcion para mostrar el total d ordenes por mesa 
   function mostrarPendientesDespacho(mesaID){
-    console.log("El detalle de la mesa a mostrar es  " + mesaID ) ;   
+    console.log("El detalle de la mesa a mostrar es 100000 " + mesaID ) ;   
     var url = base_url('index.php/Ordenes_Controller/listaOrdenesPendienteDespacho/');
     obJson = { mesaID:mesaID};
     $.ajax({
@@ -39,6 +50,34 @@ function cargar_addordenes(mesaID){
     });
   
   }
+    // funcion para mostrar el total d ordenes por mesa 
+  function mostrarPendientesCobro(select){
+
+    if (document.getElementById("mesaCobrar")){
+        console.log("objeto existe");
+    }else{
+          console.log("no existe------------");
+    }
+
+    //  obtenemos el nombre del  select para obtener su valor  
+    var mesaID  = select.value; //  (document.getElementById("mesaCobrar")) ? document.getElementById("mesaCobrar").value : 0 ;
+    //var mesaID = objSelect.value;
+    console.log("El 45644a mesa a mostrar es  " + mesaID + "aslfdloñasjfsd") ;   
+    var url = base_url('index.php/Ordenes_Controller/listaOrdenesPendienteCobro/');
+    obJson = { mesaID:mesaID};
+    $.ajax({
+           url: url, 
+           type:"POST",
+           data:obJson, 
+           beforeSend: function(){
+           }, success:function(data){          
+            $("#ordenesPendientesDespacho").html(data);    
+           }
+    });
+  
+  }
+
+
 
  
 
@@ -64,15 +103,17 @@ function cargar_addordenes(mesaID){
     });
 
   } 
-  function  despacharOrden(c, ordenPedidoID){
-    let anular = 0;
-    var ordenID = ordenPedidoID;
-    var  objChk = document.getElementById('Anular'+c);
+  function  despacharOrden(c, detPedID){
+    console.log("DESPACHAR ORDER ") ;
+    let estado = 0;
+    var detPedID = detPedID;
+    var  objChk = document.getElementById('Despachar'+c);
     if (objChk ){
       if(objChk.checked){
-        anular=1;
+        estado=1;
+      }
         var url = base_url('index.php/Ordenes_Controller/despacharOrden/' );
-        obJson = { ordenID:ordenID};
+        obJson = { detPedID:detPedID , estado:estado};
          $.ajax({
            url: url, 
            type:"POST",
@@ -89,7 +130,7 @@ function cargar_addordenes(mesaID){
     });
       }
 
-    }
+    
     console.log("Estado de anulado " + anular );
   }
 
@@ -108,6 +149,64 @@ function cargar_addordenes(mesaID){
     objTexCantidadVenta.value = "" ;
     objTexCantidadVenta.select();
   }
+
+   // funcionm para mostrar el detalle de la mesa pendiente de  cobro 
+  function mostrarPendientesCobro1(mesaID){
+    console.log("El detalle de la mesa a mostrar es  " + mesaID ) ;   
+    var url = base_url('index.php/Ordenes_Controller/listaOrdenesPendienteCobro/');
+    obJson = { mesaID:mesaID};
+    $.ajax({
+           url: url, 
+           type:"POST",
+           data:obJson, 
+           beforeSend: function(){
+           }, success:function(data){          
+            $("#ordenesPendientesDespacho").html(data);    
+           }
+    });
+  
+  }
+  // funcion para poner marca de cobro a un producto // todos los productos ya  cobrados yano se podran marcar de  nuevo // poner bandera de finalizado a tosdos aquellos ya marcados  
+  function  cobrarOrden(c, detPedID, ordenPedidoID){
+    var ordenPedidoID = ordenPedidoID ;
+    console.log("llenago al proceso de cobrar la orden ") ;
+    let estado = 0;
+    var detPedID = detPedID;
+    var  objChk = document.getElementById('Cobrar'+c);
+    if (objChk ){
+      if(objChk.checked){
+        estado=1;
+      }
+        var url = base_url('index.php/Ordenes_Controller/cobrarOrden/' );
+         obJson = { detPedID:detPedID, estado:estado, ordenPedidoID:ordenPedidoID};
+         $.ajax({
+           url: url, 
+           type:"POST",
+           data:obJson, 
+           beforeSend: function(){
+           }, success:function(data){ 
+              console.log("la orden es" + ordenPedidoID )  ;         
+             document.getElementById('total' + ordenPedidoID).textContent ="TOTAL A CANCELAR $"  + data  ;
+             console.log("la suma A OBRAR ES es  " + data);
+           }
+    });
+     // }
+
+    }
+   // console.log("Estado de anulado " + anular );
+  }
+
+
+
+
+
+
+       
+    //get_OrdenesPendientesDespachar
+    //get_OrdenesPendientesCobro
+
+
+
 
 
 

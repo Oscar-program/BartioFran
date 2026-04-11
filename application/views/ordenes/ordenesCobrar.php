@@ -65,7 +65,7 @@
         .btn-elegante {
             width: 40%;
             height: 15%;
-            background-color: #b4c555 ;  border-color:aliceblue; border-width:1px;
+            background-color: #070b3d ;  border-color:aliceblue; border-width:1px;
             color: #f5f5f5;
             border-radius: 50rem; /* estilo Bootstrap pill */
             padding: 0.55rem 1.6rem;
@@ -95,50 +95,56 @@
 }
 
 /* Active */
-/*.btn-elegante:active {
+.btn-elegante:active {
   background: linear-gradient(
     135deg,
-    rgba(8, 80, 180, 0.95),
+    rgba(180, 19, 8, 0.95),
     rgba(237, 239, 241, 0.95)
   );
   transform: translateY(0);
   box-shadow:
     0 0.4rem 0.8rem rgba(0, 0, 0, 0.3);
-}*/
+}
 
     </style>
- 	 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"></script>  -->
+ 	 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"></script> 
 
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-   <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
    </head>
    <body>
 <!--  style="float:left; text-align:justify; display: flex; align-items: center;height:75px; background-color:#21618C; background:linear-gradient(70deg,#1B2631 , #2196f3); box-shadow: 0px 0px 3px #21618C; "-->
-    <div class ="container-fluid justify-content-center;">
+    <div class ="container-fluid justify-content-center;" style="background-color:  #ffffff;  width: 100%;">
       
-        gfdgfd
-        <div class ="row">
-            <?php // var_dump($listaMesasPendientesCobro)?>   
+        
+            <div class ="row ml-50" style="background-color: #ffffff;  display: flex;
+                justify-content: flex-start;
+                width: 100%; ">
+
+                <div class ="row">
+             
 
             <div class="col-12">
-                                                <label for="mesa" class="col-form-label">Mesas:</label>
-                                                <select name="mesa" id="mesa"  class="form-control chosen" onchange="mostrarPendientesDespacho(<?php  echo  1 ; ?>)"> 
-                                                    <option value ="0"> Seleccione una mesa</option> 
+                <label for="mesa" class="col-form-label">Mesas:</label>
+                    <select  name="mesaCobrar" id="mesaCobrar"  class="form-control chosen" onchange="mostrarPendientesCobro(this)"> 
+                        <option value ="0"> Seleccione pendientes de cobro</option> 
+                        <?php  if(isset($listaMesasPendientesCobro)){
+                            if(!empty($listaMesasPendientesCobro)){
+                                foreach($listaMesasPendientesCobro as  $row){ ?>  
+                                    <option value="<?php echo $row->mesaID; ?>">
+                                            <?php echo $row->mesaID . " - " .  $row->mesNombre; ?>
+                                    </option>
+                        
+                                <?php }}} ?>
+                    </select>
+            </div>
 
-            <?php  if(isset($listaMesasPendientesCobro)){
-                if(!empty($listaMesasPendientesCobro)){
-                    foreach($listaMesasPendientesCobro as  $row){ ?>  
-                     <option value="<?php echo $row->mesaID; ?>">
-                                                        <?php echo $row->mesaID . " - " .  $row->mesNombre; ?>
-                                                        </option>
-                     
-                    
-            <?php }}} ?>
-              </select>
-        </div>
+                
+              
+            </div>
          <div  class ="row" id="ordenesPendientesDespacho" name="ordenesPendientesDespacho"  >
             
          

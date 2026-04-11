@@ -1,20 +1,21 @@
 <!-- Creamos la cabecera de las ordenes de despacho  -->
- <style type="css">
-    .contenedor1 {
-        margin-top: 20px;
-        background-color: red;
 
-    }
- </style>
-
-
-<div class="container-fluid " style="background-color: #ffffff;  margin-top: 4px;  width:98%; " >
-<?php 
+<?php
 $c= 1; 
+$orden = "";
+$ultimo = 0;
+?> 
+<div class="contenedor-tabla1" >
+<div  class="tabla-responsive1">
+          <table>
+                
+<?php 
+   $ultimo = count($lstPendDespCabecera);
+  // echo  "el total de items es "  . $ultimo ."<br>";
  if( isset($lstPendDespCabecera)){
-   foreach( $lstPendDespCabecera as  $row){
+   foreach( $lstPendDespCabecera as  $row){          
              $comentario ="";
-             $nameChek = "Anular" .$c;
+             $nameChek = "Despachar" .$c;
              $acronimo =" AM"; 
              if(!empty($row->cliente)){
                 $comentario = "Comentario :" . str_replace("%20", "", $row->cliente)  ; 
@@ -22,39 +23,62 @@ $c= 1;
              if( $row->hora>12){
                 $acronimo =" PM";
              }
-            
+            //echo   "mesa variable" .$orden  ."mesa fila  " . $row->ordenPedidoID . "<br>"; 
             ?>
-            
-                    <div class="accordion " id="accordionExample" style="background-color: #9ed1f3;">
-                        <div class="accordion-item justify-content-center" style="background-color: #ffffff; height:40px; margin-top:1px;" >
-                           
-                              
-                                <button  type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" onclick="mostrarDetalleORden( <?php echo $row->ordenPedidoID?>);"
-                                    style="background-color: #ffffff; color: #1e6fd9; font-weight: 500;  text-decoration: none; border-width:0px; width:75%;text-align:left;" >
-                                    <?php echo  "Orden #".$row->ordenPedidoID . " Area: " . strtoupper($row->area ). " Hora Pedido " . $row->hora. ":" . $row->minuto .  $acronimo. " ". $comentario ; ?>           
-                                </button>
+                 <?php  if($orden != $row->ordenPedidoID) {?> 
+                    
+                    <thead>
+                    <tr >
+                        <th colspan="7"><?php echo  "Orden #".$row->ordenPedidoID . " Area: " . strtoupper($row->area ). " Hora Pedido " . $row->hora. ":" . $row->minuto .  $acronimo. " ". $comentario ; ?> </th>
                        
-                                  <?php  if($_SESSION["nivelUsuaio"] == "2"){ ?>
-                                     <input type="checkbox" name ='<?php echo "Anular" .$c ;?>'  id ='<?php echo "Anular" .$c ;?>' style="background-color: chocolate; width:40px; height:20px ;margin-top:8px;" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->ordenPedidoID?> );">  <span style="color:black">Despachar</span> 
-                                  <?php } else {?>
-                                       <?php  if ($row->ordPpenditeDespacho == 1){?>
-                                       <input type="checkbox" name ='<?php echo "Anular" .$c ;?>'  id ='<?php echo "Anular" .$c ;?>' style="background-color: chocolate; width:40px; height:20px ;margin-top:8px;" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->ordenPedidoID?> );" disabled >  <span style="color:black">Pendiente </span> 
+                    </tr>
+                    <tr >
+                        <th>Cantidadss</th>
+                        <th >Descripción</th>                       
+                        <th>Despachar</th> 
+                       
+                    </tr>
+                    </thead>                         
+                        <tr>
+                           <td data-label="Número"><?php echo  $row->catidad; ?></td>
+                           <td data-label="Descripción"><?php  echo  strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion) );  ?></td> 
+                           <?php  if($row->despachar == 1) {?>                         
+                            <td data-label="Cantidad"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );" checked disabled></td>
+                           <?php }else {?> 
+                             <td data-label="Cantidad"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"></td>
+                           <?php }?>
+                        </tr>    
+                        
 
-                                      
-                                       <?php  }else{ ?>
-                                           <input type="checkbox" name ='<?php echo "Anular" .$c ;?>'  id ='<?php echo "Anular" .$c ;?>' style="background-color: chocolate; width:40px; height:20px ;margin-top:8px;" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->ordenPedidoID?> );"  <?php echo ($row->ordPpenditeDespacho == 0) ? 'checked disabled' : ''; ?>>  <span style="color:black">Procesado</span>
-                                      <?php }?> 
+      
+                
+                               
+                   
+               
+                  <?php  } else { ?> 
+                      <tr>
+                           <td data-label="Número"><?php echo$row->catidad; ?></td>
+                           <td data-label="Descripción"><?php  echo   strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion)); ?></td>                           
+                             <?php  if($row->despachar == 1) {?>                         
+                            <td data-label="Cantidad"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );" checked disabled></td>
+                           <?php }else {?> 
+                             <td data-label="Cantidad"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"></td>
+                           <?php }?>
 
-                                 <?php  }?>
-
-                                 <?php  for( $c=1;  $c<= 10 ;$c++ ){ ?>
-                                    <?php echo  "nostrar" ."<br>"?>
-
-                                 <?php } ?>
-                        </div>   
-                             
-                    </div>
+                           <!-- <td data-label="Cantidad"> <input type="checkbox" name="<?php //echo $nameChek; ?>" id="<?php //echo $nameChek; ?>" onclick="despacharOrden(<?php //echo $c ?>, <?php //echo $row->detPedID?> );"></td>  -->
+                            
+                        </tr> 
+                      <?php  }?>
          
- <?php  $c+=1; }}?>
+ <?php 
+         $orden  =   $row->ordenPedidoID;
+          $c+=1;
+          }?>
+           
+          
+         <?php }?>
+           </table>
     </div>
+       </div>
+
 

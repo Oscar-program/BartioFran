@@ -209,6 +209,13 @@ class ventaProducto_Controller extends CI_Controller {
      $this->ordenesPedido_Model->anularDetOrden($detPedID) ;
    }
 
+   // funcion para  procesar el  cobro de productos  
+   public function realizarCobro($ordenPedidoID){
+   // echo  "poner procesado" . $ordenPedidoID ;
+     $this->ordenesPedido_Model->procesarCobro($ordenPedidoID) ;
+
+   }
+
    // funcion  para  eliminar detalle de orden de pedido  
 
    //  funcion para  imprimir el  ticket  de la  venta de producto 

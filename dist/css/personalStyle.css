@@ -95,6 +95,9 @@
     padding-top: 10px;
     border-color: rgb(245, 233, 71) !important;
 }
+.oculto {
+    transform: translateX(-100%);
+  }
      
 
 

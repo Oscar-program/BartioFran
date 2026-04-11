@@ -177,14 +177,57 @@
    }
    // funcion que pone como despachada una orden 
     //  funcion para anular  la orden de pedido  
-    public function  despacharOrden($ordenID){
+    public function  despacharOrden($detPedID, $estado){
           //echo  "anulando la  orden de pedido".$ordenID.   "\n";
-               $this->db->set("ordPpenditeDespacho", 0) 
-                 ->where("ordenPedidoID", $ordenID)
-                 ->update("ordenpedido");
+               $this->db->set("despachar", $estado) 
+                 ->where("detPedID", $detPedID)
+                 ->update("detordenpedido");
         return $this->db->affected_rows();  
 
     }
+
+    // funcion para poner marca de cobro a  elemnto de la orden 
+    // detordenpedido
+        //despachar
+        //cobrar
+        // procesado
+
+        public function  cobrarOrden($detPedID, $estado){
+         // echo  "Cobrando en el model".$detPedID.   "\n";
+               $this->db->set("cobrar", $estado) 
+                 ->where("detPedID", $detPedID)
+                 ->update("detordenpedido");
+        return $this->db->affected_rows();  
+       
+
+
+
+    }
+    // funcion suma todos lo detalles de la ordenes marcadas para cobrar  
+    public function sumCobrar($ordenPedidoID){
+        $query = $this->db->select("sum(dettotal) as sumas" )
+          ->where("ordenPedidoID",  $ordenPedidoID)
+         ->where("cobrar",  1)
+         ->where("procesado",  0)
+         ->get("detordenpedido")
+         ->row();
+         return $query ;
+    }
+    // funcionn marca como procesado todas las  ordenes 
+    
+        public function  procesarCobro($ordenPedidoID){   
+            echo  "poniendo procesados" ;     
+               $this->db->set("procesado", 1) 
+                         ->where("ordenPedidoID",  $ordenPedidoID)
+                         ->where("cobrar",  1)
+                         ->where("despachar",  1)                 
+                 ->update("detordenpedido");
+        return $this->db->affected_rows();  
+        }
+
+
+
+
 
 
 

@@ -11,10 +11,12 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
     var url = base_url('index.php/ventaProducto_Controller/addVentaProducto/' + famProdID + "/"+  detPedID);   
     //var url = base_url("index.php/BancosController/bancos");
       $.get(url, function (data) {
-        $("#addVenta").html(data);
+         $("#addVenta").html(data);
         //console.log(data);
         document.getElementById('prodDescripcion').innerHTML=prodDescripcion;
-        $('#addVentaProducto').modal('show');
+         $('#addVentaProducto').modal('show');
+       // var modal  = document.getElementById("modal");
+       // modal.style.display = "flex";
         // ponemos el  precio  de  costo del producto 
         $("#productoID").val(idProducto); 
         $("#bodsalida").val(bodSaldID);
@@ -222,21 +224,22 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
 
   // funcion para  generar el   ticket de venta 
   //  funcion para lanzar el  pdf del  comprobante de tiket
-function  crear_pdf_ticket(){	
-	var ordenPedidoID 			= 0; 
-  var ordPcomentario      = 'Sin Comentario';
-  if(document.getElementById('ordenID')){
+function  crear_pdf_ticket(ordenPedidoID){	
+	//var ordenPedidoID 			= 0; 
+  var ordPcomentario       = 'Sin Comentario';
+  var ordenPedidoID        = ordenPedidoID ; 
+  /*if(document.getElementById('ordenID')){
     ordenPedidoID =  $("#ordenID").val();
-  }
+  }*/
 
-  if(document.getElementById('txAcomentario')){
+  /*if(document.getElementById('txAcomentario')){
     
-    ordPcomentario =  $("#txAcomentario").val();
+   // ordPcomentario =  $("#txAcomentario").val();
   //   if($("#txAcomentario").val().leng){
     //  ordPcomentario =  $("#txAcomentario").val();
     // }
    
-  }
+  }*/
 
     //  ordPcomentario =  $("#txAcomentario").val();
     // }
@@ -290,6 +293,37 @@ function  crear_pdf_ticket(){
 		
 	});*/
 } 
+// funcion para realizar el  cobro de elementos marcados para cobrar  
+function  realizarCobro(ordenPedidoID, mesaID){	
+	
+  var ordPcomentario       = 'Sin Comentario';
+  var ordenPedidoID        = ordenPedidoID ; 
+ 
+
+  swal({
+    title: "Estas seguro de procesar el  cobro ?",
+    text: "Este proceso marcara como cobrado los elementos seleccionados",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((Delete) => {
+    if (Delete) {
+      var url = base_url(
+        "index.php/ventaProducto_Controller/realizarCobro/"  + ordenPedidoID 
+      );
+      $.get(url, function (data) {	
+        
+         mostrarPendientesCobro(mesaID);
+        
+      });			
+    } else {
+      swal("Operacion  cancelada",{
+        icon: "success",
+      });
+    }
+  });
+}
+
 
 function ver_ticketPDF(ruta) {
 	var url = ruta;

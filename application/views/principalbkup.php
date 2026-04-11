@@ -64,7 +64,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#" role="button" id="menu" name ="menu"><i class="fas fa-bars" style="color:#004aad;"></i></a>
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars" style="color:#004aad;"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="index3.html" class="nav-link"  style="color:#004aad;">Principal</a>
@@ -78,7 +78,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <!-- Main Sidebar Container -->
      <!-- se personaliza wl color de fonde de lateral derecho  -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#243458 !important ;" id="menuLateral" >
+    <aside class="main-sidebar sidebar-dark-primary elevation-4" style="background-color:#243458 !important ;" >
       <!-- Brand Logo -->
      <!--  <a href="index3.html" class="brand-link">
         <img src="/BartioFran/img/nuevostablo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -167,7 +167,44 @@ defined('BASEPATH') or exit('No direct script access allowed');
                  <?php  } ?>
                
 
-          
+           <!--  <li class="nav-item menu-open">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                 Caja
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="javaScript:listarMesas();" class="nav-link ">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Registra venta </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="javaScript:get_OrdenesPendientesCobro();" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pendientes de cobro</p>
+                  </a>
+                </li>
+               
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Devoluciones </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Cuadre de caja </p>
+                  </a>
+                </li>
+
+
+              </ul>
+            </li> -->
            
             
         <?php if( $_SESSION["nivelUsuaio"] !="2" ){?> 
@@ -327,7 +364,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" id="principal1"  style="background-color:red; width:100%">
+    <div class="content-wrapper"  style="background-color: green; width:100%">
       <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">
@@ -346,8 +383,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <!-- /.content-header -->
 
       <!-- Main content -->
-      <section class="content-header">
-        <div class="content-header" id="principal"  style="background-color:green; width:100%; margin-left:0px;" >
+      <section class="container-fluid">
+        <div class="container-fluid" id="principal"  style="background-color: red; width:100%; margin-left:0px;" >
           <?php  if($_SESSION["usrLogin"]=="admin" ){?>
                 <?php    $this->load->view('mesas/listaMesas'); ?>
             <?php }else {?>
@@ -513,10 +550,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 	<script src=" <?php echo  base_url();?>js/InvDiario.js"></script>
   <script src=" <?php echo  base_url();?>js/conteoFisico.js"></script>
   <script src=" <?php echo  base_url();?>js/mesas.js"></script>
-  <script src=" <?php echo  base_url();?>js/listarAreasEstablecimiento.js"></script>
-  <script src=" <?php echo  base_url();?>js/funcionesMenu.js"></script>
-
-
+   <script src=" <?php echo  base_url();?>js/listarAreasEstablecimiento.js"></script>
   
 
   
@@ -545,8 +579,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>js/css/allDevice.css"/>
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>dist/css/tablaStyle.css"/>
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>dist/css/ordenesStyle.css"/>
-   <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>dist/css/modalStyle.css"/>
-
 	
 
  
@@ -564,12 +596,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
         })
 
        });
-       function seleccionarOpcion() {
-          var menu = document.getElementById("menuLateral");
-          menu.classList.add("oculto");
-        }
-
-       
     </script>
   
 
