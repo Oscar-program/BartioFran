@@ -51,18 +51,8 @@ function cargar_addordenes(mesaID){
   
   }
     // funcion para mostrar el total d ordenes por mesa 
-  function mostrarPendientesCobro(select){
-
-    if (document.getElementById("mesaCobrar")){
-        console.log("objeto existe");
-    }else{
-          console.log("no existe------------");
-    }
-
-    //  obtenemos el nombre del  select para obtener su valor  
-    var mesaID  = select.value; //  (document.getElementById("mesaCobrar")) ? document.getElementById("mesaCobrar").value : 0 ;
-    //var mesaID = objSelect.value;
-    console.log("El 45644a mesa a mostrar es  " + mesaID + "aslfdloñasjfsd") ;   
+  function mostrarPendientesCobro(select){ 
+    var mesaID  = select.value;   
     var url = base_url('index.php/Ordenes_Controller/listaOrdenesPendienteCobro/');
     obJson = { mesaID:mesaID};
     $.ajax({

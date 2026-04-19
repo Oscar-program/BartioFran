@@ -39,18 +39,28 @@ function cargarmenu_interno(){
 }
 /*funcion  para leer el  value del   div */
 function cargar_listaProductos(id){
+ // var id = "";
+  var valSlect =  "";
+  if(document.getElementById('familProd')){
+    valSlect =  id.value;
+  }/*else{
+      var  id =  id;
+  }*/
+  console.log("#ELEMENTO SELECCIONADO ###" + valSlect );
+
  // $("#principal"+id).val();
-  var valorid  = 0;
+ // var valorid  = 0;
   //valorid = document.getElementById('familia'+id).dataset.value;
  // valorid = $('familia'+id).attr('data-value');
 // valorid      = $("#familia").val();
- console.log("se ha hecho  click"+ id  + " capturado");
- var url = base_url('index.php/Menu_internoController/cargar_submenu/' + id);
+ //console.log("se ha hecho  click"+ id  + " capturado");
+ var url = base_url('index.php/Menu_internoController/cargar_submenu/' + valSlect);
 
  //var url = base_url("index.php/BancosController/bancos");
    $.get(url, function (data) {
-    document.getElementById("lista"+id).innerHTML = "";
-     $("#lista"+id).html(data);
+    document.getElementById("listaProductos").innerHTML = "";
+    console.log(data);
+     $("#listaProductos").html(data);
    });
 
 }

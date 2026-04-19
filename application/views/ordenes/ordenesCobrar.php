@@ -118,45 +118,27 @@
    <body>
 <!--  style="float:left; text-align:justify; display: flex; align-items: center;height:75px; background-color:#21618C; background:linear-gradient(70deg,#1B2631 , #2196f3); box-shadow: 0px 0px 3px #21618C; "-->
     <div class ="container-fluid justify-content-center;" style="background-color:  #ffffff;  width: 100%;">
-      
-        
-            <div class ="row ml-50" style="background-color: #ffffff;  display: flex;
-                justify-content: flex-start;
-                width: 100%; ">
-
+            
+Cobrar Mesas
                 <div class ="row">
-             
-
-            <div class="col-12">
-                <label for="mesa" class="col-form-label">Mesas:</label>
-                    <select  name="mesaCobrar" id="mesaCobrar"  class="form-control chosen" onchange="mostrarPendientesCobro(this)"> 
-                        <option value ="0"> Seleccione pendientes de cobro</option> 
-                        <?php  if(isset($listaMesasPendientesCobro)){
-                            if(!empty($listaMesasPendientesCobro)){
-                                foreach($listaMesasPendientesCobro as  $row){ ?>  
-                                    <option value="<?php echo $row->mesaID; ?>">
-                                            <?php echo $row->mesaID . " - " .  $row->mesNombre; ?>
-                                    </option>
-                        
-                                <?php }}} ?>
-                    </select>
-            </div>
-
-                
-              
-            </div>
-         <div  class ="row" id="ordenesPendientesDespacho" name="ordenesPendientesDespacho"  >
+                            <div class="col-12">
+                                <label for="mesa" class="col-form-label">Mesas:</label>
+                                    <select  name="mesaCobrar" id="mesaCobrar"  class="form-control chosen" onchange="mostrarPendientesCobro(this)"> 
+                                        <option value ="0"> Seleccione pendientes de cobro</option> 
+                                        <?php  if(isset($listaMesasPendientesCobro)){
+                                            if(!empty($listaMesasPendientesCobro)){
+                                                foreach($listaMesasPendientesCobro as  $row){ ?>  
+                                                    <option value="<?php echo $row->mesaID; ?>">
+                                                            <?php echo $row->mesaID . " - " .  $row->mesNombre; ?>
+                                                    </option>
+                                        
+                                                <?php }}} ?>
+                                    </select>
+                            </div>              
+                </div>
+                <div  class ="row" id="ordenesPendientesDespacho" name="ordenesPendientesDespacho">   </div>       
+                <div  id="detallePendienteDespacho" name="detallePendienteDespacho">   </div>
             
-         
-         </div>
-         <div  id="detallePendienteDespacho" name="detallePendienteDespacho"  >
-            
-           
-         </div>
-
-       
-
-
     </div>
     
    </body>

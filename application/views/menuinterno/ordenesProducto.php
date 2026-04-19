@@ -1,64 +1,77 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-$ordenID = isset($datordenID) ? $datordenID : 0 ; 
-$mesaID  = isset($mesaID) ? $mesaID : 0 ; 
-$total   = 0; 
-$datTotal = 0;
+$ordenID   = isset($datordenID) ? $datordenID : 0 ; 
+$mesaID    = isset($mesaID) ? $mesaID : 0 ; 
+$total     = 0; 
+$datTotal  = 0;
 ?>
 
 
 
-<div class = "container-fluid"> 
-<div class="row"> 
-      
-
-   <div  class="col-md 12 shadow-sm p-3 mb-1 bg-white rounded text-end">
-      <label  id="bannerMesaPedido" name ="bannerMesaPedido">  <?php echo  "MESA " . $mesaID . "         ORDEN #" .   strval($ordenID); ?></label> 
-        
-
-    </div> 
-  <input type="hidden" class="text-left text-warning border-0" name="ordenID" id="ordenID" value="<?php  echo strval($ordenID); ?>" readonly>
-   <input type="hidden" class="text-left text-warning border-0" name="ctrlmesaID" id="ctrlmesaID" value="<?php  echo $mesaID; ?>" readonly>
-</div>  
+<div class = "container-fluid">
+    <!-- titulo de mesa y numeor de orden -->     
+    <div class="row"> 
+        <div  class="col-md 12 shadow-sm p-3 mb-1 bg-white rounded text-end">
+        <label  id="bannerMesaPedido" name ="bannerMesaPedido">  <?php echo  "MESA " . $mesaID . "         ORDEN #" .   strval($ordenID); ?></label> 
+        </div> 
+        <input type="hidden" class="text-left text-warning border-0" name="ordenID" id="ordenID" value="<?php  echo strval($ordenID); ?>" readonly>
+        <input type="hidden" class="text-left text-warning border-0" name="ctrlmesaID" id="ctrlmesaID" value="<?php  echo $mesaID; ?>" readonly>
+    </div>  
     <div class="row"> 
           <!-- carga las categorias de los productos style ="width:15%;" -->           
             <div  class="col-md 6 shadow-sm p-3 mb-5 bg-white rounded" > 
-                <div class="accordion" id="accordionExample">
-                          <?php
-                        if(isset($listFamiliaProducto)){
-                            if(!empty($listFamiliaProducto)){
-                                $c= 1;
-                                foreach($listFamiliaProducto as  $row) :?>
-                                    <div class="card-header" id=" <?php echo 'headin'. $row->famProdID ;?>">
-                                        <input type="hidden" id  ="" name  ="">
-                                        <h2 class="mb-0">
-                                            <button class="btn btn-link btn-block text-left" type="button"
-                                             data-toggle="collapse" data-target="<?php echo '#collapse'. $row->famProdID ;?>"
-                                              aria-expanded="true" aria-controls="<?php echo 'collapse'. $row->famProdID ;?>" 
-                                              id="<?php echo 'btnFam'. $row->famProdID ;?>" 
-                                              onclick="cargar_listaProductos(<?php echo $row->famProdID ;?>)">
-                                            <?php  echo   $row->famProdDescripcion; ?>
-                                            </button>
-                                        </h2>
-                                    </div>
-                                    <div id="<?php echo 'collapse'. $row->famProdID ;?>" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                        <div class="card-body"  id  ="<?php echo 'lista'. $row->famProdID ;?>">
-                                           
+                <!-- ponemos un select  -->
+                    
+                    <div class="ctrlSelectFamilia" id="ctrlSelectFamilia">
+                        
+                         <?php if(isset($listFamiliaProducto)){
+                                if(!empty($listFamiliaProducto)){?>
+                                   <select  name="familProd" id="familProd"  class="form-control chosen" onchange="cargar_listaProductos(this)"> 
+                                         <option value ="0"> Seleccione familia de producto</option> 
+                                            <?php foreach($listFamiliaProducto as  $row) {?>
+                                                <option value="<?php echo $row->famProdID; ?>">  <?php echo $row->famProdID. " - " .  $row->famProdDescripcion; ?> </option>
+                                               
+                                            <?php }?>
+                                   </select>        
+                                        <?php }} ?>
+                     </div>
+                <!-- ponemos un select  -->
+                <!-- acordiones -->
+                    <div class="accordion" id="accordionExample">
+                            <?php
+                            if(isset($listFamiliaProducto)){
+                                if(!empty($listFamiliaProducto)){
+                                    $c= 1;
+                                    foreach($listFamiliaProducto as  $row) :?>
+                                        <div class="card-header" id=" <?php echo 'headin'. $row->famProdID ;?>">
+                                            <input type="hidden" id  ="" name  ="">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link btn-block text-left" type="button"
+                                                data-toggle="collapse" data-target="<?php echo '#collapse'. $row->famProdID ;?>"
+                                                aria-expanded="true" aria-controls="<?php echo 'collapse'. $row->famProdID ;?>" 
+                                                id="<?php echo 'btnFam'. $row->famProdID ;?>" 
+                                                onclick="cargar_listaProductos(<?php echo $row->famProdID ;?>)">
+                                                <?php  echo   $row->famProdDescripcion; ?>
+                                                </button>
+                                            </h2>
                                         </div>
-                                    </div>
-                                 <?php  $c+= 1; endforeach ?>
-                        <?php }}?>   
-                </div>
+                                        <div id="<?php echo 'collapse'. $row->famProdID ;?>" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                            <div class="card-body"  id  ="<?php echo 'listas'. $row->famProdID ;?>"> </div>
+                                        </div>
+                                    <?php  $c+= 1; endforeach ?>
+                            <?php }}?>   
+                    </div>
+                <!-- acordiones -->
+
+                      <div id  ="listaProductos"> </div>
+
+
+                   
             </div>
             <!-- segmento para  cargar el detalle de la orden de pedido -->           
             <div class ="col-md 6 shadow-sm p-3 mb-5 bg-white rounded" style="margin-left: 3px;">
-                
-              
-                
-                <form action="" id="formcabpedido"  name="formcabpedido">
-                <!-- <label> ORDEN DE PEDIDO  #</label> <input type="text" class="text-left text-warning border-0" name="ordenID" id="ordenID" value="<?php  //echo strval($ordenID); ?>" readonly> -->
-            
-                <!-- div para cargar el detalle de la orden que se esta tomando -->
+                <form action="" id="formcabpedido"  name="formcabpedido">            
+                     <!-- div para cargar el detalle de la orden que se esta tomando -->
                     <div class="contenedor-tabla">
                         <div class="tabla-responsive">
                             <table id="tblFamiliaProd" class="tabla-estilo">
@@ -84,17 +97,16 @@ $datTotal = 0;
                         </div>
                     </div> 
                 
-              <div class="container-fluid">
-                <div class="row">
-                <!--  <input type="number"  class="text-right border-0" name="totalOrden" id="totalOrden" value="<?php  //echo  $total;?>" readonly>  -->
-                <button type="button" id="btnDelOrden"  data-title ="Eliminar Orden" class="form-control btn-lg " style="width: 25%; color:lightslategrey ; font-size:40px; font-weight:bold; border-style:dotted; "><i class="fa fa-trash" aria-hidden="true"></i></button>
-                <button type="button" id="btnAddOrden"  data-title ="Agregar  Orden en la mesa" class="form-control  btn-lg" style="width: 25%; color:lightslategrey ; font-size:40px; font-weight:bold; border-style:dotted; " ><i class="fa fa-plus" aria-hidden="true"></i></button>
-                <button type="button" class="form-control   btn-lg" data-title ="Procesar venta" onclick="crear_pdf_ticket()" style="width: 25%; color:lightslategrey ; font-size:40px; font-weight:bold; border-style:dotted;" ><i class="fa fa-print" aria-hidden="true"></i></button>
-             </div>  
-            </div>    
-            </form>
-            </div>             
-            
+                    <div class="container-fluid">
+                        <div class="row">
+                        <!--  <input type="number"  class="text-right border-0" name="totalOrden" id="totalOrden" value="<?php  //echo  $total;?>" readonly>  -->
+                        <button type="button" id="btnDelOrden"  data-title ="Eliminar Orden" class="form-control btn-lg " style="width: 25%; color:lightslategrey ; font-size:40px; font-weight:bold; border-style:dotted; "><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button type="button" id="btnAddOrden"  data-title ="Agregar  Orden en la mesa" class="form-control  btn-lg" style="width: 25%; color:lightslategrey ; font-size:40px; font-weight:bold; border-style:dotted; " ><i class="fa fa-plus" aria-hidden="true"></i></button>
+                        <button type="button" class="form-control   btn-lg" data-title ="Procesar venta" onclick="crear_pdf_ticket()" style="width: 25%; color:lightslategrey ; font-size:40px; font-weight:bold; border-style:dotted;" ><i class="fa fa-print" aria-hidden="true"></i></button>
+                    </div>  
+                        
+                </form>
+            </div>  
     </div>
     
  

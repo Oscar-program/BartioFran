@@ -107,25 +107,27 @@
 }*/
 
     </style>
- 	 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"></script>  -->
+
+ 	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"></script>  
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-   <!--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> -->
+   
    </head>
    <body>
 <!--  style="float:left; text-align:justify; display: flex; align-items: center;height:75px; background-color:#21618C; background:linear-gradient(70deg,#1B2631 , #2196f3); box-shadow: 0px 0px 3px #21618C; "-->
-    <div class ="container-fluid justify-content-center;">
+    <div class ="container-fluid justify-content-center;"  style="background-color:  #ffffff;  width: 100%;">
       
-        gfdgfd
+   DEspachar  mesas
         <div class ="row">
-            <?php // var_dump($listaMesasPendientesCobro)?>   
+            
 
             <div class="col-12">
                                                 <label for="mesa" class="col-form-label">Mesas:</label>
-                                                <select name="mesa" id="mesa"  class="form-control chosen" onchange="mostrarPendientesDespacho(<?php  echo  1 ; ?>)"> 
+                                                <select name="mesaDespachar" id="mesaDespachar"  class="form-control chosen" onchange="mostrarPendientesDespacho(<?php  echo  1 ; ?>)"> 
                                                     <option value ="0"> Seleccione una mesa</option> 
 
             <?php  if(isset($listaMesasPendientesCobro)){
