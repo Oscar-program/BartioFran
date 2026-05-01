@@ -25,6 +25,54 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
       });
    
    }
+   function addVentaProducto1(select){
+
+
+
+
+ 
+    var option          = select.options[select.selectedIndex];
+    var idProducto      = option.value;
+    var famProdID       = option.dataset.famprodid;
+    var prodDescripcion = option.dataset.proddescripcion;
+    var precioventa     = option.dataset.precioventa;
+    var detPedID        = option.dataset.detpedid;
+
+    console.log("El precio de venta es  " + precioventa);
+    
+
+
+
+
+
+
+
+
+  console.log("los datos de los productos son Familia  " + famProdID + " idProducto" + idProducto + 
+              " detallePedido" +  detPedID  + " Descripcion"+  prodDescripcion + " PrecioCosto"+ precioventa  )  
+    
+  
+    var valorid  = 0;  
+    var bodSaldID  = $("#bodSaldID").val();   
+    console.log("funcion para mostrar los productos " + idProducto +   " idDetallePedido" +detPedID  ) ;
+    var url = base_url('index.php/ventaProducto_Controller/addVentaProducto/' + famProdID + "/"+  detPedID);   
+    //var url = base_url("index.php/BancosController/bancos");
+      $.get(url, function (data) {
+         $("#addVenta").html(data);
+        //console.log(data);
+        document.getElementById('prodDescripcion').innerHTML=prodDescripcion;
+         $('#addVentaProducto').modal('show');
+       // var modal  = document.getElementById("modal");
+       // modal.style.display = "flex";
+        // ponemos el  precio  de  costo del producto 
+        $("#productoID").val(idProducto); 
+        $("#bodsalida").val(bodSaldID);
+         $("#precioregular").val(precioventa);
+        $("#bodsalida").change();
+      });
+   
+   }
+
    // funcion para calcular el total de la venta  
    function calculartotalVenta(){
     //if(e.keyCode===13){
@@ -53,6 +101,8 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
     var totalVenta     = 0;
     var ordenID        = 0; 
     var productoID     =  0;
+     calculartotalVenta();
+
 
     //$("#productoID").val(id);
     if(document.getElementById("productoID")){

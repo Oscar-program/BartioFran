@@ -31,9 +31,12 @@ class ventaProducto_Controller extends CI_Controller {
     public function addVentaProducto($famProdID, $detPedID  ){  
         $data['comandas']           = $this->Producto_Model->get_comandas();
         $data['bodegas']            = $this->bodegaProducto_Model->get_listBodegaProducto();
+
+
        
         if($detPedID>0){
           $data['DetOrdenpedido'] = $this->ordenesPedido_Model->get_DetOrden($detPedID);
+          var_dump($data['DetOrdenpedido'] );
           if(!empty($data['DetOrdenpedido'])){
             $famProdID = $data['DetOrdenpedido']->famProdID;
           }
@@ -46,6 +49,29 @@ class ventaProducto_Controller extends CI_Controller {
      
 
      }
+      /* funcion para cargar la modal  para  procesar la venta del producto */
+    public function addVentaProducto1($famProdID, $detPedID  ){  
+        $data['comandas']           = $this->Producto_Model->get_comandas();
+        $data['bodegas']            = $this->bodegaProducto_Model->get_listBodegaProducto();
+
+        
+       
+        if($detPedID>0){
+          $data['DetOrdenpedido'] = $this->ordenesPedido_Model->get_DetOrden($detPedID);
+          var_dump($data['DetOrdenpedido'] );
+          if(!empty($data['DetOrdenpedido'])){
+            $famProdID = $data['DetOrdenpedido']->famProdID;
+          }
+        }
+        $data['precioespporfamilia'] = $this->PrecioEspecial_Model->ListPreciosEspPorFamiliaProd($famProdID);
+
+        
+
+        $this->load->view('menuinterno/add_ventaProducto',$data);
+     
+
+     }
+
      // funcion para  guardar la  venta del producto 
      public  function saveVentaProducto(){
         //ini_set('display_errors',1);
@@ -160,7 +186,7 @@ class ventaProducto_Controller extends CI_Controller {
     }
    
 
-    public function ver_ordenePedido1($ordenPedidoID, $mesaID){
+    public function ver_ordenePedido($ordenPedidoID, $mesaID){
       ini_set('display_errors',1);
       ini_set('display_startup_errors',1);
       error_reporting(E_ALL);

@@ -50,12 +50,12 @@ $datTotal  = 0;
                                                 data-toggle="collapse" data-target="<?php echo '#collapse'. $row->famProdID ;?>"
                                                 aria-expanded="true" aria-controls="<?php echo 'collapse'. $row->famProdID ;?>" 
                                                 id="<?php echo 'btnFam'. $row->famProdID ;?>" 
-                                                onclick="cargar_listaProductos(<?php echo $row->famProdID ;?>)">
+                                                onclick="cargar_listaProductos1(<?php echo $row->famProdID ;?>)">
                                                 <?php  echo   $row->famProdDescripcion; ?>
                                                 </button>
                                             </h2>
                                         </div>
-                                        <div id="<?php echo 'collapse'. $row->famProdID ;?>" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                         <div id="<?php echo 'collapse'. $row->famProdID ;?>" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordionExample">
                                             <div class="card-body"  id  ="<?php echo 'listas'. $row->famProdID ;?>"> </div>
                                         </div>
                                     <?php  $c+= 1; endforeach ?>
@@ -72,15 +72,15 @@ $datTotal  = 0;
             <div class ="col-md 6 shadow-sm p-3 mb-5 bg-white rounded" style="margin-left: 3px;">
                 <form action="" id="formcabpedido"  name="formcabpedido">            
                      <!-- div para cargar el detalle de la orden que se esta tomando -->
-                    <div class="contenedor-tabla">
-                        <div class="tabla-responsive">
-                            <table id="tblFamiliaProd" class="tabla-estilo">
+                    <div class="contenedor-tabla1">
+                        <div class="tabla-responsive1">
+                            <table id="tblFamiliaProd" class="tabla-estiloOrdn">
                                 <thead>
                                     <tr>
-                                        <th>Cantidad</th>
-                                        <th>Descripcion</th> 
-                                        <th>Total</th>                                      
-                                        <th class="text-right">ACCIONES</th>                                
+                                        <th  id ="titulos">Cantidad</th>
+                                        <th  id ="titulos">Descripcion</th> 
+                                        <th  id ="titulos">Total</th>                                      
+                                        <th  id ="titulos">ACCIONES</th>                                
                                     </tr>
                                 </thead>
                                 <tbody  id ="detOrdenesPedido">   

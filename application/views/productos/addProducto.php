@@ -27,14 +27,14 @@
   $productoID      = NULL;
   $prodDescripcion = '';
   $prodClasfInvent = 0;
-  $famProdID       = 1;
-  $presProdID      = 1;
-  $tipProdID       = 1;
-  $marcProdID      = 1;
-  $medProdID       = 1;
-  $proveedorID     = 1;
-  $presentacion_invId = 1;
-  $tipomovinvtId      = 1;
+  $famProdID       = 0;
+  $presProdID      = 0;
+  $tipProdID       = 0;
+  $marcProdID      = 0;
+  $medProdID       = 0;
+  $proveedorID     = 0;
+  $presentacion_invId = 0;
+  $tipomovinvtId      = 0;
 
   if(isset($datoproducto)){ 
     if(!empty($datoproducto)){
@@ -75,13 +75,17 @@
         <input type="hidden"  id="presProdID"      name="presProdID"      value =  "<?php echo $presProdID; ?>">
         <input type="hidden"  id="tipProdID"       name="tipProdID"       value =  "<?php echo $tipProdID; ?>">
         <input type="hidden"  id="medProdID"       name="medProdID"       value =  "<?php echo $medProdID;  ?>">
+        <input type="hidden"  id="marcProdID"       name="medProdID"       value =  "<?php echo $marcProdID;  ?>">
+       
+
+
         <input type="hidden"  id="proveedorID"     name="proveedorID"     value =  "<?php echo $proveedorID; ?>">
         <input type="hidden"  id="presentacion_invId" name="presentacion_invId" value =  "<?php echo $presentacion_invId;  ?>">
         <input type="hidden"  id="tipomovinvtId"      name="tipomovinvtId"      value =  "<?php echo $tipomovinvtId; ?>">
 
-        <div class="form-group">
-            <label for="proveedor" class="col-form-label">Proveedor:</label>
-            <select name="proveedor" id="proveedor"  class="form-control chosen">                
+        <div class="form-group">           
+            <select name="proveedor" id="proveedor"  class="form-control chosen"> 
+                 <option value="0"> Seleccione proveedor </option>                  
                  <?php foreach ($proveedorProducto as $row): ?>
                     <option value="<?php echo $row->proveedorID; ?>">
                     <?php echo $row->proveedorID . " - " .  $row->provDescripcion; ?>
@@ -92,8 +96,8 @@
         </div>
 
         <div class="form-group">
-            <label for="familia" class="col-form-label">Familia:</label>
-            <select name="familia" id="familia"  class="form-control chosen">                
+            <select name="familia" id="familia"  class="form-control chosen"> 
+              <option value="0"> Seleccione familia de producto </option>               
                  <?php foreach ($familiaProducto as $row): ?>
                     <option value="<?php echo $row->famProdID; ?>">
                     <?php echo $row->famProdID . " - " .  $row->famProdDescripcion; ?>
@@ -103,9 +107,10 @@
             
         </div>
 
-          <div class="form-group">
-            <label for="tipProducto" class="col-form-label">tipo producto:</label>
-            <select name="tipProducto" id="tipProducto"  class="form-control chosen">                
+          <div class="form-group">          
+           
+            <select name="tipProducto" id="tipProducto"  class="form-control chosen">  
+               <option value="0"> Seleccione tipo de producto</option>              
                  <?php foreach ($tipoProducto as $row): ?>
                     <option value="<?php echo $row->tipProdID; ?>">
                     <?php echo $row->tipProdID . " - " .  $row->tipProdNombre; ?>
@@ -115,9 +120,9 @@
             
           </div>
 
-          <div class="form-group">
-            <label for="marca" class="col-form-label">Marca:</label>
-            <select name="marca" id="marca"  class="form-control chosen">                
+          <div class="form-group">            
+            <select name="marca" id="marca"  class="form-control chosen">  
+               <option value="0"> Seleccione Marca</option>                 
                  <?php foreach ($MarcaProducto as $row): ?>
                     <option value="<?php echo $row->marcProdID; ?>">
                     <?php echo $row->marcProdID . " - " .  $row->marcProdDescripcion; ?>
@@ -126,19 +131,19 @@
             </select>
             
           </div>
-          <div class="form-group">
-            <label for="presentacion" class="col-form-label">Presentacion:</label>
+          <div class="form-group">          
             <select name="presentacion" id="presentacion"  class="form-control chosen">                
-                 <?php foreach ($prsentacionProducto as $row): ?>
+                       <option value="0"> Seleccione Presentacion</option>  
+               <?php foreach ($prsentacionProducto as $row): ?>
                     <option value="<?php echo $row->presProdID; ?>">
                     <?php echo $row->presProdID . " - " .  $row->presProdDescripcion; ?>
                     </option>
                 <?php endforeach ?>
             </select>            
           </div>
-          <div class="form-group">
-            <label for="medida" class="col-form-label">Medida:</label>
-            <select name="medida" id="medida"  class="form-control chosen">                
+          <div class="form-group">           
+            <select name="medida" id="medida"  class="form-control chosen">    
+              <option value="0"> Seleccione Medida</option>              
                  <?php foreach ($medidaProducto as $row): ?>
                     <option value="<?php echo $row->medProdID; ?>">
                     <?php echo $row->medProdID . " - " .  $row->medProdDescripcion; ?>
@@ -147,9 +152,9 @@
             </select>            
           </div>
 
-          <div class="form-group">
-            <label for="tipomovinvent" class="col-form-label">Tipo Mov Invt:</label>
-            <select name="tipomovinvent" id="tipomovinvent"  class="form-control chosen">                
+          <div class="form-group">           
+            <select name="tipomovinvent" id="tipomovinvent"  class="form-control chosen">   
+              <option value="0"> Seleccione movimiento de intentario</option>               
                  <?php foreach ($TipoMovInvnt as $row): ?>
                     <option value="<?php echo $row->tipomovinvtId; ?>">
                     <?php echo $row->tipomovinvtId . " - " .  $row->tipomovimientoinvt; ?>
@@ -158,9 +163,10 @@
             </select>            
           </div>
           <div class="form-group">
-            <label for="presentacioninvent" class="col-form-label">Producto/servicio:</label>
-            <select name="presentacioninvent" id="presentacioninvent"  class="form-control chosen">                
-                 <?php foreach ($Presentacion_inv as $row): ?>
+            <select name="presentacioninvent" id="presentacioninvent"  class="form-control chosen">               
+            
+            <option value="0"> Seleccione Producto/servicio</option>  
+            <?php foreach ($Presentacion_inv as $row): ?>
                     <option value="<?php echo $row->presentacion_invId; ?>">
                     <?php echo $row->presentacion_invId . " - " .  $row->presentacion_inv; ?>
                     </option>

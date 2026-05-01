@@ -71,6 +71,9 @@
 #ctrlSelectFamilia{
      display:none;
 }
+#ctrlSelectProducto{
+     display:none;
+     }
 #accordionExample{
         display:block;
          /* ocultamos encabezado */

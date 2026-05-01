@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <div class="row">
                 <div class="col- col-md-12 text-center pt-5 pb-2">
                     <h4 style="font-weight: bold;">
-                        CARACTERISTIGAS GENERALES DEL  PRODUCTO
+                        CONFIGURACIONES GENERALES 
                     </h4>
                 </div>
     </div>
@@ -39,8 +39,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="seven" aria-selected="false" onclick="verificarstadotab(this.id)">Equialente de productos</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="heigth" aria-selected="false" onclick="verificarstadotab(this.id)">Establecimiento</a>
+                    </li>
+
+                    <li class="nav-item">
                         <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="heigth" aria-selected="false" onclick="verificarstadotab(this.id)">Mesas</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="heigth" aria-selected="false" onclick="verificarstadotab(this.id)">Sucursal</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="heigth" aria-selected="false" onclick="verificarstadotab(this.id)">Areas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="heigth" aria-selected="false" onclick="verificarstadotab(this.id)">Mesas por areas</a>
+                    </li>
+
 
                     
                 </ul>
@@ -389,80 +403,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                     </div>             
                         </div>
                     </div> 
-                <!-- panel los euivalentes -->
-                    <div class="tab-pane fade  p-3" id="seven" role="tabpanel" aria-labelledby="seven-tab">
-                        <div class="row">
-                                    <div class ="col-md 6"> 
-                                        <h4>Configuracion de mesas del establecimiento </h4>
-                                        <div class ="shadow-sm p-3 mb-5 bg-white rounded">
-                                            <form enctype="multipart/form-data" action="javascript:saveEquivalenteProducto()" method="POST" id  = "FormSeventab" class = "FormSeventab" >
-                                            <input type="hidden" class="form-control text-left" id="productoID"    name="productoID">
-                                            <input type="hidden" class="form-control text-left" id="presProdID"    name="presProdID">
-                                            <input type="hidden" class="form-control text-left" id="prodPresentID" name="prodPresentID">
-                                        
-                                        
-                                
-                                            <div class="form-group">
-                                                <label for="prouctoEquivalente" class="col-form-label">Producto:</label>
-                                                <select name="prouctoEquivalente" id="prouctoEquivalente"  class="form-control chosen"> 
-                                                    <option value ="0"> Seleccione un producto</option>               
-                                                    <?php foreach ($listaProductos as $row): ?>
-                                                        <option value="<?php echo $row->productoID; ?>">
-                                                        <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
-                                                        </option>
-                                                    <?php endforeach ?>
-                                                </select>
-                                                
-                                            </div>
+                <!-- establecimiento -->
+                     
+                <!-- sucursales -->    
+                  
+                  <!-- Areas -->    
+                 
+                  <!-- Mesas Areas -->    
+                 
 
-                                            <div class="form-group">
-                                                <label for="equivalente" class="col-form-label">Equivalente:</label>
-                                                <select name="equivalente" id="equivalente"  class="form-control chosen">
-                                                <option value ="0"> Seleccione un equivalente</option>                  
-                                                    <?php foreach ($equivalentes as $row): ?>
-                                                        <option value="<?php echo $row->presProdID; ?>">
-                                                        <?php echo $row->presProdID . " - " .  $row->presentacionProd; ?>
-                                                        </option>
-                                                    <?php endforeach ?>
-                                                </select>
-                                                
-                                            </div>
-
-                                                
-                                            <div class="form-group">
-                                                    <label for="unidadequivalente" class="col-form-label">unidaddes de equivalente </label>
-                                                    <input type="number" class="form-control text-right" id="unidadequivalente" name="unidadequivalente" step ="any" required >
-                                                </div>
-                                                <div class="form-group">
-                                                <button  type="submit" data-title="Guardar registro" class="btn btn-danger btnAction"> Guardar </button>
-                                                </div>
-
-                                            </form>
-                                        </div>      
-                                    </div> 
-                                    <div class ="col-md 6">
-                                        <div class="contenedor-tabla">
-                                             <div class="tabla-responsive">
-                                            <table id="tblFamiliaProd" class="tabla-estilo">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Producto</th> 
-                                                        <th>Presentacion</th>  
-                                                        <th>Unidades</th>  
-                                                                                        
-                                                        <th>ACCIONES</th>                                
-                                                    </tr>
-                                                </thead>
-                                                <tbody id ="detEquivalentes">                                   
-                                                                                    
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        </div>
-                                    </div>             
-                        </div>
-                    </div> 
             </div>               
             </div>
       </div>

@@ -10,9 +10,9 @@ error_reporting(E_ALL);
         foreach($detalleOrden as  $row) :?>
         								<tr>
                        
-                        <td><?php  echo   $row->detcantidad; ?></td>
-                        <td><?php  echo    mb_convert_case( $row->prodDescripcion, MB_CASE_LOWER, "UTF-8");?></td>
-                        <td><?php  echo   $row->dettotal; ?></td>
+                        <td data-label="Catidad"><?php  echo   $row->detcantidad; ?></td>
+                        <td data-label="Descripcion"><?php  echo    mb_convert_case( $row->prodDescripcion, MB_CASE_LOWER, "UTF-8");?></td>
+                        <td data-label="Total"><?php  echo   $row->dettotal; ?></td>
                                                     
                         <td class="text-right"> 
                               <a href='#' class="btn-edit"

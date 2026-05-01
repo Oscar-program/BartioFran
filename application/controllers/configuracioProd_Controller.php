@@ -220,7 +220,7 @@ class configuracioProd_Controller extends CI_Controller {
    $datos['familiaProducto'] = $this->Producto_Model->get_turnooperacion();  
 
    $datos['equivalentes']          = $this->equivalenteProducto_Model->get_listaEquivalentes();
-   var_dump($datos['equivalentes']);
+   //var_dump($datos['equivalentes']);
    $datos["listaProductos"] =   $this->Producto_Model->get_ListProducto(); 
 
    //  var_dump(  $datos['familiaProducto'] );

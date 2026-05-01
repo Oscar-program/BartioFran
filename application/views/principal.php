@@ -179,7 +179,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
+
               <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="javaScript:configurarEstablecimiento();" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Establecimiento</p>
+                  </a>
+                </li>
+
                   <li class="nav-item">
                   <a href="javaScript:configurarProduct();" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -327,7 +335,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" id="principal1"  style="background-color:red; width:100%">
+    <div class="content-wrapper" id="principal1"  style="background-color:white; width:100%">
       <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">
@@ -347,7 +355,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
       <!-- Main content -->
       <section class="content-header">
-        <div class="content-header" id="principal"  style="background-color:green; width:100%; margin-left:0px;" >
+        <div class="content-header" id="principal"  style="background-color:white; width:100%; margin-left:0px;" >
           <?php  if($_SESSION["usrLogin"]=="admin" ){?>
                 <?php    $this->load->view('mesas/listaMesas'); ?>
             <?php }else {?>
@@ -515,6 +523,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>js/mesas.js"></script>
   <script src=" <?php echo  base_url();?>js/listarAreasEstablecimiento.js"></script>
   <script src=" <?php echo  base_url();?>js/funcionesMenu.js"></script>
+  <script src=" <?php echo  base_url();?>js/configEstablecimiento.js"></script>
+
+  
+
 
 
   

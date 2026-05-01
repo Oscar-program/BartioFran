@@ -215,8 +215,10 @@
     }
     // funcionn marca como procesado todas las  ordenes 
     
-        public function  procesarCobro($ordenPedidoID){   
-            echo  "poniendo procesados" ;     
+        public function  procesarCobro($ordenPedidoID){  
+            
+            // identificamos si no hay ningun elemento seleccionado 
+           // echo  "poniendo procesados" ;     
                $this->db->set("procesado", 1) 
                          ->where("ordenPedidoID",  $ordenPedidoID)
                          ->where("cobrar",  1)
