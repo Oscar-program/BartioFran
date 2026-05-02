@@ -112,6 +112,8 @@ class mesas_Model extends CI_Model {
         return  $query;
 
     }
+
+
     // funcion para crear una nueva mesa en area de establecimiento 
      public function  insertarMesaEstablecimiento($data, $mesaID){
         if($mesaID ==   null){
@@ -131,6 +133,40 @@ class mesas_Model extends CI_Model {
                
                 }
     }
+
+    /*public function insertarEstablecimiento(){
+        if($establecimientoID ==   NULL){
+            $this->db->insert("establecimientoempresa",$data);
+            return $this->db->insert_id();
+        }else{           
+            $this->db->set("estNombre",   $data["estNombre"])
+                    ->set("estDireccion", $data["estDireccion"])
+                    ->set("estTelefono",  $data["estTelefono"])                     
+                   
+                    ->where("establecimientoID", $establecimientoID)
+                    
+                    ->update("establecimientoempresa");
+            return $this->db->affected_rows();   
+
+       }  
+    }*/
+
+     // funcion para cargar la empresa que  se  quiere  modificar  
+    public function get_MesaPorID($mesaID) {
+        $query =  $this->db->select("*")   
+                           ->where("mesaID",$mesaID)         
+                           ->get("mesa")
+                           ->result();
+        return  $query;          
+    }
+
+    /*Funcion para eliminar  una medida de  producto */
+    public function delete_MesaPorID($mesaID) {
+        $this->db->where("mesaID",$mesaID)         
+                 ->delete("mesa");                 
+        return  $this->db->affected_rows();          
+    }
+
 
 
 

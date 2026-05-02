@@ -39,21 +39,21 @@ $listaEmpresa = '';
                                 <div class ="col-md 6"> 
                                     <h4>Registro Empresa</h4>
                                     <div class ="shadow-sm p-3 mb-5 bg-white rounded">
-                                        <form metod="POST" id ="FormOnetab" class="FormOnetab" action="javascript:saveMarca()" >
-                                        <input type="hidden"  name="establecimientoID" id="establecimientoID" class="form-control text-left" value ="">
+                                        <form metod="POST" id ="FormOnetab" class="FormOnetab" action="javascript:saveEmpresa()" >
+                                        <input type="hidden"  name="empresaID" id="empresaID" class="form-control text-left" value ="">
                                             <div class="form-group">
 
-                                                <label for="txtmarca" class="col-form-label">Nombre:</label>
-                                                <input type="text"  name="txtmarca" id="txtmarca" class="form-control text-left" placeholder="Ingrese marca del producto" required >
+                                                <label for="empNombre" class="col-form-label">Nombre:</label>
+                                                <input type="text"  name="empNombre" id="empNombre" class="form-control text-left" placeholder="Ingrese nombre" required >
 
-                                                <label for="txtmarca" class="col-form-label">Giro:</label>
-                                                <input type="text"  name="txtmarca" id="txtmarca" class="form-control text-left" placeholder="Ingrese marca del producto" required >
+                                                <label for="empGiro" class="col-form-label">Giro:</label>
+                                                <input type="text"  name="empGiro" id="empGiro" class="form-control text-left" placeholder="Ingrese giro" required >
 
-                                                <label for="txtmarca" class="col-form-label">nit:</label>
-                                                <input type="text"  name="txtmarca" id="txtmarca" class="form-control text-left" placeholder="Ingrese marca del producto" required >
+                                                <label for="empNit" class="col-form-label">nit:</label>
+                                                <input type="text"  name="empNit" id="empNit" class="form-control text-left" placeholder="Ingrese nit" required >
 
-                                                <label for="txtmarca" class="col-form-label">telefono:</label>
-                                                <input type="text"  name="txtmarca" id="txtmarca" class="form-control text-left" placeholder="Ingrese marca del producto" required >
+                                                <label for="empTelefono" class="col-form-label">telefono:</label>
+                                                <input type="text"  name="empTelefono" id="empTelefono" class="form-control text-left" placeholder="Ingrese tlefono" required >
 
                                                 <!--<label for="txtmarca" class="col-form-label">email:</label>
                                                 <input type="text"  name="txtmarca" id="txtmarca" class="form-control text-left" placeholder="Ingrese marca del producto" required > -->
@@ -96,18 +96,18 @@ $listaEmpresa = '';
                                 <div class ="col-md 6"> 
                                     <h4>Registro establecimimiento</h4>
                                     <div class ="shadow-sm p-3 mb-5 bg-white rounded">
-                                        <form metod="POST" id ="FormOnetab" class="FormOnetab" action="javascript:saveMarca()" >
-                                        <input type="hidden"  name="empresa_origen" id="empresa_origen" class="form-control text-left" value ="">
+                                        <form metod="POST" id ="FormTwotab" class="FormOnetab" action="javascript:saveMarca()" >
+                                        <input type="hidden"  name="establecimientoID" id="establecimientoID" class="form-control text-left" value ="">
 
                                                 <div class="form-group">
                                                             <label for="SelectEmpresaOrigen" class="col-form-label">Empresa origen:</label>
                                                             <select name="SelectEmpresaOrigen" id="SelectEmpresaOrigen"  class="form-control chosen"> 
                                                                 <option value ="0"> Seleccione empresa</option>               
-                                                                <!-- <?php //foreach ($listaEmpresa as $row): ?>
-                                                                    <option value="<?php // echo $row->empresaID; ?>">
-                                                                    <?php // echo $row->empresaID . " - " .  $row->empNombre; ?>
+                                                                 <?php foreach ($datosEmpresa as $row): ?>
+                                                                    <option value="<?php  echo $row->empresaID; ?>">
+                                                                    <?php  echo $row->empresaID . " - " .  $row->empNombre; ?>
                                                                     </option>
-                                                                <?php //endforeach ?> -->
+                                                                <?php endforeach ?>
                                                             </select>
                                                     
                                                 </div>
@@ -116,14 +116,14 @@ $listaEmpresa = '';
                                             
 
 
-                                                <label for="txtmarca" class="col-form-label">Establecimiento:</label>
-                                                <input type="text"  name="txtmarca" id="txtmarca" class="form-control text-left" placeholder="Ingrese marca del producto" required >
+                                                <label for="estNombre" class="col-form-label">Establecimiento:</label>
+                                                <input type="text"  name="estNombre" id="estNombre" class="form-control text-left" placeholder="Ingrese nombre" required >
 
-                                                <label for="txtmarca" class="col-form-label">Dirección:</label>
-                                                <input type="text"  name="txtmarca" id="txtmarca" class="form-control text-left" placeholder="Ingrese marca del producto" required >
+                                                <label for="estDireccion" class="col-form-label">Dirección:</label>
+                                                <input type="text"  name="estDireccion" id="estDireccion" class="form-control text-left" placeholder="Ingrese direccion" required >
 
-                                                <label for="txtmarca" class="col-form-label">Telefono:</label>
-                                                <input type="text"  name="txtmarca" id="txtmarca" class="form-control text-left" placeholder="Ingrese marca del producto" required >
+                                                <label for="estTelefono" class="col-form-label">Telefono:</label>
+                                                <input type="text"  name="estTelefono" id="estTelefono" class="form-control text-left" placeholder="Ingrese telefono" required >
 
                                             </div>
                                             <div class="form-group">
@@ -162,14 +162,27 @@ $listaEmpresa = '';
                                 <div class ="col-md 6"> 
                                     <h4>Areas de establecimiento </h4>
                                     <div class ="shadow-sm p-3 mb-5 bg-white rounded">
-                                        <form  id  ="FormTwotab" class = "FormTwotab"  method="POST" action="javascript:savePresentacionProduc()">
-                                        <input type="hidden" class="form-control text-left" id="presProdID" name ="presProdID">     
-                                        <div class="form-group">
-                                                <label for="txtpresentacion" class="col-form-label">Establecimiento: </label>
-                                                <input type="text" class="form-control text-left" id="txtpresentacion"   name ="txtpresentacion" placeholder="Ingrese la  presentacion del producto" required>
+                                        <form  id  ="FormTwotab" class = "FormThreetab"  method="POST" action="javascript:savePresentacionProduc()">
+                                        <input type="hidden"  id="areasEstablecimientoID" name ="areasEstablecimientoID"> 
+                                        <input type="hidden"  id="establecimientoID" name ="establecimientoID"> 
 
+                                        <div class="form-group">
+                                                            <label for="SelectEstablecimiento" class="col-form-label">Establecimiento:</label>
+                                                            <select name="SelectEstablecimiento" id="SelectEstablecimiento"  class="form-control chosen"> 
+                                                                <option value ="0"> Seleccione establecimiento</option>               
+                                                                 <?php foreach ($datosEstablecimientos as $row): ?>
+                                                                    <option value="<?php  echo $row->establecimientoID; ?>">
+                                                                    <?php  echo $row->establecimientoID . " - " .  $row->estNombre; ?>
+                                                                    </option>
+                                                                <?php endforeach ?>
+                                                            </select>
+                                                    
+                                                </div>
+
+                                        <div class="form-group">
+                                               
                                                 <label for="txtpresentacion" class="col-form-label">Area: </label>
-                                                <input type="text" class="form-control text-left" id="txtpresentacion"   name ="txtpresentacion" placeholder="Ingrese la  presentacion del producto" required>
+                                                <input type="text" class="form-control text-left" id="txtArea"   name ="txtArea" placeholder="Ingrese el area" required>
 
                                             </div>
                                             <div class="form-group">
@@ -206,11 +219,40 @@ $listaEmpresa = '';
                                 <div class ="col-md 6"> 
                                     <h4>Registro de Mesas por area </h4>
                                     <div class ="shadow-sm p-3 mb-5 bg-white rounded">
-                                        <form  id  ="FormThreetab" class ="FormThreetab" method="post" action="javascript:saveMedidaProducto()">
-                                        <input type="hidden" class="form-control text-left" id="txtmedProdID" name="txtmedProdID">    
+                                        <form  id  ="FormThreetab" class ="FormFourtab" method="post" action="javascript:saveMedidaProducto()">
+                                        <input type="hidden"  id="mesaID" name="mesaID"> 
+                                        <input type="hidden"  id="establecimientoID" name="establecimientoID">  
+                                        <input type="hidden"  id="areasEstablecimientoID" name="areasEstablecimientoID"> 
+                                        
+                                         <div class="form-group">
+                                                            <label for="SelectEstablecimiento" class="col-form-label">Establecimiento:</label>
+                                                            <select name="SelectEstablecimiento" id="SelectEstablecimiento"  class="form-control chosen"> 
+                                                                <option value ="0"> Seleccione establecimiento</option>               
+                                                                 <?php foreach ($datosEstablecimientos as $row): ?>
+                                                                    <option value="<?php  echo $row->establecimientoID; ?>">
+                                                                    <?php  echo $row->establecimientoID . " - " .  $row->estNombre; ?>
+                                                                    </option>
+                                                                <?php endforeach ?>
+                                                            </select>
+                                                    
+                                                </div>
+
+                                         
+                                               <div class="form-group">
+                                                            <label for="SelectEstablecimiento" class="col-form-label">Area establecimiento:</label>
+                                                            <select name="SelectEstablecimiento" id="SelectEstablecimiento"  class="form-control chosen"> 
+                                                                <option value ="0"> Seleccione establecimiento</option>               
+                                                                 <?php foreach ($datosAreas as $row): ?>
+                                                                    <option value="<?php  echo $row->areasEstablecimientoID; ?>">
+                                                                    <?php  echo $row->areasEstablecimientoID . " - " .  $row->area; ?>
+                                                                    </option>
+                                                                <?php endforeach ?>
+                                                            </select>
+                                                    
+                                                </div>
+
                                         <div class="form-group">
-                                                <label for="txtmedida" class="col-form-label">Area a la que perteneces: </label>
-                                                <input type="text" class="form-control text-left" id="txtmedida" name="txtmedida" placeholer ="Ingrese la medida del  producto" required  >
+                                                
                                                  <label for="txtmedida" class="col-form-label">Mesa: </label>
                                                 <input type="text" class="form-control text-left" id="txtmedida" name="txtmedida" placeholer ="Ingrese la medida del  producto" required  >
                                                  <label for="txtmedida" class="col-form-label">Capacidad: </label>

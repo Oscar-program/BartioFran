@@ -1,33 +1,42 @@
 function base_url(url){
     return window.location.origin + "/BartioFran/"+ url;
 }
-   /*Cargando la  vista  de  configuracion de Establecimiento */
-   function configurarEstablecimiento(){  
-    console.log('llegando a la  configuracion del  producto');
-    var url = base_url('index.php/ConfEstablec_Controller/setthingEstablecimineto/');
- 
+   /*funcion carga pantalla principa*/
+    function configurarEstablecimiento(){  
+      console.log('llegando a la  configuracion del  producto');
+      var url = base_url('index.php/ConfEstablec_Controller/setthingEstablecimineto/');
+  
+        $.get(url, function (data) {
+            $("#principal").html(data);
+        });
+    }
+    /*Funcion para listar las empresas  */ 
+    function listarEmpresas(){
+       console.log('llegando  a la funcion que muestra el   detalle de las marcas');
+    var url = base_url('index.php/Empresa_Controller/listarEmpresas/');  
       $.get(url, function (data) {
-          $("#principal").html(data);
+          $("#detEmpresa").html(data);
       });
-  
-  
-   }
+    }
+
+    function saveEmpresa(){
+
+    }
 
 
+/*Funcion carga la configuraciones de los paneles */
 function verificarstadotabconf(id){
-    // $("#principal"+id).val();
-     //var tab  = 0;
-    // var id = 0;
+   
      console.log('el   id seleccionado es' + id );
      var formData;
 
      switch (id) {
         case 'one-tab':
-          // Código a ejecutar si la expresión coincide con valor1
-          //console.log('Eligiendo el  form 1');
-          $("#marcProdID").val('');
-          $("#txtmarca").val('');
-          mostrarDetalles();
+          $("#empNombre").val('');
+          $("#empGiro").val('');
+          $("#empNit").val('');
+          $("#empTelefono").val('');
+          listarEmpresas();
           //console.log('Eligiendo el  form 111111');
           //formData    = new FormData($(".FormOne-tab")[0]);
 
