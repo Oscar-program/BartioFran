@@ -127,7 +127,7 @@
 
             <div class="col-12">
                                                 <label for="mesa" class="col-form-label">Mesas:</label>
-                                                <select name="mesaDespachar" id="mesaDespachar"  class="form-control chosen" onchange="mostrarPendientesDespacho(<?php  echo  1 ; ?>)"> 
+                                                <select name="mesaDespachar" id="mesaDespachar"  class="form-control chosen" onchange="mostrarPendientesDespacho(this)"> 
                                                     <option value ="0"> Seleccione una mesa</option> 
 
             <?php  if(isset($listaMesasPendientesCobro)){

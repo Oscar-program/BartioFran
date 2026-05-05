@@ -136,7 +136,7 @@ Cobrar Mesas
                                     </select>
                             </div>              
                 </div>
-                <div  class ="row" id="ordenesPendientesDespacho" name="ordenesPendientesDespacho">   </div>       
+                <div  class ="row" id="ordenesPendientesCobrar" name="ordenesPendientesCobrar">   </div>       
                 <div  id="detallePendienteDespacho" name="detallePendienteDespacho">   </div>
             
     </div>

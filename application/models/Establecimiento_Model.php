@@ -3,9 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class  Establecimiento_Model  extends CI_Model{
     public function listaEstablecimientos() {
    
-            $query =  $this->db->select("estb.*, emp.empNombre, as empresa") 
-                   ->join('empresa emp ','emp.idEmpresa =  estb.empresa_origen','inner')  
-                    ->where("estStatus", 1)
+            $query =  $this->db->select("estb.*, emp.empNombre as empresa") 
+                   ->join('empresa emp ','emp.empresaID =  estb.empresa_origen','inner')  
+                    ->where("estb.estStatus", 1)
                     ->get(" nuevoestablo.establecimientoempresa estb")
                     ->result();
             return  $query;          

@@ -21,9 +21,9 @@ class AreasEstablecimiento_Controller extends CI_Controller{
 
 
     public function insertarAreaEstablecimiento(){
-     $areaEstablecimientoID =  (isset($_REQUEST['areaEstablecimientoID'])   AND  strlen($_REQUEST['areaEstablecimientoID']) )   ? NULL ;
-     $establecimientoID     =  (isset($_REQUEST['establecimientoID'])       AND  strlen($_REQUEST['establecimientoID']) )   ? '' ;
-     $area                  =  (isset($_REQUEST['area'])                    AND  strlen($_REQUEST['area']) )   ? '' ;
+     $areaEstablecimientoID =  (isset($_REQUEST['areaEstablecimientoID'])   AND  strlen($_REQUEST['areaEstablecimientoID'] )>0 )   ? $_REQUEST['areaEstablecimientoID']: NULL ;
+     $establecimientoID     =  (isset($_REQUEST['establecimientoID'])       AND  strlen($_REQUEST['establecimientoID'])>0 )        ? $_REQUEST['establecimientoID']: '' ;
+     $area                  =  (isset($_REQUEST['area'])                    AND  strlen($_REQUEST['area'])>0 ) ? $_REQUEST['area']: '' ;
      $data = array('establecimientoID'=>$establecimientoID, 
                     'area'=>$area,  
                     );
@@ -33,14 +33,14 @@ class AreasEstablecimiento_Controller extends CI_Controller{
 
      // funcion para cargar la empresa que  se  quiere  modificar  
     public function get_AreaEstablecimientoPorID($areaEstablecimientoID) {
-        $areaEstablecimientoID =  (isset($_REQUEST['areaEstablecimientoID'])   AND  strlen($_REQUEST['areaEstablecimientoID']) )   ? 0 ;
+        $areaEstablecimientoID =  (isset($_REQUEST['areaEstablecimientoID'])   AND  strlen($_REQUEST['areaEstablecimientoID'])> 0 )   ? $_REQUEST['areaEstablecimientoID']: 0 ;
          $result= $this->AreasEstablecimiento_Model->get_AreaEstablecimientoPorID($areaEstablecimientoID);
          echo  json_encode($result);
     }
 
     /*Funcion para eliminar  una medida de  producto */
     public function delete_AreaEstablecimientoPorID($areaEstablecimientoID) {
-        $areaEstablecimientoID =  (isset($_REQUEST['areaEstablecimientoID'])   AND  strlen($_REQUEST['areaEstablecimientoID']) )   ? 0 ;
+        $areaEstablecimientoID =  (isset($_REQUEST['areaEstablecimientoID'])   AND  strlen($_REQUEST['areaEstablecimientoID'])> 0 )   ? $_REQUEST['areaEstablecimientoID']: 0 ;
         $result= $this->AreasEstablecimiento_Model->delete_AreaEstablecimientoPorID($areaEstablecimientoID);
         echo   $result ;     
     }

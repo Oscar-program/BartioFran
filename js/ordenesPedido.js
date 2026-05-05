@@ -35,7 +35,8 @@ function cargar_addordenes(mesaID){
   }
 
   // funcion para mostrar el total d ordenes por mesa 
-  function mostrarPendientesDespacho(mesaID){
+  function mostrarPendientesDespacho(select){
+    var mesaID  = select.value;
     console.log("El detalle de la mesa a mostrar es 100000 " + mesaID ) ;   
     var url = base_url('index.php/Ordenes_Controller/listaOrdenesPendienteDespacho/');
     obJson = { mesaID:mesaID};
@@ -44,7 +45,8 @@ function cargar_addordenes(mesaID){
            type:"POST",
            data:obJson, 
            beforeSend: function(){
-           }, success:function(data){          
+           }, success:function(data){  
+            console.log(data)       ;  
             $("#ordenesPendientesDespacho").html(data);    
            }
     });
@@ -61,7 +63,7 @@ function cargar_addordenes(mesaID){
            data:obJson, 
            beforeSend: function(){
            }, success:function(data){          
-            $("#ordenesPendientesDespacho").html(data);    
+            $("#ordenesPendientesCobrar").html(data);    
            }
     });
   

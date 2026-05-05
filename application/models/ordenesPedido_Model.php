@@ -149,7 +149,7 @@
 
    }
    // funcion para  mostrar el detalle de la orden pendiente de despacho  
-    public function  listaDetOrdenPendienteDespacho($ordenPedidoID){
+  /*  public function  listaDetOrdenPendienteDespacho($ordenPedidoID){
          // echo  "llegando al  modelo  " . $ordenPedidoID ;
 
           // condicionamos  los datos a mostrar solo para cuado sea nivel usuario diferente de  1   mostrar  solo los productos de comedor 
@@ -174,7 +174,79 @@
                 ->result();
         return  $query;     
 
-   }
+   }*/
+
+    public function listaOrdenesPendienteDespacho($mesaID){
+    //   echo  $_SESSION["nivelUsuaio"] = "2" ;
+
+         if($_SESSION["nivelUsuaio"] == "2"){             
+              $condicion  = "prod.famProdID = 3 or  prod.famProdID = 4 or   prod.famProdID  =  5";
+              
+           }else{
+                $condicion  = "ped.despachar =  0";
+           }
+  
+
+
+        $this->db->distinct();         
+        $query = $this->db->select("ordenp.mesaID,msa.mesNombre as mesa,   ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora, 
+                                    MINUTE(ordenp.ordPFecha) as minuto,  
+                                    upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho, ordenp.ordPtotalcancelar, 
+                                    prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo, 
+                                    ped.detPedID ,ped.detcantidad as catidad,  prod.famProdID,  ped.dettotal, ped.cobrar,ped.despachar")                    
+                      ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
+                      ->join('areasestablecimiento areEst',  'areEst.areaEstablecimientoID =  msa.areaEstablecimientoID', 'inner')
+                      ->join('detordenpedido ped',  ' ped.ordenPedidoID =  ordenp.ordenPedidoID', 'inner')
+                      ->join('producto prod',  'prod.productoID =  ped.productoID', 'inner')
+                      ->join('presentacionproducto presen',  'presen.presProdID = prod.presProdID', 'inner')
+                      ->join('presentacionprod pre',  'pre.presProdID = prod.presProdID', 'inner')
+                      ->join('familiaproducto fam',  'fam.famProdID = prod.famProdID', 'inner')
+
+                    
+                   
+                 ->where("ordenp.mesaID",  $mesaID)
+                 ->where(" ped.despachar",  0)
+                   ->where("ped.detstatus",  1)
+                   ->where($condicion )
+                ->order_by("ordenp.ordPFecha", "DESC")
+                 ->get("nuevoestablo.ordenpedido ordenp")
+                 ->result();
+        return  $query;
+
+    }
+
+    public function listaOrdenesPendienteCobro($mesaID){
+  
+
+
+        $this->db->distinct();         
+        $query = $this->db->select("ordenp.mesaID,msa.mesNombre as mesa,   ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora, 
+                                    MINUTE(ordenp.ordPFecha) as minuto,  
+                                    upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho, ordenp.ordPtotalcancelar, 
+                                    prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo, 
+                                    ped.detPedID ,ped.detcantidad as catidad,  prod.famProdID,  ped.dettotal, ped.cobrar,ped.despachar")                    
+                      ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
+                      ->join('areasestablecimiento areEst',  'areEst.areaEstablecimientoID =  msa.areaEstablecimientoID', 'inner')
+                      ->join('detordenpedido ped',  ' ped.ordenPedidoID =  ordenp.ordenPedidoID', 'inner')
+                      ->join('producto prod',  'prod.productoID =  ped.productoID', 'inner')
+                      ->join('presentacionproducto presen',  'presen.presProdID = prod.presProdID', 'inner')
+                      ->join('presentacionprod pre',  'pre.presProdID = prod.presProdID', 'inner')
+                      ->join('familiaproducto fam',  'fam.famProdID = prod.famProdID', 'inner')
+
+                    
+                   
+                 ->where("ordenp.mesaID",  $mesaID)
+                 ->where(" ordenp.ordPpenditeCobro",  1)
+                   ->where("ped.detstatus",  1)
+                ->order_by("ordenp.ordPFecha", "DESC")
+                 ->get("nuevoestablo.ordenpedido ordenp")
+                 ->result();
+        return  $query;
+
+    }
+
+
+
    // funcion que pone como despachada una orden 
     //  funcion para anular  la orden de pedido  
     public function  despacharOrden($detPedID, $estado){

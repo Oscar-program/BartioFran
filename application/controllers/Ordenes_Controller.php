@@ -33,8 +33,13 @@ class Ordenes_Controller extends CI_Controller{
     // 2- muestra las  ordenes que estan pendientes de despacho agrupadas por numero de orden    
       public  function listaOrdenesPendienteDespacho(){
          //echo  "Detalle de ordenes Despacho" . "<br>" ;
-         $mesaID =  (isset($_POST['mesaID']) AND  strlen($_POST['mesaID'])>0) ? $_POST['mesaID'] : "0" ;        
-         $data['lstPendDespCabecera'] = $this->mesas_Model->listaOrdenesPendienteDespacho($mesaID);
+         $mesaID =  (isset($_POST['mesaID']) AND  strlen($_POST['mesaID'])>0) ? $_POST['mesaID'] : "0" ; 
+        // echo "la mesa para mostrar los despachos es " .  $mesaID ;
+           $data['lstPendDespCabecera'] = $this->ordenesPedido_Model->listaOrdenesPendienteDespacho($mesaID);
+
+         
+         //$data['lstPendDespCabecera'] = $this->mesas_Model->listaOrdenesPendienteDespacho($mesaID);
+        //var_dump($data['lstPendDespCabecera']);
          //echo "dibuja cabecera" . "<br>";          
          $this->load->view('ordenes/ordenesPendientDespachoCabecera',$data);
       }
@@ -43,11 +48,19 @@ class Ordenes_Controller extends CI_Controller{
        // funcion para  mostrar las ordenes Pendientes de cobro
         
       public  function listaOrdenesPendienteCobro(){
-            //  echo  "Pendiente de cobro" ;
-         $mesaID =  (isset($_POST['mesaID']) AND  strlen($_POST['mesaID'])>0) ? $_POST['mesaID'] : "0" ;        
-         $data['lstPendDespCabecera'] = $this->mesas_Model->listaOrdenesPendienteDespacho($mesaID);
-         //echo "dibuja cabecera" . "<br>";          
-         $this->load->view('ordenes/ordenesPendienCobrar',$data);
+          //   echo  "Pendiente de cobro en funcion  " ;
+         $mesaID =  (isset($_POST['mesaID']) AND  strlen($_POST['mesaID'])>0) ? $_POST['mesaID'] : "0" ;     
+        // echo  "la mesa seleccionada es " .  $mesaID  ;  
+        $data['lstPendDespCabecera'] = $this->ordenesPedido_Model->listaOrdenesPendienteCobro($mesaID);
+
+        // $data['lstPendDespCabecera'] = $this->mesas_Model->listaOrdenesPendienteDespacho($mesaID);
+         if(!empty($data['lstPendDespCabecera'])){
+            $this->load->view('ordenes/ordenesPendienCobrar',$data);
+         }else{
+            echo "no se encontraron  datos " . "<br>";          
+         }
+         
+        
       }
 
 

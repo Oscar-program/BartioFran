@@ -6,8 +6,8 @@ class AreasEstablecimiento_Model extends CI_Model{
       public function get_listAllAreas(){
             $query =  $this->db->select("areaEst.*, estbl.estNombre as Estabñecimiento")
                  ->join('establecimientoempresa estbl','estbl.establecimientoID = areaEst.establecimientoID','inner')
-                  ->where("estado",  1)                
-                 ->get("areasestablecimiento areas")
+                  ->where("areaEst.estado",  1)                
+                 ->get("areasestablecimiento areaEst")
                  ->result();
         return  $query;   
 

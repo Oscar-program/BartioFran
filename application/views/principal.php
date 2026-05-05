@@ -127,7 +127,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                           </a>
                           <ul class="nav nav-treeview">                  
                             <li class="nav-item">
-                              <a href="javaScript:get_OrdenesPendientesCobro();" class="nav-link">
+                              <a href="javaScript:get_OrdenesPendientesDespachar();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pend. despachar</p>
                               </a>

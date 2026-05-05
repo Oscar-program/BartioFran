@@ -31,12 +31,12 @@ class mesa_Controller extends CI_Controller{
  public function insertarMesaEstablecimiento(){
         $mesaID                   = (isset($_POST['mesaID']) && strlen($_POST['mesaID'])> 0 ) ? $_POST['mesaID']: NULL;   
         $establecimientoID        = (isset($_POST['establecimientoID'])) ? $_POST['establecimientoID']: NULL; 
-        $areasEstablecimientoID   = (isset($_POST['areasEstablecimientoID'])) ? $_POST['areasEstablecimientoID']: NULL; 
+        $areaEstablecimientoID   = (isset($_POST['areaEstablecimientoID'])) ? $_POST['areaEstablecimientoID']: NULL; 
         $mesNombre                = (isset($_POST['mesNombre'])) ? $_POST['mesNombre']: NULL;
         $mescapacidad             = (isset($_POST['mescapacidad'])) ? $_POST['mescapacidad']: NULL;
         
         $dataMesa = array('establecimientoID'=>$establecimientoID,
-                          'areasEstablecimientoID'=>$areasEstablecimientoID,
+                          'areaEstablecimientoID'=>$areaEstablecimientoID,
                           'mesNombre'=>$mesNombre,
                           'mescapacidad'=>$mescapacidad,
                         );

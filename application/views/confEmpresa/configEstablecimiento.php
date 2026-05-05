@@ -243,8 +243,8 @@ $listaEmpresa = '';
                                                             <select name="SelectEstablecimiento" id="SelectEstablecimiento"  class="form-control chosen"> 
                                                                 <option value ="0"> Seleccione establecimiento</option>               
                                                                  <?php foreach ($datosAreas as $row): ?>
-                                                                    <option value="<?php  echo $row->areasEstablecimientoID; ?>">
-                                                                    <?php  echo $row->areasEstablecimientoID . " - " .  $row->area; ?>
+                                                                    <option value="<?php  echo $row->areaEstablecimientoID; ?>">
+                                                                    <?php  echo $row->areaEstablecimientoID . " - " .  $row->area; ?>
                                                                     </option>
                                                                 <?php endforeach ?>
                                                             </select>
