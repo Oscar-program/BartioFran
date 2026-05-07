@@ -5,8 +5,8 @@
         foreach($listAllAreas as  $row) :?>
         			<tr>
                         <td><?php  echo   $c; ?></td>
-                        <td><?php  echo   $row->area; ?></td>
-                        <td><?php  echo   $row->Estabñecimiento; ?></td>                                                                          
+                        <td><?php  echo  $row->Estabñecimiento;  ?></td>
+                        <td><?php  echo  $row->area;  ?></td>                                                                          
                         <td class="text-right">                        
                             <a href='#' class="btn-edit"
                                 title="Editar Detalle"                             

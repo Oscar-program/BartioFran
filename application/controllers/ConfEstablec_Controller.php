@@ -16,8 +16,9 @@ class ConfEstablec_Controller extends CI_Controller {
     }
      /*Funcio  para cargar las  congiraciones de los productos */
  public function setthingEstablecimineto(){
+   //$establecimientoID = 2 ;
   /*cargamos los datos principales para los select  */
-  $establecimientoID = 2 ;
+ 
    $data['datosEmpresa']          = $this->empresa_Model->listaEmpresas();
    $data['datosEstablecimientos'] = $this->Establecimiento_Model->listaEstablecimientos();
    $data['datosAreas']            = $this->AreasEstablecimiento_Model->get_listAllAreas();

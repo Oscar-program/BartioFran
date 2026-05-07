@@ -23,6 +23,42 @@ function base_url(url){
 
     }
 
+    // funcion para listar todos los establecimientos  
+     function listarEstablecimientos(){
+       console.log('Listando todos los establecimientos');
+       var url = base_url('index.php/ConfEstablec_Controller/listaEstablecimientos/');  
+        $.get(url, function (data) {
+            $("#detEstablecimiento").html(data);
+         });
+    }
+
+    // funcion para mostrar las diferentes  areas de los establecimientos 
+       function listAreasEstablecimientos(){
+       console.log('Listando las  areas de los establecimientos');
+       var url = base_url('index.php/AreasEstablecimiento_Controller/get_listAllAreas/');  
+        $.get(url, function (data) {
+            $("#detAreas").html(data);
+         });
+    }
+    // funcion para mostrar todas las mesas por  areas  de establecimiento  
+      function listMesasPorAreas(){
+       console.log('Listando las  areas de los establecimientos');
+       var url = base_url('index.php/AreasEstablecimiento_Controller/get_listAllAreas/');  
+        $.get(url, function (data) {
+            $("#detAreas").html(data);
+         });
+    }
+
+
+
+
+
+    function saveEmpresa(){
+
+    }
+
+
+
 
 /*Funcion carga la configuraciones de los paneles */
 function verificarstadotabconf(id){
@@ -46,13 +82,13 @@ function verificarstadotabconf(id){
             // Código a ejecutar si la expresión coincide con valor2
             console.log('Eligiendo el  form 2');
             formData    = new FormData($(".FormOne-tab")[0]);
-            getDetalPresentacion();
+            listarEstablecimientos();
         break;
         case 'three-tab':
             // Código a ejecutar si la expresión coincide con valor2
             formData    = new FormData($(".FormThree-tab")[0]);
-            mostrarDetalleMedProducto();
-          
+            //mostrarDetalleMedProducto();
+          listAreasEstablecimientos();
             console.log('Eligiendo el  form 3');
         break;
         case 'four-tab':

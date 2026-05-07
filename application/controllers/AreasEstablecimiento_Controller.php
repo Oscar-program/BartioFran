@@ -16,7 +16,8 @@ class AreasEstablecimiento_Controller extends CI_Controller{
      /* funcion listar todas las areas con su establecimiento */
     public function  get_listAllAreas(){          
         $data['listAllAreas'] = $this->AreasEstablecimiento_Model->get_listAllAreas();
-        $this->load->view('mesas/listaAreasEstablecimiento',$data);
+       // var_dump($data['listAllAreas']) ;
+        $this->load->view('confEmpresa/detAreas',$data);
     }
 
 

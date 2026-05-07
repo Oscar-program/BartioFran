@@ -45,9 +45,9 @@ $ultimo = 0;
                         </tr>
                     </thead>                         
                         <tr>
-                           <td data-label="Número"><?php echo  $row->catidad; ?></td>
+                           <td data-label="Cantidad"><?php echo  $row->catidad; ?></td>
                            <td data-label="Descripción"><?php  echo  strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion) ). " ".$estado;  ?></td>                          
-                           <td data-label="Número"><?php echo  $row->dettotal; ?></td>
+                           <td data-label="Total"><?php echo  $row->dettotal; ?></td>
                            <?php  if ($row->cobrar == 1){?>
                                   <td data-label="Cobrar"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="cobrarOrden(<?php echo $c ?>, <?php echo $row->detPedID?> , <?php echo $row->ordenPedidoID?> );" checked disabled></td>                           
                            <?php  }else{ ?>                               
@@ -57,7 +57,7 @@ $ultimo = 0;
                   <?php  } else { ?> 
                         <tr>
                            <td data-label="Catidad"><?php echo$row->catidad; ?></td>
-                           <td data-label="Descripcion"><?php  echo   strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion)) . " ".$estado; ?></td>                           
+                           <td data-label="Descripción"><?php  echo   strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion)) . " ".$estado; ?></td>                           
                            <td data-label="Total"><?php echo  $row->dettotal; ?></td>
                             <?php  if ($row->cobrar == 1){?>                                
                                   <td data-label="Cobrar"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="cobrarOrden(<?php echo $c ?>, <?php echo $row->detPedID?> , <?php echo $row->ordenPedidoID?> );" checked disabled></td>

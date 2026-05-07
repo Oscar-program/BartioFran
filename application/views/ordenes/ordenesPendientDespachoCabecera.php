@@ -33,7 +33,7 @@ $ultimo = 0;
                        
                     </tr>
                     <tr >
-                        <th id ="titulos">Cantidadss</th>
+                        <th id ="titulos">Cantidad</th>
                         <th id ="titulos" >Descripción</th>                       
                         <th id ="titulos" >Despachar</th> 
                        

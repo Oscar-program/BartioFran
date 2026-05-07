@@ -145,6 +145,16 @@ class mesas_Model extends CI_Model {
                  ->delete("mesa");                 
         return  $this->db->affected_rows();          
     }
+    // funcion mostramos todas las mesas deñ  area  
+     public function get_listAllmesas($areaEstablecimientoID){
+        $query =  $this->db->select("mes.* ")
+                    //->join('establecimientoempresa  est',  'bod.establecimientoID   =  est.establecimientoID', 'inner')
+                   ->where("mestatus",  1) 
+                 ->where("areaEstablecimientoID",  $areaEstablecimientoID)
+                 ->get("mesa  mes")
+                 ->result();
+        return  $query;          
+    }
 
 
 

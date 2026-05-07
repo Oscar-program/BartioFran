@@ -121,7 +121,7 @@
 <!--  style="float:left; text-align:justify; display: flex; align-items: center;height:75px; background-color:#21618C; background:linear-gradient(70deg,#1B2631 , #2196f3); box-shadow: 0px 0px 3px #21618C; "-->
     <div class ="container-fluid justify-content-center;"  style="background-color:  #ffffff;  width: 100%;">
       
-   DEspachar  mesas
+  
         <div class ="row">
             
 
