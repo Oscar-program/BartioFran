@@ -101,7 +101,7 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
     var totalVenta     = 0;
     var ordenID        = 0; 
     var productoID     =  0;
-     calculartotalVenta();
+    calculartotalVenta();
 
 
     //$("#productoID").val(id);
@@ -274,13 +274,15 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
 
   // funcion para  generar el   ticket de venta 
   //  funcion para lanzar el  pdf del  comprobante de tiket
-function  crear_pdf_ticket(ordenPedidoID){	
+function  crear_pdf_ticket(){	
+
+
 	//var ordenPedidoID 			= 0; 
   var ordPcomentario       = 'Sin Comentario';
-  var ordenPedidoID        = ordenPedidoID ; 
-  /*if(document.getElementById('ordenID')){
+  //var ordenPedidoID        = ordenPedidoID ; 
+  if(document.getElementById('ordenID')){
     ordenPedidoID =  $("#ordenID").val();
-  }*/
+  }
 
   /*if(document.getElementById('txAcomentario')){
     

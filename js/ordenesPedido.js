@@ -188,14 +188,52 @@ function cargar_addordenes(mesaID){
    // console.log("Estado de anulado " + anular );
   }
 
+  // funcion que muestra la modal para realizar el abono 
+
+   function mostrarModalAbono(ordenPedidoID){
+     $('#addAbonoPedido').modal('show');
+     $("#ordenPedidoID").val(ordenPedidoID) ;
+    // ordenPedidoID
+
+   
+
+  } 
 
 
+  // funcion para abonar orden 
+   function abonarOrden(){ 
+          /*console.log("mostrando mesas con ordenes pendientes Despacho /cobro") ; 
+          ordenPedidoID     
+          ordPAbono*/
 
+         var ordPAbono  =  $("#ordPAbono").val(); //  10;
+         var ordenPedidoID  = $("#ordenPedidoID").val(); //  10;
+         const select =  document.getElementById('mesaCobrar') ;//  (document.getElementById('mesaCobrar')) ? document.getElementById('mesaCobrar').value : "" ; 
+         console.log("El select  a enviar es " + select  ) ;
 
+        var url = base_url('index.php/Ordenes_Controller/abonarOrden/' );         
+         var  obJson = { ordPAbono:ordPAbono, ordenPedidoID:ordenPedidoID};
+         $.ajax({
+           url: url, 
+           type:"POST",
+           data:obJson, 
+           beforeSend: function(){
+           }, success:function(data){ 
+             $("#addAbonoPedido.close").click();
+              $(".modal-backdrop").remove(); 
+              mostrarPendientesCobro(select);    
 
+            //get_OrdenesPendientesCobro();
+            // retornar  lo que queda en la tabla ordenes  acobrar
+             //console.log("la orden es" + ordenPedidoID )  ;         
+            // document.getElementById('total' + ordenPedidoID).textContent ="TOTAL A CANCELAR $"  + data  ;
+             //console.log("la suma A OBRAR ES es  " + data);
+           }
        
-    //get_OrdenesPendientesDespachar
-    //get_OrdenesPendientesCobro
+       });
+      }
+
+
 
 
 

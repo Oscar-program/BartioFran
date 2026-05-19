@@ -119,13 +119,15 @@ class ventaProducto_Controller extends CI_Controller {
                                       'detprecioEspecial' =>$detprecioEspecial,
                                       'dettotal' =>$dettotal 
                                       );
-                            var_dump($dataDelOrdenes); 
+                         //   var_dump($dataDelOrdenes); 
                             //exit ;
                               // echo  'modificando el inventario1245' . $dataDelOrdenes . 'detalle ' . $detPedID . "<br>";
+          if( $productoID > 0 and $ordenPedidoID> 0  ){                    
 
           $this->ordenesPedido_Model->addDetOrdenPedido($dataDelOrdenes, $detPedID);  
+          }
           //echo  'modificando el inventario' . "<br>";
-          $operacionesInventario ->actualizarInventario($productoID, $movtipo, $bodegaOrigen,  $bodegaOrigen , $detcantidad ); 
+        //  $operacionesInventario->actualizarInventario($productoID, $movtipo, $bodegaOrigen,  $bodegaOrigen , $detcantidad ); 
         # Fin del procesamiento del detalle de ordenes 
 
         # segmento para  trabajar el  descuento en los  inventarios 
@@ -251,14 +253,37 @@ class ventaProducto_Controller extends CI_Controller {
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
 
+          echo  "Pedido  "  . $ordenPedidoID .  "<br>"  ;
+
         // segmento para  actualizar la cabecera de la orden  de compra 
         $RVntaTotal =  $this->ordenesPedido_Model->get_TotalVenta($ordenPedidoID);
+
+        $infoPedido =  $this->ordenesPedido_Model->infoPedido($ordenPedidoID) ;
+        var_dump($infoPedido);
+        
+
+        //$datos = $infoPedido[0];
+        $ordPAbono =   $infoPedido->ordPAbono;
+        echo  "el total del abono " .$ordPAbono .  "Pedido  "  . $ordenPedidoID  ;
+     
+    
+    //->set("ordPAcobrar",       ($data["ordPtotalcancelar"] - $data["ordPAbono"]))
+        
+
+        
+
+        
         $data  =  array( 'ordPcomentario'=>$ordPcomentario,
                           'ordPCantidadPrd'=> $RVntaTotal->cantProd, 
-                          'ordPtotalcancelar'=>$RVntaTotal->ventatotal,
-                          'ordPpenditeCobro'=>0 
+                          'ordPtotalcancelar'=>  round($RVntaTotal->ventatotal,2),
+                          'ordPAbono'=>round($ordPAbono,2),
+
+                          
                         );
-                         // var_dump(   $data )
+
+                         
+                        
+                    var_dump(   $data );
         $this->ordenesPedido_Model->addOrdenPedido($data, $ordenPedidoID);
        
 

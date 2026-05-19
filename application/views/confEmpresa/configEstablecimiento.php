@@ -21,7 +21,7 @@ $listaEmpresa = '';
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="true" onclick="verificarstadotabconf(this.id)">Establecimiento</a>
+                        <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false" onclick="verificarstadotabconf(this.id)">Establecimiento</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="Three" aria-selected="false" onclick="verificarstadotabconf(this.id)" >Areas</a>
@@ -91,12 +91,12 @@ $listaEmpresa = '';
                     </div>
 
                 <!-- panel de establecimiento -->
-                    <div class="tab-pane fade show active p-3" id="two" role="tabpanel" aria-labelledby="two-tab" >
+                    <div class="tab-pane fade  p-3" id="two" role="tabpanel" aria-labelledby="two-tab" >
                             <div class="row">
                                 <div class ="col-md 6"> 
                                     <h4>Registro establecimimiento</h4>
                                     <div class ="shadow-sm p-3 mb-5 bg-white rounded">
-                                        <form metod="POST" id ="FormTwotab" class="FormOnetab" action="javascript:saveMarca()" >
+                                        <form metod="POST" id ="FormTwotab" class="FormTwotab" action="javascript:saveMarca()" >
                                         <input type="hidden"  name="establecimientoID" id="establecimientoID" class="form-control text-left" value ="">
 
                                                 <div class="form-group">
@@ -294,6 +294,7 @@ $listaEmpresa = '';
       </div>
     
   </div>
+    </div>
 </div>
 <style>
         

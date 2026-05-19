@@ -15,16 +15,23 @@
 
     //funcion para insert nueva medida de  producto 
     public function  addOrdenPedido($data, $ordenPedidoID){
+         //echo  "llamando a funcion  agregar orden pedido" ;
         if($ordenPedidoID ==   null){
           //  ECHO  "INSERTANDO UNA NUEVA ORDEN DE PEDIDO  \n" ;
             $this->db->insert("ordenpedido",$data);
             return $this->db->insert_id();
         }else{
-            // ECHO  "actualizando  UNA NUEVA ORDEN DE PEDIDO  \n" ;
+         //   ECHO  "actualizando  UNA NUEVA ORDEN DE PEDIDO  \n" . $ordenPedidoID  ;
+           
+
+
+
             $this->db->set("ordPcomentario", $data["ordPcomentario"])
                     ->set("ordPCantidadPrd", $data["ordPCantidadPrd"])
                     ->set("ordPtotalcancelar", $data["ordPtotalcancelar"])
-                    ->set("ordPpenditeCobro", $data["ordPpenditeCobro"])
+                    ->set("ordPAbono",         $data["ordPAbono"])
+                    ->set("ordPAcobrar",       ($data["ordPtotalcancelar"] - $data["ordPAbono"]))
+                    //->set("ordPpenditeCobro", $data["ordPpenditeCobro"])
                     ->where("ordenPedidoID", $ordenPedidoID)
                     ->where("ordPanulado",  0)
                     ->update("ordenpedido");
@@ -216,13 +223,13 @@
     }
 
     public function listaOrdenesPendienteCobro($mesaID){
-  
+   // echo  "mostrando los datos del  pedido" ;
 
 
         $this->db->distinct();         
         $query = $this->db->select("ordenp.mesaID,msa.mesNombre as mesa,   ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora, 
                                     MINUTE(ordenp.ordPFecha) as minuto,  
-                                    upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho, ordenp.ordPtotalcancelar, 
+                                    upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho,  ordenp.ordPAbono, ordenp.ordPAcobrar  as  ordPtotalcancelar, 
                                     prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo, 
                                     ped.detPedID ,ped.detcantidad as catidad,  prod.famProdID,  ped.dettotal, ped.cobrar,ped.despachar")                    
                       ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
@@ -298,6 +305,31 @@
                  ->update("detordenpedido");
         return $this->db->affected_rows();  
         }
+
+        // funcion para abonar  el  cobro de la orden 
+    public function  abonarOrden($ordenPedidoID,  $ordPAbono){   
+               $this->db->set("ordPAbono", $ordPAbono) 
+                 ->where("ordenPedidoID", $ordenPedidoID)
+                 ->update("ordenpedido");
+        return $this->db->affected_rows();  
+
+    }
+    // funcion para  retornar los datos de la  cabecera del pedido 
+    public function infoPedido($ordenPedidoID){
+        $query = $this->db->select("*" )
+          //->where("ordenPedidoID",  $ordenPedidoID)
+         //->where("cobrar",  1)
+         //->where("procesado",  0)
+         ->get("ordenpedido")
+         ->row();
+         return $query ;
+    }
+
+
+
+    // funcio para actualizar el abono 
+
+
 
 
 

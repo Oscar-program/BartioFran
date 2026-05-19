@@ -99,6 +99,28 @@ class Ordenes_Controller extends CI_Controller{
 
        }
 
+       // funcion para abonar la ordenCabcera 
+
+        public function abonarOrden(){
+         echo  "llegando al  controlador de abono  " ; 
+         
+          $ordPAbonoRealizar = (isset($_POST['ordPAbono']) AND  $_POST['ordPAbono']!=0) ? $_POST['ordPAbono'] :0;          
+          $ordenPedidoID     = (isset($_POST['ordenPedidoID']) AND  $_POST['ordenPedidoID']!=0) ? $_POST['ordenPedidoID'] : 0 ;  
+          $infoPedido        = $this->ordenesPedido_Model->infoPedido($ordenPedidoID) ;
+          $ordPtotalcancelar = $infoPedido->ordPtotalcancelar;
+          $Abonado           = $infoPedido->ordPAbono;
+          $ordPAbono         = ($Abonado + $ordPAbonoRealizar );
+          $ordPAcobrar       = ($ordPtotalcancelar  - $ordPAbono ) ;
+
+
+
+          $this->ordenesPedido_Model->abonarOrden($ordenPedidoID, $ordPAbono);
+        
+
+       }
+
+
+
 
       
 

@@ -43,9 +43,9 @@ $ultimo = 0;
                            <td data-label="Catidad"><?php echo  $row->catidad; ?></td>
                            <td data-label="Descripción"><?php  echo  strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion) );  ?></td> 
                            <?php  if($row->despachar == 1) {?>                         
-                            <td data-label="Despachar"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );" checked disabled></td>
+                            <td data-label="Despachar"> <input type="button"  class="btn-check" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"></td>
                            <?php }else {?> 
-                             <td data-label="Despachar"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"></td>
+                             <td data-label="Despachar"> <input type="button" class="btn-check"  name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"></td>
                            <?php }?>
                         </tr>    
                         
@@ -60,9 +60,9 @@ $ultimo = 0;
                            <td data-label="Número"><?php echo$row->catidad; ?></td>
                            <td data-label="Descripción"><?php  echo   strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion)); ?></td>                           
                              <?php  if($row->despachar == 1) {?>                         
-                            <td data-label="Cantidad"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );" checked disabled></td>
+                            <td data-label="Cantidad"> <input type="checkbox"  class="btn-check"  name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"></td>
                            <?php }else {?> 
-                             <td data-label="Cantidad"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"></td>
+                             <td data-label="Cantidad"> <input type="checkbox" class="btn-check" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"></td>
                            <?php }?>
 
                            <!-- <td data-label="Cantidad"> <input type="checkbox" name="<?php //echo $nameChek; ?>" id="<?php //echo $nameChek; ?>" onclick="despacharOrden(<?php //echo $c ?>, <?php //echo $row->detPedID?> );"></td>  -->

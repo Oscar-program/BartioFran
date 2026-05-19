@@ -77,3 +77,40 @@
                         font-size:clamp(12px,1.2vw,15px);
                         color:#333;
                         }
+
+.btn-check{
+    appearance: none;
+    -webkit-appearance: none;
+
+    padding: 12px 22px;
+    background: #e0e0e0;
+    border: 2px solid #999;
+    border-radius: 8px;
+
+    cursor: pointer;
+    transition: all .2s ease;
+
+    display: inline-block;
+    min-width: 120px;
+    height: 45px;
+}
+
+/* Texto dentro */
+.btn-check::before{
+    content: "Cobrar";
+    color: #333;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+/* Estado activado */
+.btn-check:checked{
+    background: #28a745;
+    border-color: #1f7a33;
+}
+
+/* Texto activado */
+.btn-check:checked::before{
+    content: "Cobrado";
+    color: white;
+}
