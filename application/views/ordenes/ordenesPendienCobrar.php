@@ -92,7 +92,7 @@ $ultimo = 0;
 			  <div class="modal-body">
 				<form>
 				
-					<input type="hidden" class="form-control text-right" id="ordenPedidoID" name="ordenPedidoID" readonly>
+					<input type="text" class="form-control text-right" id="ordenPedidoID" name="ordenPedidoID" readonly>
                  <div class="form-group">
 						<input type="number" class="form-control text-right" id="ordPAbono"  name="ordPAbono"  value ="" step="any">
 					  </div> 

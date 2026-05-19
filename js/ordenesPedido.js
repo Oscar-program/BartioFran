@@ -209,7 +209,8 @@ function cargar_addordenes(mesaID){
          var ordPAbono  =  $("#ordPAbono").val(); //  10;
          var ordenPedidoID  = $("#ordenPedidoID").val(); //  10;
          const select =  document.getElementById('mesaCobrar') ;//  (document.getElementById('mesaCobrar')) ? document.getElementById('mesaCobrar').value : "" ; 
-         console.log("El select  a enviar es " + select  ) ;
+         
+         console.log("LA ORDEN A ABONAR ES " + ordenPedidoID  ) ;
 
         var url = base_url('index.php/Ordenes_Controller/abonarOrden/' );         
          var  obJson = { ordPAbono:ordPAbono, ordenPedidoID:ordenPedidoID};

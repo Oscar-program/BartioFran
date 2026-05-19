@@ -106,15 +106,26 @@ class Ordenes_Controller extends CI_Controller{
          
           $ordPAbonoRealizar = (isset($_POST['ordPAbono']) AND  $_POST['ordPAbono']!=0) ? $_POST['ordPAbono'] :0;          
           $ordenPedidoID     = (isset($_POST['ordenPedidoID']) AND  $_POST['ordenPedidoID']!=0) ? $_POST['ordenPedidoID'] : 0 ;  
+            echo  "Los  datos antes del abono  " .  $ordenPedidoID  . "pendiente"  .    $ordPtotalcancelar  . "Abonado" .  $Abonado   ;
+
           $infoPedido        = $this->ordenesPedido_Model->infoPedido($ordenPedidoID) ;
+          var_dump(  $infoPedido ) ;
           $ordPtotalcancelar = $infoPedido->ordPtotalcancelar;
           $Abonado           = $infoPedido->ordPAbono;
+              echo  "Los  datos antes del abono  " .  $ordenPedidoID  . "pendiente"  .    $ordPtotalcancelar  . "Abonado" .  $Abonado   ;
+        // echo  "Los  datos antes del abono  " .     $ordPtotalcancelar  . "Abonado" .  $Abonado   ;
           $ordPAbono         = ($Abonado + $ordPAbonoRealizar );
           $ordPAcobrar       = ($ordPtotalcancelar  - $ordPAbono ) ;
 
+          $datos   = array('ordPtotalcancelar'=>$ordPtotalcancelar, 
+                            'ordPAbono'=>$ordPAbono,
+                             'ordPAcobrar'=>$ordPAcobrar) ;
+          var_dump($datos )   ;               
+          
 
 
-          $this->ordenesPedido_Model->abonarOrden($ordenPedidoID, $ordPAbono);
+
+          //$this->ordenesPedido_Model->abonarOrden($ordenPedidoID, $ordPAbono,   $ordPAcobrar);
         
 
        }

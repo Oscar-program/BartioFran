@@ -307,8 +307,10 @@
         }
 
         // funcion para abonar  el  cobro de la orden 
-    public function  abonarOrden($ordenPedidoID,  $ordPAbono){   
-               $this->db->set("ordPAbono", $ordPAbono) 
+    public function  abonarOrden($ordenPedidoID,  $ordPAbono, $ordPAcobrar){   
+               $this->db->set("ordPAbono", $ordPAbono)
+                          ->set("ordPAcobrar", $ordPAcobrar) 
+               
                  ->where("ordenPedidoID", $ordenPedidoID)
                  ->update("ordenpedido");
         return $this->db->affected_rows();  
@@ -317,9 +319,9 @@
     // funcion para  retornar los datos de la  cabecera del pedido 
     public function infoPedido($ordenPedidoID){
         $query = $this->db->select("*" )
-          //->where("ordenPedidoID",  $ordenPedidoID)
+          ->where("ordenPedidoID",  $ordenPedidoID)
          //->where("cobrar",  1)
-         //->where("procesado",  0)
+        // ->where("procesado",  0)
          ->get("ordenpedido")
          ->row();
          return $query ;
