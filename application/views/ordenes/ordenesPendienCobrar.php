@@ -16,6 +16,8 @@ $ultimo = 0;
              $nameChek   = "Cobrar" .$c;
              $thCancelar = "total" .$row->ordenPedidoID;
              $acobrar    = (float) $row->ordPtotalcancelar;  
+             $ordPAbono   = (float) $row->ordPAbono;
+
              $acronimo   = " AM"; 
              if(!empty($row->cliente)){
                 $comentario = "Comentario :" . str_replace("%20", "", $row->cliente)  ; 
@@ -31,7 +33,7 @@ $ultimo = 0;
                         <thead>
                               <tr>
                                  <th colspan="2"><?php echo  "Orden #".$row->ordenPedidoID . " Area: " . strtoupper($row->area ). " Hora Pedido " . $row->hora. ":" . $row->minuto .  $acronimo. " ". $comentario ; ?> </th> </th>
-                                 <th colspan="1" id ="<?php  echo  $thCancelar; ?>" name  = "<?php  echo  $thCancelar; ?>"> <?php echo  "Total a cancelar  $" . $acobrar   ?></th>
+                                 <th colspan="1" id ="<?php  echo  $thCancelar; ?>" name  = "<?php  echo  $thCancelar; ?>"> <?php echo "Abonado $" .   round($ordPAbono,2) .  " A cobrar  $" . round($acobrar,2)   ?></th>
                                  <th colspan="1">
                                  <button type="button" class="form-control   btn-sm" data-title ="Abonar" onclick="mostrarModalAbono(<?php echo $row->ordenPedidoID?>)"><i class="fa fa-print" aria-hidden="true"></i></button>
                                  </th>
