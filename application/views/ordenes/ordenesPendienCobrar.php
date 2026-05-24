@@ -32,42 +32,37 @@ $ultimo = 0;
                  <?php  if($orden != $row->ordenPedidoID) {?>                  
                         <thead>
                               <tr>
-                                 <th colspan="2"><?php echo  "Orden #".$row->ordenPedidoID . " Area: " . strtoupper($row->area ). " Hora Pedido " . $row->hora. ":" . $row->minuto .  $acronimo. " ". $comentario ; ?> </th> </th>
+                                 <th colspan="3"><?php echo  "Orden #".$row->ordenPedidoID . " Area: " . strtoupper($row->area ). " Hora Pedido " . $row->hora. ":" . $row->minuto .  $acronimo. " ". $comentario ; ?> </th> </th>
                                  <th colspan="1" id ="<?php  echo  $thCancelar; ?>" name  = "<?php  echo  $thCancelar; ?>"> <?php echo "Abonado $" .   round($ordPAbono,2) .  " A cobrar  $" . round($acobrar,2)   ?></th>
                                  <th colspan="1">
-                                 <button type="button" class="form-control   btn-sm" data-title ="Abonar" onclick="mostrarModalAbono(<?php echo $row->ordenPedidoID?>)"><i class="fa fa-print" aria-hidden="true"></i></button>
+                                     <button type="button" class="form-control   btn-sm" data-title ="Abonar" onclick="mostrarModalAbono(<?php echo $row->ordenPedidoID?>)"><i class="fa fa-print" aria-hidden="true"></i></button>
                                  </th>
                                  <th colspan="1">
                                     <button type="button" class="form-control   btn-sm" data-title ="Procesar venta" onclick="realizarCobro(<?php echo $row->ordenPedidoID?>, <?php echo $row->mesaID?>  )"><i class="fa fa-print" aria-hidden="true"></i></button>
                                  </th>
                               </tr>
+                        </thead>
+                         <thead>
                               <tr>
                                     <th id ="titulos">Cantidad</th>
-                                    <th id ="titulos">Descripción</th> 
-                                    <th id ="titulos">Precio</th>
-                                    <th id ="titulos">Cobrar</th>  
+                                    <th id ="titulos" colspan="3">Descripción</th> 
+                                    <th id ="titulos" colspan="2" >Precio</th>
+                                    
                               </tr>
                         </thead>                         
                         <tr>
                            <td data-label="Cantidad"><?php echo  $row->catidad; ?></td>
-                           <td data-label="Descripción"><?php  echo  strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion) ). " ".$estado;  ?></td>                          
-                           <td data-label="Total"><?php echo  $row->dettotal; ?></td>
-                           <?php  if ($row->cobrar == 1){?>
-                                  <td data-label="Cobrar"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="cobrarOrden(<?php echo $c ?>, <?php echo $row->detPedID?> , <?php echo $row->ordenPedidoID?> );" checked disabled></td>                           
-                           <?php  }else{ ?>                               
-                                  <td data-label="Cobrar"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="cobrarOrden(<?php echo $c ?>, <?php echo $row->detPedID?> , <?php echo $row->ordenPedidoID?> );"></td>
-                                 <?php }?> 
+                           <td data-label="Descripción" colspan="3" ><?php  echo  strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion) ). " ".$estado;  ?></td>                          
+                           <td data-label="Total" colspan="2"><?php echo  $row->dettotal; ?></td>
+                          
                         </tr>                
                         <?php  } else { ?> 
                               <tr>
                                  <td data-label="Catidad"><?php echo$row->catidad; ?></td>
-                                 <td data-label="Descripción"><?php  echo   strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion)) . " ".$estado; ?></td>                           
-                                 <td data-label="Total"><?php echo  $row->dettotal; ?></td>
-                                 <?php  if ($row->cobrar == 1){?>                                
-                                       <td data-label="Cobrar"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="cobrarOrden(<?php echo $c ?>, <?php echo $row->detPedID?> , <?php echo $row->ordenPedidoID?> );" checked disabled></td>
-                                 <?php  }else{ ?>
-                                                <td data-label="Cobrar"> <input type="checkbox" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="cobrarOrden(<?php echo $c ?>, <?php echo $row->detPedID?> , <?php echo $row->ordenPedidoID?> );"></td>
-                                       <?php }?> 
+                                 <td data-label="Descripción" colspan="2"><?php  echo   strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion)) . " ".$estado; ?></td>                           
+                                  <td data-label="Total" ></td>
+                                 <td data-label="Total" colspan="2"><?php echo  $row->dettotal; ?></td>
+                                 
                               </tr> 
                         <?php  }?>
          

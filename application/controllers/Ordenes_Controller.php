@@ -81,8 +81,9 @@ class Ordenes_Controller extends CI_Controller{
           $detPedID =  (isset($_POST['detPedID']) AND  $_POST['detPedID']!=0) ? $_POST['detPedID'] : "0" ;
           $estado = (isset($_POST['estado']) AND  $_POST['estado']!=0) ? $_POST['estado'] : "0" ;
 
-          //echo  "el detalle del pedido a despachar es " . $detPedID ;
-          $this->ordenesPedido_Model->despacharOrden($detPedID, $estado);
+          echo  "el detalle del pedido a despachar es " . $detPedID  .  "Estyado"  . $estado;
+          $result   =  $this->ordenesPedido_Model->despacharOrden($detPedID, $estado);
+          echo   $result ;
        }
       
        // funcion para poner marca de cobrar a todos aquellos item marcados

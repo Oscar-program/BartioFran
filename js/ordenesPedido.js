@@ -97,13 +97,13 @@ function cargar_addordenes(mesaID){
   } 
   function  despacharOrden(c, detPedID){
     console.log("DESPACHAR ORDER ") ;
-    let estado = 0;
+    let estado = 1;
     var detPedID = detPedID;
-    var  objChk = document.getElementById('Despachar'+c);
+    const  objChk = document.getElementById('Despachar'+c);
     if (objChk ){
-      if(objChk.checked){
+      /*if(objChk.checked){
         estado=1;
-      }
+      }*/
         var url = base_url('index.php/Ordenes_Controller/despacharOrden/' );
         obJson = { detPedID:detPedID , estado:estado};
          $.ajax({
@@ -120,6 +120,11 @@ function cargar_addordenes(mesaID){
            }
 
     });
+    objChk.disabled = true;
+    objChk.style.backgroundColor = '#999';
+    objChk.style.cursor = 'not-allowed';
+    objChk.style.opacity = '0.7';
+
       }
 
     

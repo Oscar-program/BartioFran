@@ -240,7 +240,14 @@ class ventaProducto_Controller extends CI_Controller {
    // funcion para  procesar el  cobro de productos  
    public function realizarCobro($ordenPedidoID){
    // echo  "poner procesado" . $ordenPedidoID ;
-     $this->ordenesPedido_Model->procesarCobro($ordenPedidoID) ;
+      $infoPedido  =   $this->ordenesPedido_Model->infoPedido($ordenPedidoID); 
+      //var_dump($infoPedido) ;
+      $ordPtotalcancelar = $infoPedido->ordPtotalcancelar;
+      $ordPpenditeCobro = 0;
+
+      //echo  "Los datos generales del pedido son " .      $ordPtotalcancelar .  " asd " . $ordPpenditeCobro ;
+
+     $this->ordenesPedido_Model->procesarCobro($ordenPedidoID, $ordPtotalcancelar) ;
 
    }
 

@@ -43,9 +43,9 @@ $ultimo = 0;
                            <td data-label="Catidad"><?php echo  $row->catidad; ?></td>
                            <td data-label="Descripción"><?php  echo  strtoupper($row->prodDescripcion . " " . str_replace("OTROS", '', $row->Presentacion) );  ?></td> 
                            <?php  if($row->despachar == 1) {?>                         
-                            <td data-label="Despachar"> <input type="button"  class="btn-check" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"></td>
+                            <td data-label="Despachar"> <input type="button" value ="Despachado"  name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"> </td>
                            <?php }else {?> 
-                             <td data-label="Despachar"> <input type="button" class="btn-check"  name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"></td>
+                             <td data-label="Despachar"> <input type="button"  value ="Despachar" name="<?php echo $nameChek; ?>" id="<?php echo $nameChek; ?>" onclick="despacharOrden(<?php echo $c ?>, <?php echo $row->detPedID?> );"  class="form-control btn-sm" style="background-color: #243458; color:white;"> </td>
                            <?php }?>
                         </tr>    
                         

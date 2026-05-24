@@ -294,16 +294,27 @@
     }
     // funcionn marca como procesado todas las  ordenes 
     
-        public function  procesarCobro($ordenPedidoID){  
+        public function  procesarCobro($ordenPedidoID, $ordPtotalcancelar ){  
             
             // identificamos si no hay ningun elemento seleccionado 
            // echo  "poniendo procesados" ;     
                $this->db->set("procesado", 1) 
                          ->where("ordenPedidoID",  $ordenPedidoID)
-                         ->where("cobrar",  1)
-                         ->where("despachar",  1)                 
+                         //->where("cobrar",  1)
+                         //->where("despachar",  1)                 
                  ->update("detordenpedido");
-        return $this->db->affected_rows();  
+        // return $this->db->affected_rows();  
+        // poenemos abonado toda la cabecesra del abono  ordPAbono
+          $this->db->set("ordPAbono", $ordPtotalcancelar) 
+                    ->set("ordPAcobrar", 0.0)
+                     ->set("ordPpenditeDespacho", 0)
+                     ->set("ordPpenditeCobro", 0)
+                     
+                         ->where("ordenPedidoID",  $ordenPedidoID)
+                                        
+                 ->update("ordenpedido");
+                 return $this->db->affected_rows();  
+
         }
 
         // funcion para abonar  el  cobro de la orden 
