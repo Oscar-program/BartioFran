@@ -68,6 +68,49 @@ public function get_EstablecimientoPorID($establecimientoID){
       echo  $result;
 
   }
+  public function registraNewMesa(){
+    echo  "llegando al controlador para  registrar nueva mesa " ; 
+
+
+  $mesaID   = (isset($_REQUEST['mesaID'])       AND  strlen($_REQUEST['mesaID'])> 0 )   ? $_REQUEST['mesaID']  : NULL;
+    $SEstablecimiento     = (isset($_REQUEST['SEstablecimiento'])       AND  $_REQUEST['SEstablecimiento'] !=0 )   ? $_REQUEST['SEstablecimiento']  : NULL;
+    $SArea               = (isset($_REQUEST['SArea'])   AND  $_REQUEST['SArea'] !=0 )   ? $_REQUEST['SArea'] : '' ;
+    $txtmesa                   = (isset($_REQUEST['txtmesa'])                     AND  strlen($_REQUEST['txtmesa'])>0 )   ? $_REQUEST['txtmesa'] : '' ;
+    $txtcapacidad              = (isset($_REQUEST['txtcapacidad'])                AND  strlen($_REQUEST['txtcapacidad'])>0 )   ? $_REQUEST['txtcapacidad']  :'' ;
+    $data  = array( 'SEstablecimiento'=>$SEstablecimiento,
+                 'SArea'=>$SArea,
+                'txtmesa'=>$txtmesa,
+                'txtcapacidad'=>$txtcapacidad,
+                
+                );
+
+   // var_dump($data) ;
+
+ //$result = $this->Establecimiento_Model->insertarEstablecimiento($establecimientoID, $data);
+ echo  $result ;
+
+
+  }
+  // funcion para  registrar   nueva area del establecimiento  
+  public function registrarAreaEstb(){
+    echo  "almacenando el  area del establecimiento " ; 
+
+    $areasEstablecimientoID = (isset($_REQUEST['SEstab'])       AND  strlen($_REQUEST['SEstab'] )>0 )   ? $_REQUEST['SEstab']  : NULL; 
+
+     $SEstab     = (isset($_REQUEST['SEstab'])       AND  $_REQUEST['SEstab'] !=0 )   ? $_REQUEST['SEstab']  : NULL;
+    $Area               = (isset($_REQUEST['Area'])   AND  $_REQUEST['Area'] !=0 )   ? $_REQUEST['Area'] : '' ;
+     $data  = array( 'SEstablecimiento'=>$SEstablecimiento,
+                 'SArea'=>$SArea,
+                'txtmesa'=>$txtmesa,
+                'txtcapacidad'=>$txtcapacidad,
+                
+                );
+
+
+
+
+  }
+
 
 
 

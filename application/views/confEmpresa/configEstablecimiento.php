@@ -162,13 +162,13 @@ $listaEmpresa = '';
                                 <div class ="col-md 6"> 
                                     <h4>Areas de establecimiento </h4>
                                     <div class ="shadow-sm p-3 mb-5 bg-white rounded">
-                                        <form  id  ="FormTwotab" class = "FormThreetab"  method="POST" action="javascript:savePresentacionProduc()">
+                                        <form  id  ="FormAreaEstb" class = "FormAreaEstb"  method="POST" action="javascript:saveAreaEstab()">
                                         <input type="hidden"  id="areasEstablecimientoID" name ="areasEstablecimientoID"> 
                                         <input type="hidden"  id="establecimientoID" name ="establecimientoID"> 
 
                                         <div class="form-group">
-                                                            <label for="SelectEstablecimiento" class="col-form-label">Establecimiento:</label>
-                                                            <select name="SelectEstablecimiento" id="SelectEstablecimiento"  class="form-control chosen"> 
+                                                            <label for="SEstab" class="col-form-label">Establecimiento:</label>
+                                                            <select name="SEstab" id="SEstab"  class="form-control chosen"> 
                                                                 <option value ="0"> Seleccione establecimiento</option>               
                                                                  <?php foreach ($datosEstablecimientos as $row): ?>
                                                                     <option value="<?php  echo $row->establecimientoID; ?>">
@@ -181,8 +181,8 @@ $listaEmpresa = '';
 
                                         <div class="form-group">
                                                
-                                                <label for="txtpresentacion" class="col-form-label">Area: </label>
-                                                <input type="text" class="form-control text-left" id="txtArea"   name ="txtArea" placeholder="Ingrese el area" required>
+                                                <label for="txtArea" class="col-form-label">Area: </label>
+                                                <input type="text" class="form-control text-left" id="Area"   name ="Area" placeholder="Ingrese el area" required>
 
                                             </div>
                                             <div class="form-group">
@@ -219,14 +219,14 @@ $listaEmpresa = '';
                                 <div class ="col-md 6"> 
                                     <h4>Registro de Mesas por area </h4>
                                     <div class ="shadow-sm p-3 mb-5 bg-white rounded">
-                                        <form  id  ="FormThreetab" class ="FormFourtab" method="post" action="javascript:saveMedidaProducto()">
+                                        <form  id  ="FormRegMesa" class ="FormRegMesa" method="post" action="javascript:saveMesa()">
                                         <input type="hidden"  id="mesaID" name="mesaID"> 
                                         <input type="hidden"  id="establecimientoID" name="establecimientoID">  
                                         <input type="hidden"  id="areasEstablecimientoID" name="areasEstablecimientoID"> 
                                         
                                          <div class="form-group">
-                                                            <label for="SelectEstablecimiento" class="col-form-label">Establecimiento:</label>
-                                                            <select name="SelectEstablecimiento" id="SelectEstablecimiento"  class="form-control chosen"> 
+                                                            <label for="SEstablecimiento" class="col-form-label">Establecimiento:</label>
+                                                            <select name="SEstablecimiento" id="SEstablecimiento"  class="form-control chosen"> 
                                                                 <option value ="0"> Seleccione establecimiento</option>               
                                                                  <?php foreach ($datosEstablecimientos as $row): ?>
                                                                     <option value="<?php  echo $row->establecimientoID; ?>">
@@ -239,8 +239,8 @@ $listaEmpresa = '';
 
                                          
                                                <div class="form-group">
-                                                            <label for="SelectEstablecimiento" class="col-form-label">Area establecimiento:</label>
-                                                            <select name="SelectEstablecimiento" id="SelectEstablecimiento"  class="form-control chosen"> 
+                                                            <label for="SArea" class="col-form-label">Area establecimiento:</label>
+                                                            <select name="SArea" id="SArea"  class="form-control chosen"> 
                                                                 <option value ="0"> Seleccione establecimiento</option>               
                                                                  <?php foreach ($datosAreas as $row): ?>
                                                                     <option value="<?php  echo $row->areaEstablecimientoID; ?>">
@@ -253,10 +253,10 @@ $listaEmpresa = '';
 
                                         <div class="form-group">
                                                 
-                                                 <label for="txtmedida" class="col-form-label">Mesa: </label>
-                                                <input type="text" class="form-control text-left" id="txtmedida" name="txtmedida" placeholer ="Ingrese la medida del  producto" required  >
-                                                 <label for="txtmedida" class="col-form-label">Capacidad: </label>
-                                                <input type="text" class="form-control text-left" id="txtmedida" name="txtmedida" placeholer ="Ingrese la medida del  producto" required  >
+                                                 <label for="txtmesa" class="col-form-label">Mesa: </label>
+                                                <input type="text" class="form-control text-left" id="txtmesa" name="txtmesa" placeholer ="Ingrese la medida del  producto" required  >
+                                                 <label for="txtcapacidad" class="col-form-label">Capacidad: </label>
+                                                <input type="text" class="form-control text-left" id="txtcapacidad" name="txtcapacidad" placeholer ="Ingrese la medida del  producto" required  >
                                         </div>
                                             <div class="form-group">
                                             <button  type="submit" data-title="Almacenar registro" class="btn btn-danger btnAction"> Guardar </button>

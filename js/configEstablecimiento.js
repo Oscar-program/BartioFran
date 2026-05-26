@@ -92,12 +92,13 @@ function verificarstadotabconf(id){
             console.log('Eligiendo el  form 3');
         break;
         case 'four-tab':
+            console.log("ejecutando  funcion para   ver vista  ingreso DE MESAS ....") ;
                 // Código a ejecutar si la expresión coincide con valor2
                 formData    = new FormData($(".FormFour-tab")[0]);
                 console.log('Eligiendo el  form 4');
                 $("#txtfamProdID").val('');
                 $("#txtfamilia").val('');
-                get_listFamiliaProducto();
+                //get_listFamiliaProducto();
         break;
         case 'five-tab':
             // Código a ejecutar si la expresión coincide con valor2
@@ -257,4 +258,86 @@ function  DeleteMarcar(marcProdID){
       });
     }
   });
+}
+/*funcion   registra   nueva mesa del estableciemiento   */
+function saveMesa(){
+  console.log("ALMACENANDO EL REGISTRO DE LA MESA ") ;
+  console.log('formulario Creado....... mARCS');
+  var formData;
+  if(document.getElementById('FormRegMesa')) {
+    formData = new FormData($(".FormRegMesa")[0]);
+    console.log('formulario Creado....... mARCS');
+  }else{
+      console.log('no existe el formulario');
+  }
+             
+   url_destino = "index.php/ConfEstablec_Controller/registraNewMesa/";
+   console.log('Despues  de la URL');
+
+   $.ajax({
+    url: base_url(url_destino),
+    type: "POST",
+    data: formData,
+    cache: false,
+    contentType: false,
+    processData: false,
+    beforeSend: function () {
+      // Show image container
+      $("#loader").css("display", "block");
+    },
+    success: function (data) {
+    //$("#codigoCliente").prop( "disabled", true);
+      alertify.set("notifier", "position", "top-right");
+      alertify.success("Registro guardo correctamente");
+    },
+    complete: function () {
+      // Show image container
+      $("#loader").css("display", "none");
+      mostrarDetalles();
+      $("#marcProdID").val('');
+      $("#txtmarca").val('');
+    }
+  });
+
+}
+
+function saveAreaEstab(){
+  console.log("ALMACENANDO EL REGISTRO DE LA MESA ") ;
+  console.log('formulario Creado....... mARCS');
+  var formData;
+  if(document.getElementById('FormAreaEstb')) {
+    formData = new FormData($(".FormAreaEstb")[0]);
+    console.log('formulario Creado....... mARCS');
+  }else{
+      console.log('no existe el formulario');
+  }
+             
+   url_destino = "index.php/ConfEstablec_Controller/registraNewMesa/";
+   console.log('Despues  de la URL');
+
+   $.ajax({
+    url: base_url(url_destino),
+    type: "POST",
+    data: formData,
+    cache: false,
+    contentType: false,
+    processData: false,
+    beforeSend: function () {
+      // Show image container
+      $("#loader").css("display", "block");
+    },
+    success: function (data) {
+    //$("#codigoCliente").prop( "disabled", true);
+      alertify.set("notifier", "position", "top-right");
+      alertify.success("Registro guardo correctamente");
+    },
+    complete: function () {
+      // Show image container
+      $("#loader").css("display", "none");
+      mostrarDetalles();
+      $("#marcProdID").val('');
+      $("#txtmarca").val('');
+    }
+  });
+
 }
