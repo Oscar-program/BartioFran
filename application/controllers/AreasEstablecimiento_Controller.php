@@ -23,12 +23,15 @@ class AreasEstablecimiento_Controller extends CI_Controller{
 
     public function insertarAreaEstablecimiento(){
      $areaEstablecimientoID =  (isset($_REQUEST['areaEstablecimientoID'])   AND  strlen($_REQUEST['areaEstablecimientoID'] )>0 )   ? $_REQUEST['areaEstablecimientoID']: NULL ;
-     $establecimientoID     =  (isset($_REQUEST['establecimientoID'])       AND  strlen($_REQUEST['establecimientoID'])>0 )        ? $_REQUEST['establecimientoID']: '' ;
-     $area                  =  (isset($_REQUEST['area'])                    AND  strlen($_REQUEST['area'])>0 ) ? $_REQUEST['area']: '' ;
-     $data = array('establecimientoID'=>$establecimientoID, 
+     $establecimientoID     =  (isset($_REQUEST['SEstab'])       AND  strlen($_REQUEST['SEstab'])>0 )        ? $_REQUEST['SEstab']: '2' ;
+     $area                  =  (isset($_REQUEST['Area'])                    AND  strlen($_REQUEST['Area'])>0 ) ? $_REQUEST['Area']: '' ;
+     $data = array(
+        'establecimientoID'=>$establecimientoID, 
                     'area'=>$area,  
                     );
-    $result= $this->AreasEstablecimiento_Model->insertarAreaEstablecimiento( $areaEstablecimientoID, $area);
+                   // var_dump($data);
+
+    $result= $this->AreasEstablecimiento_Model->insertarAreaEstablecimiento( $areaEstablecimientoID, $data);
     echo $result ;
     }
 

@@ -42,10 +42,10 @@ function base_url(url){
     }
     // funcion para mostrar todas las mesas por  areas  de establecimiento  
       function listMesasPorAreas(){
-       console.log('Listando las  areas de los establecimientos');
-       var url = base_url('index.php/AreasEstablecimiento_Controller/get_listAllAreas/');  
+       console.log('Listando mesas  por  area ');
+       var url = base_url('index.php/ConfEstablec_Controller/listarMesasArea/');  
         $.get(url, function (data) {
-            $("#detAreas").html(data);
+            $("#detMesas").html(data);
          });
     }
 
@@ -98,7 +98,7 @@ function verificarstadotabconf(id){
                 console.log('Eligiendo el  form 4');
                 $("#txtfamProdID").val('');
                 $("#txtfamilia").val('');
-                //get_listFamiliaProducto();
+                listMesasPorAreas();
         break;
         case 'five-tab':
             // Código a ejecutar si la expresión coincide con valor2
@@ -289,6 +289,7 @@ function saveMesa(){
     //$("#codigoCliente").prop( "disabled", true);
       alertify.set("notifier", "position", "top-right");
       alertify.success("Registro guardo correctamente");
+       listMesasPorAreas();
     },
     complete: function () {
       // Show image container
@@ -302,7 +303,7 @@ function saveMesa(){
 }
 
 function saveAreaEstab(){
-  console.log("ALMACENANDO EL REGISTRO DE LA MESA ") ;
+  console.log("ALMACENANDO AREA DEL  ESTABLECIMIENTO ") ;
   console.log('formulario Creado....... mARCS');
   var formData;
   if(document.getElementById('FormAreaEstb')) {
@@ -312,7 +313,7 @@ function saveAreaEstab(){
       console.log('no existe el formulario');
   }
              
-   url_destino = "index.php/ConfEstablec_Controller/registraNewMesa/";
+   url_destino = "index.php/AreasEstablecimiento_Controller/insertarAreaEstablecimiento/";
    console.log('Despues  de la URL');
 
    $.ajax({
@@ -330,13 +331,14 @@ function saveAreaEstab(){
     //$("#codigoCliente").prop( "disabled", true);
       alertify.set("notifier", "position", "top-right");
       alertify.success("Registro guardo correctamente");
+      listAreasEstablecimientos();
     },
     complete: function () {
       // Show image container
       $("#loader").css("display", "none");
-      mostrarDetalles();
-      $("#marcProdID").val('');
-      $("#txtmarca").val('');
+     // mostrarDetalles();
+     // $("#marcProdID").val('');
+     // $("#txtmarca").val('');
     }
   });
 

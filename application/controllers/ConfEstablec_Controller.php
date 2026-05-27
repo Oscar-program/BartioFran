@@ -68,25 +68,36 @@ public function get_EstablecimientoPorID($establecimientoID){
       echo  $result;
 
   }
+
+    /* funcion listar todas las areas con su establecimiento */
+ 
+
+  public function  listarMesasArea(){
+    $data['listMesas'] = $this->mesas_Model->get_listAllmesas();
+       // var_dump($data['listAllAreas']) ;
+        $this->load->view('confEmpresa/detMesas',$data);
+  }
   public function registraNewMesa(){
-    echo  "llegando al controlador para  registrar nueva mesa " ; 
+   // echo  "llegando al controlador para  registrar nueva mesa " ; 
 
 
-  $mesaID   = (isset($_REQUEST['mesaID'])       AND  strlen($_REQUEST['mesaID'])> 0 )   ? $_REQUEST['mesaID']  : NULL;
-    $SEstablecimiento     = (isset($_REQUEST['SEstablecimiento'])       AND  $_REQUEST['SEstablecimiento'] !=0 )   ? $_REQUEST['SEstablecimiento']  : NULL;
-    $SArea               = (isset($_REQUEST['SArea'])   AND  $_REQUEST['SArea'] !=0 )   ? $_REQUEST['SArea'] : '' ;
-    $txtmesa                   = (isset($_REQUEST['txtmesa'])                     AND  strlen($_REQUEST['txtmesa'])>0 )   ? $_REQUEST['txtmesa'] : '' ;
-    $txtcapacidad              = (isset($_REQUEST['txtcapacidad'])                AND  strlen($_REQUEST['txtcapacidad'])>0 )   ? $_REQUEST['txtcapacidad']  :'' ;
-    $data  = array( 'SEstablecimiento'=>$SEstablecimiento,
-                 'SArea'=>$SArea,
-                'txtmesa'=>$txtmesa,
-                'txtcapacidad'=>$txtcapacidad,
+    $mesaID              = (isset($_REQUEST['mesaID'])       AND  strlen($_REQUEST['mesaID'])> 0 )   ? $_REQUEST['mesaID']  : NULL;
+    $establecimientoID    = (isset($_REQUEST['SEstablecimiento'])       AND  $_REQUEST['SEstablecimiento'] !=0 )   ? $_REQUEST['SEstablecimiento']  : NULL;
+    $areaEstablecimientoID               = (isset($_REQUEST['SArea'])   AND  $_REQUEST['SArea'] !=0 )   ? $_REQUEST['SArea'] : '' ;
+    $mesNombre             = (isset($_REQUEST['txtmesa'])                     AND  strlen($_REQUEST['txtmesa'])>0 )   ? $_REQUEST['txtmesa'] : '' ;
+    $mescapacidad        = (isset($_REQUEST['txtcapacidad'])                AND  strlen($_REQUEST['txtcapacidad'])>0 )   ? $_REQUEST['txtcapacidad']  :'' ;
+    $data  = array( 'mesaID'=>$mesaID,
+      'establecimientoID'=>$establecimientoID,
+                 'areaEstablecimientoID'=>$areaEstablecimientoID,
+                'mesNombre'=>$mesNombre,
+                'mescapacidad'=>$mescapacidad,
                 
                 );
 
-   // var_dump($data) ;
+   //var_dump($data) ;
+   //exit ;
 
- //$result = $this->Establecimiento_Model->insertarEstablecimiento($establecimientoID, $data);
+ $result = $this->mesas_Model->insertarMesaEstablecimiento($data, $mesaID);
  echo  $result ;
 
 
@@ -105,6 +116,8 @@ public function get_EstablecimientoPorID($establecimientoID){
                 'txtcapacidad'=>$txtcapacidad,
                 
                 );
+
+                
 
 
 

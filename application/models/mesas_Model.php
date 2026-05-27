@@ -146,12 +146,22 @@ class mesas_Model extends CI_Model {
         return  $this->db->affected_rows();          
     }
     // funcion mostramos todas las mesas deñ  area  
-     public function get_listAllmesas($areaEstablecimientoID){
-        $query =  $this->db->select("mes.* ")
-                    //->join('establecimientoempresa  est',  'bod.establecimientoID   =  est.establecimientoID', 'inner')
-                   ->where("mestatus",  1) 
-                 ->where("areaEstablecimientoID",  $areaEstablecimientoID)
-                 ->get("mesa  mes")
+
+    /*select  m.mesaID, m.establecimientoID, m.areaEstablecimientoID,  m.mesNombre, m.mescapacidad,  areStb.area,  m.mestatus      
+ from  nuevoestablo.mesa  m 
+ inner  join  nuevoestablo.establecimientoempresa   estb
+ on m.establecimientoID  = estb.establecimientoID
+ inner join  nuevoestablo.areasestablecimiento areStb
+ on areStb.areaEstablecimientoID = m.areaEstablecimientoID
+ where   m.mestatus  = 1 ;   
+  */
+     public function get_listAllmesas(){
+        $query =  $this->db->select(" m.mesaID, m.establecimientoID, m.areaEstablecimientoID,  m.mesNombre as mesa, m.mescapacidad as capacidad,  areStb.area,  m.mestatus  ")
+                    ->join('nuevoestablo.establecimientoempresa estb',  'm.establecimientoID  = estb.establecimientoID', 'inner')
+                    ->join('nuevoestablo.areasestablecimiento areStb',  'areStb.areaEstablecimientoID = m.areaEstablecimientoID', 'inner')
+                   ->where(" m.mestatus",  1) 
+                 //->where("areaEstablecimientoID",  $areaEstablecimientoID)
+                 ->get("mesa  m")
                  ->result();
         return  $query;          
     }

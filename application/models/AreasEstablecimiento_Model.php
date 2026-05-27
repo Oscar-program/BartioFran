@@ -24,9 +24,9 @@ class AreasEstablecimiento_Model extends CI_Model{
         return  $query;          
     }
 
-    public function insertarAreaEstablecimiento(){
+    public function insertarAreaEstablecimiento($areaEstablecimientoID, $data){
         if($areaEstablecimientoID ==   NULL){
-            $this->db->insert("establecimientoempresa",$data);
+            $this->db->insert("areasestablecimiento",$data);
             return $this->db->insert_id();
         }else{           
             $this->db->set("establecimientoID", $data["establecimientoID"])
