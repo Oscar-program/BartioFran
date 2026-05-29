@@ -102,7 +102,7 @@ class mesas_Model extends CI_Model {
         }else{
 
             $this->db->set("establecimientoID", $data["establecimientoID"])
-                    ->set("areasEstablecimientoID", $data["areasEstablecimientoID"])
+                    ->set("areaEstablecimientoID", $data["areaEstablecimientoID"])
                     ->set("mesNombre", $data["mesNombre"])
                     ->set("mescapacidad", $data["mescapacidad"])
                     ->where("mesaID", $mesaID)

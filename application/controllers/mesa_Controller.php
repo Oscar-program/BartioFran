@@ -9,39 +9,45 @@ class mesa_Controller extends CI_Controller{
     }
     //   funcion para  mostrar las mesas en el menu  principal   para que se le   pueda  agregar  una  o  varias  ordenes
      public function listarMesas($areasEstablecimientoID){
-        $data['listaMesas'] = $this->mesas_Model->get_listmesas($areasEstablecimientoID);
-        //var_dump($data['submenu']);
-        //  $data['comandas'] = $this->Producto_Model->get_comandas();
-        //$data['familia']  = $famProdID;
-        //var_dump($data['comandas'] );
+        $data['listaMesas'] = $this->mesas_Model->get_listmesas($areasEstablecimientoID);      
         $this->load->view('mesas/listaMesas',$data);
      }
      // funcion  que lista las mesas que tiene ordenes pendientes de cobro
-
      public function listaMesasPendienteCobro(){
-
-         $data['listaMesasPendientesCobro'] = $this->mesas_Model->listaMesasPendienteCobro();
-        //var_dump($data['submenu']);
-        //  $data['comandas'] = $this->Producto_Model->get_comandas();
-        //$data['familia']  = $famProdID;
-        //var_dump($data['comandas'] );
+         $data['listaMesasPendientesCobro'] = $this->mesas_Model->listaMesasPendienteCobro();       
         $this->load->view('ordenes/ordenesPendientes',$data);
 
      }
- public function insertarMesaEstablecimiento(){
-        $mesaID                   = (isset($_POST['mesaID']) && strlen($_POST['mesaID'])> 0 ) ? $_POST['mesaID']: NULL;   
-        $establecimientoID        = (isset($_POST['establecimientoID'])) ? $_POST['establecimientoID']: NULL; 
-        $areaEstablecimientoID   = (isset($_POST['areaEstablecimientoID'])) ? $_POST['areaEstablecimientoID']: NULL; 
-        $mesNombre                = (isset($_POST['mesNombre'])) ? $_POST['mesNombre']: NULL;
-        $mescapacidad             = (isset($_POST['mescapacidad'])) ? $_POST['mescapacidad']: NULL;
-        
-        $dataMesa = array('establecimientoID'=>$establecimientoID,
-                          'areaEstablecimientoID'=>$areaEstablecimientoID,
-                          'mesNombre'=>$mesNombre,
-                          'mescapacidad'=>$mescapacidad,
-                        );
-      $this->mesas_Model->insertarMesaEstablecimiento($dataMesa, $mesaID);
- }
+
+
+    public function registraNewMesa(){  
+        $mesaID                = (isset($_REQUEST['mesaID'])           AND  strlen($_REQUEST['mesaID'])> 0 )        ? $_REQUEST['mesaID']           : NULL;
+        $establecimientoID     = (isset($_REQUEST['SEstablecimiento']) AND  $_REQUEST['SEstablecimiento'] !=0 )     ? $_REQUEST['SEstablecimiento'] : NULL;
+        $areaEstablecimientoID = (isset($_REQUEST['SArea'])            AND  $_REQUEST['SArea'] !=0 )                ? $_REQUEST['SArea']            : '' ;
+        $mesNombre             = (isset($_REQUEST['txtmesa'])          AND  strlen($_REQUEST['txtmesa'])>0 )        ? $_REQUEST['txtmesa']          : '' ;
+        $mescapacidad          = (isset($_REQUEST['txtcapacidad'])     AND  strlen($_REQUEST['txtcapacidad'])>0 )   ? $_REQUEST['txtcapacidad']     : '' ;
+        $data                  = array( 'mesaID'=>$mesaID,
+                                        'establecimientoID'=>$establecimientoID,
+                                        'areaEstablecimientoID'=>$areaEstablecimientoID,
+                                        'mesNombre'=>$mesNombre,
+                                        'mescapacidad'=>$mescapacidad                
+                                    );
+        $result                = $this->mesas_Model->insertarMesaEstablecimiento($data, $mesaID);
+        echo  $result ;
+    }
+
+    public function  listarMesasArea(){
+        $data['listMesas'] = $this->mesas_Model->get_listAllmesas();      
+        $this->load->view('confEmpresa/detMesas',$data);
+    }
+
+    public function  get_MesaPorID($mesaID){
+        $datosMesa = $this->mesas_Model->get_MesaPorID($mesaID);
+        echo  json_encode($datosMesa) ;
+
+
+    }
+
 
      
 

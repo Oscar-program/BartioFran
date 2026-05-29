@@ -11,12 +11,12 @@
                         <td class="text-right">                        
                             <a href='#' class="btn-edit"
                                 title="Editar Detalle"                             
-                                onclick="get_marcaxId(<?php  echo   $row->areaEstablecimientoID; ?>, <?php  echo   $row->establecimientoID; ?>, <?php  echo   $row->mesaID; ?>);">
+                                onclick="get_MesaPorID(<?php  echo   $row->mesaID; ?>);">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </a>
                             <a href='#' class="btn-eraser"
                                  title="Eliminar registro"
-                                onclick="DeleteMarcar(<?php  echo  $row->mesaID; ?>);">
+                                onclick="get_MesaPorID(<?php  echo  $row->mesaID; ?>);">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </a> 
                         </td>

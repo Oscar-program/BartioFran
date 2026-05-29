@@ -4,7 +4,7 @@ class AreasEstablecimiento_Model extends CI_Model{
 
     /*listar todas las areas de los restablecimientos */
       public function get_listAllAreas(){
-            $query =  $this->db->select("areaEst.*, estbl.estNombre as Estabñecimiento")
+            $query =  $this->db->select("areaEst.*, estbl.estNombre as Establecimiento")
                  ->join('establecimientoempresa estbl','estbl.establecimientoID = areaEst.establecimientoID','inner')
                   ->where("areaEst.estado",  1)                
                  ->get("areasestablecimiento areaEst")
@@ -25,6 +25,7 @@ class AreasEstablecimiento_Model extends CI_Model{
     }
 
     public function insertarAreaEstablecimiento($areaEstablecimientoID, $data){
+       // echo  "el area de establecimiento recibido es " .$areaEstablecimientoID ;
         if($areaEstablecimientoID ==   NULL){
             $this->db->insert("areasestablecimiento",$data);
             return $this->db->insert_id();

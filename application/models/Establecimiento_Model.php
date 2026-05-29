@@ -17,7 +17,8 @@ class  Establecimiento_Model  extends CI_Model{
         }else{           
             $this->db->set("estNombre",   $data["estNombre"])
                     ->set("estDireccion", $data["estDireccion"])
-                    ->set("estTelefono",  $data["estTelefono"])                     
+                    ->set("estTelefono",  $data["estTelefono"])  
+                    ->set("empresa_origen",  $data["empresa_origen"])                   
                    
                     ->where("establecimientoID", $establecimientoID)
                     

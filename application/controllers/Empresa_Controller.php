@@ -24,7 +24,7 @@ class Empresa_Controller extends CI_Controller {
          $empGiro     = (isset($_REQUEST['empGiro'])     AND  strlen($_REQUEST['empGiro'])>0 )     ? $_REQUEST['empGiro']   : '' ;
          $empNit      = (isset($_REQUEST['empNit'])      AND  strlen($_REQUEST['empNit'])>0 )      ? $_REQUEST['empNit']     :'' ;
          $empTelefono = (isset($_REQUEST['empTelefono']) AND  strlen($_REQUEST['empTelefono']) )   ? $_REQUEST['empTelefono'] : '' ;
-         $data   =  array('empNombre'=>$empNombre,  
+         $data        =  array('empNombre'=>$empNombre,  
                           'empGiro'=>$empGiro, 
                           'empNit'=>$empNit, 
                           'empTelefono'=>$empTelefono, 

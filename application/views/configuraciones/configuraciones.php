@@ -38,22 +38,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <li class="nav-item">
                         <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="seven" aria-selected="false" onclick="verificarstadotab(this.id)">Equialente de productos</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="heigth" aria-selected="false" onclick="verificarstadotab(this.id)">Establecimiento</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="heigth" aria-selected="false" onclick="verificarstadotab(this.id)">Mesas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="heigth" aria-selected="false" onclick="verificarstadotab(this.id)">Sucursal</a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="heigth" aria-selected="false" onclick="verificarstadotab(this.id)">Areas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="seven-tab" data-toggle="tab" href="#seven" role="tab" aria-controls="heigth" aria-selected="false" onclick="verificarstadotab(this.id)">Mesas por areas</a>
-                    </li>
+                 
 
 
                     

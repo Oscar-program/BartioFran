@@ -175,7 +175,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
               <a href="#" class="nav-link ">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
-                  Administracion
+                  Configuraciones
                   <i class="right fas fa-angle-left"></i>
                 </p>
               </a>
@@ -184,28 +184,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <li class="nav-item">
                   <a href="javaScript:configurarEstablecimiento();" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Establecimiento</p>
+                    <p>Establecimientos</p>
                   </a>
                 </li>
 
-                  <li class="nav-item">
+                <!--<li class="nav-item">
                   <a href="javaScript:configurarProduct();" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Mesas</p>
                   </a>
-                </li>
+                </li> -->
 
 
                 <li class="nav-item">
                   <a href="javaScript:configurarProduct();" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Producto</p>
+                    <p>Info Productos</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="javaScript:listarProductos()" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Lista de productos</p>
+                    <p>Nuevos productos</p>
                   </a>
                 </li>
 
@@ -236,7 +236,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
               </ul>
             </li>
 
-             <li class="nav-item menu-open">
+         <!-- <li class="nav-item menu-open">
               <a href="#" class="nav-link ">
                 <i class="nav-icon fas fa-industry"></i>
                 <p>
@@ -295,7 +295,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </a>
                 </li>
               </ul>
-           </li>  
+           </li> --> 
 
           <li class="nav-item menu-open">
               <a href="#" class="nav-link ">

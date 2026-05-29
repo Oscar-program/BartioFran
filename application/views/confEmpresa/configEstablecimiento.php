@@ -39,7 +39,7 @@ $listaEmpresa = '';
                                 <div class ="col-md 6"> 
                                     <h4>Registro Empresa</h4>
                                     <div class ="shadow-sm p-3 mb-5 bg-white rounded">
-                                        <form metod="POST" id ="FormOnetab" class="FormOnetab" action="javascript:saveEmpresa()" >
+                                        <form metod="POST" id ="FormEmpresa" class="FormEmpresa" action="javascript:saveEmpresa()" >
                                         <input type="hidden"  name="empresaID" id="empresaID" class="form-control text-left" value ="">
                                             <div class="form-group">
 
@@ -96,7 +96,7 @@ $listaEmpresa = '';
                                 <div class ="col-md 6"> 
                                     <h4>Registro establecimimiento</h4>
                                     <div class ="shadow-sm p-3 mb-5 bg-white rounded">
-                                        <form metod="POST" id ="FormTwotab" class="FormTwotab" action="javascript:saveMarca()" >
+                                        <form metod="POST" id ="FormEstablecimiento" class="FormEstablecimiento" action="javascript:saveEstablecimiento()" >
                                         <input type="hidden"  name="establecimientoID" id="establecimientoID" class="form-control text-left" value ="">
 
                                                 <div class="form-group">

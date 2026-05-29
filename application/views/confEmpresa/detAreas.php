@@ -5,12 +5,12 @@
         foreach($listAllAreas as  $row) :?>
         			<tr>
                         <td><?php  echo   $c; ?></td>
-                        <td><?php  echo  $row->Estabñecimiento;  ?></td>
+                        <td><?php  echo  $row->Establecimiento;  ?></td>
                         <td><?php  echo  $row->area;  ?></td>                                                                          
                         <td class="text-right">                        
                             <a href='#' class="btn-edit"
                                 title="Editar Detalle"                             
-                                onclick="get_marcaxId(<?php  echo   $row->areaEstablecimientoID; ?>, <?php  echo   $row->establecimientoID; ?>);">
+                                onclick="obtenerAreaporId(<?php echo   $row->areaEstablecimientoID; ?>);">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </a>
                             <a href='#' class="btn-eraser"
