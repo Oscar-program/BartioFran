@@ -51,41 +51,11 @@ function validaUser(){
     });
 
 
-    
-    //var url2 = base_url('index.php/login_Controller/principal/');
-   // principal()
-
-      
-    
-        //var url = base_url("index.php/BancosController/bancos");
-       /* $.get(url, function (data) {
-            if(data ==  0 ){
-                swal("Los datos del usuario no  fueron encontrados",{
-                    icon: "error",
-                  });
-            }else{
-                window.location.href =base_url("index.php/Welcome/principal");
-               // window.onload()
-                //acceso();
-            }
-            //$("#addProductCompra").html(data);
-            // document.getElementById('prodDescripcion').innerHTML=descripcion
-            //$('#addProducCompra').modal('show');
-           // $("#idCompratmp").val(idCompratmp)        
-        });*/
 }
 
 function acceso(){
-    //  esto lo pasaremos por  Json para  evitar  mostrar  datos en  la  barra  direccione 
-    //console.log("Llegando a la funcion para  validar  al  usuarios"); 
-
-   // var url = base_url('index.php/login_Controller/validaUser/');
     var url = base_url('index.php/Welcome/principal/');
-   // principal()
 
-      
-    
-        //var url = base_url("index.php/BancosController/bancos");
         $.get(url, function (data) {
                   
         });
@@ -93,18 +63,18 @@ function acceso(){
 
 //  funcion para  registrar al usuarios  
 function registerUser(){
-   console.log("lazando la ventana para  registrar el usuarios");
+    console.log("lazando la ventana para  registrar el usuarios");
 
-   window.location.href = base_url("index.php/Welcome/registerUser");
-    //var url = base_url('index.php/Welcome/registerUser/');
-   // principal()
+  // window.location.href = base_url("index.php/Welcome/registerUser");
 
-      
-    
-        //var url = base_url("index.php/BancosController/bancos");
-       // $.get(url, function (data) {
-                  
-        //});
+     var url = base_url('index.php/Welcome/registerUser');
+ 
+    $.get(url, function (data) {
+        $("#principal").html(data);
+            
+    });
+
+  
 }
 // funcion para almacenar los  datos de los  nuevos usuarios 
 
@@ -145,6 +115,7 @@ function  saveUser(){
         ){},
         success:function(data){
           console.log("datos Almacenados  correctamente")
+          listarUsuarios() ;
 
         },
         complete:function(){
@@ -152,4 +123,13 @@ function  saveUser(){
         }
 
     });
+}
+function listarUsuarios(){
+    var url = base_url('index.php/login_Controller/allUserSystem/');
+ 
+    $.get(url, function (data) {
+        $("#principal").html(data);
+            
+    });
+
 }

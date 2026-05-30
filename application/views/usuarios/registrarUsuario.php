@@ -37,16 +37,17 @@
       </style>
 
 </head>
-<body class="hold-transition register-page" style="background-color:white ;">
-<div class="register-box" style="border-radius: 20px; background-color:steelblue  ">
-  <div class="card card-outline card-primary"   style="background-color:white ;  border-radius: 20px; ">
+<body style="background-color:red ;  display:flex; justify-content:center; align-items:center;"  >
+<div class="register-box" style="border-radius: 20px; background-color:steelblue;">
+  <div class="card card-outline card-primary"   style="background-color:white ;  border-radius: 20px;  " >
     <div class="card-header text-center" >
-      <a href="../../index2.html" class="h1"><b>Nuevo</b> Usuario </a>
+      <a href="" class="h1"><b>Nuevo</b> Usuario </a>
     </div>
     <div class="card-body"  style="background-color:dodgerblue ; border-radius: 30px 30px 10px  10px ; ">
       <p class="login-box-msg"  style="color:dodgerblue;">Registrar nuevo usuario</p>
 
       <form action="javascript:saveUser()" method="post">
+        <input type="hidden"  name="usuarioID" id="usuarioID" class="form-control text-left">
         <div class="input-group mb-3" style=" border-radius: 0px 20px 20px  0px ; ">
             <div class="input-group-append" >            
             <div class="input-group-text" style="background-color:white ; color: steelblue ; border-radius: 20px 0px 0px  20px ;">            

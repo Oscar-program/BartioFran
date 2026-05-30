@@ -17,19 +17,42 @@ class Usuarios_Model extends CI_Model{
   //funcion para  almacenar los datos del  usuario 
  
 
-    public function insert_user($data)
+    public function insert_user($data, $usuarioID)
     {
-      $this->db->insert("usuario",$data);
-      return $this->db->insert_id();
+
+    if($usuarioID ==   NULL){
+         // ECHO  "HACER INSERCION" ;
+    
+            $this->db->insert("usuario",$data);
+            return $this->db->insert_id();
+        }else{
+             // ECHO  "HACER UPDATE    CLJDSKCSKDNJ" ;
+
+           $this->db->set("usrNombre", $data["usrNombre"])
+                    ->set("usrLogin", $data["usrLogin"])
+                    ->set("usrPwd", $data["usrPwd"])
+                    ->set("empresaID", $data["empresaID"])
+                    ->set("nivelUsuarioID", $data["nivelUsuarioID"])
+                    ->where("usuarioID", $usuarioID)
+                    ->where("usrStatus",  1)
+                    ->update("usuario");
+            return $this->db->affected_rows();  
+
+
+      //$this->db->insert("usuario",$data);
+      //return $this->db->insert_id();
     }
+     }
 
     // funcion  retorna todos los usuarios  
     public function allUserSystem(){
-      $query =  $this->db->select("usr.*" )   
-      //->where('usr.usrLogin',$usrLogin )                             
-      //->where("usr.usrPwd", $usrPwd)              
+      $query =  $this->db->select("u.usuarioID, u.usrNombre, u.usrLogin,  u.usrPwd,  u.empresaID , u.nivelUsuarioID , 
+                                   emp.empNombre, nlu.nivel ,   u.usrStatus" )
+                           ->join('nuevoestablo.empresa emp','u.empresaID =  emp.empresaID','inner')
+                           ->join('nuevoestablo.nivelusuario nlu','nlu.nivelUsuarioID =  u.nivelUsuarioID','inner')          
+          
    
-      ->get("usuario usr")
+      ->get("nuevoestablo.usuario u ")
       ->result();
       return  $query;  
     }

@@ -226,7 +226,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="javaScript:preciosProducto()" class="nav-link">
+                  <a href="javaScript:listarUsuarios()" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Usuarios</p>
                   </a>
