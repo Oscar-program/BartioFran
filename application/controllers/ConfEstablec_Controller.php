@@ -65,8 +65,8 @@ public function get_EstablecimientoPorID($establecimientoID){
 
 }
 
-  public function delete_EstablecimientoPorID($establecimientoID){
-      $result =  $this->Establecimiento_Model->delete_EstablecimientoPorID($establecimientoID);
+  public function deleteEstablecimiento($establecimientoID){
+      $result =  $this->Establecimiento_Model->deleteEstablecimiento($establecimientoID);
       echo  $result;
 
   }

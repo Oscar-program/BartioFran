@@ -140,9 +140,10 @@ class mesas_Model extends CI_Model {
     }
 
     /*Funcion para eliminar  una medida de  producto */
-    public function delete_MesaPorID($mesaID) {
-        $this->db->where("mesaID",$mesaID)         
-                 ->delete("mesa");                 
+    public function delete_Mesa($mesaID) {
+        $this->db->set("mestatus",0)
+                 ->where("mesaID",$mesaID)         
+                 ->update("mesa");                 
         return  $this->db->affected_rows();          
     }
     // funcion mostramos todas las mesas deñ  area  

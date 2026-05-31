@@ -185,7 +185,7 @@ public function preciosProducto(){
 // funcion  para actualizar los precio  del  los productos 
 public function  updatePrecProd (){  
   $productoID     = (isset($_POST["productoID"]))?  $_POST["productoID"] : 0;
-  $preciocosto    = (isset($_POST["preciocosto"]))?  $_POST["preciocosto"] : 0;
+  $preciocosto    = 0 ; //(isset($_POST["preciocosto"]))?  $_POST["preciocosto"] : 0;
   $precioventa    = (isset($_POST["precioventa"]))?  $_POST["precioventa"] : 0;    
   $fechactualizado = date("Y-m-d H:i:s");
   # preparando el algoritmo para  refleja la  salida en  el kardex

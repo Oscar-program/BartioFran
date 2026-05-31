@@ -47,6 +47,11 @@ class mesa_Controller extends CI_Controller{
 
 
     }
+    public function delete_Mesa($mesaID){
+         $datos = $this->mesas_Model->delete_Mesa($mesaID);
+        echo $datos ;
+
+    }
 
 
      

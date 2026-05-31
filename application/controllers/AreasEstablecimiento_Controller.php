@@ -44,9 +44,9 @@ class AreasEstablecimiento_Controller extends CI_Controller{
     }
 
     /*Funcion para eliminar  una medida de  producto */
-    public function delete_AreaEstablecimientoPorID($areaEstablecimientoID) {
+    public function delete_AreaEstablecimiento($areaEstablecimientoID) {
       //  $areaEstablecimientoID =  (isset($_REQUEST['areaEstablecimientoID'])   AND  strlen($_REQUEST['areaEstablecimientoID'])> 0 )   ? $_REQUEST['areaEstablecimientoID']: 0 ;
-        $result= $this->AreasEstablecimiento_Model->delete_AreaEstablecimientoPorID($areaEstablecimientoID);
+        $result= $this->AreasEstablecimiento_Model->delete_AreaEstablecimiento($areaEstablecimientoID);
         echo   $result ;     
     }
 

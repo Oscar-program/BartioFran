@@ -7,7 +7,8 @@ class Usuarios_Model extends CI_Model{
   function getUserpwd($usrLogin, $usrPwd){
            $query =  $this->db->select("usr.*" )   
                                 ->where('usr.usrLogin',$usrLogin )                             
-                                ->where("usr.usrPwd", $usrPwd)              
+                                ->where("usr.usrPwd", $usrPwd)
+                                ->where("usr.usrStatus", 1)                 
                              
                                 ->get("usuario usr")
                                 ->row();
@@ -21,12 +22,12 @@ class Usuarios_Model extends CI_Model{
     {
 
     if($usuarioID ==   NULL){
-         // ECHO  "HACER INSERCION" ;
+        //  ECHO  "HACER INSERCION" ;
     
             $this->db->insert("usuario",$data);
             return $this->db->insert_id();
         }else{
-             // ECHO  "HACER UPDATE    CLJDSKCSKDNJ" ;
+           //   ECHO  "HACER UPDATE    CLJDSKCSKDNJ" ;
 
            $this->db->set("usrNombre", $data["usrNombre"])
                     ->set("usrLogin", $data["usrLogin"])
@@ -49,7 +50,8 @@ class Usuarios_Model extends CI_Model{
       $query =  $this->db->select("u.usuarioID, u.usrNombre, u.usrLogin,  u.usrPwd,  u.empresaID , u.nivelUsuarioID , 
                                    emp.empNombre, nlu.nivel ,   u.usrStatus" )
                            ->join('nuevoestablo.empresa emp','u.empresaID =  emp.empresaID','inner')
-                           ->join('nuevoestablo.nivelusuario nlu','nlu.nivelUsuarioID =  u.nivelUsuarioID','inner')          
+                           ->join('nuevoestablo.nivelusuario nlu','nlu.nivelUsuarioID =  u.nivelUsuarioID','inner')
+                           ->where("u.usrStatus",  1)           
           
    
       ->get("nuevoestablo.usuario u ")
@@ -66,6 +68,64 @@ class Usuarios_Model extends CI_Model{
       ->result();
       return  $query;  
     }
+    
+    public function  get_UserID($usuarioID){
+      $query =  $this->db->select("u.*" )
+                     ->where("u.usuarioID", $usuarioID)
+                     ->where("u.usrStatus",  1) 
+                    ->get("nuevoestablo.usuario u ")
+                    ->row();
+      return  $query;  
+      
+
+    }
+    function  del_UserID($usuarioID){
+        $this->db->set("usrStatus", 0)                   
+                    ->where("usuarioID", $usuarioID)                   
+                    ->update("usuario");
+            return $this->db->affected_rows();  
+
+    }
+    # hacemos apartado para el registro de los difrentes niveles de usuario 
+
+    public function listNivelusuario(){
+      $query =  $this->db->select("nvl.*" )
+                         ->where("nvl.estado",  1)
+                         ->get("nuevoestablo.nivelusuario nvl")    
+                          ->result();
+                        return  $query;  
+    }
+    public function insert_nivelUsuario($data, $nivelUsuarioID){
+        if($nivelUsuarioID ==   NULL){
+            $this->db->insert("nivelusuario",$data);
+            return $this->db->insert_id();
+        }else{             
+           $this->db->set("nivel", $data["nivel"])                    
+                    ->where("nivelUsuarioID", $nivelUsuarioID)
+                    ->where("estado",  1)
+                    ->update("nivelusuario");
+            return $this->db->affected_rows();
+                }
+    }
+    public function  get_NivelUserID($nivelUsuarioID){
+      $query =  $this->db->select("nvl.*" )
+                     ->where("nvl.nivelUsuarioID", $nivelUsuarioID)
+                     ->where("nvl.estado",  1) 
+                    ->get("nuevoestablo.nivelusuario nvl ")
+                    ->row();
+      return  $query;  
+      
+
+    }
+    public function  delete_NivelUser($nivelUsuarioID){
+        $this->db->set("estado", 0)                   
+                    ->where("nivelUsuarioID", $nivelUsuarioID)                   
+                    ->update("nivelusuario");
+            return $this->db->affected_rows();  
+
+    }
+
+
 
 
 

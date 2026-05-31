@@ -47,7 +47,7 @@
       <p class="login-box-msg"  style="color:dodgerblue;">Registrar nuevo usuario</p>
 
       <form action="javascript:saveUser()" method="post">
-        <input type="hidden"  name="usuarioID" id="usuarioID" class="form-control text-left">
+        <input type="text"  name="usuarioID" id="usuarioID" >
         <div class="input-group mb-3" style=" border-radius: 0px 20px 20px  0px ; ">
             <div class="input-group-append" >            
             <div class="input-group-text" style="background-color:white ; color: steelblue ; border-radius: 20px 0px 0px  20px ;">            

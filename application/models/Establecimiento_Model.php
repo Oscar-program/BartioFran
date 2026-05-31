@@ -38,10 +38,11 @@ class  Establecimiento_Model  extends CI_Model{
     }
 
     /*Funcion para eliminar  una medida de  producto */
-    public function delete_EstablecimientoPorID($establecimientoID) {
-        $this->db->where("establecimientoID",$establecimientoID)         
-                 ->delete("establecimientoempresa");                 
-        return  $this->db->affected_rows();          
+    public function deleteEstablecimiento($establecimientoID) {
+        $this->db->set("estStatus", 0)
+                ->where("establecimientoID", $establecimientoID)
+               ->update("establecimientoempresa");
+            return $this->db->affected_rows();
     }
 
 

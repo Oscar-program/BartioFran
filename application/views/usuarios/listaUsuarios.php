@@ -44,36 +44,22 @@
                                                     
                         ?>
                         <tr>
-
                             <td><?php echo $c ;?></b></td>
                             <td><?php echo $row->usrNombre; ?></td>
                             <td><?php echo $row->usrLogin; ?></td>
                             <td><?php echo $row->usrPwd; ?></td>
                             <td><?php echo $row->empNombre; ?></td>
-                            <td><?php echo $row->nivel; ?></td>
-                          
-                                                        
+                            <td><?php echo $row->nivel; ?></td>                          
                             <td class="text-right">
-
                                 <a href='#' class="btn btn-default btn-sm" style="margin:0px;    color: #5DADE2 ;"
                                     title="Consultar venta"
-                                    onclick="editUser(<?php echo $row->usuarioID ;?>);" >
+                                    onclick="get_UserID(<?php echo $row->usuarioID ;?>);" >
                                     <i class="fa fa-pencil" aria-hidden="true"></i></a>
 
-                                
-                                    
                                     <a href='#' class="btn btn-default btn-sm"style="margin:0px;  color: #5DADE2 ;"
                                     title="Asignar sucursal de cobro"
-                                    onclick="delUser(<?php echo $row->usuarioID ;?>);">
-                                    <i class="fa fa-trash-o" aria-hidden="true"></i></a> 
-
-
-                                     
-
-                                    
-
-                                
-                                    
+                                    onclick="del_UserID(<?php echo $row->usuarioID ;?>);">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i></a>                                     
                             </td>
                         </tr>
                         <?php  $c +=1; 
@@ -86,9 +72,7 @@
     </div>
 </div>
 
-<div   id ="vmodaladdProducto">
-        
-</div>
+
 
 
     <script>

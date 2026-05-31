@@ -29,6 +29,10 @@ $listaEmpresa = '';
                         <li class="nav-item">
                         <a class="nav-link" id="four-tab" data-toggle="tab" href="#four" role="tab" aria-controls="Four" aria-selected="false" onclick="verificarstadotabconf(this.id)">Mesas</a>
                     </li>
+                    </li>
+                        <li class="nav-item">
+                        <a class="nav-link" id="five-tab" data-toggle="tab" href="#five" role="tab" aria-controls="Five" aria-selected="false" onclick="verificarstadotabconf(this.id)">Nivel usuario</a>
+                    </li>
                    
                 </ul>
             </div>
@@ -288,7 +292,53 @@ $listaEmpresa = '';
                                 </div>             
                         </div>
                     </div>
-                
+                <!-- Nivel usuario Sistema -->
+                   <div class="tab-pane fade  p-3" id="five" role="tabpanel" aria-labelledby="four-tab">
+                        <div class="row">
+                                <div class ="col-md 6"> 
+                                    <h4>Nivel usuario sistema</h4>
+                                    <div class ="shadow-sm p-3 mb-5 bg-white rounded">
+                                        <form  id  ="FormNivelUser" class ="FormNivelUser" method="post" action="javascript:saveNivelUsuario()">
+                                        <input type="hidden"  id="nivelUsuarioID" name="nivelUsuarioID"> 
+                                        
+                                        
+                                         
+                                         
+                                              
+
+                                        <div class="form-group">
+                                                
+                                                 <label for="txtmesa" class="col-form-label">Nivel: </label>
+                                                <input type="text" class="form-control text-left" id="nivel" name="nivel" placeholer ="Ingrese nivel usuario sistema" required  >
+                                                
+                                        </div>
+                                            <div class="form-group">
+                                            <button  type="submit" data-title="Almacenar registro" class="btn btn-danger btnAction"> Guardar </button>
+                                            </div>
+
+                                        </form>
+                                    </div>      
+                                </div> 
+                                <div class ="col-md 6">
+                                     <div class="contenedor-tabla">
+                                        <div class="tabla-responsive">
+                                            <table id="tblMesas" class="tabla-estilo" >
+                                                <thead class="headertable">
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Nivel</th>
+                                                        <th class="text-right">ACCIONES</th>                                
+                                                    </tr>
+                                                </thead>
+                                                <tbody id ="detNivelUsuario">                                   
+                                                                                        
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                     </div>    
+                                </div>             
+                        </div>
+                    </div>
             </div>               
             
       </div>

@@ -181,11 +181,12 @@ function addProducto(productoID){
     var preciocosto = 0;
     var precioventa = 0;
     if(document.getElementById("precioventa"+ identificador)){
-      precioventa =  $("#precioventa" + identificador).val(); 
+      precioventa =  $("#precioventa" + identificador).val();
+       preciocosto =  $("#precioventa" + identificador).val();  
     }
-    if(document.getElementById("preciocosto"+ identificador)){
+    /*if(document.getElementById("preciocosto"+ identificador)){
       preciocosto =  $("#preciocosto" + identificador).val(); 
-    }
+    }*/
 
     //var precio = $("#precio" + identificador).val();
     //var bodegaDest    = bodegaProductoIDDes;// $("#bodegaDest"    +identificador).val();  
@@ -215,8 +216,9 @@ function addProducto(productoID){
           },
           success: function (data) {
           //$("#codigoCliente").prop( "disabled", true);
-            alertify.set("notifier", "position", "top-right");
-            alertify.success("Precio actualizado correctamente");
+           // alertify.set("notifier", "position", "top-right");
+            //alertify.success("Precio actualizado correctamente");
+             preciosProducto()
           },
           complete: function () {
              

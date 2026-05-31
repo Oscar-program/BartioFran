@@ -18,8 +18,8 @@
                         <tr class="thead-dark" style="border-style: none !important;">
                             <th>#</th>
                             <th>NOMBRE DEL  PRODUCTO</th>
-                            <th>EXISTENCIA</th>
-                            <th>PRECIO VENTA</th>
+                            <th>PRECIO ACTUAL</th>
+                            <th>NEW. PRECIO</th>
                            
                                                     
                             <th class="text-right">ACCIONES</th>                                
@@ -37,7 +37,7 @@
                                     <tr>
                                     <td><?php echo $c; ?> </td>
                                         <td><?php echo strtoupper($row->prodDescripcion) ; ?></td>
-                                        <td><?php echo $row->existencia; ?> </td>
+                                        <td><?php echo '$ '. $row->precioventa; ?> </td>
                                         
                                         
                                         <td><input type="number"   class="form-control text-right"  id ="<?php echo  'precioventa' .  $c; ?>"    name ="<?php echo  'precioventa' .  $c; ?>"></td>

@@ -65,7 +65,7 @@ class   login_Controller extends CI_Controller{
         $aes_encrypt  =  new  aes_encrypt();
        
         $aes_key       ='xyz123';
-        $usuarioID     = (isset($_POST["usuarioID"])  and   strlen($_POST["usuarioID"])> 0) ?  $_POST["usuarioID"] : NULL;         
+        $usuarioID     = (isset($_REQUEST["usuarioID"])  and   strlen($_REQUEST["usuarioID"])> 0) ?  $_REQUEST["usuarioID"] : NULL;         
         $usrNombre     = (isset($_POST["Fullname"]))?  $_POST["Fullname"] : "";
         $usrLogin      = (isset($_POST["Email"]))?  $_POST["Email"] : "";
         $usrPwd        = (isset($_POST["Password"]))?  $aes_encrypt->aes_encryptAcceso($_POST["Password"] ,"encrypt") : "";
@@ -79,14 +79,55 @@ class   login_Controller extends CI_Controller{
                         'nivelUsuarioID' => $nivelUsuarioID,
                         
                     );
+                  //  echo  "el iddelusuario es  " .  $_REQUEST["usuarioID"] . "CSDF" ; 
+                   // EXIT  ;
+
        $this->usuarios_Model->insert_user($data, $usuarioID);
 
     }
 
     // funcion para listar los usuarios del sistema 
     function allUserSystem(){
-    $datos['allUserSystem'] = $this->usuarios_Model->allUserSystem(); 
+     $datos['allUserSystem'] = $this->usuarios_Model->allUserSystem(); 
      $this->load->view('usuarios/listaUsuarios', $datos);
 
     }
+    
+    // obtener informacion de usuario para modificar 
+    function  get_UserID($usuarioID){
+         $datos = $this->usuarios_Model->get_UserID($usuarioID) ; 
+      
+           echo  json_encode($datos);
+    }
+    function  del_UserID($usuarioID){
+          $datos = $this->usuarios_Model->del_UserID($usuarioID) ; 
+        
+           echo  $datos; 
+
+    }
+    #  funcion para la configuracion del  nivel del usuario 
+    public function listNivelusuario(){
+        $datos['listNivelusuario'] = $this->usuarios_Model->listNivelusuario(); 
+        $this->load->view('confEmpresa/detNivelUsuario', $datos);
+    }
+    public function savenivelUsuario(){
+        $nivelUsuarioID   = (isset($_POST["nivelUsuarioID"])  and   strlen($_POST["nivelUsuarioID"])> 0) ?  $_POST["nivelUsuarioID"] : NULL;     
+        $nivel            = (isset($_POST["nivel"]))?  $_POST["nivel"] : "";
+        $data             =  array('nivel'=>$nivel);
+        $result = $this->usuarios_Model->insert_nivelUsuario($data, $nivelUsuarioID);
+    }
+    public function  get_NivelUserID($nivelUsuarioID){
+           $datos = $this->usuarios_Model->get_NivelUserID($nivelUsuarioID) ;        
+           echo  json_encode($datos);
+
+    }
+    public function  deleteNivelUser($nivelUsuarioID){
+          $datos = $this->usuarios_Model->delete_NivelUser($nivelUsuarioID) ; 
+          echo  $datos ;       
+    }
+
+
+
+
+
 }

@@ -17,7 +17,7 @@
                             </a>
                             <a href='#' class="btn-eraser"
                                  title="Eliminar registro"
-                                onclick="">
+                                onclick="deleteEstablecimiento(<?php  echo   $row->establecimientoID; ?>);">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </a> 
                         </td>

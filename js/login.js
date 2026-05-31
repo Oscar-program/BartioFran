@@ -20,16 +20,14 @@ function validaUser(){
         establecimID =  $("#establecimiento").val();
     }
     //console.log('EL esablecimiento seleccionado es ' + establecimiento  );   
-    alert('EL esablecimiento seleccionado es ' + establecimID )  ; 
+    //alert('EL esablecimiento seleccionado es ' + establecimID )  ; 
     var DJson = { user:user, pwd:pwd, establecimID:establecimID };
     alert('los  datos enviados por el  Json son ' + DJson)  ; 
     $.ajax({
         url:url,
         type:"POST",
         data:DJson, 
-
         beforeSend:function(
-
         ){},
         success:function(data){
             if(data ==  0 ){
@@ -37,12 +35,8 @@ function validaUser(){
                     icon: "error",
                   });
             }else{
-              window.location.href = base_url("index.php/Welcome/principal");
-               // window.onload()
-                //acceso();
+              window.location.href = base_url("index.php/Welcome/principal");              
             }
-
-
         },
         complete:function(){
 
@@ -52,40 +46,30 @@ function validaUser(){
 
 
 }
-
 function acceso(){
     var url = base_url('index.php/Welcome/principal/');
-
-        $.get(url, function (data) {
-                  
+        $.get(url, function (data) {                  
         });
 }
-
 //  funcion para  registrar al usuarios  
 function registerUser(){
-    console.log("lazando la ventana para  registrar el usuarios");
-
-  // window.location.href = base_url("index.php/Welcome/registerUser");
-
-     var url = base_url('index.php/Welcome/registerUser');
- 
+     var url = base_url('index.php/Welcome/registerUser'); 
     $.get(url, function (data) {
-        $("#principal").html(data);
-            
+        $("#principal").html(data);            
     });
-
-  
 }
 // funcion para almacenar los  datos de los  nuevos usuarios 
-
 function  saveUser(){
     console.log("Llegando a la funcion para  guardar los  datos de los  usuarios"); 
     var Fullname   =  "";
     var Email      =  "";
     var niveluser  =  "" ;
     var Password   =  "";
-
     var url  = base_url('index.php/login_Controller/saveUser/');
+     if(document.getElementById('usuarioID')){
+        usuarioID =  $("#usuarioID").val();
+    }
+
 
     if(document.getElementById('Fullname')){
         Fullname =  $("#Fullname").val();
@@ -101,35 +85,51 @@ function  saveUser(){
     if(document.getElementById('password')){
         Password =  $("#password").val();
     }
-   
-
-
-    var DJson = { Fullname: Fullname, Email:Email, niveluser:niveluser,  Password:Password };
+    var DJson = {usuarioID:usuarioID,  Fullname: Fullname, Email:Email, niveluser:niveluser,  Password:Password };
     $.ajax({
         url:url,
         type:"POST",
         data:DJson, 
-
         beforeSend:function(
-
         ){},
         success:function(data){
           console.log("datos Almacenados  correctamente")
           listarUsuarios() ;
-
         },
         complete:function(){
-
         }
-
     });
 }
 function listarUsuarios(){
-    var url = base_url('index.php/login_Controller/allUserSystem/');
- 
+    var url = base_url('index.php/login_Controller/allUserSystem/'); 
     $.get(url, function (data) {
-        $("#principal").html(data);
-            
+        $("#principal").html(data);            
     });
+}
+
+function  get_UserID(usuarioID){
+     var url = base_url('index.php/login_Controller/get_UserID/' + usuarioID);
+      $.get(url, function (data) {
+            const  datos  =   JSON.parse(data); 
+            var url = base_url('index.php/Welcome/registerUser'); 
+            $.get(url, function (data) {
+                $("#principal").html(data);
+                  $("#usuarioID").val(datos['usuarioID'] ) ;
+                  $("#usuarioID").show();
+                  $("#Fullname").val(datos['usrNombre']);
+                  $("#Email").val(datos['usrLogin']);             
+                  $("#Password").val(datos['usrPwd']);
+                  $("#niveluser").val(datos['nivelUsuarioID']); 
+                  $("#niveluser").change(); 
+                    
+            });            
+        });
 
 }
+function del_UserID(usuarioID){
+     var url = base_url('index.php/login_Controller/del_UserID/' + usuarioID);
+      $.get(url, function (data) {
+         listarUsuarios();
+      });
+
+} 

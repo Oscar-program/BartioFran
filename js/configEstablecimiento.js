@@ -1,16 +1,47 @@
 function base_url(url){
     return window.location.origin + "/BartioFran/"+ url;
 }
+function verificarstadotabconf(id){
+      
+        console.log('el   id seleccionado es' + id );
+        var formData;
+
+        switch (id) {
+            case 'one-tab':         
+              listarEmpresas();
+              break;
+            case 'two-tab':            
+                listarEstablecimientos();
+            break;
+            case 'three-tab':         
+              listAreasEstablecimientos();
+                
+            case 'four-tab':            
+                    listMesasPorAreas();
+            break;
+             case 'five-tab':            
+                    listNivelusuario();
+            break;
+            
+            case 'seven-tab':
+                
+                  break;    
+            // Más casos...
+            default:
+              // Código a ejecutar si no coincide con ningún caso anterior
+          }
+        
+
+    }
 
    /*funcion carga pantalla principa*/
-    function configurarEstablecimiento(){  
+function configurarEstablecimiento(){  
       console.log('llegando a la  configuracion del  producto');
-      var url = base_url('index.php/ConfEstablec_Controller/setthingEstablecimineto/');
-  
+      var url = base_url('index.php/ConfEstablec_Controller/setthingEstablecimineto/');  
         $.get(url, function (data) {
             $("#principal").html(data);
         });
-    }
+}
    
 
 //#region LISTAR 
@@ -41,6 +72,13 @@ function base_url(url){
         var url = base_url('index.php/mesa_Controller/listarMesasArea/');  
           $.get(url, function (data) {
               $("#detMesas").html(data);
+          });
+      }
+      function listNivelusuario(){
+        // console.log('Listando mesas  por  area ');
+        var url = base_url('index.php/login_Controller/listNivelusuario/');  
+          $.get(url, function (data) {
+              $("#detNivelUsuario").html(data);
           });
       }
 //#endregion  
@@ -138,6 +176,7 @@ function base_url(url){
                 success: function (data) {   
                   alertify.set("notifier", "position", "top-right");
                   alertify.success("Registro guardo correctamente");
+                   $("#areasEstablecimientoID").val('') ;
                    $("#Area").val('') ; 
                    $("#SEstab").val(0); 
                    $("#SEstab").change(); 
@@ -186,6 +225,38 @@ function base_url(url){
                     
                     }
                 });
+      }
+      function  saveNivelUsuario(){
+        var formData;
+        if(document.getElementById('FormNivelUser')) {
+          formData = new FormData($(".FormNivelUser")[0]);   
+        }             
+        url_destino = "index.php/login_Controller/savenivelUsuario/";
+        $.ajax({
+                    url: base_url(url_destino),
+                    type: "POST",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+                      // Show image container
+                      $("#loader").css("display", "block");
+                    },
+                    success: function (data) {
+                    //$("#codigoCliente").prop( "disabled", true);
+                      alertify.set("notifier", "position", "top-right");
+                      alertify.success("Registro guardo correctamente");
+                      $("#nivel").val('') ; 
+                      $("#nivelUsuarioID").val(''); 
+                   
+                      listNivelusuario();
+                    },
+                    complete: function () {
+                    
+                    }
+                });
+
       }
      
 // #endregion
@@ -265,7 +336,6 @@ function base_url(url){
      var url = base_url('index.php/mesa_Controller/get_MesaPorID/' + mesaID);
       $.get(url, function (data) {
           console.log(data) ;
-
            const  datos  =   JSON.parse(data); 
 
           
@@ -289,145 +359,119 @@ function base_url(url){
     
 
   }
+  function get_NivelUserID(nivelUsuarioID){
+     console.log("NIVEL DE USUARIO SELECCIONADO" + nivelUsuarioID) ;
+     var url = base_url('index.php/login_Controller/get_NivelUserID/' + nivelUsuarioID);
+      $.get(url, function (data) {
+          console.log(data) ;
 
+           const  datos  =   JSON.parse(data); 
 
+          
+           console.log(datos) ;
+          
+             $("#nivelUsuarioID").val( datos['nivelUsuarioID'] ) ; 
+             $("#nivel").val(datos['nivel']); 
+           
+
+             
+
+            
+
+            
+        });
+
+  }
 //#endregion
 
 
 
+//#region Elimiar  
+function  deleteEstablecimiento(establecimientoID){
+     var url = base_url('index.php/ConfEstablec_Controller/deleteEstablecimiento/' + establecimientoID);
+      $.get(url, function (data) {
+         listarEstablecimientos();
+      });
 
-/*Funcion carga la configuraciones de los paneles */
-function verificarstadotabconf(id){
-   
-     console.log('el   id seleccionado es' + id );
-     var formData;
+}
 
-     switch (id) {
-        case 'one-tab':         
-          listarEmpresas();
-          break;
-        case 'two-tab':            
-            listarEstablecimientos();
-        break;
-        case 'three-tab':         
-          listAreasEstablecimientos();
-            
-        case 'four-tab':            
-                listMesasPorAreas();
-        break;
-        
-        case 'seven-tab':
-             
-              break;    
-        // Más casos...
-        default:
-          // Código a ejecutar si no coincide con ningún caso anterior
-      }
+function deleteAreaEstablecimiento(areaEstablecimientoID){
+     var url = base_url('index.php/AreasEstablecimiento_Controller/delete_AreaEstablecimiento/' + areaEstablecimientoID);
+      $.get(url, function (data) {
+         listAreasEstablecimientos();
+      });
+
+}
+
+function  deleteMesa(mesaID){
+     var url = base_url('index.php/mesa_Controller/delete_Mesa/' + mesaID);
+      $.get(url, function (data) {
+         listMesasPorAreas();
+      });
+  
+}
+function deleteNivelUser(nivelUsuarioID){
+   var url = base_url('index.php/login_Controller/deleteNivelUser/' + nivelUsuarioID);
+      $.get(url, function (data) {
+         listNivelusuario();
+      });
+}
     
 
- }
-/*funcion para almacenar la marca de los   productos */
-function  saveMarca(){
-  
-  var formData;
-  if(document.getElementById('FormOnetab')) {
-    formData = new FormData($(".FormOnetab")[0]);
+    function  saveMarca1(){
+      
+      var formData;
+      if(document.getElementById('FormOnetab')) {
+        formData = new FormData($(".FormOnetab")[0]);
+      
+      }else{
+          console.log('no existe el formulario');
+      }
+                
+      url_destino = "index.php/configuracioProd_Controller/saveMarca/";
+      console.log('Despues  de la URL');
+
+      $.ajax({
+        url: base_url(url_destino),
+        type: "POST",
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        beforeSend: function () {
+          // Show image container
+          $("#loader").css("display", "block");
+        },
+        success: function (data) {
+        //$("#codigoCliente").prop( "disabled", true);
+          alertify.set("notifier", "position", "top-right");
+          alertify.success("Registro guardo correctamente");
+        },
+        complete: function () {
+          // Show image container
+          $("#loader").css("display", "none");
+          mostrarDetalles();
+          $("#marcProdID").val('');
+          $("#txtmarca").val('');
+        }
+      });
+
+    }
    
-  }else{
-      console.log('no existe el formulario');
-  }
-             
-   url_destino = "index.php/configuracioProd_Controller/saveMarca/";
-   console.log('Despues  de la URL');
-
-   $.ajax({
-    url: base_url(url_destino),
-    type: "POST",
-    data: formData,
-    cache: false,
-    contentType: false,
-    processData: false,
-    beforeSend: function () {
-      // Show image container
-      $("#loader").css("display", "block");
-    },
-    success: function (data) {
-    //$("#codigoCliente").prop( "disabled", true);
-      alertify.set("notifier", "position", "top-right");
-      alertify.success("Registro guardo correctamente");
-    },
-    complete: function () {
-      // Show image container
-      $("#loader").css("display", "none");
-      mostrarDetalles();
-      $("#marcProdID").val('');
-      $("#txtmarca").val('');
+    function mostrarDetalles1(){
+      console.log('llegando  a la funcion que muestra el   detalle de las marcas');
+        var url = base_url('index.php/configuracioProd_Controller/mostrarDetalleMarcas/');
+      
+      //var url = base_url("index.php/BancosController/bancos");
+          $.get(url, function (data) {
+              $("#detMArcas").html(data);
+          });
+      
     }
-  });
 
-}
-/*mostrar el  detalle de las marcas  */
-function mostrarDetalles(){
-  console.log('llegando  a la funcion que muestra el   detalle de las marcas');
-    var url = base_url('index.php/configuracioProd_Controller/mostrarDetalleMarcas/');
-  
-  //var url = base_url("index.php/BancosController/bancos");
-      $.get(url, function (data) {
-          $("#detMArcas").html(data);
-      });
-  
-}
-/*funcion para  retornar la  marca seleccionada*/
-function  get_marcaxId(id){
-  console.log('obtener la marca seleccionada');
-  var url = base_url('index.php/configuracioProd_Controller/get_marcaxId/' +id);
+    
 
-//var url = base_url("index.php/BancosController/bancos");
-    $.get(url, function (data) {
-        // console.log(data);
-         var datosMarca  =  JSON.parse(data);
-         console.log(datosMarca);
-         console.log(datosMarca[0].marcProdID);
-        $("#marcProdID").val(datosMarca[0].marcProdID);
-        $("#txtmarca").val(datosMarca[0].marcProdDescripcion);
-       
-    });
 
-}
-
-/*Funcion para eliminar  un detallle de la  marca */
-function  DeleteMarcar(marcProdID){
-  swal({
-    title: "Estas seguro de elimnar el  registro ?",
-    text: "Este proceso eliminara el  registro de base  de  datos",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  }).then((Delete) => {
-    if (Delete) {
-                var url = base_url(
-                  "index.php/configuracioProd_Controller/delete_MarcaProductoID/" + marcProdID
-                );
-                $.get(url, function (data) {
-                  if (data == 0) {
-                        swal({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Surgio un error al  eliminar el  registro',														
-                        });
-                  } else if (data == 1) {
-                    swal("Registro eliminado corectamente", {
-                      icon: "success",
-                    });
-                    mostrarDetalles();
-                  }
-
-                });				
-    } else {
-      swal("Operacion  cancelada",{
-        icon: "success",
-      });
-    }
-  });
-}
+    
+//#regionElimiar
 

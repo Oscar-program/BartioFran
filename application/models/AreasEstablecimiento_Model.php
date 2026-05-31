@@ -48,9 +48,10 @@ class AreasEstablecimiento_Model extends CI_Model{
     }
 
     /*Funcion para eliminar  una medida de  producto */
-    public function delete_AreaEstablecimientoPorID($areaEstablecimientoID) {
-        $this->db->where("areaEstablecimientoID",$areaEstablecimientoID)         
-                 ->delete("areasestablecimiento");                 
+    public function delete_AreaEstablecimiento($areaEstablecimientoID) {
+        $this->db->set("estado", 0)
+                  ->where("areaEstablecimientoID",$areaEstablecimientoID)         
+                 ->update("areasestablecimiento");                 
         return  $this->db->affected_rows();          
     }
 
