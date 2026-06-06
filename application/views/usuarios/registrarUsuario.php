@@ -37,8 +37,9 @@
       </style>
 
 </head>
-<body style="background-color:red ;  display:flex; justify-content:center; align-items:center;"  >
-<div class="register-box" style="border-radius: 20px; background-color:steelblue;">
+<!--<body style="background-color:red ;  display:flex; justify-content:center; align-items:center;"  > -->
+<div class="register-box" style="border-radius: 20px; background-color:steelblue;  margin:0 auto;">
+  dfhjksdhfjkdbfjkbsd
   <div class="card card-outline card-primary"   style="background-color:white ;  border-radius: 20px;  " >
     <div class="card-header text-center" >
       <a href="" class="h1"><b>Nuevo</b> Usuario </a>
@@ -141,5 +142,5 @@
 <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
-</body>
+<!-- </body> -->
 </html>

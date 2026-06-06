@@ -3,6 +3,7 @@ defined('BASEPATH') or  exit('No direct script access allowed');
  ini_set('display_errors',1);
  ini_set('display_startup_errors',1);
  error_reporting(E_ALL); 
+ date_default_timezone_set('America/El_Salvador');  
 
 class Ordenes_Controller extends CI_Controller{
      public function __construct(){
@@ -130,6 +131,16 @@ class Ordenes_Controller extends CI_Controller{
         
 
        }
+
+      public function listaOrdenesProcesadas(){
+          $datos['listaOrdenesProcesadas']  =  $this->ordenesPedido_Model->listaOrdenesProcesadas(); 
+          
+      }
+      public function procesarPedido($ordenPedidoID){
+         $datos =  $this->ordenesPedido_Model->procesarPedido($ordenPedidoID); 
+
+      }
+
 
 
 

@@ -207,9 +207,7 @@ function cargar_addordenes(mesaID){
 
   // funcion para abonar orden 
    function abonarOrden(){ 
-          /*console.log("mostrando mesas con ordenes pendientes Despacho /cobro") ; 
-          ordenPedidoID     
-          ordPAbono*/
+
 
          var ordPAbono  =  $("#ordPAbono").val(); //  10;
          var ordenPedidoID  = $("#ordenPedidoID").val(); //  10;
@@ -228,12 +226,23 @@ function cargar_addordenes(mesaID){
              $("#addAbonoPedido.close").click();
               $(".modal-backdrop").remove(); 
               mostrarPendientesCobro(select);    
+           }
+       
+       });
+      }
 
-            //get_OrdenesPendientesCobro();
-            // retornar  lo que queda en la tabla ordenes  acobrar
-             //console.log("la orden es" + ordenPedidoID )  ;         
-            // document.getElementById('total' + ordenPedidoID).textContent ="TOTAL A CANCELAR $"  + data  ;
-             //console.log("la suma A OBRAR ES es  " + data);
+      function procesarPedido(ordenPedidoID){ 
+        console.log("la orden a procesar es " + ordenPedidoID )  ;  
+
+        var url = base_url('index.php/Ordenes_Controller/procesarPedido/' + ordenPedidoID );         
+         
+         $.ajax({
+           url: url, 
+           type:"POST",
+           beforeSend: function(){
+           }, success:function(data){ 
+            
+
            }
        
        });

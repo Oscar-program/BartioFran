@@ -86,7 +86,7 @@
     // funcion que  muestra todas las  ordenes pendientes  de cobro 
     public function get_OrdenesPendientesCobro(){
         $query =  $this->db->select(" msa.mesNombre, ordp.ordenPedidoID, date_format(ordp.ordPFecha,  '%d-%m-%Y') as ordPFecha,   mesr.meserNombre,  ordp.ordPpenditeCobro ")
-                ->join('mesero  mesr',  'ordp.meseroID = mesr.meseroID ', 'inner')
+                ->join('usuario  u',  'ordp.usuarioID = u.usuarioID ', 'inner')
                 ->join('mesa msa ',  'ordp.mesaID =  msa.mesaID', 'inner')
                 //->where("ordp.mesaID",  $mesaID) 
                 ->where("ordp.ordPpenditeCobro",  1)               
@@ -97,11 +97,11 @@
     }
     // funcion para  retornar los  datos con los  cuales  se  va  a emitir el  recibo  
     public function get_datosticket($ordenPedidoID){
-        $query =  $this->db->select("msa.mesNombre,  mro.meserNombre , detOr.detPedID, date_format( ord.ordPFecha,'%d-%m-%Y') as  ordPFecha,  detOr.ordenPedidoID, detOr.detcantidad, 
+        $query =  $this->db->select("msa.mesNombre,  u.usrNombre , detOr.detPedID, date_format( ord.ordPFecha,'%d-%m-%Y') as  ordPFecha,  detOr.ordenPedidoID, detOr.detcantidad, 
 		prod.prodDescripcion, (detOr.detprecioNormal + detOr.detprecioEspecial)  preciounit, detOr.dettotal"
                                     )
                 ->join('ordenpedido ord',  'detOr.ordenPedidoID =  ord.ordenPedidoID', 'inner')
-                ->join('mesero mro ',  'ord.meseroID =  mro.meseroID', 'inner')
+                ->join('usuario u ',  'ord.usuarioID =  u.usuarioID', 'inner')
                 ->join('mesa msa',  'ord.mesaID =  msa.mesaID', 'inner')
                 ->join('producto prod',  'detOr.productoID =  prod.productoID', 'inner')                
                 ->where("detOr.ordenPedidoID",  $ordenPedidoID)               
@@ -228,7 +228,9 @@
 
         $this->db->distinct();         
         $query = $this->db->select("ordenp.mesaID,msa.mesNombre as mesa,   ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora, 
-                                    MINUTE(ordenp.ordPFecha) as minuto,  
+                                    MINUTE(ordenp.ordPFecha) as minuto,
+                                    IF( LENGTH(ordenp.ordFechaVisto)> 0, CONCAT(
+                                    TIMESTAMPDIFF( MINUTE, ordenp.ordPFecha,  ordenp.ordFechaVisto), 'MINUTOS TRASNCURRIDOS '), 'SIN ASIGNAR') AS minutos_transcurridos,
                                     upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho,  ordenp.ordPAbono, ordenp.ordPAcobrar  as  ordPtotalcancelar, 
                                     prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo, 
                                     ped.detPedID ,ped.detcantidad as catidad,  prod.famProdID,  ped.dettotal, ped.cobrar,ped.despachar")                    
@@ -337,6 +339,52 @@
          ->row();
          return $query ;
     }
+
+    // funcion mustra todas las ordenes cobradas  
+    public function listaOrdenesProcesadas(){
+   // echo  "mostrando los datos del  pedido" ;
+
+
+        $this->db->distinct();         
+        $query = $this->db->select("ordenp.mesaID,msa.mesNombre as mesa,   ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora, 
+                                    MINUTE(ordenp.ordPFecha) as minuto,  
+                                    upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho,  ordenp.ordPAbono, ordenp.ordPAcobrar  as  ordPtotalcancelar, 
+                                    prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo, 
+                                    ped.detPedID ,ped.detcantidad as catidad,  prod.famProdID,  ped.dettotal, ped.cobrar,ped.despachar")
+                      ->join('usuario as  u',  ' u.usuarioID = ordenp.usuarioID', 'inner') 
+                      ->join('nivelusuario as  nlu',  ' nlu.nivelUsuarioID = u.nivelUsuarioID', 'inner')  
+
+                      ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
+                      ->join('areasestablecimiento areEst',  'areEst.areaEstablecimientoID =  msa.areaEstablecimientoID', 'inner')
+                      ->join('detordenpedido ped',  ' ped.ordenPedidoID =  ordenp.ordenPedidoID', 'inner')
+                      ->join('producto prod',  'prod.productoID =  ped.productoID', 'inner')
+                      ->join('presentacionproducto presen',  'presen.presProdID = prod.presProdID', 'inner')
+                      ->join('presentacionprod pre',  'pre.presProdID = prod.presProdID', 'inner')
+                      ->join('familiaproducto fam',  'fam.famProdID = prod.famProdID', 'inner')
+
+                    
+                   
+                 //->where("ordenp.mesaID",  $mesaID)
+                 ->where(" ordenp.ordPpenditeCobro",  0)
+                   ->where("ped.detstatus",  1)
+                ->order_by("ordenp.ordPFecha", "DESC")
+                 ->get("nuevoestablo.ordenpedido ordenp")
+                 ->result();
+        return  $query;
+
+    }
+
+    public function  procesarPedido($ordenPedidoID){
+       // echo  "la orden a procesar es "    . $ordenPedidoID ;    
+       date_default_timezone_set('America/El_Salvador');       
+          $this->db->set("ordVisto", 1) 
+                    ->set("ordFechaVisto", date("Y-m-d H:i:s"))
+                    ->where("ordenPedidoID",  $ordenPedidoID)
+                                        
+                 ->update("ordenpedido");
+                 return $this->db->affected_rows();  
+
+        }
 
 
 

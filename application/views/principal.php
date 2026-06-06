@@ -335,7 +335,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper" id="principal1"  style="background-color:white; width:100%">
+    <div class="content-wrapper" id="principal3"  style="background-color:white; width:100%;">
       <!-- Content Header (Page header) -->
       <div class="content-header">
         <div class="container-fluid">
@@ -352,10 +352,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </div><!-- /.container-fluid -->
       </div>
       <!-- /.content-header -->
-
+        <!--  display:flex;  -->
       <!-- Main content -->
       <section class="content-header">
-        <div class="content-header" id="principal"  style="background-color:white; width:100%; margin-left:0px;" >
+        <div class="content-header" id="principal"   style="background-color:white;
+            width:100%;
+           margin:0 auto;           
+            justify-content:center;
+            align-items:center;">  
           <?php  if($_SESSION["usrLogin"]=="admin" ){?>
                 <?php    $this->load->view('mesas/listaMesas'); ?>
             <?php }else {?>

@@ -4,7 +4,7 @@
 <div class="container-fluid m-top">
         <div class="row">
             <div class="col-12 text-left">
-                <H2>  LISTA DE PRODUCTOS </H2>
+                <H2> PRODUCTOS  </H2>
             </div>
         </div>
 </div> 
@@ -12,7 +12,7 @@
 <div class="container-fluid m-top">
         <div class="row">
             <div class="col-4 text-start">
-            <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom" onclick="addProducto(<?php echo 0 ;?>);"  style="background-color: #5DADE2 ;"> Ingreso de productos  <i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom" onclick="addProducto(<?php echo 0 ;?>);"  style="background-color: #5DADE2 ;"> New <i class="fa fa-plus" aria-hidden="true"></i></button>
             </div>
         </div>
 </div>  

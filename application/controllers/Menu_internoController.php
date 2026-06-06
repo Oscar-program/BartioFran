@@ -64,12 +64,12 @@ class Menu_internoController extends CI_Controller {
         //var_dump($data['submenu']);
         //$data['comandas'] = $this->Producto_Model->get_comandas();
         # segmento para  generar la  cabecera  de la  orden de pedido  
-        $meseroID       =  1;
+        $usuarioID       =   $_SESSION["usuarioID"];
         $mesaID         = $mesaID;
         $comandaID      =  1;
         $ordenPedidoID  = null;
 
-       $datosMEsa  =  array( 'meseroID' =>$meseroID,
+       $datosMEsa  =  array( 'usuarioID' =>$usuarioID,
                             'mesaID' =>$mesaID,
                             'comandaID' =>$comandaID,
                             

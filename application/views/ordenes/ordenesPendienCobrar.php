@@ -32,13 +32,13 @@ $ultimo = 0;
                  <?php  if($orden != $row->ordenPedidoID) {?>                  
                         <thead>
                               <tr>
-                                 <th colspan="3"><?php echo  "Orden #".$row->ordenPedidoID . " Area: " . strtoupper($row->area ). " Hora Pedido " . $row->hora. ":" . $row->minuto .  $acronimo. " ". $comentario ; ?> </th> </th>
+                                 <th colspan="3"><?php echo  "Orden #".$row->ordenPedidoID . " Area: " . strtoupper($row->area ). " Hora Pedido " . $row->hora. ":" . $row->minuto .  $acronimo. "  ". $row->minutos_transcurridos. " " .  $comentario ; ?> </th> </th>
                                  <th colspan="1" id ="<?php  echo  $thCancelar; ?>" name  = "<?php  echo  $thCancelar; ?>"> <?php echo "Abonado $" .   round($ordPAbono,2) .  " A cobrar  $" . round($acobrar,2)   ?></th>
                                  <th colspan="1">
-                                     <button type="button" class="form-control   btn-sm" data-title ="Abonar" onclick="mostrarModalAbono(<?php echo $row->ordenPedidoID?>)"><i class="fa fa-print" aria-hidden="true"></i></button>
+                                     <button type="button" class="form-control   btn-sm" data-title ="Abonar" onclick="mostrarModalAbono(<?php echo $row->ordenPedidoID?>)" style="color:#007bff ;"><i class="fa fa-credit-card" aria-hidden="true"></i></button>
                                  </th>
                                  <th colspan="1">
-                                    <button type="button" class="form-control   btn-sm" data-title ="Procesar venta" onclick="realizarCobro(<?php echo $row->ordenPedidoID?>, <?php echo $row->mesaID?>  )"><i class="fa fa-print" aria-hidden="true"></i></button>
+                                    <button type="button" class="form-control   btn-sm" data-title ="Procesar venta" onclick="realizarCobro(<?php echo $row->ordenPedidoID?>, <?php echo $row->mesaID?>   )" style="color:red ;"><i class="fa fa-calculator" aria-hidden="true"></i></button>
                                  </th>
                               </tr>
                         </thead>
@@ -89,13 +89,13 @@ $ultimo = 0;
 			  <div class="modal-body">
 				<form>
 				
-					<input type="text" class="form-control text-right" id="ordenPedidoID" name="ordenPedidoID" readonly>
+					<input type="hidden" class="form-control text-right" id="ordenPedidoID" name="ordenPedidoID" readonly>
                  <div class="form-group">
 						<input type="number" class="form-control text-right" id="ordPAbono"  name="ordPAbono"  value ="" step="any">
 					  </div> 
-					  <div class="form-group">
+					  <div class="form-group text-right">
 						 
-						  <button type="button" class="btn btn-danger btnActionVenta1" data-title ="Procesar venta" onclick="abonarOrden()">
+						  <button type="button" class="btn btn-danger btn-sm btnActionVenta1" data-title ="Procesar venta" onclick="abonarOrden()">
 						  <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
 					  </div> 
 				</form>
