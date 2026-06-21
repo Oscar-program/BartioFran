@@ -4,7 +4,7 @@
 
  //   muestra las mesas q
  function listarMesas(areasEstablecimientoID){
-    console.log("Listando las mesas  ");
+    console.log("Listando las mesas  ????????? MODIFICADO ");
     var url = base_url('index.php/mesa_Controller/listarMesas/' + areasEstablecimientoID);
     //var url = base_url("index.php/BancosController/bancos");
     $.get(url, function (data) {

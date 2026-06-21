@@ -141,7 +141,8 @@
             <?php }}} ?>
               </select>
         </div>
-         <div  class ="row" id="ordenesPendientesDespacho" name="ordenesPendientesDespacho"  >
+        <!-- class ="row" -->
+         <div   id="ordenesPendientesDespacho" name="ordenesPendientesDespacho">
             
          
          </div>

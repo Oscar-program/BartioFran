@@ -3,10 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  
 
 <head>
-  
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Nuevo Establo  | Dashboard</title>
@@ -43,94 +41,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <link rel="stylesheet" href="/BartioFran/plugins/daterangepicker/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="/BartioFran/plugins/summernote/summernote-bs4.min.css">
-  <style>
-  /* CONTENEDOR PRINCIPAL */
-
-#contenedorPrincipal{
-    min-height: calc(100vh - 57px);
-    background: #fff;
-}
-
-/* ÁREA DONDE SE CARGAN LAS VISTAS */
-
-#principal{
-    width:100%;
-    min-height:calc(100vh - 100px);
-    padding:15px;
-    overflow-x:auto;
-}
-
-/* IMAGEN CENTRAL */
-
-.logo-central{
-    max-width:450px;
-    width:100%;
-    height:auto;
-}
-
-/* MÓVILES */
-
-/* MÓVILES */
-@media (max-width:768px){
-
-    /* elimina margen lateral del content-wrapper */
-    .content-wrapper{
-        margin-left: 0 !important;
-        padding: 0 !important;
-    }
-
-    /* elimina padding del contenido */
-    .content{
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    /* elimina padding bootstrap */
-    .container-fluid{
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-    }
-
-    /* contenedor principal */
-    #principal{
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    /* tarjetas */
-    .card{
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        border-radius: 0 !important;
-    }
-
-    .card-body{
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-     .row{
-        margin-left:0 !important;
-        margin-right:0 !important;
-    }
-
-    [class*="col-"]{
-        padding-left:0 !important;
-        padding-right:0 !important;
-    }
-     #principal{
-        width:100vw !important;
-        max-width:100vw !important;
-        overflow-x:hidden;
-    }
-
-
-
-}
-
-</style>
   
   
 
@@ -424,50 +334,116 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content   content-wrapper  -->
-   
-    <!--  EFINIMOS UNA BNUEVA SECCION DE PRUEBA PARA MOSTRAR TODOS LOS CONTENIDOS   -->
-  
-
-       <!--  EFINIMOS UNA BNUEVA SECCION DE PRUEBA PARA MOSTRAR TODOS LOS CONTENIDOS   -->
-
-    <!-- Contenedor único de contenido -->
-<div class="content-wrapper" id="contenedorPrincipal">
-
-    <section class="content">
-
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper" id="principal3"  style="background-color:white; width:100%;">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
         <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0"></h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+        <!--  display:flex;  -->
+      <!-- Main content -->
+      <section class="content-header">
+        <div class="content-header" id="principal"   style="background-color:white;
+            width:100%;
+           margin:0 auto;           
+            justify-content:center;
+            align-items:center;">  
+          <?php  if($_SESSION["usrLogin"]=="admin" ){?>
+                <?php    $this->load->view('mesas/listaMesas'); ?>
+            <?php }else {?>
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+                <div class="container-fluid ">
+                  <img src="C:\xampp\htdocs\BartioFran\img\logoCentral.png" alt="">
+                </div>
 
-            <div id="principal">
+            
+          <!-- Creamo otro grupo de opciones de panel principal -->
+          <div class="row">
+              <div class="container-fluid justify-content-center te">
+                
+                  <img src="/BartioFran/img/logoCentral.png" alt="">
+                </div>
+          </div>
+          <!-- /.row -->
+          <!-- Main row -->
+          <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-7 connectedSortable">
+              <!-- Custom tabs (Charts with tabs)-->
+             
+              <!-- /.card -->
 
-                <?php if($_SESSION["usrLogin"]=="admin"){ ?>
+              <!-- DIRECT CHAT -->
+             
+              <!--/.direct-chat -->
 
-                    <?php $this->load->view('mesas/listaMesas'); ?>
+              <!-- TO DO List -->
+              
+              <!-- /.card -->
+            </section>
+            <!-- /.Left col -->
+            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <section class="col-lg-5 connectedSortable">
 
-                <?php } else { ?>
-
-                    <div class="row justify-content-center">
-
-                        <div class="col-12 text-center">
-
-                            <img
-                                src="<?php echo base_url();?>img/logoCentral.png"
-                                class="img-fluid logo-central"
-                                alt="Logo">
-
-                        </div>
-
+              <!-- Map card -->
+              <div class="card bg-gradient-primary" style="display:none;">
+                
+                <div class="card-body">
+                  
+                </div>
+                <!-- /.card-body-->
+                <div class="card-footer bg-transparent" style="display:none">
+                  <div class="row">
+                    <div class="col-4 text-center">
+                      <div id="sparkline-1"></div>
+                      <div class="text-white">Visitors</div>
                     </div>
+                    <!-- ./col -->
+                    <div class="col-4 text-center">
+                      <div id="sparkline-2"></div>
+                      <div class="text-white">Online</div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-4 text-center">
+                      <div id="sparkline-3"></div>
+                      <div class="text-white">Sales</div>
+                    </div>
+                    <!-- ./col -->
+                  </div>
+                  <!-- /.row -->
+                </div>
+              </div>
+              <!-- /.card -->
 
-                <?php } ?>
+              <!-- solid sales graph -->
+             
+              <!-- /.card -->
 
-            </div>
-
-        </div>
-
-    </section>
-
-</div>
+              <!-- Calendar -->
+             
+              <!-- /.card -->
+            </section>
+            <!-- right col -->
+          </div>
+          <?php }?>
+          <!-- /.row (main row) -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
       <strong>PsTSystem &copy; 2014 <a href="https://adminlte.io">PsTSystem</a>.</strong>

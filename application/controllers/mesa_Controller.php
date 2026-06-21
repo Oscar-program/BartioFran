@@ -9,7 +9,13 @@ class mesa_Controller extends CI_Controller{
     }
     //   funcion para  mostrar las mesas en el menu  principal   para que se le   pueda  agregar  una  o  varias  ordenes
      public function listarMesas($areasEstablecimientoID){
-        $data['listaMesas'] = $this->mesas_Model->get_listmesas($areasEstablecimientoID);      
+         
+        //ECHO "LISTANDO LAS AREAS DE LA MESA  PARA EL ESTABLECIMIENTO " . $areasEstablecimientoID  . "<br>" ;
+        $areasEstablecimientoID  = str_replace("%20", "", $areasEstablecimientoID ) ;
+        //ECHO "LnuevoESTABLECIMIENTO " . $areasEstablecimientoID  . "<br>" ;
+
+        $_SESSION["areasEstablecimientoID"]       = $areasEstablecimientoID ; 
+        $data['listaMesas'] = $this->mesas_Model->get_listmesas( $areasEstablecimientoID);      
         $this->load->view('mesas/listaMesas',$data);
      }
      // funcion  que lista las mesas que tiene ordenes pendientes de cobro

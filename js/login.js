@@ -22,7 +22,7 @@ function validaUser(){
     //console.log('EL esablecimiento seleccionado es ' + establecimiento  );   
     //alert('EL esablecimiento seleccionado es ' + establecimID )  ; 
     var DJson = { user:user, pwd:pwd, establecimID:establecimID };
-    alert('los  datos enviados por el  Json son ' + DJson)  ; 
+  //  alert('los  datos enviados por el  Json son ' + DJson)  ; 
     $.ajax({
         url:url,
         type:"POST",

@@ -49,7 +49,7 @@ $dettotal           = 0;
             <span>Mi Modal Responsivehgfhvhjvfhjhhg</span>
             <span class="close-btn" onclick="cerrarModal()">&times;</span>
         </div>  -->
-     <div class="modal fade" id="addVentaProducto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal fade" id="addVentaProducto" name   ="addVentaProducto"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
       <div class="modal-content">
         

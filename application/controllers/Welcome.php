@@ -61,8 +61,12 @@ class Welcome extends CI_Controller {
 	// funcion para  registrar los  usuarios del  sistema  
 	// funcion para  cargar el  menu principal 
 	public function  registerUser(){
-		
-		$this->load->view('usuarios/registrarUsuario');
+		// pasamos los datos  de los niveles de usuarios 
+		 $datos['listNivelusuario'] = $this->usuarios_Model->listNivelusuario();  
+
+
+		$this->load->view('usuarios/registrarUsuario', $datos);
+		// 
 	}
 	public function testConexion(){
 		echo 'llegandfo a conexion'  .'<br>' ;  

@@ -154,7 +154,7 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
                     };  
         url_destino       = "index.php/ventaProducto_Controller/saveVentaProducto/";
 
-        console.log("Almacenando Venta");
+        console.log("Almacenando Venta####################");
         $.ajax({
             url: base_url(url_destino),
             type: "POST",
@@ -174,7 +174,8 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
               $("#detOrdenesPedido").html(data);
               calculaTotalVenta(ordenID);
               $("#addVentaProducto.close").click();
-              $(".modal-backdrop").remove();    
+              $(".modal-backdrop").remove();  
+               $('#addVentaProducto').modal('hide');  
             },
             complete: function (data) {
                // console.log(data);
@@ -298,8 +299,30 @@ function  crear_pdf_ticket(){
 
 
   //console.log("generando la   opcion de  i,presion de  ticket")
+    var url = base_url(
+        "index.php/ventaProducto_Controller/pdfCrearTicket/"  + ordenPedidoID  + "/" + ordPcomentario
+      );
+      $.get(url, function (data) {
+          console.log("El establecimiento capturado es???????????? " + data )	 ;
+             // echo $_SESSION["areasEstablecimientoID"] ;
+        // var datos = JSON.parse(data);
+        // var caja             = datos["caja"];
+         //var repositorio      = datos["destino"];
+         //var comprobante      = datos["nombre_archivo"];
+         //var documentomostrar = repositorio + comprobante;		 
+         //crear_cintaelectronic(caja);
+         //ver_ticketPDF(documentomostrar);
+          swal("Operacion  exitosa",{
+        icon: "success",});
+         
+        //get_listAreasEstablecimiento(data);
 
-  swal({
+         listarMesas(data);
+        
+      });	
+
+
+  /*swal({
     title: "Estas seguro de cerrar la ordern ?",
     text: "Este proceso cerrara la oden de pedido y no podra agregar mas  productos",
     icon: "warning",
@@ -317,7 +340,7 @@ function  crear_pdf_ticket(){
          var comprobante      = datos["nombre_archivo"];
          var documentomostrar = repositorio + comprobante;		 
          //crear_cintaelectronic(caja);
-         ver_ticketPDF(documentomostrar);
+         //ver_ticketPDF(documentomostrar);
          listarMesas();
         
       });			
@@ -326,7 +349,7 @@ function  crear_pdf_ticket(){
         icon: "success",
       });
     }
-  });
+  });*/
 
   
 	//let idCliente 				= $("#idCliente").val();

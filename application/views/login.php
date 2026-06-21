@@ -46,7 +46,7 @@
   
 </head>
 <body class="hold-transition login-page" style =  "background-image: url(./img/logoCentral.png); background-repeat: no-repeat;background-size: cover;">
-<div class="login-box" style="background-color:#1D59B0;  box-shadow: 5px 5px 15px #05B9F3 ; border-radius: 20px; opacity: 0.9;">
+<div class="login-box" style="background-color:#1D59B0;  box-shadow: 5px 5px 15px #ffffff ; border-radius: 20px; opacity: 0.9;">
   <div class="login-logo">
     <a href="javaScript:carga_principal()" style="font-weight:bold; color:#1D59B0; font-size: 40px; text-shadow:
     1px 1px 2px black,
@@ -58,8 +58,9 @@
 
   </div>
   <!-- /.login-logo -->
-  <div class="card" style="background-color:#1D59B0 ; border-radius:0px 0px 15px 15px;  box-shadow: 5px 5px 15px #05B9F3 ;">
-    <div class="card-body login-card-body" style="background-color:white; border-radius:50px 0px 15px 15px; opacity: 0.9;">
+   <!--  border-radius:50px 0px 15px 15px; opacity: 0.9;--> 
+  <div class="card" style="background-color:#1D59B0 ; border-radius:0px 0px 15px 15px;  box-shadow: 5px 5px 15px #111111 ;">
+    <div class="card-body login-card-body" style="background-color:white;">
       <br>
       <p class="login-box-msg" style="color:white; font-weight:bold;">Registrarse para iniciar session</p>
      <!--   action="index.php/Welcome/principal/"   action="javascript:validaUser()"  -->

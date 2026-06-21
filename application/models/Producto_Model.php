@@ -51,7 +51,7 @@ class Producto_Model extends CI_Model {
         return  $query;          
     }
     public function get_listaProductos() {
-        $query =  $this->db->select("prod.productoID, prod.prodDescripcion, fam.famProdDescripcion, pres.presProdDescripcion,
+        $query =  $this->db->select("prod.productoID, prod.prodDescripcion, prod.presentacion_invId, fam.famProdDescripcion, pres.presProdDescripcion,
                                      tipPro.tipProdNombre,  marc.marcProdDescripcion, med.medProdDescripcion ,prov.provDescripcion"
                                     )
                  ->join('familiaproducto fam ', 'prod.famProdID =    fam.famProdID', 'inner') 

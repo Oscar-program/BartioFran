@@ -331,11 +331,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                                 <label for="prouctoEquivalente" class="col-form-label">Producto:</label>
                                                 <select name="prouctoEquivalente" id="prouctoEquivalente"  class="form-control chosen"> 
                                                     <option value ="0"> Seleccione un producto</option>               
-                                                    <?php foreach ($listaProductos as $row): ?>
+                                                    <?php foreach ($listaProductos as $row): 
+                                                         if(   $row->presentacion_invId == 1){
+                                                         ?>
+                                                        
                                                         <option value="<?php echo $row->productoID; ?>">
                                                         <?php echo $row->productoID . " - " .  $row->prodDescripcion; ?>
                                                         </option>
-                                                    <?php endforeach ?>
+                                                    <?php }
+                                                     endforeach ?>
                                                 </select>
                                                 
                                             </div>

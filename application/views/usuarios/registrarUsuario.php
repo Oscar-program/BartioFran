@@ -8,11 +8,11 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css"> -->
   <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!--<link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.min.css"> -->
   <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+  <!-- <link rel="stylesheet" href="../../dist/css/adminlte.min.css"> -->
   <script src=" <?php echo  base_url();?>js/login.js"></script>
 
   <style>
@@ -39,7 +39,7 @@
 </head>
 <!--<body style="background-color:red ;  display:flex; justify-content:center; align-items:center;"  > -->
 <div class="register-box" style="border-radius: 20px; background-color:steelblue;  margin:0 auto;">
-  dfhjksdhfjkdbfjkbsd
+  
   <div class="card card-outline card-primary"   style="background-color:white ;  border-radius: 20px;  " >
     <div class="card-header text-center" >
       <a href="" class="h1"><b>Nuevo</b> Usuario </a>
@@ -48,7 +48,7 @@
       <p class="login-box-msg"  style="color:dodgerblue;">Registrar nuevo usuario</p>
 
       <form action="javascript:saveUser()" method="post">
-        <input type="text"  name="usuarioID" id="usuarioID" >
+        <input type="hidden"  name="usuarioID" id="usuarioID" >
         <div class="input-group mb-3" style=" border-radius: 0px 20px 20px  0px ; ">
             <div class="input-group-append" >            
             <div class="input-group-text" style="background-color:white ; color: steelblue ; border-radius: 20px 0px 0px  20px ;">            
@@ -76,6 +76,13 @@
           </div>
           <select name="niveluser" id="niveluser" class="form-control" style=" background-color:dodgerblue; border-color:white ; color:white; border-radius: 0px 20px 20px  0px ; " required>
           <OPtion value="0">Seleccione el  nivel de usuario</OPtion>
+          <?php 
+           if(isset($listNivelusuario)  and  !empty($listNivelusuario)){
+             foreach ($listNivelusuario as $key => $value) { ?>
+              <OPtion value="<?php  echo  $value->nivelUsuarioID ?>"><?php  echo  $value->nivel ?></OPtion>
+           
+             <?php }}
+          ?>
             <OPtion value="1">Administrador</OPtion>
             <OPtion value="2">Invitado</OPtion>
           </select>
@@ -137,10 +144,10 @@
 <!-- /.register-box -->
 
 <!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
+<!--<script src="../../plugins/jquery/jquery.min.js"></script> -->
 <!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!--<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 <!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
+<!--<script src="../../dist/js/adminlte.min.js"></script> -->
 <!-- </body> -->
 </html>

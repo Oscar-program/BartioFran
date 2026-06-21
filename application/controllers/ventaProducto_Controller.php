@@ -260,18 +260,18 @@ class ventaProducto_Controller extends CI_Controller {
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
 
-          echo  "Pedido  "  . $ordenPedidoID .  "<br>"  ;
+          //echo  "Pedido  "  . $ordenPedidoID .  "<br>"  ;
 
         // segmento para  actualizar la cabecera de la orden  de compra 
         $RVntaTotal =  $this->ordenesPedido_Model->get_TotalVenta($ordenPedidoID);
 
         $infoPedido =  $this->ordenesPedido_Model->infoPedido($ordenPedidoID) ;
-        var_dump($infoPedido);
+      //  var_dump($infoPedido);
         
 
         //$datos = $infoPedido[0];
         $ordPAbono =   $infoPedido->ordPAbono;
-        echo  "el total del abono " .$ordPAbono .  "Pedido  "  . $ordenPedidoID  ;
+       // echo  "el total del abono " .$ordPAbono .  "Pedido  "  . $ordenPedidoID  ;
      
     
     //->set("ordPAcobrar",       ($data["ordPtotalcancelar"] - $data["ordPAbono"]))
@@ -290,12 +290,12 @@ class ventaProducto_Controller extends CI_Controller {
 
                          
                         
-                    var_dump(   $data );
+                   // var_dump(   $data );
         $this->ordenesPedido_Model->addOrdenPedido($data, $ordenPedidoID);
        
 
         // include getcwd(). "/application/libraries/fpdf/fpdf.php";
-        $this->pdf = new FPDF('P', 'mm', array(82.1,297));
+      /*  $this->pdf = new FPDF('P', 'mm', array(82.1,297));
         $this->pdf->AddPage();
         $this->pdf->AliasNbPages();
         $this->pdf->SetTitle("Ticket");
@@ -494,8 +494,8 @@ class ventaProducto_Controller extends CI_Controller {
 
         );
        
-      //header('Content-type: appliation/json');
-        echo json_encode($datosretorno);
+      //header('Content-type: appliation/json');*/
+        echo $_SESSION["areasEstablecimientoID"] ;
         
 
 
