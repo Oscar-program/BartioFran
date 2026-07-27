@@ -140,7 +140,7 @@
     }
     //  funcion para anular  la orden de pedido  
     public function  anularOrden($ordenID){
-          // echo  "anulando la  orden de pedido   \n";
+           //echo  "anulando la  orden de pedido " . $ordenID. "<br>" ;
                $this->db->set("ordPanulado", 1) 
                  ->where("ordenPedidoID", $ordenID)
                  ->update("ordenpedido");
@@ -214,6 +214,7 @@
                  ->where("ordenp.mesaID",  $mesaID)
                  ->where(" ped.despachar",  0)
                    ->where("ped.detstatus",  1)
+                    ->where("ordenp.ordPanulado",  0)
                    ->where($condicion )
                 ->order_by("ordenp.ordPFecha", "DESC")
                  ->get("nuevoestablo.ordenpedido ordenp")

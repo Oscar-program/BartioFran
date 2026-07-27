@@ -55,7 +55,7 @@ class Menu_internoController extends CI_Controller {
 
      }
      // funcion para cargar la pantalla principal de  ordenes  
-     public function cargar_addordenes($mesaID){
+     public function cargar_addordenes($mesaID, $mesNombre){
        
        //echo 'llegando al  menu interno de la familia de  productos'. $mesaID .  "<br>";
         $data['listFamiliaProducto'] = $this->familiaProducto_Model->get_listFamiliaProducto();
@@ -71,6 +71,7 @@ class Menu_internoController extends CI_Controller {
 
        $datosMEsa  =  array( 'usuarioID' =>$usuarioID,
                             'mesaID' =>$mesaID,
+                          
                             'comandaID' =>$comandaID,
                             
                         );
@@ -81,6 +82,8 @@ class Menu_internoController extends CI_Controller {
         $data['familia']     = $mesaID;
         $data['datordenID']  = $ordenID ;
         $data['mesaID']      = $mesaID ;
+          $data['mesNombre']      = $mesNombre ;
+
 
         //var_dump($data['comandas'] );
         $this->load->view('menuinterno/ordenesProducto',$data);

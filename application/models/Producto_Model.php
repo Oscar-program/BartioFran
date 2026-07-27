@@ -11,15 +11,16 @@ class Producto_Model extends CI_Model {
         return $this->db->insert_id();
     }else{
       //  echo  'Actualizando Producto';
+      // ->set("prodClasfInvent",  $data["prodClasfInvent"])
         $this->db->set("prodDescripcion", $data["prodDescripcion"])
                 ->set("famProdID",        $data["famProdID"])
                 ->set("presProdID",       $data["presProdID"])                     
                 ->set("tipProdID",        $data["tipProdID"])                    
                 ->set("marcProdID",       $data["marcProdID"])
                 ->set("medProdID",        $data["medProdID"])
-                ->set("proveedorID",      $data["proveedorID"])
-                ->set("prodClasfInvent",  $data["prodClasfInvent"])
-                ->set("tipomovinvtId",    $data["tipomovinvtId"])                 
+                ->set("proveedorID",      $data["proveedorID"])                
+                ->set("tipomovinvtId",    $data["tipomovinvtId"]) 
+                ->set("prodctucocina",    $data["prodctucocina"])                 
                 ->where("productoID",     $productoID)
                 ->where("prodStatus",  1 )
                 ->update("producto");
@@ -60,8 +61,9 @@ class Producto_Model extends CI_Model {
                  ->join('marcaproducto marc', ' marc.marcProdID  = prod.marcProdID', 'inner') 
                  ->join('medidaproducto med', 'med.medProdID  = prod.medProdID', 'inner') 
                  ->join('proveedores prov', 'prov.proveedorID  = prod.proveedorID', 'inner') 
+                 ->order_by("prod.productoID")
 
-                
+                  ->where('prod.prodStatus',1)
                
                  ->get("producto prod")
                  ->result();
@@ -127,6 +129,21 @@ public function get_ListProductoTrasladar(){
     return  $query;
 
  }
+
+ // funcion para eliminar  un  producto 
+  public function  deleteProducto( $productoID){
+        $this->db->set("prodStatus", 0)
+                             
+                ->where("productoID",     $productoID)
+                //->where("prodStatus",  0 )
+                ->update("producto");
+        return $this->db->affected_rows();   
+        
+    
+
+}
+
+
 
 
 }

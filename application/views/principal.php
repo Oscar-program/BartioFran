@@ -389,6 +389,24 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
           <li class="nav-item menu-open">
               <a href="#" class="nav-link ">
+                <i class="nav-icon fas fa-industry"></i>
+                <p>
+                 Inventario
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="javaScript:LoadviewConteoFisico();" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Conteo Físico</p>
+                  </a>
+                </li>
+              </ul>
+          </li>
+
+          <li class="nav-item menu-open">
+              <a href="#" class="nav-link ">
                 <i class="nav-icon fas fa-credit-card"></i>
                 <p>
                  Gastos
@@ -492,6 +510,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script>
     $.widget.bridge('uibutton', $.ui.button)
   </script>
+  
   <!-- Bootstrap 4 -->
   <script src=" <?php echo  base_url();?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src=" <?php echo  base_url();?>plugins/bootstrap/js/popper.min.js"></script>
@@ -553,6 +572,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>js/funcionesMenu.js"></script>
   <script src=" <?php echo  base_url();?>js/configEstablecimiento.js"></script>
 
+
   
 
 
@@ -586,6 +606,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>dist/css/tablaStyle.css"/>
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>dist/css/ordenesStyle.css"/>
    <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>dist/css/modalStyle.css"/>
+
+   
 
 	
 

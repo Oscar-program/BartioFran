@@ -3,275 +3,233 @@ function base_url(url){
 }
 
 function LoadviewConteoFisico(){
-  console.log('cargando la vista de conteo fisico');
   var url = base_url("index.php/ConteoFisico_Controller/capturaConteo/");
     $.get(url, function (data) {
         $("#principal").html(data);
     });
-
-
 }
-// funcion que almacena  la cabecera del conteo  
-function guardarConteoFisico1(){    
-    var  url  =     base_url("index.php/ConteoFisico_Controller/insertar_conteo/");
-    if( $("#producto").val()==0){
+
+// dispatcher: si estamos editando un detalle actualiza, si no agrega uno nuevo
+function procesarConteoFisico(){
+    var detConteoID = parseInt($("#detConteoID").val());
+    if(detConteoID > 0){
+        updateDetConteoFisico();
+    }else{
+        guardarConteoFisico1();
+    }
+}
+
+// valida los campos del formulario del conteo
+function validarConteo(){
+    if( parseInt($("#turno").val()) == 0 || isNaN(parseInt($("#turno").val())) ){
          alertify.set("notifier", "position", "bottom-center");
-         alertify.error("Tiene que seleccionar  un producto");
+         alertify.error("Tiene que seleccionar un turno");
         return false;
     }
-    if(parseInt($("#tcierreant").val())==0){
+    if( parseInt($("#bodega").val()) == 0 || isNaN(parseInt($("#bodega").val())) ){
          alertify.set("notifier", "position", "bottom-center");
-         alertify.error("El cierre anterior tiene que ser mayor a cero");
+         alertify.error("Tiene que seleccionar una bodega");
         return false;
     }
-    if( ($("#existenciaF").val().length)==0){
+    if( parseInt($("#producto").val()) == 0 || isNaN(parseInt($("#producto").val())) ){
+         alertify.set("notifier", "position", "bottom-center");
+         alertify.error("Tiene que seleccionar un producto");
+        return false;
+    }
+    if( ($("#existenciaF").val().length) == 0 ){
           alertify.set("notifier", "position", "bottom-center");
-         alertify.error("La exitencia fisica tiene que ser mayor o igual acero");
+         alertify.error("El conteo físico final es obligatorio");
         return false;
     }
-   
-    var  conteoID  = $("#conteoID").val() ;
+    return true;
+}
 
-    var  detConteoID  = $("#detConteoID").val();
-    console.log("conteo"  + conteoID  + "detConteo " + detConteoID
-         
-    );
-    
-   
-
-    $.ajax({           
+// funcion que almacena la cabecera y el detalle del conteo
+function guardarConteoFisico1(){
+    if( !validarConteo() ){ return false; }
+    var  url  =  base_url("index.php/ConteoFisico_Controller/insertar_conteo/");
+    $.ajax({
           url: url,
           type:"POST",
-          data: $("#FormConteoFisico").serialize(),          
+          data: $("#FormConteoFisico").serialize(),
           datatype:"json",
-          beforeSend: function(){
-
-          },  
-          success: function(data){             
-             if(data["nError"]=="200"){                
+          success: function(data){
+             if(data["nError"]=="200"){
                  alertify.set("notifier", "position", "bottom-center");
-                 alertify.warning("Compra procesada correctamente");
+                 alertify.success("Conteo procesado correctamente");
+                 $("#conteoID").val(data["conteoID"]);
+                 $("#detConteoID").val(0);
                  get_listaDetConteo(data["conteoID"]) ;
-                 $("#conteoID").val(data["conteoID"]); 
-                 $("#detConteoID").val(data["detConteoID"]);
-
-                 $("#producto").val(0);
-                 $("#producto").change();
-                 $("#tcierreant").val(null);
-                 $("#existenciaF").val(null);
-                 $("#aberia").val(null);
-                 //$("#aberia").val(null);
-                 $("#refil").val(null);
-                 $("#stockf").val(null);
+                 limpiarLinea();
              }else {
                 alertify.set("notifier", "position", "bottom-center");
-                alertify.error("Surgio un error  al momento de almacenar los datos ");
-                 
-             }           
+                alertify.error(data["msgError"]);
+             }
           }
     });
-} 
-function  get_listaDetConteo(conteoID){
-        //  console.log("el id del conteo que se retornara datos  " + conteoID  );  
-
-    var url = base_url('index.php/ConteoFisico_Controller/get_listaDetConteo/'+ conteoID);     
-        $.get(url, function (data) {
-          //  console.log(data) ;  
-
-          $("#detConteo").html(data);               
-        });
-
-
 }
+
+// funcion que actualiza un detalle del conteo
+function  updateDetConteoFisico(){
+    if( !validarConteo() ){ return false; }
+    var  url  =  base_url("index.php/ConteoFisico_Controller/updateDetConteoFisico/");
+    var conteoID = $("#conteoID").val();
+    $.ajax({
+          url: url,
+          type:"POST",
+          data: $("#FormConteoFisico").serialize(),
+          datatype:"json",
+          success: function(data){
+             if(data["nError"]=="200"){
+                 alertify.set("notifier", "position", "bottom-center");
+                 alertify.success("Conteo actualizado correctamente");
+                 $("#detConteoID").val(0);
+                 get_listaDetConteo(conteoID) ;
+                 limpiarLinea();
+             }else {
+                alertify.set("notifier", "position", "bottom-center");
+                alertify.error(data["msgError"]);
+             }
+          }
+    });
+}
+
+// limpia solamente los campos de la linea de producto (mantiene la cabecera)
+function limpiarLinea(){
+    $("#producto").val(0);
+    $("#producto").change();
+    $("#tcierreant").val("");
+    $("#existenciaF").val("");
+    $("#aberia").val(0);
+    $("#refil").val(0);
+    $("#stockf").val("");
+}
+
+// inicia un nuevo conteo (limpia cabecera y detalle)
+function nuevoConteo(){
+    $("#conteoID").val(0);
+    $("#detConteoID").val(0);
+    $("#turno").val(0);
+    $("#bodega").val(0);
+    limpiarLinea();
+    $("#detConteo").html("");
+}
+
+// carga el detalle de un conteo en la tabla de la pestaña de ingreso
+function  get_listaDetConteo(conteoID){
+    var url = base_url('index.php/ConteoFisico_Controller/get_listaDetConteo/'+ conteoID);
+        $.get(url, function (data) {
+          $("#detConteo").html(data);
+        });
+}
+
+// arrastra el ultimo conteo final del producto/bodega como conteo inicial
+function cargarCierreAnterior(){
+    var producto = parseInt($("#producto").val());
+    var bodega   = parseInt($("#bodega").val());
+    if( isNaN(producto) || producto == 0 || isNaN(bodega) || bodega == 0 ){ return false; }
+    // en modo edicion no se sobreescribe el conteo inicial ya cargado
+    if( parseInt($("#detConteoID").val()) > 0 ){ return false; }
+    var url = base_url("index.php/ConteoFisico_Controller/get_cierreAnterior/");
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: {producto:producto, bodega:bodega},
+        datatype:"json",
+        success: function(data){
+            var res = (typeof data == "string") ? JSON.parse(data) : data;
+            $("#tcierreant").val(res["tcierreant"]);
+            calcularexistenciaReal();
+        }
+    });
+}
+
+// busca los conteos en un rango de fechas
 function getlistaConteo(){
     var FechIncio =  ($("#FechIncio").val().length>0 ) ? $("#FechIncio").val() : "";
-        var FechFin   =  ($("#FechFin").val().length>0 )   ? $("#FechFin").val() : "";
-        if(FechIncio.length== 0 ||  FechFin.length ==  0 ){
-            console.log("Las fechas no pueden estar vacias");
-            return   false;
-        }
-        var urlDest = "index.php/ConteoFisico_Controller/get_listaConteo/";
-        var datJson ={FechIncio:FechIncio, FechFin:FechFin};
-        $.ajax({
-                 url: base_url(urlDest),
-                 type: "POST" ,
-                 data: datJson,
-                 beforeSend: function(){},
-                 success: function (data){                   
-                 document.getElementById('tblConteo').innerHTML = '';     
-                 $("#tblConteo").html(data);
-                 $("#tblConteo").change();
-                 },
-                 complete:  function (){} 
-
-         });
-
-         //console.log("Buscar datos de  conteo fisico");               
-        
-
-}
-// funcion para editar el  conteo fisico 
-function getDetConteo(conteoID){
-    console.log("seleccionadp  un nuevo tab ");
-   // var myTab =document.querySelector("myTab");
-        let tab = document.getElementById("one-tab");
-         tab.click();
-          var urlDestino = base_url('index.php/ConteoFisico_Controller/get_listaDetConteo/'+ conteoID); 
-
-        // var urlDestino  =  "index.php/ConteoFisico_Controller/get_listaDetConteo/"+ conteoID  ;
-         
-          $.get(urlDestino, function (data) {
-            console.log("Recargando el detalle del  conteo  ");
-            console.log(data);
-            document.getElementById('detalleConteo').innerHTML =""; 
-          //  $("#detConteo").innerHTML =""; 
-          $("#detalleConteo").html(data);   
-         // $("#detConteo").html(data);                 
-        });
-
-
-
-
-    /* let tab = document.querySelector("one-tab");
-        tab.addEventListener("click", function(){
-            tab.click();
-        });*/
-
-
-       // myTab.removeClass("active");
-        //myTab.addClass("active");
-        //myTab.show();
-
-      /* var FechIncio =  ($("#FechIncio").val().length>0 ) ? $("#FechIncio").val() : "";
-        var FechFin   =  ($("#FechFin").val().length>0 )   ? $("#FechFin").val() : "";
-        if(FechIncio.length== 0 ||  FechFin.length ==  0 ){
-            console.log("Las fechas no pueden estar vacias");
-            return   false;
-        }*/
-        /*var urlDest = "index.php/ConteoFisico_Controller/get_detConteo/";
-        var datJson ={conteoID:conteoID};
-        $.ajax({
-                 url: base_url(urlDest),
-                 type: "POST" ,
-                 data: datJson,
-                 beforeSend: function(){},
-                 success: function (data){                   
-                 document.getElementById('tblConteo').innerHTML = '';     
-                 $("#tblConteo").html(data);
-                 $("#tblConteo").change();
-                 },
-                 complete:  function (){} 
-
-         });*/
-
-         //console.log("Buscar datos de  conteo fisico");               
-        
-
-}
-// funcion  que muestra los datos del detalle en los controles para que sean editados  
-function cargarElementos(detConteoID){
-    var urlDestino = "index.php/ConteoFisico_Controller/get_DetConteoID/";
-    var obJson  =  {detConteoID:detConteoID}
+    var FechFin   =  ($("#FechFin").val().length>0 )   ? $("#FechFin").val() : "";
+    if(FechIncio.length== 0 ||  FechFin.length ==  0 ){
+        alertify.set("notifier", "position", "bottom-center");
+        alertify.error("Las fechas no pueden estar vacías");
+        return   false;
+    }
+    var urlDest = "index.php/ConteoFisico_Controller/get_listaConteo/";
+    var datJson = {FechIncio:FechIncio, FechFin:FechFin};
     $.ajax({
-        url: base_url(urlDestino),
-        type:"post",
-        data:obJson,  
-        datatype:"json",
-        beforeSend: function(){},
-        success: function(data){
-            console.log(data);
-
-        },
-        complete: function(){}
-    });
-
+             url: base_url(urlDest),
+             type: "POST" ,
+             data: datJson,
+             success: function (data){
+                $("#detListaConteo").html(data);
+             }
+     });
 }
-// funcion elimina el detalle de conteo  
+
+// carga un conteo existente en la pestaña de ingreso para agregar / editar lineas
+function getDetConteo(conteoID){
+    let tab = document.getElementById("one-tab");
+    tab.click();
+    $("#conteoID").val(conteoID);
+    $("#detConteoID").val(0);
+    get_listaDetConteo(conteoID);
+}
+
+// elimina un detalle (linea) del conteo
 function  detDetalleConteoFisico(detConteoID){
-    console.log("llegando a la funcion de conteo fisico");
      var  conteoID = 0;
-     if(document.getElementById("conteoID")){ conteoID = $("#conteoID").val();}    
-     var url = base_url('index.php/ConteoFisico_Controller/detDetalleConteoFisico/'+ detConteoID);     
-        $.get(url, function (data) {  
-          $("#detConteo").html(data);  
-            get_listaDetConteo(conteoID);                    
+     if(document.getElementById("conteoID")){ conteoID = $("#conteoID").val(); }
+     var url = base_url('index.php/ConteoFisico_Controller/detDetalleConteoFisico/'+ detConteoID);
+        $.get(url, function (data) {
+            get_listaDetConteo(conteoID);
         });
 }
 
+// carga los datos de un detalle en el formulario para editarlo
 function getDetConteoPorID(detConteoID){
-          var urlDestino = base_url('index.php/ConteoFisico_Controller/edit_DetConteoID/'+ detConteoID);          
+          var urlDestino = base_url('index.php/ConteoFisico_Controller/edit_DetConteoID/'+ detConteoID);
           $.get(urlDestino, function (data) {
-            var datos = JSON.parse(data);
+            var datos = (typeof data == "string") ? JSON.parse(data) : data;
+            $("#detConteoID").val(datos["detConteoID"]);
+            $("#conteoID").val(datos["conteoID"]);
             $("#tcierreant").val(datos["tcierreant"]);
             $("#existenciaF").val(datos["existenciaF"]);
             $("#aberia").val(datos["aberia"]);
             $("#refil").val(datos["refil"]);
             $("#stockf").val(datos["stockf"]);
-            $("#producto").val(datos["productoID"]);
-            $("#bodega").val(datos["bodegaProductoID"]);              
+            $("#producto").val(datos["productoID"]).change();
+            $("#bodega").val(datos["bodegaProductoID"]);
+            let tab = document.getElementById("one-tab");
+            tab.click();
         });
 }
-// funcion que  actualiza la toma de  inventario
-function  updateDetConteoFisico(){
-    var  url  =     base_url("index.php/ConteoFisico_Controller/insertar_conteo/");
-    if( $("#producto").val()==0){
-         alertify.set("notifier", "position", "bottom-center");
-         alertify.error("Tiene que seleccionar  un producto");
-        return false;
-    }
-    if(parseInt($("#tcierreant").val())==0){
-         alertify.set("notifier", "position", "bottom-center");
-         alertify.error("El cierre anterior tiene que ser mayor a cero");
-        return false;
-    }
-    if( ($("#existenciaF").val().length)==0){
-          alertify.set("notifier", "position", "bottom-center");
-         alertify.error("La exitencia fisica tiene que ser mayor o igual acero");
-        return false;
-    }
-   
-    var  conteoID  = $("#conteoID").val() ;
 
-    var  detConteoID  = $("#detConteoID").val();
-    console.log("conteo"  + conteoID  + "detConteo " + detConteoID
-         
-    );
-    
-   
-
-    $.ajax({           
-          url: url,
-          type:"POST",
-          data: $("#FormConteoFisico").serialize(),          
-          datatype:"json",
-          beforeSend: function(){
-
-          },  
-          success: function(data){             
-             if(data["nError"]=="200"){                
-                 alertify.set("notifier", "position", "bottom-center");
-                 alertify.warning("Compra procesada correctamente");
-                 get_listaDetConteo(data["conteoID"]) ;
-                 $("#conteoID").val(data["conteoID"]); 
-                 $("#detConteoID").val(data["detConteoID"]);
-
-                 $("#producto").val(0);
-                 $("#producto").change();
-                 $("#tcierreant").val(null);
-                 $("#existenciaF").val(null);
-                 $("#aberia").val(null);
-                 //$("#aberia").val(null);
-                 $("#refil").val(null);
-                 $("#stockf").val(null);
-             }else {
-                alertify.set("notifier", "position", "bottom-center");
-                alertify.error("Surgio un error  al momento de almacenar los datos ");
-                 
-             }           
-          }
-    });
+// anula un conteo fisico completo
+function anularConteo(conteoID){
+    alertify.confirm("¿Desea anular este conteo físico?", function(){
+        var url = base_url('index.php/ConteoFisico_Controller/anular_conteo/'+ conteoID);
+        $.get(url, function (data) {
+            alertify.set("notifier", "position", "bottom-center");
+            alertify.success("Conteo anulado");
+            getlistaConteo();
+        });
+    }, function(){ });
 }
 
-
-
-
+// genera el resumen del inventario actual por producto
+function getResumenInventario(){
+    var FechIncio =  ($("#FechIncioR").val().length>0 ) ? $("#FechIncioR").val() : "";
+    var FechFin   =  ($("#FechFinR").val().length>0 )   ? $("#FechFinR").val() : "";
+    if(FechIncio.length== 0 ||  FechFin.length ==  0 ){
+        return   false;
+    }
+    var urlDest = "index.php/ConteoFisico_Controller/resumenInventario/";
+    var datJson = {FechIncio:FechIncio, FechFin:FechFin};
+    $.ajax({
+             url: base_url(urlDest),
+             type: "POST" ,
+             data: datJson,
+             success: function (data){
+                $("#detResumen").html(data);
+             }
+     });
+}

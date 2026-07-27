@@ -22,6 +22,61 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+/*para checknox  */
+.switch-container{
+    display:inline-flex;
+    align-items:center;
+    cursor:pointer;
+    user-select:none;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:22px;
+    color:#444;
+}
+
+.switch-container input{
+    display:none;
+}
+
+/* Fondo del switch */
+.slider{
+    position:relative;
+    width:42px;
+    height:22px;
+    background:#d8d8d8;
+    border-radius:30px;
+    transition:.3s;
+    margin-right:10px;
+}
+
+/* Botón */
+.slider::before{
+    content:"";
+    position:absolute;
+    width:16px;
+    height:16px;
+    left:3px;
+    top:3px;
+    background:#ffffff;
+    border-radius:50%;
+    box-shadow:0 1px 3px rgba(0,0,0,.35);
+    transition:.3s;
+}
+
+/* Cuando está activado */
+.switch-container input:checked + .slider{
+    background:#0d6efd;
+}
+
+.switch-container input:checked + .slider::before{
+    transform:translateX(20px);
+}
+
+.texto{
+    margin-left:2px;
+} 
+
+
 </style>
 <?php 
   $productoID      = NULL;
@@ -35,6 +90,7 @@
   $proveedorID     = 0;
   $presentacion_invId = 0;
   $tipomovinvtId      = 0;
+  $productcocinadb   = 0; 
 
   if(isset($datoproducto)){ 
     if(!empty($datoproducto)){
@@ -50,6 +106,7 @@
       $proveedorID        = $datoproducto->proveedorID;
       $presentacion_invId = $datoproducto->presentacion_invId;
       $tipomovinvtId      = $datoproducto->tipomovinvtId;
+      $productcocinadb    = $datoproducto->prodctucocina;
     }
 
   }
@@ -75,7 +132,9 @@
         <input type="hidden"  id="presProdID"      name="presProdID"      value =  "<?php echo $presProdID; ?>">
         <input type="hidden"  id="tipProdID"       name="tipProdID"       value =  "<?php echo $tipProdID; ?>">
         <input type="hidden"  id="medProdID"       name="medProdID"       value =  "<?php echo $medProdID;  ?>">
-        <input type="hidden"  id="marcProdID"       name="medProdID"       value =  "<?php echo $marcProdID;  ?>">
+        <input type="hidden"  id="marcProdID"      name="medProdID"       value =  "<?php echo $marcProdID;  ?>">
+        <!-- <input type="hidden"  id="productcocinadb"      name="productcocinadb"       value =  "<?php //echo $productcocinadb;  ?>">-->
+
        
 
 
@@ -173,6 +232,7 @@
                 <?php endforeach ?>
             </select>            
           </div>
+          
 
 
 
@@ -180,6 +240,26 @@
             <label for="message-text" class="col-form-label">Descripcion </label>
             <input type="text" class="form-control text-left" id="descripcion" name="descripcion" value ="<?php echo $prodDescripcion ?>  ">
           </div>
+
+           <?php  
+           
+          if($productcocinadb ==  '1'){ ?>
+          <label class="switch-container">
+              <input type="checkbox" id="prodctucocina"  name  ="prodctucocina" checked>
+              <span class="slider"></span>
+              <span class="texto">Producto de cocina</span>
+          </label>
+
+
+          
+          <?php   }else { ?>
+           <label class="switch-container">
+              <input type="checkbox" id="prodctucocina" name  ="prodctucocina" >
+              <span class="slider"></span>
+              <span class="texto">Producto de cocina</span>
+          </label>
+          <?php  } ?>
+
       <div class="modal-footer">
         <button  type="submit" class="btn btn-danger"> Enviar </button>
       </div>

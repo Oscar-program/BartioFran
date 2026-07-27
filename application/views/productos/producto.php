@@ -66,7 +66,7 @@
                                     
                                     <a href='#' class="btn btn-default btn-sm"style="margin:0px;  color: #5DADE2 ;"
                                     title="Asignar sucursal de cobro"
-                                    onclick="ver_modalsuccobro();">
+                                    onclick="deleteProducto(<?php echo $row->productoID ;?>);">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i></a> 
 
 

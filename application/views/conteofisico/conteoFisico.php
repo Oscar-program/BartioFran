@@ -3,115 +3,110 @@
         <div class="card mt-3 tab-card">
             <div class="card-header tab-card-header ">
                 <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                    <li class="nav-item"> <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true" onclick="verificarstadotab(this.id)">Ingreso Inventario</a> </li>
-                    <li class="nav-item"> <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false" onclick="verificarstadotab(this.id)">Busqueda Inventario</a> </li>
+                    <li class="nav-item"> <a class="nav-link active" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One" aria-selected="true">Ingreso Conteo</a> </li>
+                    <li class="nav-item"> <a class="nav-link" id="two-tab" data-toggle="tab" href="#two" role="tab" aria-controls="Two" aria-selected="false">Búsqueda de Conteos</a> </li>
+                    <li class="nav-item"> <a class="nav-link" id="three-tab" data-toggle="tab" href="#three" role="tab" aria-controls="Three" aria-selected="false" onclick="getResumenInventario()">Inventario Actual</a> </li>
                 </ul>
             </div>
             <div class="tab-content" id="myTabContent">
                <!-- Registra los conteos fisicos   -->
                 <div class="tab-pane fade show active p-3" id="one" role="tabpanel" aria-labelledby="one-tab">
-                   
-
                         <div class="container-fluid m-top">
                             <div class="row">
                                 <div class="col-12 text-center">
-                                    <H4 style="color:#5DADE2; font-weight:bold;"> CONTEO FISICO</H4>
+                                    <H4 style="color:#5DADE2; font-weight:bold;"> CONTEO FÍSICO</H4>
                                 </div>
                                 <br>
                                 <br>
-                              
+
                                 <div class="col-lg-5">
                                     <form id="FormConteoFisico" name="FormConteoFisico"  method="post" >
                                         <input type="hidden" name="conteoID" id="conteoID"  value ="0" >
                                         <input type="hidden" name="detConteoID" id="detConteoID" value ="0">
 
                                         <div class="mb-3">
-                                            <input type="date"  class="form-control"  name="fechaC" id="fechaC"  value="<?php  date_default_timezone_set("America/El_Salvador"); echo $date = date("Y-m-d"); ?>"> 
+                                            <label class="small text-muted mb-0">Fecha</label>
+                                            <input type="date"  class="form-control"  name="fechaC" id="fechaC"  value="<?php  date_default_timezone_set("America/El_Salvador"); echo $date = date("Y-m-d"); ?>">
                                         </div>
                                         <div class="mb-3">
-                                            <select class="form-control  custom-margin" name="turno" id="turno" selected="this.selectedText">
-                                                <option value="Apertura" selected>Seleccione un turno</option>
+                                            <label class="small text-muted mb-0">Turno</label>
+                                            <select class="form-control  custom-margin" name="turno" id="turno">
+                                                <option value="0" selected>Seleccione un turno</option>
                                                 <?php  foreach( $turnos as  $row): ?>
                                                         <option value="<?php  echo  $row->turnOperaID ?>"> <?php echo  $row->turnOperaDescripcion;  ?></option>
-                                                <?php endforeach; ?>      
-                                                
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                        <select class="form-control  custom-margin" name="bodega" id="bodega" selected="this.selectedText">
-                                                <option value="Apertura" selected>Seleccione una bodega</option>
+                                            <label class="small text-muted mb-0">Bodega</label>
+                                            <select class="form-control  custom-margin" name="bodega" id="bodega">
+                                                <option value="0" selected>Seleccione una bodega</option>
                                                 <?php  foreach( $bodegas as  $row): ?>
                                                         <option value="<?php  echo  $row->bodegaProductoID ?>"> <?php echo  $row->bodProdDescripcion;  ?></option>
-                                                <?php endforeach; ?>      
-                                                
+                                                <?php endforeach; ?>
                                             </select>
                                         </div>
 
                                         <div class="mb-3">
-                                            <select class="form-control custom-margin chosen" name="producto" id="producto" selected="this.selectedValue">
+                                            <label class="small text-muted mb-0">Producto</label>
+                                            <select class="form-control custom-margin chosen" name="producto" id="producto">
+                                                <option value="0" selected>Seleccione un producto</option>
                                                 <?php foreach ($listaProductos as $row){?>
-                                                    <option value="<?=$row->productoID?>" <?php if($row->productoID == 1) echo " selected" ?>>
+                                                    <option value="<?=$row->productoID?>">
                                                         <?=$row->prodDescripcion?>
                                                     </option>
                                                     <?php }?>
                                             </select>
                                         </div>
-                                   
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control   custom-margin" id="tcierreant" name ="tcierreant" value="" placeholder="Total cierre anterior">
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control custom-margin"  id="existenciaF"  name="existenciaF"   placeholder="Existencia física">
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control  custom-margin"  id="aberia"   name="aberia" placeholder="Aberías">
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control custom-margin"  id="refil" name="refil"  placeholder="Refíl">
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control   custom-margin"  id="stockf"  name="stockf"  placeholder="Existencia Real">
-                                        </div>
 
-                                        
-                                    </form> 
-                                 
+                                        <div class="mb-3">
+                                            <label class="small text-muted mb-0">Conteo inicial (cierre anterior)</label>
+                                            <input type="number" min="0" class="form-control   custom-margin" id="tcierreant" name ="tcierreant" value="" placeholder="Conteo inicial">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small text-muted mb-0">Reabastecimiento (refil)</label>
+                                            <input type="number" min="0" class="form-control custom-margin"  id="refil" name="refil"  placeholder="Refil" value="0">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small text-muted mb-0">Conteo físico final (existencia actual)</label>
+                                            <input type="number" min="0" class="form-control custom-margin"  id="existenciaF"  name="existenciaF"   placeholder="Existencia física final">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small text-muted mb-0">Averías / mermas</label>
+                                            <input type="number" min="0" class="form-control  custom-margin"  id="aberia"   name="aberia" placeholder="Averías" value="0">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small text-muted mb-0">Consumo del día (calculado)</label>
+                                            <input type="number" class="form-control   custom-margin"  id="stockf"  name="stockf"  placeholder="Consumo = (inicial + refil) - final - averías" readonly>
+                                        </div>
+                                    </form>
+
                                     <div class="mb-3 text-right">
-                                                <button  id ="btnSaveConteo" name="btnSaveConteo"  class="btn btn-lg btn-primary"  style="background-color: #5DADE2 ;  border-color:aliceblue; border-width:1px;"  title="Procesar Conteo físico" onclick="saveCompraproducto()">  <i class="fa fa-database" aria-hidden="true"></i> Guardar Conteo </button>
-                                                <!-- <button id ="btnSaveCompra" name="btnSaveCompra"  class="btn btn-lg btn-primary"  style="background-color: #5DADE2 ;  border-color:aliceblue; border-width:1px;"  title="Procesar compra" onclick="saveCompraproducto()">  <i class="fa fa-database" aria-hidden="true"></i> Guardar compra </button> -->
-                                                <button id ="btnVerModalDetComp" name="btnVerModalDetComp"  class="btn btn-lg btn-primary" style="background-color: #5DADE2; border-color:aliceblue; border-width:1px;" title="Agregar detalle de conteo1" onclick="guardarConteoFisico1()">  <i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                        
+                                                <button  id ="btnNuevoConteo" name="btnNuevoConteo"  class="btn btn-lg btn-secondary" title="Iniciar un nuevo conteo" onclick="nuevoConteo()">  <i class="fa fa-file" aria-hidden="true"></i> Nuevo </button>
+                                                <button  id ="btnSaveConteo" name="btnSaveConteo"  class="btn btn-lg btn-primary"  style="background-color: #5DADE2 ;  border-color:aliceblue; border-width:1px;"  title="Agregar producto al conteo" onclick="procesarConteoFisico()">  <i class="fa fa-database" aria-hidden="true"></i> Agregar / Guardar </button>
                                      </div>
-                                </div>   
-                              
+                                </div>
 
-                            
                                 <div class="col-lg-7">
                                     <table  class="table table-hover" id="detalleConteo" style="border-width: 1px; border-color:#5DADE2 ;" >
                                             <thead>
                                                 <tr style="font-size: 9px;">
-                                                    <th style="font-size: 10px;">#</th>   
-                                                    <th style="font-size: 10px;">Descripcion</th>
-                                                    <th style="font-size: 10px;"> T. Cierre</th>
-                                                    <th style="font-size: 10px;">Existencia</th>
-                                                    <th style="font-size: 10px;">Aberias</th>
+                                                    <th style="font-size: 10px;">#</th>
+                                                    <th style="font-size: 10px;">Producto</th>
+                                                    <th style="font-size: 10px;">Inicial</th>
                                                     <th style="font-size: 10px;">Refil</th>
-                                                    <th style="font-size: 10px;">Existencia Real</th>
+                                                    <th style="font-size: 10px;">Final</th>
+                                                    <th style="font-size: 10px;">Averías</th>
+                                                    <th style="font-size: 10px;">Consumo</th>
                                                     <th style="font-size: 10px;">Acciones</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="detConteo" > 
-                                            </tbody>  
-                                    </table> 
-                                    <div class="mb-3 text-right">
-                                            
-                                                    
-                                    </div>
-
+                                            <tbody id="detConteo" >
+                                            </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                  
                 </div>
 
                 <!-- lista los conteos fisicos  -->
@@ -119,17 +114,15 @@
                     <div class="container-fluid m-top">
                         <div class="row">
                             <div class="col-12 text-center">
-                                <H5> BUSQUEDA INVENTARIO DIARIO</H5> </div>
+                                <H5> BÚSQUEDA DE CONTEOS FÍSICOS</H5> </div>
                                 <br>
                                  <br>
-                         
+
                                 <div class="container-fluid mt-0">
                                     <div class="row">
-                                        <div class="col-md"><input type="date"  class="form-control" name="FechIncio" id="FechIncio"></div>
-                                        <div class="col-md"><input type="date" class="form-control" name="FechFin" id="FechFin"></div>
-                                        <div class="col-md"><input type="button" id="btnBuscaConteo"  class="form-control" value="Buscar" onclick="getlistaConteo()"  style ="background-color: #5DADE2; width:30%;color:aliceblue; font-weight:bold;"></div>
-
-
+                                        <div class="col-md"><label class="small text-muted mb-0">Desde</label><input type="date"  class="form-control" name="FechIncio" id="FechIncio"></div>
+                                        <div class="col-md"><label class="small text-muted mb-0">Hasta</label><input type="date" class="form-control" name="FechFin" id="FechFin"></div>
+                                        <div class="col-md align-self-end"><input type="button" id="btnBuscaConteo"  class="form-control" value="Buscar" onclick="getlistaConteo()"  style ="background-color: #5DADE2; width:50%;color:aliceblue; font-weight:bold;"></div>
                                     </div>
                                     <br>
                                     <div class="row">
@@ -137,169 +130,99 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>FECHA</th>  
+                                                    <th>FECHA</th>
                                                     <th>TURNO</th>
-                                                    <th>CIERRE</th>
-                                                    <th>EXISTENCIA</th>
-                                                    <th>ABERIA</th>
-                                                    <th>REFIL</th>                                
-                                                    <th>TOTAL</th>                              
-                                                    <th class="text-right">ACCIONES</th>                                
+                                                    <th>INICIAL</th>
+                                                    <th>REFIL</th>
+                                                    <th>FINAL</th>
+                                                    <th>AVERÍAS</th>
+                                                    <th>CONSUMO</th>
+                                                    <th class="text-right">ACCIONES</th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="detConteo">
+                                            <tbody id="detListaConteo">
                                             </tbody>
-
                                         </table>
-
-
                                     </div>
-                                    
-                                    
-                             
-
-                                    
-                                     
-                               
-                                   
-
                                 </div>
                             </div>
                         </div>
-								
-						
+                    </div>
+                </div>
+
+                <!-- resumen inventario actual  -->
+                <div class="tab-pane fade  p-3" id="three" role="tabpanel" aria-labelledby="three-tab">
+                    <div class="container-fluid m-top">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <H5> INVENTARIO ACTUAL POR PRODUCTO</H5> </div>
+                                <br>
+                                <div class="container-fluid mt-0">
+                                    <div class="row">
+                                        <div class="col-md"><label class="small text-muted mb-0">Desde</label><input type="date"  class="form-control" name="FechIncioR" id="FechIncioR"></div>
+                                        <div class="col-md"><label class="small text-muted mb-0">Hasta</label><input type="date" class="form-control" name="FechFinR" id="FechFinR"></div>
+                                        <div class="col-md align-self-end"><input type="button" id="btnResumen"  class="form-control" value="Generar" onclick="getResumenInventario()"  style ="background-color: #5DADE2; width:50%;color:aliceblue; font-weight:bold;"></div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <table id="tblResumen" class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>PRODUCTO</th>
+                                                    <th>INICIAL</th>
+                                                    <th>REFIL</th>
+                                                    <th>FINAL</th>
+                                                    <th>AVERÍAS</th>
+                                                    <th>CONSUMO</th>
+                                                    <th>EXISTENCIA ACTUAL</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="detResumen">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-     $(document).ready( function(){
-       $("#btnSaveConteo").prop("disabled",true);
-         
-     });
 
-</script>
+<!-- recalcula el consumo cada vez que cambia un valor -->
 <script>
     $(document).ready( function(){
-      $("#tcierreant").on("change", function(){
-
-         console.log("haciendo cambios en el cierre anterior");
+      $("#tcierreant, #existenciaF, #aberia, #refil").on("change keyup", function(){
          calcularexistenciaReal();
-      })
-
+      });
+      // al cambiar producto o bodega arrastramos el cierre anterior como conteo inicial
+      $("#producto, #bodega").on("change", function(){
+         cargarCierreAnterior();
+      });
     });
 
-</script>
-<script>
-    $(document).ready( function(){
-      $("#existenciaF").on("change", function(){
-         console.log("Cambiando la existencia fisica");
-         calcularexistenciaReal();
-      })
-
-    });
-
-</script>
-<script>
-    $(document).ready( function(){
-      $("#aberia").on("change", function(){
-         console.log("Cambiando la existencia fisica");
-         calcularexistenciaReal();
-      })
-
-    });
-
-</script>
-<script>
-    $(document).ready( function(){
-      $("#refil").on("change", function(){
-         console.log("Cambiando la existencia fisica");
-         calcularexistenciaReal();
-      })
-
-    });
-
-</script>
-
-<script>
-    function activarTab(){
-        let tab = document.getElementById("one-tab");
-         tab.click();
-
-        /*tab.addEventListener("click", function(){
-           
-        });*/
-
-    }
-   // $(document).ready(function (){
-
-        
-    /*  $("#btnBuscaConteo").on('click', function(){
-        var FechIncio =  ($("#FechIncio").val().length>0 ) ? $("#FechIncio").val() : "";
-        var FechFin   =  ($("#FechFin").val().length>0 )   ? $("#FechFin").val() : "";
-        if(FechIncio.length== 0 ||  FechFin.length ==  0 ){
-            console.log("Las fechas no pueden estar vacias");
-            return   false;
-        }
-        var urlDest = "index.php/ConteoFisico_Controller/get_listaConteo/";
-        var datJson ={FechIncio:FechIncio, FechFin:FechFin};
-        $.ajax({
-                 url: base_url(urlDest),
-                 type: "POST" ,
-                 data: datJson,
-                 beforeSend: function(){},
-                 success: function (data){
-                    console.log(data);
-                 $("#detConteo").html(data);
-                   $("#detConteo").change();
-                 //$("#detCompra").html(data);
-
-                 },
-                 complete:  function (){} 
-
-         });
-
-         //console.log("Buscar datos de  conteo fisico");               
-        });*/
-
-    //});
-    
-
-</script>
-
-
-<!-- funcion que hace la sumatoia de los valores -->
-<script>
+    // consumo del dia = (conteo inicial + refil) - conteo final - averias
     function calcularexistenciaReal(){
-        var suma        = 0 ;
-        var tcierreant  = ($("#tcierreant").val().length>0)? parseInt($("#tcierreant").val()) :  0;
-        var existenciaF = ($("#existenciaF").val().length>0)? parseInt($("#existenciaF").val()) :  0;
-        var aberia      = ($("#aberia").val().length>0)? parseInt($("#aberia").val()) :  0;
-        var refil       = ($("#refil").val().length>0)? parseInt($("#refil").val()) :  0;
-        suma            = (tcierreant - existenciaF- aberia) + refil ;
-        if(suma>0) {
-            $("#stockf").val(suma);
-        }else{
-            $("#stockf").val(null);
-        }
-
+        var tcierreant  = ($("#tcierreant").val().length>0)?  parseInt($("#tcierreant").val())  : 0;
+        var existenciaF = ($("#existenciaF").val().length>0)? parseInt($("#existenciaF").val()) : 0;
+        var aberia      = ($("#aberia").val().length>0)?      parseInt($("#aberia").val())      : 0;
+        var refil       = ($("#refil").val().length>0)?       parseInt($("#refil").val())       : 0;
+        var consumo     = (tcierreant + refil) - existenciaF - aberia;
+        $("#stockf").val(consumo);
     }
 </script>
 
-
 <script>
-
 $(document).ready(function()
 {
- $("#Producto").select2({
-                                        theme: 'bootstrap4',
-                                        placeholder: "Select producto",
-                                        allowClear: true,
-                                        width: 'resolve',
-                                    });
-
-
+ $("#producto").select2({
+                            theme: 'bootstrap4',
+                            placeholder: "Seleccione un producto",
+                            allowClear: true,
+                            width: 'resolve',
+                         });
 });
 </script>

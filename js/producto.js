@@ -37,6 +37,7 @@ function addProducto(productoID){
     var proveedorID        =  1;
     var presentacion_invId =  0;
     var tipomovinvtId      =  0;
+    var  presProdID = 0 ;
 
     console.log("se ha hecho  click"+ productoID  + " capturado");
     var url = base_url('index.php/productos_Controller/addProducto/' + productoID);
@@ -46,6 +47,12 @@ function addProducto(productoID){
         $("#vmodaladdProducto").html(data);
         //  document.getElementById('prodDescripcion').innerHTML=descripcion      
         $('#addProducto').modal('show');
+
+       
+
+
+
+
         if(document.getElementById('famProdID')){
           famProdID = $("#famProdID").val();
         }
@@ -81,7 +88,7 @@ function addProducto(productoID){
         $("#tipProducto").change();  
         $("#marca").val(marcProdID);
         $("#marca").change();  
-        $("#presentacion").val();
+        $("#presentacion").val(presProdID);
         $("#presentacion").change();  
         $("#medida").val(medProdID);
         $("#medida").change();
@@ -180,9 +187,29 @@ function addProducto(productoID){
    function updatePrecProd(productoID, identificador){
     var preciocosto = 0;
     var precioventa = 0;
+    var proddisponible =0;
+
+
+  
+  const chkProducto = document.getElementById("proddisponible"+ identificador);
+
+//chkProducto.addEventListener("change", function(){
+
+    if(chkProducto.checked){
+        console.log("Activado");
+    }else{
+        console.log("Desactivado");
+    }
+
+   //return false  ; 
+   
+
     if(document.getElementById("precioventa"+ identificador)){
       precioventa =  $("#precioventa" + identificador).val();
-       preciocosto =  $("#precioventa" + identificador).val();  
+       preciocosto =  $("#precioventa" + identificador).val(); 
+       proddisponible =   chkProducto.checked;
+
+
     }
     /*if(document.getElementById("preciocosto"+ identificador)){
       preciocosto =  $("#preciocosto" + identificador).val(); 
@@ -196,7 +223,7 @@ function addProducto(productoID){
 
     //}   
     var DJson         = {
-                         productoID:productoID, preciocosto:preciocosto,precioventa:precioventa 
+                         productoID:productoID, preciocosto:preciocosto,precioventa:precioventa, proddisponible:proddisponible 
                          
                         };  
 	url_destino       = "index.php/productos_Controller/updatePrecProd/";
@@ -227,6 +254,18 @@ function addProducto(productoID){
 
 
    } 
+
+   function deleteProducto(productoID){
+    console.log("Eliminando el producto") ;
+     var url = base_url('index.php/productos_Controller/deleteProducto/' + productoID);
+   
+    //var url = base_url("index.php/BancosController/bancos");
+      $.get(url, function (data) {
+        listarProductos();
+
+   });
+  }
+
 
    //   funcion para motrar los  items de la tabla temporal  
   

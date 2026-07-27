@@ -212,7 +212,7 @@ class ventaProducto_Controller extends CI_Controller {
      // echo  'llegadno al controlador';                
      $data['detalleOrden'] =  $this->ordenesPedido_Model->get_listDetOrden($ordenPedidoID); 
 
-     $data['submenu'] = $this->Producto_Model->get_submenu($famProdID);
+      $data['submenu'] = $this->Producto_Model->get_submenu($famProdID);
       $data['familia']  = 110 ;//$mesaID;
       $data['datordenID']  =    $ordenPedidoID ;
       $data['mesaID']  =    $mesaID ;
@@ -230,6 +230,10 @@ class ventaProducto_Controller extends CI_Controller {
 
    public function  anularOrden(){
      $ordenID =  isset($_REQUEST['ordenID']) ? $_REQUEST['ordenID']:  0;
+     $this->ordenesPedido_Model->anularOrden($ordenID) ;
+   }
+   public function  anularOrdenID($ordenID){
+     //$ordenID =  isset($_REQUEST['ordenID']) ? $_REQUEST['ordenID']:  0;
      $this->ordenesPedido_Model->anularOrden($ordenID) ;
    }
    public function  anularDetOrden(){

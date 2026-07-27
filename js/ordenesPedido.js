@@ -25,9 +25,9 @@ function base_url(url){
 
 
 // funcion para cargar la  venta principal de ordenes 
-function cargar_addordenes(mesaID){   
-    console.log("Listando las mesas  ");
-    var url = base_url('index.php/Menu_internoController/cargar_addordenes/' + mesaID);  
+function cargar_addordenes(mesaID, mesNombre){   
+    console.log("Listando las mesas "  + mesaID + "    "+ mesNombre);
+    var url = base_url('index.php/Menu_internoController/cargar_addordenes/' + mesaID +'/'+ mesNombre );  
     $.get(url, function (data) {
         $("#principal").html(data);             
     });
@@ -247,6 +247,25 @@ function cargar_addordenes(mesaID){
        
        });
       }
+
+      // funcion para mostrar las ordenes pendientes de despacho  por el  id de la mesa  
+       function mostrarPendientesDespachomesaID(mesaID){
+    var mesaID  = mesaID  ; //select.value;
+    console.log("El detalle de la mesa a mostrar es 100000 " + mesaID ) ;   
+    var url = base_url('index.php/Ordenes_Controller/listaOrdenesPendienteDespacho/');
+    obJson = { mesaID:mesaID};
+    $.ajax({
+           url: url, 
+           type:"POST",
+           data:obJson, 
+           beforeSend: function(){
+           }, success:function(data){  
+            console.log(data)       ;  
+            $("#ordenesPendientesDespacho").html(data);    
+           }
+    });
+  
+  }
 
 
 

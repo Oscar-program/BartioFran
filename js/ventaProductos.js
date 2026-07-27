@@ -517,5 +517,31 @@ function editDetaVenta(famProdID, detPedID){
 
  }
 
+ // funcion para anular la orden  por el id de la orden, tenmiendo en cuenta que  el  necargado de despacho podra anular la orden  
+
+ function  anularOrdenID(ordenID, mesaID){
+    console.log("Elimiando la mesa por el  id de la orden  ") ;
+    url  =  base_url('index.php/ventaProducto_Controller/anularOrden/');
+    console.log("anulando la  orden de pedido la mesa es " +  mesaID + "la orden es  " + ordenID  );
+    var obJSON = {ordenID : ordenID } ;
+   $.ajax({
+            url: url,
+            type: "POST",
+            data: obJSON,
+            beforeSend: function (){
+
+            }, 
+            success: function(data){    
+              mostrarPendientesDespachomesaID(mesaID);
+
+
+             
+                 
+
+            }
+
+    });
+
+ }
 
   

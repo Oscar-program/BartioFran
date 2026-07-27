@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class  preciosProducto_Model extends CI_Model{
 
     public function lista_productoCostear() {
-        $query =  $this->db->select("precprod.productoID, upper(prod.prodDescripcion)  as  prodDescripcion, sum(invprod.existenciaInvProd)  as  existencia, precprod.precioventa")
+        $query =  $this->db->select("precprod.productoID, upper(prod.prodDescripcion)  as  prodDescripcion, sum(invprod.existenciaInvProd)  as  existencia, precprod.precioventa, precprod.proddisponible ")
                   ->join("producto prod", "precprod.productoID  = prod.productoID","inner")
                   ->join("inventarioproducto invprod", "invprod.productoID  =  prod.productoID","inner")
                   ->group_by("prod.productoID")
@@ -34,7 +34,8 @@ class  preciosProducto_Model extends CI_Model{
         // Precio costo se registra cuando se ingresa compra de productos y se pone el del  comprobante del proveedor  
 
         if( $data["preciocosto"]>0){
-            $this->db->set("preciocosto", $data["preciocosto"])            
+            $this->db->set("preciocosto", $data["preciocosto"]) 
+                      ->set("proddisponible", $data["proddisponible"])           
             ->where("productoID", $productoID)
             ->where("precioProdStatus",  1)
             ->update("precioproducto");
@@ -42,7 +43,16 @@ class  preciosProducto_Model extends CI_Model{
 
         }else if ($data["precioventa"]>0){
             $this->db->set("precioventa", $data["precioventa"]) 
-                     ->set("fechactualizado", $data["fechactualizado"])              
+                     ->set("fechactualizado", $data["fechactualizado"])
+                     ->set("proddisponible", $data["proddisponible"])               
+            ->where("productoID", $productoID)
+            ->where("precioProdStatus",  1)
+            ->update("precioproducto");
+             return $this->db->affected_rows();
+        }else{
+              $this->db->set("precioventa", $data["precioventa"]) 
+                     ->set("fechactualizado", $data["fechactualizado"])
+                     ->set("proddisponible", $data["proddisponible"])               
             ->where("productoID", $productoID)
             ->where("precioProdStatus",  1)
             ->update("precioproducto");

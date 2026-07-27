@@ -1,4 +1,8 @@
 <?php 
+ini_set('display_errors',1);
+  ini_set('display_startup_errors',1);
+  error_reporting(E_ALL); 
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Productos_Controller extends CI_Controller {  
     public function __construct()
@@ -86,6 +90,10 @@ class Productos_Controller extends CI_Controller {
         $prodDescripcion    = (isset($_POST['descripcion'])) ? $_POST['descripcion']: NULL;
         $tipomovinvtId      = (isset($_POST['tipomovinvent'])) ? $_POST['tipomovinvent']: NULL;
         $presentacion_invId = (isset($_POST['presentacioninvent'])) ? $_POST['presentacioninvent']: NULL;
+       // echo  "el valor del  control es" . $_POST['prodctucocina'] . "<br>" ;
+
+        $prodctucocina   = ($_POST['prodctucocina']==true) ? '1': '0';
+
         
         $dataProd = array('prodDescripcion'=>$prodDescripcion,
                           'famProdID'=>$famProdID,
@@ -95,11 +103,12 @@ class Productos_Controller extends CI_Controller {
                           'medProdID'=>$medProdID,
                           'proveedorID'=>$proveedorID,
                           'tipomovinvtId'=>$tipomovinvtId,
-                          'presentacion_invId'=>$presentacion_invId
+                          'presentacion_invId'=>$presentacion_invId, 
+                          'prodctucocina'=>$prodctucocina,
 
                           
                         );
-        // var_dump($dataProd);
+         var_dump($dataProd);
         //  hacemos la  insercion en la tabla de precios 
         echo    'el id del producto que se va actualizar es '. $productoID . '#'.'<br>';
         $rIdProd  = $this->Producto_Model->addProducto( $dataProd,$productoID);
@@ -179,20 +188,30 @@ public function preciosProducto(){
   error_reporting(E_ALL); 
   //echo  'llegando al  controlador';
   $datos['lista_productoCostear'] =  $this->preciosProducto_Model->lista_productoCostear();
+ // var_dump($datos['lista_productoCostear']) ;
+
   $this->load->view('inventarios/precios_producto', $datos);
 }
    
 // funcion  para actualizar los precio  del  los productos 
 public function  updatePrecProd (){  
+  ini_set('display_errors',1);
+  ini_set('display_startup_errors',1);
+  error_reporting(E_ALL); 
+  
+
   $productoID     = (isset($_POST["productoID"]))?  $_POST["productoID"] : 0;
   $preciocosto    = 0 ; //(isset($_POST["preciocosto"]))?  $_POST["preciocosto"] : 0;
   $precioventa    = (isset($_POST["precioventa"]))?  $_POST["precioventa"] : 0;    
   $fechactualizado = date("Y-m-d H:i:s");
+  //echo "el valor del control es" . $_POST["proddisponible"] . "<br>" ;
+  $proddisponible = (  $_POST["proddisponible"] == 'true' )? 1 : 0;
   # preparando el algoritmo para  refleja la  salida en  el kardex
  
   $data =  array( 'preciocosto'      => $preciocosto,
                   'precioventa'      => $precioventa,
-                  'fechactualizado'  => $fechactualizado                       
+                  'fechactualizado'  => $fechactualizado ,
+                   'proddisponible'  => $proddisponible,                    
                 );
   //var_dump($data); 
   // usamos  una nueva sincronizacin  para probar el  commit              
@@ -201,6 +220,12 @@ public function  updatePrecProd (){
 
 
 } 
+
+public function deleteProducto($productoID){
+    $datos =  $this->Producto_Model->deleteProducto($productoID);
+
+}
+
 
 
    

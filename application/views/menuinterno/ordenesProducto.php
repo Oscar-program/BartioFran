@@ -2,6 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 $ordenID   = isset($datordenID) ? $datordenID : 0 ; 
 $mesaID    = isset($mesaID) ? $mesaID : 0 ; 
+$mesNombre = isset($mesNombre) ? $mesNombre : "" ; 
 $total     = 0; 
 $datTotal  = 0;
 ?>
@@ -12,7 +13,7 @@ $datTotal  = 0;
     <!-- titulo de mesa y numeor de orden -->     
     <div class="row"> 
         <div  class="col-md 12 shadow-sm p-3 mb-1 bg-white rounded text-end">
-        <label  id="bannerMesaPedido" name ="bannerMesaPedido">  <?php echo  "MESA " . $mesaID . "         ORDEN #" .   strval($ordenID); ?></label> 
+        <label  id="bannerMesaPedido" name ="bannerMesaPedido">  <?php echo  str_replace("%20" ,  " ", $mesNombre) . "         ORDEN #" .   strval($ordenID); ?></label> 
         </div> 
         <input type="hidden" class="text-left text-warning border-0" name="ordenID" id="ordenID" value="<?php  echo strval($ordenID); ?>" readonly>
         <input type="hidden" class="text-left text-warning border-0" name="ctrlmesaID" id="ctrlmesaID" value="<?php  echo $mesaID; ?>" readonly>
