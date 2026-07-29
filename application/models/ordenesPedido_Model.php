@@ -184,13 +184,13 @@
    }*/
 
     public function listaOrdenesPendienteDespacho($mesaID){
-    //   echo  $_SESSION["nivelUsuaio"] = "2" ;
-
+           //   echo  $_SESSION["nivelUsuaio"] = "2" // es cocinero los demas usuarios podran ver lo que despacharon ;
+           $condicion  = "";
          if($_SESSION["nivelUsuaio"] == "2"){             
-              $condicion  = "prod.famProdID = 3 or  prod.famProdID = 4 or   prod.famProdID  =  5";
+              $condicion  = "prod.prodctucocina = 1" ; // "prod.famProdID = 3 or  prod.famProdID = 4 or   prod.famProdID  =  5";
               
            }else{
-                $condicion  = "ped.despachar =  0";
+                $condicion  = "ped.despachar =  0 or ped.despachar =  1 ";
            }
   
 

@@ -66,6 +66,10 @@ $dettotal           = 0;
             <input type="hidden" class="form-control text-right" id="ordenPedidoID" name="ordenPedidoID" value ="<?php echo $ordenPedidoID  ;?>" readonly>
             <input type="hidden" class="form-control text-right" id="precioregular" name="precioregular" value ="">
             <input type="hidden" class="form-control text-right" id="totalVenta" name="totalVenta" value ="">
+            <input type="hidden" class="form-control text-right" id="prodctucocina" name="prodctucocina" value ="">
+
+             
+
             <div class="form-group text-center">
               <p id="prodDescripcion" style = "color:darkblue; font-weight:bold; font-size:20px;"> </p>
             </div>

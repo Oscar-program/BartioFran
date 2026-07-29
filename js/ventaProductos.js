@@ -2,7 +2,7 @@ function base_url(url){
     return window.location.origin + "/BartioFran/"+ url;
 }
 /*funcion para cargar la modal */
-function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  preciocosto){
+function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  preciocosto, prodctucocina){
  // modal que carga el producto y el  precio    
   console.log("los datos de los productos son Familia  " + famProdID + "idProducto" + idProducto +  "detallePedido" +  detPedID  + "Descripcion"+  prodDescripcion + "PrecioCosto"+ preciocosto  )  
     var valorid  = 0;  
@@ -22,6 +22,8 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
         $("#bodsalida").val(bodSaldID);
          $("#precioregular").val(preciocosto.toFixed(2));
         $("#bodsalida").change();
+        $("#prodctucocina").val(prodctucocina); 
+
       });
    
    }
@@ -69,6 +71,7 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
         $("#bodsalida").val(bodSaldID);
          $("#precioregular").val(precioventa);
         $("#bodsalida").change();
+         $("#prodctucocina").val(prodctucocina); 
       });
    
    }
@@ -100,7 +103,8 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
     var cantiadVenta   = 0;
     var totalVenta     = 0;
     var ordenID        = 0; 
-    var productoID     =  0;
+    var productoID     = 0;
+    var prodctucocina  = 0 ;
     calculartotalVenta();
 
 
@@ -137,6 +141,11 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
     if(document.getElementById("detPedID")){
         detPedID= $("#detPedID").val();
     }
+    // poemos si el producto es de cocina 
+     if(document.getElementById("prodctucocina")){
+        prodctucocina= $("#prodctucocina").val();
+    }
+
 
 
     //detPedID
@@ -151,6 +160,7 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
                     precincremento:precincremento, 
                     cantidadVenta:cantidadVenta,
                     totalVenta:totalVenta, 
+                    prodctucocina: prodctucocina 
                     };  
         url_destino       = "index.php/ventaProducto_Controller/saveVentaProducto/";
 

@@ -17,6 +17,7 @@ style= "padding:0; margin:0; height:100%; overflow:hidden;  opacity:2; margin-le
                       
 
                                 <option value="<?php echo $row->productoID; ?>"
+                                    data-famprodid       = "<?php echo $row->prodctucocina ;?>"
                                     data-famprodid       = "<?php echo $row->famProdID ;?>"
                                     data-detpedid        = "<?php echo $detPedID=0 ;?>"
                                     data-proddescripcion = "<?php echo $row->prodDescripcion?>"
@@ -33,7 +34,7 @@ style= "padding:0; margin:0; height:100%; overflow:hidden;  opacity:2; margin-le
             foreach($submenu as  $row){ 
             ?>
             <div  style="float:left; width:25%; margin-left:3px; shadow p-3 mb-5 bg-white rounded" id  =" <?php echo   'familia'.$row->productoID ?>" 
-                name  = 'familia' data-value=="<?php echo $row->productoID;?>" onclick="addVentaProducto(<?php echo $row->famProdID ;?>, <?php echo $row->productoID ;?>,  <?php echo $detPedID=0 ;?>, <?php echo "' $row->prodDescripcion '" ;?> ,  <?php echo $row->precioventa ;?>)">
+                name  = 'familia' data-value=="<?php echo $row->productoID;?>" onclick="addVentaProducto(<?php echo $row->famProdID ;?>, <?php echo $row->productoID ;?>,  <?php echo $detPedID=0 ;?>, <?php echo "' $row->prodDescripcion '" ;?> ,  <?php echo $row->precioventa ;?>,  <?php echo $row->prodctucocina ;?>)">
                         <!-- small box -->
                         <div class="small-box bg-info btnMenu">
                             <div class="inner btnMenu">

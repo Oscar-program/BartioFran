@@ -83,6 +83,8 @@ class ventaProducto_Controller extends CI_Controller {
         //productoID:productoID, precioregular:precioregular, 
         //comanda:comanda, bodsalida:bodsalida, precincremento:precincremento, cantiadVenta:cantiadVenta,totalVenta:totalVenta 
         $operacionesInventario  =  new  operacionesInvenatarios();
+        $despachar = 0 ; 
+        $procesado = 0 ; 
         //exit;
         $transaccionID   = (isset($_POST["idTransac"]))?  $_POST["idTransac"] : 0;
         $movtipo         = "VENT" ;
@@ -99,6 +101,12 @@ class ventaProducto_Controller extends CI_Controller {
         $entrada         = (isset($_POST["cantidadVenta"]))?  $_POST["cantidadVenta"] : 0;
         $totalVenta      = (isset($_POST["totalVenta"]))?  $_POST["totalVenta"] : 0;
         $detPedID        = (isset($_POST["detPedID"]) && $_POST["detPedID"]!=null )?  $_POST["detPedID"] : null;
+        $prodctucocina   = (isset($_POST["prodctucocina"]))?  $_POST["prodctucocina"] : 0;
+        if($prodctucocina == 0){
+          $despachar    = 1 ; 
+         // $procesado    = 1;
+        }
+
      
 
         # procesamos la venta en el detalle de ordenes  
@@ -117,7 +125,10 @@ class ventaProducto_Controller extends CI_Controller {
                                       'detcantidad' =>$detcantidad,
                                       'detprecioNormal' =>$detprecioNormal,
                                       'detprecioEspecial' =>$detprecioEspecial,
-                                      'dettotal' =>$dettotal 
+                                      'dettotal' =>$dettotal, 
+                                      'despachar' =>$despachar 
+                                      
+
                                       );
                          //   var_dump($dataDelOrdenes); 
                             //exit ;
