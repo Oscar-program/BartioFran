@@ -21,7 +21,7 @@ class familiaProducto_Controller extends CI_Controller {
         ini_set('display_startup_errors',1);
         error_reporting(E_ALL);
         /* Creamos una variable para determinar el  modelo  a ejecutar*/
-       
+       //echo  "el valor del control es " . $_POST['txtfamilia'] ;
       if(isset($_POST['txtfamilia'])){
           $famProdDescripcion = $_POST['txtfamilia'];
           $famProdID = null;
@@ -30,6 +30,8 @@ class familiaProducto_Controller extends CI_Controller {
             $famProdID = $_POST['txtfamProdID'];
           }
           $data =  array("famProdDescripcion"=>$famProdDescripcion);
+         // var_dump($data) ;
+
           $result = $this->familiaProducto_Model->addFamiliaProducto($data, $famProdID);
       }else{
         echo   'no se ha dibujado el  control DEL  DETALLE DE LAS PRESENTACIONES';
@@ -47,6 +49,13 @@ class familiaProducto_Controller extends CI_Controller {
   $result =  $this->familiaProducto_Model->delete_FamiliaProductoID($medProdID);
   echo  $result;
   } 
+
+    public function listaAllFamiliaProducto(){
+        $data['listFamiliaProducto'] = $this->familiaProducto_Model->listaAllFamiliaProducto();
+        $this->load->view('configuraciones/detFamilia',$data);
+
+     }
+
 
    
 

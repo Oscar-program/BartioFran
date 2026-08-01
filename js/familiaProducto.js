@@ -11,6 +11,18 @@ function get_listFamiliaProducto(){
       });
   
   }
+
+
+  function listaAllFamiliaProducto(){
+    console.log('intentando cargar el  menu interno');
+    var url = base_url('index.php/familiaProducto_Controller/listaAllFamiliaProducto/');
+      $.get(url, function (data) {
+          $("#detFamilia").html(data);
+      });
+  
+  }
+
+
   function  saveFamiliaProducto(){
     var formData;
     console.log('In presentacion  Producto');
@@ -42,7 +54,7 @@ function get_listFamiliaProducto(){
       complete: function () {
         // Show image container
         $("#loader").css("display", "none");
-        get_listFamiliaProducto();
+        listaAllFamiliaProducto();
        
 
         $("#txtfamProdID").val('');

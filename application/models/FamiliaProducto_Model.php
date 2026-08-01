@@ -17,7 +17,9 @@ class FamiliaProducto_Model extends CI_Model {
 
     /*funcion para insert nueva medida de  producto */
     public function  addFamiliaProducto($data, $famProdID){
+        //echo  "llegasndo al modelo para almacenar el valor" .  $famProdID . "fdg g" ;
         if($famProdID ==   null){
+          //  echo  "insertando el valor" ;
             $this->db->insert("familiaproducto",$data);
             return $this->db->insert_id();
         }else{
@@ -46,6 +48,16 @@ class FamiliaProducto_Model extends CI_Model {
                  ->delete("familiaproducto");                 
         return  $this->db->affected_rows();          
     }
+
+    // listar todas  las familias creadas  
+      // funcion para cargar la medida que  se  quiere  modificar  
+    public function listaAllFamiliaProducto() {
+        $query =  $this->db->select("*")                                    
+                           ->get("familiaproducto")
+                           ->result();
+        return  $query;          
+    }
+
 
 
     

@@ -39,7 +39,7 @@ function verificarstadotab(id){
                 console.log('Eligiendo el  form 4');
                 $("#txtfamProdID").val('');
                 $("#txtfamilia").val('');
-                get_listFamiliaProducto();
+                listaAllFamiliaProducto();
         break;
         case 'five-tab':
             // Código a ejecutar si la expresión coincide con valor2
