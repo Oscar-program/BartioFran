@@ -12,7 +12,7 @@
 <div class="container-fluid m-top">
         <div class="row">
             <div class="col-4 text-start">
-            <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom" onclick="addProducto(<?php echo 0 ;?>);"  style="background-color: #5DADE2 ;"> New <i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom" onclick="addProveedor(<?php echo 0 ;?>);"  style="background-color: #5DADE2 ;"> New <i class="fa fa-plus" aria-hidden="true"></i></button>
             </div>
         </div>
 </div>  
@@ -40,20 +40,19 @@
                         <?php  $c = 1;
                             $activo ='N';
                         foreach ($listaProveedores as $row) :   ; 
-                        
 
                                                     
                         ?>
                         <tr>
 
                             <td><?php echo $c ;?></b></td>
-                            <td><?php echo $row->prodDescripcion; ?></td>
-                            <td><?php echo $row->famProdDescripcion; ?></td>
-                            <td><?php echo $row->presProdDescripcion; ?></td>
-                            <td><?php echo $row->tipProdNombre; ?></td>
-                            <td><?php echo $row->marcProdDescripcion; ?></td>
-                            <td><?php echo $row->medProdDescripcion; ?></td>
                             <td><?php echo $row->provDescripcion; ?></td>
+                            <td><?php echo $row->provContacto; ?></td>
+                            <td><?php echo $row->emailProv; ?></td>
+                            <td><?php echo $row->provTelefono; ?></td>
+                            <td><?php echo $row->clasificacion; ?></td>
+                            <td><?php echo $row->tipoContribuyente; ?></td>
+                           
                                                         
                             <td class="text-right">
 
@@ -88,7 +87,7 @@
     </div>
 </div>
 
-<div   id ="vmodaladdProducto">
+<div id ="vmodaladdProveedor">
         
 </div>
 
@@ -105,7 +104,7 @@
         });
         
     $(document).ready(function() {
-        $('#tblListaProd').DataTable({
+        $('#tblListaProveedor').DataTable({
             //para cambiar el lenguaje a español
             "order":[[0, "asc" ]],
             "language": {

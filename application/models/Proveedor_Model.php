@@ -5,11 +5,12 @@ class Proveedor_Model extends CI_Model {
     // funcion para cargar las  categorias de los  productos  
     public function get_listaProveedores() {
         $query =  $this->db->select("prov.proveedorID,  prov.provDescripcion,
-                                    prov.provContacto,  prov.emailProv, prov.provTelefono,   clasf.clasificacion, tipc.tipoContribuyente
+                                    prov.provContacto,  prov.emailProv, prov.provTelefono,   clasf.clasificacion, tipc.tipoContribuyente,
                                     clasf.clasfiscalID,  tipc.tipoContribID") 
                   ->join("clasificacion_fiscal clasf", "clasf.clasfiscalID =  prov.clasfiscalID","inner")
                   ->join("tipo_contribuyente tipc", "tipc.tipoContribID =  prov.tipoContribID","inner") 
-                 ->get("proveedores proveedores prov")
+                   ->where("prov.provStatus",  1 )
+                 ->get("proveedores  prov")
                  ->result();
         return  $query;          
     }
@@ -19,12 +20,14 @@ class Proveedor_Model extends CI_Model {
 
     // funcion que retorna  la informacion general del proveedor , (Gran contribiyente, mediano y otros) (Gravados-excento-no sujetos)  
     public function  get_infoProveedor($proveedorID){
-        $query =  $this->db->select("prov.proveedorID,  prov.provDescripcion,  clasf.clasfiscalID,  tipc.tipoContribID") 
+        $query =  $this->db->select("prov.proveedorID,  prov.provDescripcion,
+         prov.provContacto,  prov.emailProv, prov.provTelefono,   clasf.clasificacion, tipc.tipoContribuyente,
+          clasf.clasfiscalID,  tipc.tipoContribID") 
                         ->join("clasificacion_fiscal clasf", "clasf.clasfiscalID =  prov.clasfiscalID","inner")
                         ->join("tipo_contribuyente tipc", "tipc.tipoContribID =  prov.tipoContribID","inner") 
                         ->where("proveedorID", $proveedorID)
                         ->get("proveedores prov")
-                        ->result();
+                        ->row();
         return  $query;
 
     }
@@ -34,11 +37,11 @@ class Proveedor_Model extends CI_Model {
   public function  addProveedor($data, $proveedorID){
      
     if($proveedorID ==   NULL){
-    //    echo  'Ingresando Producto' . $productoID;
+       echo  'Ingresando Producto' . $proveedorID;
         $this->db->insert("proveedores",$data);
         return $this->db->insert_id();
     }else{
-      //  echo  'Actualizando Producto';
+        echo  'Actualizando Producto';
       // ->set("prodClasfInvent",  $data["prodClasfInvent"])
         $this->db->set("clasfiscalID",   $data["clasfiscalID"])
                 ->set("tipoContribID",   $data["tipoContribID"])

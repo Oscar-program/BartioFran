@@ -45,8 +45,8 @@ class familiaProducto_Controller extends CI_Controller {
   }
 
   /*Funcion para elminar marca de  producto  */
-  public  function  delete_FamiliaProductoID($medProdID){
-  $result =  $this->familiaProducto_Model->delete_FamiliaProductoID($medProdID);
+  public  function  delete_FamiliaProductoID($famProdID){
+  $result =  $this->familiaProducto_Model->delete_FamiliaProductoID($famProdID);
   echo  $result;
   } 
 

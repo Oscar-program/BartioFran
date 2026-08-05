@@ -39,7 +39,7 @@ class Productos_Controller extends CI_Controller {
         ini_set('display_startup_errors',1);
         error_reporting(E_ALL); 
         $data['proveedorProducto']   = $this->Proveedor_Model->get_listaProveedores();
-        $data['familiaProducto']     = $this->FamiliaProducto_Model->get_listFamiliaProducto();
+        $data['familiaProducto']     = $this->FamiliaProducto_Model->listaAllFamiliaProducto();
         $data['tipoProducto']        = $this->TipoProducto_Model->get_listaTipoProducto();
         $data['medidaProducto']      = $this->MedidaProducto_Model->get_listaMedidaProducto();
         $data['MarcaProducto']       = $this->Marcas_Model->get_listaMarcaProducto();
@@ -57,7 +57,7 @@ class Productos_Controller extends CI_Controller {
       ini_set('display_startup_errors',1);
       error_reporting(E_ALL); 
       $data['proveedorProducto']   = $this->Proveedor_Model->get_listaProveedores();
-      $data['familiaProducto']     = $this->FamiliaProducto_Model->get_listFamiliaProducto();
+      $data['familiaProducto']     = $this->FamiliaProducto_Model->listaAllFamiliaProducto();
       $data['tipoProducto']        = $this->TipoProducto_Model->get_listaTipoProducto();
       $data['medidaProducto']      = $this->MedidaProducto_Model->get_listaMedidaProducto();
       $data['MarcaProducto']       = $this->Marcas_Model->get_listaMarcaProducto();
@@ -111,7 +111,7 @@ class Productos_Controller extends CI_Controller {
          var_dump($dataProd);
         //  hacemos la  insercion en la tabla de precios 
         echo    'el id del producto que se va actualizar es '. $productoID . '#'.'<br>';
-        $rIdProd  = $this->Producto_Model->addProducto( $dataProd,$productoID);
+        $rIdProd  = $this->Producto_Model->addProducto($dataProd,$productoID);
         if($rIdProd!=0){
           $resulbPrec =  $this->preciosProducto_Model->get_productoIDPrecios($rIdProd);
             if(Empty( $resulbPrec )){

@@ -299,6 +299,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
                   </a>
                 </li>
 
+                <li class="nav-item">
+                  <a href="javaScript:listarProveedores()" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Proveedores</p>
+                  </a>
+                </li>
+
+
                
                 
                 <li class="nav-item">
@@ -571,6 +579,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src=" <?php echo  base_url();?>js/listarAreasEstablecimiento.js"></script>
   <script src=" <?php echo  base_url();?>js/funcionesMenu.js"></script>
   <script src=" <?php echo  base_url();?>js/configEstablecimiento.js"></script>
+  <script src=" <?php echo  base_url();?>js/proveedores.js"></script>
+
+
+  
+
+
 
 
   

@@ -8,6 +8,19 @@ class Proveedores_Controller extends CI_Controller{
         $this->load->helper('path');
     }
 
+     // funcion  retorna la lista completa de los proveedores  
+     public function listaProveedores() {
+        ini_set('display_errors',1);
+        ini_set('display_startup_errors',1);
+        error_reporting(E_ALL);  
+        $data['listaProveedores'] = $this->Proveedor_Model->get_listaProveedores() ;
+       //  var_dump($data['listaProveedores']) ;
+        $this->load->view('proveedores/proveedores',$data);
+
+
+     }
+
+
     // funcion sirve para cargar la ventana donde se ingresara los datos del proveedor 
       public function addProveedor($proveedorID){ 
         ini_set('display_errors',1);
@@ -15,9 +28,10 @@ class Proveedores_Controller extends CI_Controller{
         error_reporting(E_ALL); 
         $data['datoClasificacionFiscal']   = $this->Proveedor_Model->Listaclasificacionfiscal();
         $data['datoTipoConribuyente']      = $this->Proveedor_Model->Listatipocontribuyente();
-        $data['datoProveedor']             = $this->Producto_Model->get_productoID($proveedorID);
+        $data['datoProveedor']             = $this->Proveedor_Model->get_infoProveedor($proveedorID);
+     //   var_dump(  $data['datoProveedor']   );
 
-        $this->load->view('productos/addProveedor',$data);
+        $this->load->view('proveedores/addProveedor',$data);
      }
 
 
@@ -27,12 +41,17 @@ class Proveedores_Controller extends CI_Controller{
     public function saveProveedor(){
       //  capuramos los datos de los controles  
        $proveedorID     = (isset($_POST['proveedorID']))     ? $_POST['proveedorID']: NULL; 
-       $clasfiscalID    = (isset($_POST['clasfiscalID']))    ? $_POST['clasfiscalID']: NULL;
-       $tipoContribID   = (isset($_POST['tipoContribID']))   ? $_POST['tipoContribID']: NULL;
+       $clasfiscalID    = (isset($_POST['clasFis']))         ? $_POST['clasFis']: NULL;
+       $tipoContribID   = (isset($_POST['Contribuyente']))      ? $_POST['Contribuyente']: NULL;
        $provDescripcion = (isset($_POST['provDescripcion'])) ? $_POST['provDescripcion']: NULL;
        $provContacto    = (isset($_POST['provContacto']))    ? $_POST['provContacto']: NULL; 
        $emailProv       = (isset($_POST['emailProv']))       ? $_POST['emailProv']: NULL; 
        $provTelefono    = (isset($_POST['provTelefono']))    ? $_POST['provTelefono']: NULL; 
+
+       
+
+      // echo "Los datos del proveedor es " .  $proveedorID   . "<br>" ;
+
 
          $data = array('clasfiscalID'=>$clasfiscalID,
                           'tipoContribID'=>$tipoContribID,
@@ -44,10 +63,12 @@ class Proveedores_Controller extends CI_Controller{
 
                           
                         );
-         var_dump($data);
-      
+         //var_dump($data);
+         //exit ;
+
+
          $result= $this->Proveedor_Model->addProveedor($data, $proveedorID) ;
-         return $result ;
+         //return $result ;
 
 
     }
@@ -69,15 +90,12 @@ class Proveedores_Controller extends CI_Controller{
 
     }
 
-    // funcion  retorna la lista completa de los proveedores  
-     public function get_listaProveedores() {
-          $data['listaProveedores'] = $this->Proveedor_Model->get_listaProveedores() ;
 
-        // $data['listaProductos'] = $this->Producto_Model->get_listaProductos();
-        $this->load->view('productos/producto',$data);
+    
 
 
-     }
+
+   
 
 
 }

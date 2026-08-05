@@ -193,6 +193,7 @@
                 $condicion  = "ped.despachar =  0 or ped.despachar =  1 ";
            }
   
+     
 
 
         $this->db->distinct();         
@@ -386,6 +387,10 @@
                  return $this->db->affected_rows();  
 
         }
+    
+    
+
+
 
 
 

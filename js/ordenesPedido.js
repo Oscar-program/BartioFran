@@ -249,7 +249,7 @@ function cargar_addordenes(mesaID, mesNombre){
       }
 
       // funcion para mostrar las ordenes pendientes de despacho  por el  id de la mesa  
-       function mostrarPendientesDespachomesaID(mesaID){
+      function mostrarPendientesDespachomesaID(mesaID){
     var mesaID  = mesaID  ; //select.value;
     console.log("El detalle de la mesa a mostrar es 100000 " + mesaID ) ;   
     var url = base_url('index.php/Ordenes_Controller/listaOrdenesPendienteDespacho/');
@@ -266,6 +266,37 @@ function cargar_addordenes(mesaID, mesNombre){
     });
   
   }
+
+
+  /*function  anularOrdenEnLista(){
+    const  ordenID  =   document.getElementById('ordenID').value ;
+    const mesaID   =   document.getElementById('ctrlmesaID').value ; 
+    url  =  base_url('index.php/ventaProducto_Controller/anularOrden/');
+    console.log("anulando la  orden de pedido la mesa es " +  mesaID + "la orden es  " + ordenID  );
+    var obJSON = {ordenID : ordenID } ;
+    $.ajax({
+            url: url,
+            type: "POST",
+            data: obJSON,
+            beforeSend: function (){
+
+            }, 
+            success: function(data){                
+              //console.log("modificando orden" );
+               cargar_addordenes(mesaID) ;
+              // ver_ordenePedido(ordenID, mesaID) ;
+               $("#totalVenta").val(parseFloat(0));
+               document.getElementById('bannerMesaPedido').innerHTML = "";
+               document.getElementById('bannerMesaPedido').innerHTML = "MESA W" + mesaID + "         ORDEN #" + "" ;
+              //console.log("Datos  Modificados" );
+                 
+
+            }
+
+    });
+
+ }*/
+
 
 
 

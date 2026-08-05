@@ -101,7 +101,7 @@ function get_listFamiliaProducto(){
                       swal("Registro eliminado corectamente", {
                         icon: "success",
                       });
-                      get_listFamiliaProducto();
+                      listaAllFamiliaProducto();
                     }
   
                   });				

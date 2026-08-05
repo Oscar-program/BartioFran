@@ -554,4 +554,32 @@ function editDetaVenta(famProdID, detPedID){
 
  }
 
+ // funcion para anular detalle de la ordern ya registradas como ventas 
+  function  anularDetalleOrdenIDdet(detPedID, mesaID){
+    console.log("Eliminando un detalle de la ORDE................  ") ;
+    url  =  base_url('index.php/ventaProducto_Controller/anularDetOrden/');
+    console.log("anulando el MESA" +  mesaID + "DETALLE  " + detPedID  );
+    var obJSON = {detPedID : detPedID } ;
+   $.ajax({
+            url: url,
+            type: "POST",
+            data: obJSON,
+            beforeSend: function (){
+
+            }, 
+            success: function(data){    
+              mostrarPendientesDespachomesaID(mesaID);
+
+
+             
+                 
+
+            }
+
+    });
+
+ }
+
+
+
   
