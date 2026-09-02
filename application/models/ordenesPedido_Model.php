@@ -61,7 +61,7 @@
     //   funcion para listar  el  detalle  de la orden de pedido del  cliente  
     public function get_listDetOrden($ordenPedidoID){
         //  echo  "la orden del pedido es  " . $ordenPedidoID ;
-        $query =  $this->db->select("detOr.detPedID, detOr.ordenPedidoID, detOr.productoID, detOr.detprecioNormal, detOr.detcantidad, prod.prodDescripcion, detOr.dettotal, prod.famProdID")
+        $query =  $this->db->select("detOr.detPedID, detOr.ordenPedidoID, detOr.productoID, detOr.detprecioNormal, detOr.detcantidad, prod.prodDescripcion, detOr.dettotal, prod.famProdID, prod.prodctucocina")
                            ->join('producto prod',  'detOr.productoID =  prod.productoID', 'inner')        
                            ->join('ordenpedido ordp',  'detOr.ordenPedidoID =  ordp.ordenPedidoID', 'inner')
                 ->where("detOr.ordenPedidoID",  $ordenPedidoID) 
@@ -184,39 +184,46 @@
    }*/
 
     public function listaOrdenesPendienteDespacho($mesaID){
-           //   echo  $_SESSION["nivelUsuaio"] = "2" // es cocinero los demas usuarios podran ver lo que despacharon ;
-           $condicion  = "";
-         if($_SESSION["nivelUsuaio"] == "2"){             
-              $condicion  = "prod.prodctucocina = 1" ; // "prod.famProdID = 3 or  prod.famProdID = 4 or   prod.famProdID  =  5";
-              
-           }else{
-                $condicion  = "ped.despachar =  0 or ped.despachar =  1 ";
-           }
-  
-     
+           //  El  cocinero ( nivel 2 )  solo  ve  los  productos  que  pasan  por  cocina.
+           //
+           //  OJO :  antes  los  demas  niveles  agregaban  la  condicion  suelta
+           //     "ped.despachar = 0 or ped.despachar = 1"
+           //  Como  CI  une  los  where()  con  AND  y  el  OR  no  iba  entre  parentesis ,
+           //  MySQL  la  interpretaba  como :
+           //     ( mesaID = X AND ... AND despachar = 0 )  OR  ( despachar = 1 )
+           //  La  segunda  rama  no  tenia  filtro  de  mesa , por  eso  la  pantalla
+           //  mostraba  ordenes  ya  despachadas  de  TODAS  las  mesas.  Se  elimina.
+        /* if($_SESSION["nivelUsuaio"] == "2"){
+              $this->db->where("prod.prodctucocina", 1);
+           }*/
 
 
-        $this->db->distinct();         
-        $query = $this->db->select("ordenp.mesaID,msa.mesNombre as mesa,   ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora, 
-                                    MINUTE(ordenp.ordPFecha) as minuto,  
-                                    upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho, ordenp.ordPtotalcancelar, 
-                                    prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo, 
-                                    ped.detPedID ,ped.detcantidad as catidad,  prod.famProdID,  ped.dettotal, ped.cobrar,ped.despachar")                    
+
+        $this->db->distinct();
+        $query = $this->db->select("ordenp.mesaID,msa.mesNombre as mesa,   ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora,
+                                    MINUTE(ordenp.ordPFecha) as minuto,
+                                    upper(trim(coalesce(usr.usrNombre,'SIN USUARIO'))) as usuario,
+                                    date_format(ordenp.ordPFecha, '%h:%i %p') as horapedido,
+                                    TIMESTAMPDIFF(SECOND, ordenp.ordPFecha, NOW()) as segundos_espera,
+                                    upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho, ordenp.ordPtotalcancelar,
+                                    prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo,
+                                    ped.detPedID ,ped.detcantidad as catidad,  prod.famProdID,  ped.dettotal, ped.cobrar,ped.despachar")
                       ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
                       ->join('areasestablecimiento areEst',  'areEst.areaEstablecimientoID =  msa.areaEstablecimientoID', 'inner')
+                      ->join('usuario usr',  'usr.usuarioID = ordenp.usuarioID', 'left')
                       ->join('detordenpedido ped',  ' ped.ordenPedidoID =  ordenp.ordenPedidoID', 'inner')
                       ->join('producto prod',  'prod.productoID =  ped.productoID', 'inner')
                       ->join('presentacionproducto presen',  'presen.presProdID = prod.presProdID', 'inner')
                       ->join('presentacionprod pre',  'pre.presProdID = prod.presProdID', 'inner')
                       ->join('familiaproducto fam',  'fam.famProdID = prod.famProdID', 'inner')
 
-                    
-                   
+
+
                  ->where("ordenp.mesaID",  $mesaID)
                  ->where(" ped.despachar",  0)
                    ->where("ped.detstatus",  1)
-                    ->where("ordenp.ordPanulado",  0)
-                   ->where($condicion )
+                ->where("prod.prodctucocina", 1)
+                   // ->where($this->condNoAnulada("ordenp"), NULL, FALSE)
                 ->order_by("ordenp.ordPFecha", "DESC")
                  ->get("nuevoestablo.ordenpedido ordenp")
                  ->result();
@@ -228,24 +235,28 @@
    // echo  "mostrando los datos del  pedido" ;
 
 
-        $this->db->distinct();         
-        $query = $this->db->select("ordenp.mesaID,msa.mesNombre as mesa,   ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora, 
+        $this->db->distinct();
+        $query = $this->db->select("ordenp.mesaID,msa.mesNombre as mesa,   ordenp.ordenPedidoID, ordenp.ordPFecha, HOUR( ordenp.ordPFecha)  as hora,
                                     MINUTE(ordenp.ordPFecha) as minuto,
                                     IF( LENGTH(ordenp.ordFechaVisto)> 0, CONCAT(
                                     TIMESTAMPDIFF( MINUTE, ordenp.ordPFecha,  ordenp.ordFechaVisto), 'MINUTOS TRASNCURRIDOS '), 'SIN ASIGNAR') AS minutos_transcurridos,
-                                    upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho,  ordenp.ordPAbono, ordenp.ordPAcobrar  as  ordPtotalcancelar, 
-                                    prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo, 
-                                    ped.detPedID ,ped.detcantidad as catidad,  prod.famProdID,  ped.dettotal, ped.cobrar,ped.despachar")                    
+                                    upper(trim(coalesce(usr.usrNombre,'SIN USUARIO'))) as usuario,
+                                    date_format(ordenp.ordPFecha, '%h:%i %p') as horapedido,
+                                    TIMESTAMPDIFF(SECOND, ordenp.ordPFecha, NOW()) as segundos_espera,
+                                    upper(trim(ordenp.ordPcomentario)) as cliente, areEst.area,  ordenp.ordPpenditeDespacho,  ordenp.ordPAbono, ordenp.ordPAcobrar  as  ordPtotalcancelar,
+                                    prod.prodDescripcion , presen.presProdDescripcion as Presentacion,  pre.presentacionProd as tipo,
+                                    ped.detPedID ,ped.detcantidad as catidad,  prod.famProdID,  ped.dettotal, ped.cobrar,ped.despachar")
                       ->join('mesa as  msa',  ' msa.mesaID = ordenp.mesaID', 'inner')
                       ->join('areasestablecimiento areEst',  'areEst.areaEstablecimientoID =  msa.areaEstablecimientoID', 'inner')
+                      ->join('usuario usr',  'usr.usuarioID = ordenp.usuarioID', 'left')
                       ->join('detordenpedido ped',  ' ped.ordenPedidoID =  ordenp.ordenPedidoID', 'inner')
                       ->join('producto prod',  'prod.productoID =  ped.productoID', 'inner')
-                      ->join('presentacionproducto presen',  'presen.presProdID = prod.presProdID', 'inner')
-                      ->join('presentacionprod pre',  'pre.presProdID = prod.presProdID', 'inner')
-                      ->join('familiaproducto fam',  'fam.famProdID = prod.famProdID', 'inner')
+                      ->join('presentacionproducto presen',  'presen.presProdID = prod.presProdID', 'INNER')
+                      ->join('presentacionprod pre',  'pre.presProdID = prod.presProdID', 'INNER')
+                      ->join('familiaproducto fam',  'fam.famProdID = prod.famProdID', 'INNER')
 
-                    
-                   
+
+
                  ->where("ordenp.mesaID",  $mesaID)
                  ->where(" ordenp.ordPpenditeCobro",  1)
                    ->where("ped.detstatus",  1)
@@ -254,6 +265,250 @@
                  ->result();
         return  $query;
 
+    }
+
+    // =====================================================================
+    //  CONDICION  DE  ORDEN  NO  ANULADA
+    //  addOrdenPedido()  nunca  escribe  ordPanulado  al  insertar  ( solo  anularOrden()  lo
+    //  pone  en  1 ) ,  por  lo  que  el  campo  puede  quedar  en  NULL .  Un  filtro
+    //  "ordPanulado = 0"  descarta  esas  filas  porque  NULL = 0  es  falso  en  SQL ,
+    //  por  eso  la  condicion  se  escribe  siempre  aceptando  el  NULL.
+    // =====================================================================
+    private function condNoAnulada($alias = "ordenp"){
+        return "(".$alias.".ordPanulado IS NULL OR ".$alias.".ordPanulado = 0)";
+    }
+
+    // =====================================================================
+    //  ORDENES  ABIERTAS  ( NO  COBRADAS )  DE  UNA  MESA
+    //  ordPpenditeCobro = 1  significa  que  la  orden  todavia  esta  pendiente  de  cobro ,
+    //  cuando  se  procesa  el  cobro  ( procesarCobro ) el  campo  queda  en  0.
+    // =====================================================================
+    public function listaOrdenesAbiertasMesa($mesaID){
+        $query = $this->db->select("ordenp.ordenPedidoID, ordenp.mesaID, msa.mesNombre as mesa, areEst.area,
+                                    areEst.areaEstablecimientoID,
+                                    ordenp.ordPFecha, date_format(ordenp.ordPFecha, '%h:%i %p') as horapedido,
+                                    TIMESTAMPDIFF(SECOND, ordenp.ordPFecha, NOW()) as segundos_espera,
+                                    upper(trim(coalesce(usr.usrNombre,'SIN USUARIO'))) as usuario,
+                                    upper(trim(ordenp.ordPcomentario)) as cliente,
+                                    ordenp.ordPpenditeCobro, ordenp.ordPpenditeDespacho,
+                                    coalesce(ordenp.ordPAbono,0) as ordPAbono,
+                                    coalesce(sum(ped.dettotal),0) as totalorden,
+                                    coalesce(count(ped.detcantidad),0) as cantidadprod")
+                      ->join('mesa as  msa',  'msa.mesaID = ordenp.mesaID', 'inner')
+                      ->join('areasestablecimiento areEst',  'areEst.areaEstablecimientoID =  msa.areaEstablecimientoID', 'inner')
+                      ->join('usuario usr',  'usr.usuarioID = ordenp.usuarioID', 'left')
+                      ->join('detordenpedido ped',  'ped.ordenPedidoID =  ordenp.ordenPedidoID and ped.detstatus = 1', 'left', FALSE)
+                 ->where("ordenp.mesaID",  $mesaID)
+                 ->where("ordenp.ordPpenditeCobro",  1)
+                 //->where("sum(ped.dettotal)>" 0)
+                 ->group_by("ordenp.ordenPedidoID")
+                 ->order_by("ordenp.ordPFecha", "DESC")
+                 ->get("ordenpedido ordenp")
+                 ->result();
+        return  $query;
+    }
+
+    //  funcion que  valida  si  la  orden  todavia  se  puede  modificar ( no  cobrada  y  no  anulada )
+    public function esOrdenAbierta($ordenPedidoID){
+        $query = $this->db->select("ordenPedidoID")
+                 ->where("ordenPedidoID",  $ordenPedidoID)
+                 ->where("ordPpenditeCobro",  1)
+                 ->where($this->condNoAnulada("ordenpedido"), NULL, FALSE)
+                 ->get("ordenpedido")
+                 ->row();
+        return  (empty($query)) ? 0 : 1 ;
+    }
+
+    //  funcion que  detecta  si  la  orden  YA  fue  cobrada  o  anulada , en  ese  caso  no  se  le
+    //  pueden  agregar  mas  productos .  Se  evalua  en  negativo  para  no  bloquear  ordenes
+    //  recien  creadas  que  todavia  no  tengan  la  bandera  escrita .
+    public function esOrdenCobradaOAnulada($ordenPedidoID){
+        $query = $this->db->select("ordenPedidoID")
+                 ->where("ordenPedidoID",  $ordenPedidoID)
+                 ->group_start()
+                    ->where("ordPpenditeCobro",  0)
+                    ->or_where("ordPanulado",  1)
+                 ->group_end()
+                 ->get("ordenpedido")
+                 ->row();
+        return  (empty($query)) ? 0 : 1 ;
+    }
+
+    // =====================================================================
+    //  SUMATORIA  DE  TODAS  LAS  ORDENES  DE  LA  MESA  ( pendientes  de  cobro )
+    //  Se  resuelve  con  una  tabla  derivada  de  UNA  fila  por  orden :  si  se  sumaran
+    //  los  campos  de  la  cabecera  ( ordPAbono / ordPAcobrar )  con  un  JOIN  directo  al
+    //  detalle ,  cada  monto  se  repetiria  tantas  veces  como  lineas  tenga  la  orden
+    //  y  el  total  saldria  inflado.
+    //  Devuelve :
+    //    ordenes      = cantidad  de  ordenes  abiertas  con  al  menos  un  producto
+    //    cantidadprod = unidades  vendidas
+    //    totalmesa    = suma  de  las  lineas  de  detalle  ( consumo  real  de  la  mesa )
+    //    abonomesa    = suma  de  abonos  registrados
+    //    acobrarmesa  = suma  del  " A cobrar "  que  muestra  cada  orden  en  la  lista
+    //
+    //  IMPORTANTE :  los  filtros  son  EXACTAMENTE  los  mismos  que  usa
+    //  listaOrdenesPendienteCobro()  ( mesaID + ordPpenditeCobro = 1 + detstatus = 1 ) ,
+    //  para  que  el  label  siempre  cuadre  con  las  ordenes  que  se  ven  en  pantalla.
+    //  Si  se  quiere  descartar  las  anuladas  hay  que  agregar  en  AMBAS  consultas :
+    //     AND (o.ordPanulado IS NULL OR o.ordPanulado = 0)
+    //  ( se  escribe  aceptando  el  NULL  porque  addOrdenPedido()  no  inicializa  ese  campo )
+    // =====================================================================
+    public function totalMesaPendienteCobro($mesaID){
+        $sql = "SELECT count(*)                            AS ordenes,
+                       coalesce(sum(t.cantidadprod),0)     AS cantidadprod,
+                       coalesce(sum(t.totaldetalle),0)     AS totalmesa,
+                       coalesce(sum(t.abono),0)            AS abonomesa,
+                       coalesce(sum(t.acobrar),0)          AS acobrarmesa
+                  FROM (
+                        SELECT o.ordenPedidoID,
+                               coalesce(o.ordPAbono,0)   AS abono,
+                               coalesce(o.ordPAcobrar,0) AS acobrar,
+                               (SELECT coalesce(sum(d.detcantidad),0)
+                                  FROM detordenpedido d
+                                 WHERE d.ordenPedidoID = o.ordenPedidoID
+                                   AND d.detstatus = 1)  AS cantidadprod,
+                               (SELECT coalesce(sum(d.dettotal),0)
+                                  FROM detordenpedido d
+                                 WHERE d.ordenPedidoID = o.ordenPedidoID
+                                   AND d.detstatus = 1)  AS totaldetalle
+                          FROM ordenpedido o
+                         WHERE o.mesaID = ?
+                           AND o.ordPpenditeCobro = 1
+                           AND EXISTS (SELECT 1 FROM detordenpedido d
+                                        WHERE d.ordenPedidoID = o.ordenPedidoID
+                                          AND d.detstatus = 1)
+                       ) t";
+        $query = $this->db->query($sql, array($mesaID))->row();
+        return  $query;
+    }
+
+    // =====================================================================
+    //  COBRAR  TODAS  LAS  ORDENES  DE  LA  MESA  DE  UNA  SOLA  VEZ
+    //  Deja  la  cabecera  como :  ordPpenditeCobro = 0  y  ordPpenditeDespacho = 0
+    //  unicamente  en  las  ordenes  NO  anuladas  de  la  mesa.
+    //  La  condicion  de  anulado  se  escribe  aceptando  el  NULL  porque
+    //  addOrdenPedido()  no  inicializa  ese  campo  al  crear  la  orden ;  con  un
+    //  "ordPanulado = 0"  a  secas  el  UPDATE  no  afectaria  ninguna  fila.
+    //  Devuelve  la  cantidad  de  ordenes  actualizadas.
+    // =====================================================================
+    public function cobrarTodaLaMesa($mesaID){
+
+        //  1)  el  detalle  de  esas  ordenes  queda  marcado  como  procesado.
+        //     Va  primero  porque  se  apoya  en  ordPpenditeCobro = 1 , que  el  paso  2  apaga.
+        $sqlDetalle = "UPDATE detordenpedido d
+                        INNER JOIN ordenpedido o ON o.ordenPedidoID = d.ordenPedidoID
+                          SET d.procesado = 1
+                        WHERE o.mesaID = ?
+                          AND o.ordPpenditeCobro = 1
+                          AND (o.ordPanulado IS NULL OR o.ordPanulado = 0)";
+        $this->db->query($sqlDetalle, array($mesaID));
+
+        //  2)  la  cabecera  queda  cobrada  y  despachada.
+        //     Se  ajustan  tambien  los  montos  igual  que  procesarCobro() , para  que
+        //     cobrar  toda  la  mesa  deje  los  mismos  datos  que  cobrar  orden  por  orden.
+        $sqlCabecera = "UPDATE ordenpedido o
+                           SET o.ordPpenditeCobro    = 0,
+                               o.ordPpenditeDespacho = 0,
+                               o.ordPAbono           = coalesce(o.ordPtotalcancelar,0),
+                               o.ordPAcobrar         = 0
+                         WHERE o.mesaID = ?
+                           AND o.ordPpenditeCobro = 1
+                           AND (o.ordPanulado IS NULL OR o.ordPanulado = 0)";
+        $this->db->query($sqlCabecera, array($mesaID));
+
+        return $this->db->affected_rows();
+    }
+
+    // =====================================================================
+    //  FILTROS  COMPARTIDOS  DEL  REPORTE  DE  PRODUCTOS  VENDIDOS
+    //  Se  centralizan  aqui  para  que  el  resumen , el  detalle  y  la  exportacion
+    //  a  Excel  usen  EXACTAMENTE  los  mismos  criterios.
+    //    $soloCocina :  ""  = todos ,  "1"  = solo  productos  de  cocina ,  "0"  = solo  los  que  no  son  de  cocina
+    // =====================================================================
+    private function filtrosProductosVendidos($fechaIni, $fechaFin, $areaEstablecimientoID, $usuarioID, $soloCocina){
+        $this->db->where("ped.detstatus",  1)
+                 ->where($this->condNoAnulada("ordenp"), NULL, FALSE);
+
+        if(strlen($fechaIni) > 0){
+            $this->db->where("date(ordenp.ordPFecha) >=", $fechaIni);
+        }
+        if(strlen($fechaFin) > 0){
+            $this->db->where("date(ordenp.ordPFecha) <=", $fechaFin);
+        }
+        if($areaEstablecimientoID > 0){
+            $this->db->where("areEst.areaEstablecimientoID", $areaEstablecimientoID);
+        }
+        if($usuarioID > 0){
+            $this->db->where("ordenp.usuarioID", $usuarioID);
+        }
+        if($soloCocina === "1" OR $soloCocina === 1){
+            $this->db->where("prod.prodctucocina", 1);
+        }else if($soloCocina === "0" OR $soloCocina === 0){
+            //  se  aceptan  los  NULL  porque  prodctucocina  puede  no  estar  inicializado
+            $this->db->where("(prod.prodctucocina IS NULL OR prod.prodctucocina = 0)", NULL, FALSE);
+        }
+    }
+
+    //  funcion que  lista  los  usuarios  que  tienen  ventas  registradas , para  el  combo  del  filtro
+    public function usuariosConVentas(){
+        $sql = "SELECT DISTINCT u.usuarioID, upper(trim(u.usrNombre)) AS usrNombre
+                  FROM ordenpedido o
+                 INNER JOIN usuario u ON u.usuarioID = o.usuarioID
+                 ORDER BY u.usrNombre";
+        $query = $this->db->query($sql)->result();
+        return  $query;
+    }
+
+    // =====================================================================
+    //  DETALLE  DE  PRODUCTOS  VENDIDOS
+    //  filtros :  rango  de  fecha ,  area ,  usuario  y  producto  de  cocina
+    //  si  no  se  envia  ningun  filtro  muestra  TODO
+    // =====================================================================
+    public function detalleProductosVendidos($fechaIni = "", $fechaFin = "", $areaEstablecimientoID = 0, $usuarioID = 0, $soloCocina = ""){
+        $this->db->select("areEst.areaEstablecimientoID, areEst.area, msa.mesNombre as mesa,
+                           ordenp.ordenPedidoID, date_format(ordenp.ordPFecha,'%d-%m-%Y') as fecha,
+                           date_format(ordenp.ordPFecha,'%h:%i %p') as hora,
+                           upper(trim(coalesce(usr.usrNombre,'SIN USUARIO'))) as usuario,
+                           prod.productoID, upper(prod.prodDescripcion) as prodDescripcion,
+                           coalesce(prod.prodctucocina,0) as prodctucocina,
+                           fam.famProdDescripcion, ped.detcantidad as cantidad,
+                           (ped.detprecioNormal + coalesce(ped.detprecioEspecial,0)) as preciounit,
+                           ped.dettotal, ordenp.ordPpenditeCobro")
+                 ->join('mesa as  msa',  'msa.mesaID = ordenp.mesaID', 'inner')
+                 ->join('areasestablecimiento areEst',  'areEst.areaEstablecimientoID =  msa.areaEstablecimientoID', 'inner')
+                 ->join('usuario usr',  'usr.usuarioID = ordenp.usuarioID', 'left')
+                 ->join('detordenpedido ped',  'ped.ordenPedidoID =  ordenp.ordenPedidoID', 'inner')
+                 ->join('producto prod',  'prod.productoID =  ped.productoID', 'inner')
+                 ->join('familiaproducto fam',  'fam.famProdID = prod.famProdID', 'left');
+
+        $this->filtrosProductosVendidos($fechaIni, $fechaFin, $areaEstablecimientoID, $usuarioID, $soloCocina);
+
+        $query = $this->db->order_by("ordenp.ordPFecha", "DESC")
+                 ->order_by("ordenp.ordenPedidoID", "DESC")
+                 ->get("ordenpedido ordenp")
+                 ->result();
+        return  $query;
+    }
+
+    //  funcion que  agrupa  los  productos  vendidos  para  el  resumen  del  reporte
+    public function resumenProductosVendidos($fechaIni = "", $fechaFin = "", $areaEstablecimientoID = 0, $usuarioID = 0, $soloCocina = ""){
+        $this->db->select("areEst.area, prod.productoID, upper(prod.prodDescripcion) as prodDescripcion,
+                           coalesce(prod.prodctucocina,0) as prodctucocina,
+                           sum(ped.detcantidad) as cantidad, sum(ped.dettotal) as total")
+                 ->join('mesa as  msa',  'msa.mesaID = ordenp.mesaID', 'inner')
+                 ->join('areasestablecimiento areEst',  'areEst.areaEstablecimientoID =  msa.areaEstablecimientoID', 'inner')
+                 ->join('detordenpedido ped',  'ped.ordenPedidoID =  ordenp.ordenPedidoID', 'inner')
+                 ->join('producto prod',  'prod.productoID =  ped.productoID', 'inner');
+
+        $this->filtrosProductosVendidos($fechaIni, $fechaFin, $areaEstablecimientoID, $usuarioID, $soloCocina);
+
+        $query = $this->db->group_by("areEst.areaEstablecimientoID")
+                 ->group_by("prod.productoID")
+                 ->order_by("total", "DESC")
+                 ->get("ordenpedido ordenp")
+                 ->result();
+        return  $query;
     }
 
 

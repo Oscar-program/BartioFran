@@ -17,7 +17,7 @@ style= "padding:0; margin:0; height:100%; overflow:hidden;  opacity:2; margin-le
                       
 
                                 <option value="<?php echo $row->productoID; ?>"
-                                    data-famprodid       = "<?php echo $row->prodctucocina ;?>"
+                                    data-prodctucocina   = "<?php echo $row->prodctucocina ;?>"
                                     data-famprodid       = "<?php echo $row->famProdID ;?>"
                                     data-detpedid        = "<?php echo $detPedID=0 ;?>"
                                     data-proddescripcion = "<?php echo $row->prodDescripcion?>"

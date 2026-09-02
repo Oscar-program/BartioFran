@@ -38,18 +38,42 @@ class Producto_Model extends CI_Model {
         return  $query;          
     }
 
-    /*Funcion para cargar los submenu de los productos */
-    public function get_submenu($famProdID) {
+    /*Funcion para cargar los submenu de los productos
+      $areaEstablecimientoID = area  de la  mesa , el  precio  que  se  muestra  es  el  del  area  ( si  no  tiene , se  usa  el  precio  base )
+      $soloCocina            = 1  muestra  unicamente  los  productos  marcados  como  prodctucocina = 1 */
+    public function get_submenu($famProdID, $areaEstablecimientoID = 0, $soloCocina = 0) {
        // echo 'llegado al  modelo';
-        $query =  $this->db->select("prod.*,prec.precioventa, sum(inv.existenciaInvProd) existencia")
-                 ->join('precioproducto prec', 'prec.productoID = prod.productoID', 'inner') 
-                 ->join('inventarioproducto inv', 'inv.productoID = prod.productoID', 'inner') 
-                 ->where('prod.famProdID',$famProdID)
-                 ->group_by('prod.productoID')
-               
+        $area = intval($areaEstablecimientoID);
+        //  si  todavia  no  se  ha  creado  la  tabla  de  precios  por  area  se  trabaja  con  el  precio  base
+        $hayPrecioArea = $this->db->table_exists('precioproductoarea');
+        $selPrecio     = ($hayPrecioArea)
+                         ? "COALESCE(prcarea.precioventa, prec.precioventa) as precioventa"
+                         : "prec.precioventa" ;
+
+        $this->db->select("prod.*, ".$selPrecio.", sum(inv.existenciaInvProd) existencia")
+                 ->join('precioproducto prec', 'prec.productoID = prod.productoID', 'inner')
+                 ->join('inventarioproducto inv', 'inv.productoID = prod.productoID', 'inner');
+        if($hayPrecioArea){
+            $this->db->join('precioproductoarea prcarea',
+                        'prcarea.productoID = prod.productoID and prcarea.areaEstablecimientoID = '.$area.' and prcarea.precioAreaStatus = 1',
+                        'left', FALSE);
+        }
+        $this->db->where('prod.famProdID',$famProdID)
+                 ->where('prod.prodStatus',1)
+                 //->where('prec.proddisponible',1)
+                 ->where('prcarea.precioventa > 0');
+                  
+
+
+        //  filtro para mostrar solo los productos  de cocina
+        if($soloCocina == 1){
+            $this->db->where('prod.prodctucocina', 1);
+        }
+        $query =  $this->db->group_by('prod.productoID')
+
                  ->get("producto prod")
                  ->result();
-        return  $query;          
+        return  $query;
     }
     public function get_listaProductos() {
         $query =  $this->db->select("prod.productoID, prod.prodDescripcion, prod.presentacion_invId, fam.famProdDescripcion, pres.presProdDescripcion,

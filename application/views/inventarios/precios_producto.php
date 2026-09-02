@@ -1,3 +1,7 @@
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
+$famSel = isset($famProdID) ? $famProdID : 0 ;
+?>
 <style>
 /*para checknox  */
 .switch-container{
@@ -25,7 +29,7 @@
     margin-right:10px;
 }
 
-/* Botón */
+/* BotÃ³n */
 .slider::before{
     content:"";
     position:absolute;
@@ -39,7 +43,7 @@
     transition:.3s;
 }
 
-/* Cuando está activado */
+/* Cuando estÃ¡ activado */
 .switch-container input:checked + .slider{
     background:#0d6efd;
 }
@@ -50,99 +54,50 @@
 
 .texto{
     margin-left:2px;
-} 
+}
+
+/*  columnas de precio  por  area  */
+.colArea{
+    background-color:#EBF5FB;
+}
+.lbPrecioArea{
+    display:block;
+    font-size:14px;
+    color:#1B4F72;
+    font-weight:bold;
+    text-align:right;
+}
 
 
 </style>
 
 <div class="container-fluid m-top">
-        <div class="row">
-            <div class="col-12 text-center">
-                <H2 style="color:#5DADE2">  PRECIOS PRODUCTOS </H2>
-            </div>
+
+    <!-- ============  DIV  DEL  FILTRO  ( no  se  recarga ) ============ -->
+    <div id="filtroPreciosProducto" name="filtroPreciosProducto" class="row shadow-sm p-3 mb-3 bg-white rounded">
+        <div class="col-md-4 col-12">
+            <label for="famPrecios" class="col-form-label">Familia de producto:</label>
+            <select name="famPrecios" id="famPrecios" class="form-control chosen"
+                    onchange="cargarListaPrecios()">
+                <option value="0"> TODAS LAS FAMILIAS </option>
+                <?php if(isset($listFamiliaProducto)){
+                        if(!empty($listFamiliaProducto)){
+                            foreach($listFamiliaProducto as $row){ ?>
+                            <option value="<?php echo $row->famProdID; ?>"
+                                <?php echo ($famSel == $row->famProdID) ? 'selected' : '' ; ?>>
+                                <?php echo strtoupper($row->famProdDescripcion); ?>
+                            </option>
+                <?php   }}} ?>
+            </select>
         </div>
-</div>
-<?php  
-$proddisponible  =  0; ?> 
-
-<div class="contenedor-tabla">
-    <div class="tabla-responsive">
-                <!--<div class="table-responsive"> -->
-                    <input type="hidden" id="trasladoID" name="trasladoID">
-
-                    <table id="tblListaProd" class="tabla  tabla-estiloOrdn">
-                        <thead style="border-style: none !important;">
-                            <tr class="thead-dark" style="border-style: none !important;">
-                                <th>#</th>
-                                <th>NOMBRE DEL  PRODUCTO</th>
-                                <th>PRECIO ACTUAL</th>
-                                <th>NEW. PRECIO</th>
-                            
-                                <th>Disponible</th>                        
-                                <th class="text-right">ACCIONES</th> 
-                                
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            if(isset($lista_productoCostear)){
-                                if(!empty($lista_productoCostear)){
-                                    $c= 1;
-                                    foreach($lista_productoCostear as  $row) :?>
-                                    
-                                        
-                                        
-                                        <tr>
-                                        <td data-label="#"><?php echo $c; ?> </td>
-                                            <td data-label="Descripción" ><?php echo strtoupper($row->prodDescripcion) ; ?></td>
-                                            <td data-label="Precio actual" ><?php echo '$ '. $row->precioventa; ?> </td>
-                                            
-                                            
-                                            <td data-label="Nuevo Precio"><input type="number"   class="form-control text-right"  id ="<?php echo  'precioventa' .  $c; ?>"    name ="<?php echo  'precioventa' .  $c; ?>"></td>
-                                           
-
-                                            <td>
-                                                  <?php  
-           
-                                                        if($row->proddisponible ==  '1'){ ?>
-                                                        
-                                                        <label class="switch-container">
-                                                            <input type="checkbox" id="<?php echo 'proddisponible'  .  $c; ?>" checked>
-                                                            <span class="slider"></span>
-                                                            <!--<span class="texto">Disponible</span> -->
-                                                        </label>
-
-
-                                                        
-                                                        <?php   }else { ?>
-                                                        <label class="switch-container">
-                                                            <input type="checkbox" id="<?php echo 'proddisponible'  .  $c; ?>"  >
-                                                            <span class="slider"></span>
-                                                            <!--<span class="texto">Disponible</span> -->
-                                                        </label>
-                                                        <?php  } ?>
-
-                                            </td>
-                                             <td  data-label="Nuevo Precio" class="text-right">
-
-                                                <a href='#' class="btn btn-info btn-sm" style="margin:0px;  color:white;  background-color: #5DADE2  !important ;"
-                                                    data-title="Actualizar precio"
-                                                    onclick="updatePrecProd(<?php echo $row->productoID; ?>, <?php echo $c; ?>)">
-                                                    <i class="fa fa-refresh" aria-hidden="true"></i> </a>
-                                                    
-                                            </td>
-
-                                        </tr>
-                            
-                        
-                                        
-                                    <?php  $c +=1; endforeach ?>
-                            <?php }
-                                } ?>
-                        </tbody>
-                    </table>
-
-                <!--</div> -->
+        <div class="col-md-8 col-12 text-center">
+            <H2 style="color:#5DADE2">  PRECIOS PRODUCTOS </H2>
+        </div>
     </div>
+
+    <!-- ============  DIV  DE  LA  LISTA  ( este  es  el  unico  que  se  recarga  por  AJAX ) ============ -->
+    <div id="listaPreciosProducto" name="listaPreciosProducto">
+        <?php $this->load->view('inventarios/cuerpoPreciosProducto'); ?>
+    </div>
+
 </div>

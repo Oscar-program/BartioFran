@@ -22,10 +22,11 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
         $("#bodsalida").val(bodSaldID);
          $("#precioregular").val(preciocosto.toFixed(2));
         $("#bodsalida").change();
-        $("#prodctucocina").val(prodctucocina); 
+        //  si  no  se  recibio  la  marca  de  cocina  se  asume  0  ( no  pasa  por  cocina )
+        $("#prodctucocina").val((prodctucocina === undefined || prodctucocina === null) ? 0 : prodctucocina);
 
       });
-   
+
    }
    function addVentaProducto1(select){
 
@@ -39,6 +40,7 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
     var prodDescripcion = option.dataset.proddescripcion;
     var precioventa     = option.dataset.precioventa;
     var detPedID        = option.dataset.detpedid;
+    var prodctucocina   = option.dataset.prodctucocina;
 
     console.log("El precio de venta es  " + precioventa);
     
@@ -409,6 +411,29 @@ function  realizarCobro(ordenPedidoID, mesaID){
   });
 }
 
+
+// funcion para cobrar  DE  UNA  SOLA  VEZ  todas  las  ordenes  pendientes  de  la  mesa
+function  realizarCobroMesa(mesaID, totalMesa){
+  var total = (totalMesa === undefined || totalMesa === null) ? "" : " por $" + totalMesa ;
+
+  swal({
+    title: "Cobrar TODAS las ordenes de la mesa ?",
+    text: "Se marcaran como cobradas todas las ordenes pendientes de esta mesa" + total + ". Esta accion no se puede deshacer.",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((Confirmar) => {
+    if (Confirmar) {
+      var url = base_url("index.php/ventaProducto_Controller/realizarCobroMesa/" + mesaID);
+      $.get(url, function (data) {
+        swal("Se cobraron " + data + " orden(es) de la mesa", { icon: "success" });
+        mostrarPendientesCobro(mesaID);
+      });
+    } else {
+      swal("Operacion  cancelada",{ icon: "success" });
+    }
+  });
+}
 
 function ver_ticketPDF(ruta) {
 	var url = ruta;

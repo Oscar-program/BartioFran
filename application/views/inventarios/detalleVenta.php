@@ -17,7 +17,7 @@ error_reporting(E_ALL);
                         <td class="text-right"> 
                               <a href='#' class="btn-edit"
                                  title="Editar detalle"
-                                onclick="addVentaProducto(<?php echo $row->famProdID ;?>, <?php echo $row->productoID ;?>,  <?php echo $row->detPedID;?>, <?php echo "' $row->prodDescripcion '" ;?> ,  <?php echo $row->detprecioNormal ;?>)">
+                                onclick="addVentaProducto(<?php echo $row->famProdID ;?>, <?php echo $row->productoID ;?>,  <?php echo $row->detPedID;?>, <?php echo "' $row->prodDescripcion '" ;?> ,  <?php echo $row->detprecioNormal ;?>,  <?php echo isset($row->prodctucocina) ? intval($row->prodctucocina) : 0 ;?>)">
                                 <i class="fa fa-pencil" aria-hidden="true"></i> </a>
 
                                 <a href='#' class="btn-eraser" 

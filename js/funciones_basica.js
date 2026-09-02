@@ -37,6 +37,22 @@ function cargarmenu_interno(){
        }
   })*/
 }
+/* funcion que  lee  el  area  de la  mesa  y  el  filtro  de  cocina  puestos  en la  pantalla  de  ordenes ,
+   con  ellos  la  lista  de  productos  muestra  el  precio  del  area  y  filtra  prodctucocina = 1 */
+function paramsListaProductos(){
+  var areaID     = 0;
+  var soloCocina = 0;
+  if(document.getElementById('ctrlAreaID')){
+    areaID = document.getElementById('ctrlAreaID').value;
+  }
+  if(document.getElementById('ctrlSoloCocina')){
+    soloCocina = document.getElementById('ctrlSoloCocina').value;
+  }
+  if(areaID === "" || areaID === null || areaID === undefined){ areaID = 0; }
+  if(soloCocina === "" || soloCocina === null || soloCocina === undefined){ soloCocina = 0; }
+  return "/" + areaID + "/" + soloCocina;
+}
+
 /*funcion  para leer el  value del   div */
 function cargar_listaProductos(id){
  // var id = "";
@@ -54,7 +70,7 @@ function cargar_listaProductos(id){
  // valorid = $('familia'+id).attr('data-value');
 // valorid      = $("#familia").val();
  //console.log("se ha hecho  click"+ id  + " capturado");
- var url = base_url('index.php/Menu_internoController/cargar_submenu/' + valSlect);
+ var url = base_url('index.php/Menu_internoController/cargar_submenu/' + valSlect + paramsListaProductos());
 
  //var url = base_url("index.php/BancosController/bancos");
    $.get(url, function (data) {
@@ -82,7 +98,7 @@ function cargar_listaProductos1(id){
  // valorid = $('familia'+id).attr('data-value');
 // valorid      = $("#familia").val();
  //console.log("se ha hecho  click"+ id  + " capturado");
- var url = base_url('index.php/Menu_internoController/cargar_submenu/' + id);
+ var url = base_url('index.php/Menu_internoController/cargar_submenu/' + id + paramsListaProductos());
 
  //var url = base_url("index.php/BancosController/bancos");
    $.get(url, function (data) {

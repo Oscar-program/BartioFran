@@ -1,23 +1,36 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-$ordenID   = isset($datordenID) ? $datordenID : 0 ; 
-$mesaID    = isset($mesaID) ? $mesaID : 0 ; 
-$mesNombre = isset($mesNombre) ? $mesNombre : "" ; 
-$total     = 0; 
-$datTotal  = 0;
+$ordenID   = isset($datordenID) ? $datordenID : 0 ;
+$mesaID    = isset($mesaID) ? $mesaID : 0 ;
+$mesNombre = isset($mesNombre) ? $mesNombre : "" ;
+$total     = 0;
+$datTotal  = isset($datTotal) ? (float) $datTotal : 0;
+//  area  de  la  mesa , con  ella  se  resuelve  el  precio  de  cada  producto
+$areaEstablecimientoID = isset($areaEstablecimientoID) ? $areaEstablecimientoID : 0 ;
+$area                  = isset($area) ? $area : "" ;
+//  1 =  la  lista  de  productos  muestra  solo  los  marcados  como  producto  de  cocina
+$soloCocina            = isset($soloCocina) ? $soloCocina : 0 ;
 ?>
 
 
 
 <div class = "container-fluid">
-    <!-- titulo de mesa y numeor de orden -->     
-    <div class="row"> 
+    <!-- titulo de mesa y numeor de orden -->
+    <div class="row">
         <div  class="col-md 12 shadow-sm p-3 mb-1 bg-white rounded text-end">
-        <label  id="bannerMesaPedido" name ="bannerMesaPedido">  <?php echo  str_replace("%20" ,  " ", $mesNombre) . "         ORDEN #" .   strval($ordenID); ?></label> 
-        </div> 
+        <label  id="bannerMesaPedido" name ="bannerMesaPedido">  <?php echo  str_replace("%20" ,  " ", $mesNombre) . "   " . strtoupper($area) . "         ORDEN #" .   strval($ordenID); ?></label>
+        <?php if($soloCocina == 1){ ?>
+            <span class="badge badge-danger" style="font-size:12px;">SOLO PRODUCTOS DE COCINA</span>
+        <?php } ?>
+        <button type="button" class="btn btn-sm btn-outline-secondary" style="float:left;"
+                onclick="ordenesMesa(<?php echo $mesaID; ?>, '<?php echo str_replace("%20" ," ", $mesNombre); ?>')">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> Ordenes de la mesa</button>
+        </div>
         <input type="hidden" class="text-left text-warning border-0" name="ordenID" id="ordenID" value="<?php  echo strval($ordenID); ?>" readonly>
         <input type="hidden" class="text-left text-warning border-0" name="ctrlmesaID" id="ctrlmesaID" value="<?php  echo $mesaID; ?>" readonly>
-    </div>  
+        <input type="hidden" name="ctrlAreaID"     id="ctrlAreaID"     value="<?php echo $areaEstablecimientoID; ?>" readonly>
+        <input type="hidden" name="ctrlSoloCocina" id="ctrlSoloCocina" value="<?php echo $soloCocina; ?>" readonly>
+    </div>
     <div class="row"> 
           <!-- carga las categorias de los productos style ="width:15%;" -->           
             <div  class="col-md 6 shadow-sm p-3 mb-5 bg-white rounded" > 
@@ -89,7 +102,7 @@ $datTotal  = 0;
                                 </tbody>
                             </table>
                             <br>
-                            <label id ="lbTotal" > Total a cancelar $  <?php  number_format($datTotal,2) ?>   </label>
+                            <label id ="lbTotal" > Total a cancelar $<?php echo number_format($datTotal,2) ; ?>   </label>
                     
                             <div> 
                                 <textarea class="form-control" name="txAcomentario" id="txAcomentario" cols="30" rows="3"> Sin Comentario

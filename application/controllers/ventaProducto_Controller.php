@@ -133,9 +133,15 @@ class ventaProducto_Controller extends CI_Controller {
                          //   var_dump($dataDelOrdenes); 
                             //exit ;
                               // echo  'modificando el inventario1245' . $dataDelOrdenes . 'detalle ' . $detPedID . "<br>";
-          if( $productoID > 0 and $ordenPedidoID> 0  ){                    
+          //  no  se  permite  agregar  ni  modificar  productos  en  una  orden  ya  cobrada  o  anulada
+          if( $ordenPedidoID > 0 && $this->ordenesPedido_Model->esOrdenCobradaOAnulada($ordenPedidoID) == 1 ){
+             echo "<tr><td colspan='4' class='text-center' style='color:red;'>La orden #".$ordenPedidoID." ya fue cobrada o anulada, no se pueden agregar productos.</td></tr>";
+             return ;
+          }
 
-          $this->ordenesPedido_Model->addDetOrdenPedido($dataDelOrdenes, $detPedID);  
+          if( $productoID > 0 and $ordenPedidoID> 0  ){
+
+          $this->ordenesPedido_Model->addDetOrdenPedido($dataDelOrdenes, $detPedID);
           }
           //echo  'modificando el inventario' . "<br>";
         //  $operacionesInventario->actualizarInventario($productoID, $movtipo, $bodegaOrigen,  $bodegaOrigen , $detcantidad ); 
@@ -221,9 +227,16 @@ class ventaProducto_Controller extends CI_Controller {
                           'comandaID' =>$comandaID,
                       );*/
      // echo  'llegadno al controlador';                
-     $data['detalleOrden'] =  $this->ordenesPedido_Model->get_listDetOrden($ordenPedidoID); 
+     $data['detalleOrden'] =  $this->ordenesPedido_Model->get_listDetOrden($ordenPedidoID);
 
-      $data['submenu'] = $this->Producto_Model->get_submenu($famProdID);
+      //  el  area  de la  mesa  define  el  precio  con  el  que  se  muestran  los  productos
+      $infoMesa                      = $this->mesas_Model->get_infoMesa($mesaID);
+      $data['areaEstablecimientoID'] = (!empty($infoMesa)) ? $infoMesa->areaEstablecimientoID : 0 ;
+      $data['area']                  = (!empty($infoMesa)) ? $infoMesa->area : "" ;
+      $data['mesNombre']             = (!empty($infoMesa)) ? $infoMesa->mesNombre : "" ;
+      $data['soloCocina']            = 0 ;
+
+      $data['submenu'] = $this->Producto_Model->get_submenu($famProdID, $data['areaEstablecimientoID'], 0);
       $data['familia']  = 110 ;//$mesaID;
       $data['datordenID']  =    $ordenPedidoID ;
       $data['mesaID']  =    $mesaID ;
@@ -266,7 +279,18 @@ class ventaProducto_Controller extends CI_Controller {
 
    }
 
-   // funcion  para  eliminar detalle de orden de pedido  
+   // =================================================================
+   //  funcion para  cobrar  DE  UNA  SOLA  VEZ  todas  las  ordenes  pendientes  de  la  mesa.
+   //  Un  solo  UPDATE  por  mesa :  deja  ordPpenditeCobro = 0  y  ordPpenditeDespacho = 0
+   //  en  las  ordenes  no  anuladas.
+   // =================================================================
+   public function realizarCobroMesa($mesaID){
+      $cobradas = $this->ordenesPedido_Model->cobrarTodaLaMesa($mesaID);
+      //  se  devuelve  la  cantidad  de  ordenes  cobradas  para  avisarlo  en  pantalla
+      echo $cobradas ;
+   }
+
+   // funcion  para  eliminar detalle de orden de pedido
 
    //  funcion para  imprimir el  ticket  de la  venta de producto 
    public function pdfCrearTicket($ordenPedidoID, $ordPcomentario){

@@ -159,7 +159,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <li class="nav-item d-none d-sm-inline-block">
           <a href="index3.html" class="nav-link"  style="color:#004aad;">Principal</a>
         </li>
-        
+
+      </ul>
+
+      <!-- Right navbar links :  cerrar  sesion -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a href="javaScript:cerrarSession();" class="nav-link" title="Cerrar sesion" style="color:#004aad;">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="d-none d-sm-inline-block"> Cerrar sesion</span>
+          </a>
+        </li>
       </ul>
 
      
@@ -250,6 +260,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                               <a href="javaScript:get_OrdenesPendientesCobro();" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pend. Cobro</p>
+                              </a>
+                            </li>
+                             <li class="nav-item">
+                              <a href="javaScript:detalleProductosVendidos();" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Prod. Vendidos</p>
                               </a>
                             </li>
                           </ul>
@@ -437,13 +453,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 
               </ul>
           </li>
-          <?php }?> 
+          <?php }?>
 
 
+            <!-- ============  CERRAR  SESION  ( disponible  para  todos  los  niveles ) ============ -->
+            <li class="nav-item">
+              <a href="javaScript:cerrarSession();" class="nav-link">
+                <i class="nav-icon fas fa-sign-out-alt" style="color:#ff6b6b;"></i>
+                <p>Cerrar sesion</p>
+              </a>
+            </li>
 
-            
           </ul>
-          
+
         </nav>
         <!-- /.sidebar-menu -->
       </div>

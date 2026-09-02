@@ -12,7 +12,19 @@ class mesas_Model extends CI_Model {
                  ->result();
         return  $query;          
     }
-    // funcion que muestra las mesas que tienen  ordenes pendientes de cobro  
+    //  funcion que  retorna los  datos de la  mesa  junto  con  el  area  a  la  que  pertenece ,
+    //  se  usa para  saber  con  que  precio  de  area  se  deben  mostrar  los  productos
+    public function get_infoMesa($mesaID){
+        $query =  $this->db->select("mes.mesaID, mes.mesNombre, mes.mescapacidad, mes.establecimientoID,
+                                    mes.areaEstablecimientoID, areEst.area")
+                    ->join('areasestablecimiento areEst',  'areEst.areaEstablecimientoID =  mes.areaEstablecimientoID', 'inner')
+                 ->where("mes.mesaID",  $mesaID)
+                 ->get("mesa  mes")
+                 ->row();
+        return  $query;
+    }
+
+    // funcion que muestra las mesas que tienen  ordenes pendientes de cobro
     public function listaMesasPendienteCobro(){
         //  echo  "llegando al modelo" . "<br>" ;
        //  $this->db->distinct();         

@@ -2,15 +2,21 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 class  preciosProducto_Model extends CI_Model{
 
-    public function lista_productoCostear() {
-        $query =  $this->db->select("precprod.productoID, upper(prod.prodDescripcion)  as  prodDescripcion, sum(invprod.existenciaInvProd)  as  existencia, precprod.precioventa, precprod.proddisponible ")
+    //  $famProdID = 0  trae  todas  las  familias , cualquier  otro  valor  filtra  por  esa  familia
+    public function lista_productoCostear($famProdID = 0) {
+        $this->db->select("precprod.productoID, upper(prod.prodDescripcion)  as  prodDescripcion, sum(invprod.existenciaInvProd)  as  existencia, precprod.precioventa, precprod.proddisponible, prod.famProdID ")
                   ->join("producto prod", "precprod.productoID  = prod.productoID","inner")
                   ->join("inventarioproducto invprod", "invprod.productoID  =  prod.productoID","inner")
-                  ->group_by("prod.productoID")
-                    //->where('prodprec.productoID',$productoID)               
+                ->where('prod.prodStatus',1);
+        if($famProdID > 0){
+            $this->db->where('prod.famProdID', $famProdID);
+        }
+        $query =  $this->db->group_by("prod.productoID")
+                    //->where('prodprec.productoID',$productoID)
+                 ->order_by("prod.prodDescripcion", "ASC")
                  ->get("precioproducto precprod")
                  ->result();
-        return  $query;          
+        return  $query;
     }
     // funcio  que  identifica si e producto ya se encuentra  registrado en los  productos para asignar el precio  
     public function get_productoIDPrecios($productoID) {
@@ -29,6 +35,18 @@ class  preciosProducto_Model extends CI_Model{
             return $this->db->insert_id();
         }
     } 
+    //  funcion que  actualiza  UNICAMENTE  la  marca  de  disponible  del  producto.
+    //  Se  usa  desde  la  pantalla  de  precios  por  area :  alli  el  precio  de  venta
+    //  vive  en  precioproductoarea , por  eso  esta  funcion  NO  debe  tocar  precioventa
+    //  ( updateProductoPrec  lo  dejaba  en  0  cuando  la  caja  de  texto  llegaba  vacia ).
+    public function  updateDisponibleProducto($productoID, $proddisponible){
+        $this->db->set("proddisponible", $proddisponible)
+                 ->where("productoID", $productoID)
+                 ->where("precioProdStatus",  1)
+                 ->update("precioproducto");
+        return $this->db->affected_rows();
+    }
+
     //  funcion para actualizar el  precio de costo y precio de  venta fechactualizado
     public function  updateProductoPrec($data, $productoID){
         // Precio costo se registra cuando se ingresa compra de productos y se pone el del  comprobante del proveedor  

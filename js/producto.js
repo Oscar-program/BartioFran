@@ -172,88 +172,91 @@ function addProducto(productoID){
   
   
    }
-   // funcion para  asginar los precios a los productos  
+   // funcion para  asginar los precios a los productos
    function  preciosProducto(){
     console.log("Asignacion  de precios a productos  ");
     var url = base_url('index.php/productos_Controller/preciosProducto/');
-  
+
     //var url = base_url("index.php/BancosController/bancos");
         $.get(url, function (data) {
             $("#principal").html(data);
         });
 
    }
-   //   funcion para actualizar el precio del los productos 
+
+   //  funcion que  recarga  UNICAMENTE  el  div  de  la  lista  de  precios , filtrada  por  la
+   //  familia  seleccionada.  Se  llama  al  cambiar  el  select  y  al  guardar  un  precio ,
+   //  asi  el  filtro  elegido  no  se  pierde.
+   function cargarListaPrecios(){
+    var famProdID = (document.getElementById('famPrecios')) ? $("#famPrecios").val() : 0 ;
+    if(famProdID === "" || famProdID === null || famProdID === undefined){ famProdID = 0; }
+
+    console.log("Recargando lista de precios de la familia " + famProdID);
+    var url = base_url('index.php/productos_Controller/listaPreciosProducto/');
+    $.ajax({
+          url: url,
+          type: "POST",
+          data: { famProdID: famProdID },
+          beforeSend: function () {
+          },
+          success: function (data) {
+            $("#listaPreciosProducto").html(data);
+          }
+        });
+   }
+   //   funcion para actualizar los precios  del  producto.
+   //   Esta  pantalla  ya  NO  toca  precioproducto.precioventa :  los  precios  se  guardan
+   //   en  la  tabla  precioproductoarea , una  columna  por  cada  area  creada.
    function updatePrecProd(productoID, identificador){
-    var preciocosto = 0;
-    var precioventa = 0;
-    var proddisponible =0;
+     savePreciosProductoArea(productoID, identificador);
+   }
 
+   //   funcion para actualizar los precios  de  cada  area  del  producto ,  se envia   precios[areaEstablecimientoID] = precio
+   function savePreciosProductoArea(productoID, identificador){
+    var precios        = {};
+    var totalAreas     = 0;
+    var proddisponible = 0;
 
-  
-  const chkProducto = document.getElementById("proddisponible"+ identificador);
-
-//chkProducto.addEventListener("change", function(){
-
-    if(chkProducto.checked){
-        console.log("Activado");
-    }else{
-        console.log("Desactivado");
+    //  estado del  switch  Disponible  de  la  fila
+    var chkProducto = document.getElementById("proddisponible" + identificador);
+    if(chkProducto){
+        proddisponible = chkProducto.checked ? 1 : 0 ;
     }
 
-   //return false  ; 
-   
+    // se  recorren solo las  cajas  de  texto  de  la  fila  del producto
+    $(".ctrlPrecioArea[data-fila='" + identificador + "']").each(function(){
+        var areaID  = $(this).attr("data-area");
+        var precio  = $(this).val();
+        if(precio !== null && precio !== undefined && precio.toString().trim().length > 0){
+            precios[areaID] = precio;
+            totalAreas += 1;
+        }
+    });
 
-    if(document.getElementById("precioventa"+ identificador)){
-      precioventa =  $("#precioventa" + identificador).val();
-       preciocosto =  $("#precioventa" + identificador).val(); 
-       proddisponible =   chkProducto.checked;
+    var DJson = { productoID:productoID, precios:precios, proddisponible:proddisponible };
+    url_destino = "index.php/PrecioArea_Controller/savePreciosProductoArea/";
 
+    console.log("Actualizando " + totalAreas + " precio(s) por area del producto " + productoID);
 
-    }
-    /*if(document.getElementById("preciocosto"+ identificador)){
-      preciocosto =  $("#preciocosto" + identificador).val(); 
-    }*/
-
-    //var precio = $("#precio" + identificador).val();
-    //var bodegaDest    = bodegaProductoIDDes;// $("#bodegaDest"    +identificador).val();  
-    //var  idTransac   = 0; 
-    //if(document.getElementById('trasladoID')){
-     // idTransac = $("#trasladoID").val();
-
-    //}   
-    var DJson         = {
-                         productoID:productoID, preciocosto:preciocosto,precioventa:precioventa, proddisponible:proddisponible 
-                         
-                        };  
-	url_destino       = "index.php/productos_Controller/updatePrecProd/";
-	
-	console.log("Actualizando el precio  del los productos  ##########");
-	
-	$.ajax({
+    $.ajax({
           url: base_url(url_destino),
           type: "POST",
           data: DJson,
-          // cache: false,
-          //contentType: false,
-          //processData: false,
           beforeSend: function () {
-            // Show image container
-            $("#loader").css("display", "block");
           },
           success: function (data) {
-          //$("#codigoCliente").prop( "disabled", true);
-           // alertify.set("notifier", "position", "top-right");
-            //alertify.success("Precio actualizado correctamente");
-             preciosProducto()
+            console.log("precios  de  area  actualizados : " + data);
+            if(typeof alertify !== "undefined"){
+                alertify.set("notifier", "position", "top-right");
+                alertify.success("Precios actualizados en " + data + " area(s)");
+            }
+            //  se  recarga  solo  el  div  de  la  lista , conservando  la  familia  filtrada
+            cargarListaPrecios();
           },
           complete: function () {
-             
           }
         });
-
-
-   } 
+   }
 
    function deleteProducto(productoID){
     console.log("Eliminando el producto") ;

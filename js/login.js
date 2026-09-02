@@ -46,9 +46,24 @@ function validaUser(){
 
 
 }
+//  funcion para  cerrar  la  sesion  del  usuario
+function cerrarSession(){
+    swal({
+      title: "Desea cerrar la sesion ?",
+      text: "Se cerrara la sesion y volvera a la pantalla de acceso",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((Cerrar) => {
+      if (Cerrar) {
+        window.location.href = base_url("index.php/login_Controller/cerrarSession");
+      }
+    });
+}
+
 function acceso(){
     var url = base_url('index.php/Welcome/principal/');
-        $.get(url, function (data) {                  
+        $.get(url, function (data) {
         });
 }
 //  funcion para  registrar al usuarios  

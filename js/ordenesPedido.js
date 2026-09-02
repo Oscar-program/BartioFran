@@ -24,49 +24,194 @@ function base_url(url){
        }       
 
 
-// funcion para cargar la  venta principal de ordenes 
-function cargar_addordenes(mesaID, mesNombre){   
-    console.log("Listando las mesas "  + mesaID + "    "+ mesNombre);
-    var url = base_url('index.php/Menu_internoController/cargar_addordenes/' + mesaID +'/'+ mesNombre );  
-    $.get(url, function (data) {
-        $("#principal").html(data);             
+// =====================================================================
+//  DETALLE  DE  PRODUCTOS  VENDIDOS  ( rango  de  fecha  +  area )
+//  por  defecto  se  abre  sin  filtros , es  decir  mostrando  TODO
+// =====================================================================
+function detalleProductosVendidos(){
+    console.log("Abriendo el detalle de productos vendidos");
+    var url = base_url('index.php/Ordenes_Controller/detalleProductosVendidos/');
+    $.ajax({
+           url: url,
+           type: "POST",
+           data: { fechaIni:"", fechaFin:"", areaEstablecimientoID:0, usuarioID:0, soloCocina:"" },
+           beforeSend: function(){
+           }, success:function(data){
+            $("#principal").html(data);
+           }
     });
-  
+}
+
+//  lee  los  filtros  de  la  pantalla ,  se  usa  tanto  para  buscar  como  para  exportar
+function filtrosProductosVendidos(){
+    return {
+        fechaIni              : (document.getElementById('fechaIni'))        ? $("#fechaIni").val()        : "" ,
+        fechaFin              : (document.getElementById('fechaFin'))        ? $("#fechaFin").val()        : "" ,
+        areaEstablecimientoID : (document.getElementById('areaVendidos'))    ? $("#areaVendidos").val()    : 0  ,
+        usuarioID             : (document.getElementById('usuarioVendidos')) ? $("#usuarioVendidos").val() : 0  ,
+        soloCocina            : (document.getElementById('cocinaVendidos'))  ? $("#cocinaVendidos").val()  : ""
+    };
+}
+
+//  aplica  los  filtros  y  recarga  unicamente  el  cuerpo  del  reporte
+function buscarProductosVendidos(){
+    var filtros = filtrosProductosVendidos();
+
+    console.log("Filtrando productos vendidos", filtros);
+    var url = base_url('index.php/Ordenes_Controller/buscarProductosVendidos/');
+    $.ajax({
+           url: url,
+           type: "POST",
+           data: filtros,
+           beforeSend: function(){
+           }, success:function(data){
+            $("#cuerpoProductosVendidos").html(data);
+           }
+    });
+}
+
+//  limpia  los  filtros  y  vuelve  a  mostrar  TODO
+function limpiarFiltroProductosVendidos(){
+    if(document.getElementById('fechaIni')){        $("#fechaIni").val("");        }
+    if(document.getElementById('fechaFin')){        $("#fechaFin").val("");        }
+    if(document.getElementById('areaVendidos')){    $("#areaVendidos").val(0);     }
+    if(document.getElementById('usuarioVendidos')){ $("#usuarioVendidos").val(0);  }
+    if(document.getElementById('cocinaVendidos')){  $("#cocinaVendidos").val("");  }
+    buscarProductosVendidos();
+}
+
+//  descarga  el  reporte  a  Excel  respetando  los  filtros  aplicados
+function exportarProductosVendidos(){
+    var f = filtrosProductosVendidos();
+    var params = "?fechaIni="              + encodeURIComponent(f.fechaIni)
+               + "&fechaFin="              + encodeURIComponent(f.fechaFin)
+               + "&areaEstablecimientoID=" + encodeURIComponent(f.areaEstablecimientoID)
+               + "&usuarioID="             + encodeURIComponent(f.usuarioID)
+               + "&soloCocina="            + encodeURIComponent(f.soloCocina);
+
+    console.log("Descargando productos vendidos a Excel");
+    //  navegacion  directa :  el  servidor  responde  con  Content-Disposition attachment ,
+    //  por  eso  el  navegador  descarga  el  archivo  sin  salir  de  la  pantalla
+    window.location.href = base_url('index.php/Ordenes_Controller/exportarProductosVendidos') + params;
+}
+
+// =====================================================================
+//  ORDENES  ABIERTAS  DE  UNA  MESA
+//  muestra  las  ordenes  que  todavia  NO  se  han  cobrado  y  permite
+//  agregarles  productos ,  ademas  muestra  el  total  de  toda  la  mesa
+// =====================================================================
+function ordenesMesa(mesaID, mesNombre){
+    console.log("Ordenes abiertas de la mesa " + mesaID);
+    var nombre = (mesNombre === undefined || mesNombre === null) ? "" : mesNombre ;
+    var url = base_url('index.php/Menu_internoController/ordenesMesa/' + mesaID + '/' + encodeURIComponent(nombre));
+    $.get(url, function (data) {
+        $("#principal").html(data);
+    });
+}
+
+//  abre  una  orden  YA  EXISTENTE  para  agregarle  productos
+//  soloCocina = 1  ->  la  lista  de  productos  muestra  unicamente  prodctucocina = 1
+function agregarProductosOrden(ordenPedidoID, mesaID, soloCocina){
+    var filtro = (soloCocina === undefined) ? 1 : soloCocina ;
+    console.log("Agregando productos a la orden " + ordenPedidoID + " soloCocina=" + filtro);
+    var url = base_url('index.php/Menu_internoController/agregarProductosOrden/' + ordenPedidoID + '/' + mesaID + '/' + filtro);
+    $.get(url, function (data) {
+        $("#principal").html(data);
+        calculaTotalVenta(ordenPedidoID);
+    });
+}
+
+// =====================================================================
+//  CONTADOR  ACTIVO  DEL  TIEMPO  DE  ESPERA  ( color  rojo )
+//  cada  elemento  .contador-espera  trae  en  data-segundos  los  segundos
+//  transcurridos  calculados  por  el  servidor ,  el  navegador  solo  suma
+// =====================================================================
+var intervaloContadoresEspera = null;
+
+function formatoTiempoEspera(totalSegundos){
+    if(totalSegundos < 0){ totalSegundos = 0; }
+    var h = Math.floor(totalSegundos / 3600);
+    var m = Math.floor((totalSegundos % 3600) / 60);
+    var s = Math.floor(totalSegundos % 60);
+    return (h < 10 ? "0" + h : h) + ":" + (m < 10 ? "0" + m : m) + ":" + (s < 10 ? "0" + s : s);
+}
+
+function refrescarContadoresEspera(){
+    $(".contador-espera").each(function(){
+        var seg = parseInt($(this).attr("data-segundos"), 10);
+        if(isNaN(seg)){ seg = 0; }
+        seg += 1;
+        $(this).attr("data-segundos", seg);
+        $(this).text(formatoTiempoEspera(seg));
+    });
+}
+
+function iniciarContadoresEspera(){
+    //  se  pinta  de  inmediato  para  no  esperar  el  primer  segundo
+    $(".contador-espera").each(function(){
+        var seg = parseInt($(this).attr("data-segundos"), 10);
+        if(isNaN(seg)){ seg = 0; }
+        $(this).text(formatoTiempoEspera(seg));
+    });
+    if(intervaloContadoresEspera != null){
+        clearInterval(intervaloContadoresEspera);
+    }
+    intervaloContadoresEspera = setInterval(refrescarContadoresEspera, 1000);
+}
+
+
+// funcion para cargar la  venta principal de ordenes
+function cargar_addordenes(mesaID, mesNombre){
+    console.log("Listando las mesas "  + mesaID + "    "+ mesNombre);
+    var url = base_url('index.php/Menu_internoController/cargar_addordenes/' + mesaID +'/'+ mesNombre );
+    $.get(url, function (data) {
+        $("#principal").html(data);
+    });
+
   }
 
-  // funcion para mostrar el total d ordenes por mesa 
+  //  el  parametro  puede  llegar  como  el  select  ( onchange )  o  como  el  id  de  la  mesa
+  function resolverMesaID(origen){
+    if(origen === null || origen === undefined){ return 0; }
+    if(typeof origen === "object" && origen.value !== undefined){ return origen.value; }
+    return origen;
+  }
+
+  // funcion para mostrar el total d ordenes por mesa
   function mostrarPendientesDespacho(select){
-    var mesaID  = select.value;
-    console.log("El detalle de la mesa a mostrar es 100000 " + mesaID ) ;   
+    var mesaID  = resolverMesaID(select);
+    console.log("El detalle de la mesa a mostrar es 100000 " + mesaID ) ;
     var url = base_url('index.php/Ordenes_Controller/listaOrdenesPendienteDespacho/');
     obJson = { mesaID:mesaID};
     $.ajax({
-           url: url, 
+           url: url,
            type:"POST",
-           data:obJson, 
+           data:obJson,
            beforeSend: function(){
-           }, success:function(data){  
-            console.log(data)       ;  
-            $("#ordenesPendientesDespacho").html(data);    
+           }, success:function(data){
+            console.log(data)       ;
+            $("#ordenesPendientesDespacho").html(data);
+            iniciarContadoresEspera();
            }
     });
-  
+
   }
-    // funcion para mostrar el total d ordenes por mesa 
-  function mostrarPendientesCobro(select){ 
-    var mesaID  = select.value;   
+    // funcion para mostrar el total d ordenes por mesa
+  function mostrarPendientesCobro(select){
+    var mesaID  = resolverMesaID(select);
     var url = base_url('index.php/Ordenes_Controller/listaOrdenesPendienteCobro/');
     obJson = { mesaID:mesaID};
     $.ajax({
-           url: url, 
+           url: url,
            type:"POST",
-           data:obJson, 
+           data:obJson,
            beforeSend: function(){
-           }, success:function(data){          
-            $("#ordenesPendientesCobrar").html(data);    
+           }, success:function(data){
+            $("#ordenesPendientesCobrar").html(data);
+            iniciarContadoresEspera();
            }
     });
-  
+
   }
 
 
@@ -157,11 +302,12 @@ function cargar_addordenes(mesaID, mesNombre){
            type:"POST",
            data:obJson, 
            beforeSend: function(){
-           }, success:function(data){          
-            $("#ordenesPendientesDespacho").html(data);    
+           }, success:function(data){
+            $("#ordenesPendientesDespacho").html(data);
+            iniciarContadoresEspera();
            }
     });
-  
+
   }
   // funcion para poner marca de cobro a un producto // todos los productos ya  cobrados yano se podran marcar de  nuevo // poner bandera de finalizado a tosdos aquellos ya marcados  
   function  cobrarOrden(c, detPedID, ordenPedidoID){
@@ -259,12 +405,13 @@ function cargar_addordenes(mesaID, mesNombre){
            type:"POST",
            data:obJson, 
            beforeSend: function(){
-           }, success:function(data){  
-            console.log(data)       ;  
-            $("#ordenesPendientesDespacho").html(data);    
+           }, success:function(data){
+            console.log(data)       ;
+            $("#ordenesPendientesDespacho").html(data);
+            iniciarContadoresEspera();
            }
     });
-  
+
   }
 
 

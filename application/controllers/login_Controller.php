@@ -47,7 +47,24 @@ class   login_Controller extends CI_Controller{
         echo $RetornaUser ; 
       
     }
-    //  segmento para  desemcrptar la clave de usuario  
+    //  funcion para  cerrar  la  sesion  del  usuario  y  regresar  a  la  pantalla  de  login
+    public function cerrarSession(){
+        if(session_status() ==  PHP_SESSION_NONE){
+            session_start();
+        }
+        $_SESSION = array();
+        session_unset();
+        session_destroy();
+        //  se  destruye  tambien  la  cookie  de  sesion  para  que  no  quede  rastro  del  usuario
+        if(ini_get("session.use_cookies")){
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                      $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+        }
+        redirect(base_url());
+    }
+
+    //  segmento para  desemcrptar la clave de usuario
     public function  desempcriptar(){
         $aes_encrypt  =  new  aes_encrypt();
         $datosUser  = $this->usuarios_Model->allUserSystem();

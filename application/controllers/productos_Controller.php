@@ -20,9 +20,11 @@ class Productos_Controller extends CI_Controller {
            $this->load->model('preciosProducto_Model');
            $this->load->model('inventProducto_Model');
            $this->load->model('equivalenteProducto_Model');
-           $this->load->model('Config_Model');           
-           //preciosProducto_Model           
-           $this->load->helper('path');          
+           $this->load->model('Config_Model');
+           $this->load->model('PrecioArea_Model');
+           $this->load->model('AreasEstablecimiento_Model');
+           //preciosProducto_Model
+           $this->load->helper('path');
     }
     //Creamos la funncion para  agrear el menu  interno 
     public function listarProductos(){
@@ -187,10 +189,32 @@ public function preciosProducto(){
   ini_set('display_startup_errors',1);
   error_reporting(E_ALL); 
   //echo  'llegando al  controlador';
-  $datos['lista_productoCostear'] =  $this->preciosProducto_Model->lista_productoCostear();
+  //  el  filtro  de  familia  llega  vacio  la  primera  vez :  se  muestran  todas
+  $famProdID = (isset($_REQUEST['famProdID']) AND $_REQUEST['famProdID'] > 0) ? $_REQUEST['famProdID'] : 0 ;
+
+  $datos['lista_productoCostear'] =  $this->preciosProducto_Model->lista_productoCostear($famProdID);
  // var_dump($datos['lista_productoCostear']) ;
+  //  se agregan  las  areas  creadas  para  dibujar  una  columna  de precio  por  cada  una  de  ellas
+  $datos['listAreasEstablecimiento'] = $this->AreasEstablecimiento_Model->get_listAreasEstablecimiento($_SESSION["establecimientoID"]);
+  $datos['preciosArea']              = $this->PrecioArea_Model->get_matrizPreciosArea();
+  //  familias  para  el  select  del  filtro
+  $datos['listFamiliaProducto']      = $this->FamiliaProducto_Model->listaAllFamiliaProducto();
+  $datos['famProdID']                = $famProdID;
 
   $this->load->view('inventarios/precios_producto', $datos);
+}
+
+// funcion que  devuelve  UNICAMENTE  el  cuerpo  de  la  lista  de  precios  filtrada  por  familia.
+// La  usa  el  select  del  filtro  y  tambien  el  boton  de  actualizar  precio , asi  solo  se
+// recarga  el  div  de  la  lista  y  el  filtro  seleccionado  no  se  pierde.
+public function listaPreciosProducto(){
+  $famProdID = (isset($_REQUEST['famProdID']) AND $_REQUEST['famProdID'] > 0) ? $_REQUEST['famProdID'] : 0 ;
+
+  $datos['lista_productoCostear']    = $this->preciosProducto_Model->lista_productoCostear($famProdID);
+  $datos['listAreasEstablecimiento'] = $this->AreasEstablecimiento_Model->get_listAreasEstablecimiento($_SESSION["establecimientoID"]);
+  $datos['preciosArea']              = $this->PrecioArea_Model->get_matrizPreciosArea();
+
+  $this->load->view('inventarios/cuerpoPreciosProducto', $datos);
 }
    
 // funcion  para actualizar los precio  del  los productos 
