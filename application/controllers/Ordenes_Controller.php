@@ -15,14 +15,14 @@ class Ordenes_Controller extends CI_Controller{
         $this->load->helper('path');
     }
 
-    //  1-  Muestra las mesas que  tiene ordenes pendientes de despacho  
+    //  1-  Muestra las mesas que  tiene ordenes pendientes de DESPACHO  
     public function get_OrdenesPendientesDespachar(){   
       //echo  "Pendientes despachar " . "<br>" ;        
-       $data['listaMesasPendientesCobro'] = $this->mesas_Model->listaMesasPendienteCobro();
+       $data['listaMesasPendientesCobro'] = $this->mesas_Model->listaMesasPendienteDespacho();
        $this->load->view('ordenes/ordenesDespacho', $data);
     }
     
-    // funcion muestra las ordenes pendientes de despacho 
+    // funcion muestra las ordenes pendientes de COBRO 
     public function get_OrdenesPendientesCobro(){   
        //echo  "PendientesCobro " . "<br>" ;        
        $data['listaMesasPendientesCobro'] = $this->mesas_Model->listaMesasPendienteCobro();
@@ -277,6 +277,12 @@ class Ordenes_Controller extends CI_Controller{
       public function procesarPedido($ordenPedidoID){
          $datos =  $this->ordenesPedido_Model->procesarPedido($ordenPedidoID); 
 
+      }
+      public function  resumenProductosMesa($mesaID){
+          $datos['ResumenOrdenes'] =  $this->ordenesPedido_Model->resumenProductosMesa($mesaID);
+           $this->load->view('ordenes/resumenOrdenesPorMesa', $datos);
+
+         // var_dump($datos['ResumenOrdenes']) ;  
       }
 
 

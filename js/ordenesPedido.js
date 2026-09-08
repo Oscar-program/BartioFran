@@ -413,6 +413,21 @@ function cargar_addordenes(mesaID, mesNombre){
     });
 
   }
+  function mostrarResumenMesa(mesaIdCobro){
+   console.log("Preparando para  mostrar la modal") ;
+   var url = base_url('index.php/Ordenes_Controller/resumenProductosMesa/' +mesaIdCobro);
+   // obJson = { mesaID:mesaID};
+    $.ajax({
+           url: url, 
+           type:"get",
+          // data:obJson, 
+           beforeSend: function(){
+           }, success:function(data){
+              console.log(data) ;
+            $("#divResumenPorMesa").html(data);
+            $('#ResumenOrden').modal('show');
+           }});
+  }
 
 
   /*function  anularOrdenEnLista(){

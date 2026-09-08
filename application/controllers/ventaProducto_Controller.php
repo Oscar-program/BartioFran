@@ -255,6 +255,7 @@ class ventaProducto_Controller extends CI_Controller {
    public function  anularOrden(){
      $ordenID =  isset($_REQUEST['ordenID']) ? $_REQUEST['ordenID']:  0;
      $this->ordenesPedido_Model->anularOrden($ordenID) ;
+     $this->ordenesPedido_Model->anularAllDetPedido($ordenID); // anulamos todo el detalle de orden que fue  anulada
    }
    public function  anularOrdenID($ordenID){
      //$ordenID =  isset($_REQUEST['ordenID']) ? $_REQUEST['ordenID']:  0;

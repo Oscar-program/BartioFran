@@ -45,6 +45,17 @@ class  preciosProducto_Model extends CI_Model{
                  ->where("precioProdStatus",  1)
                  ->update("precioproducto");
         return $this->db->affected_rows();
+
+
+        /*$this->db->set("precioventa",     $data["precioventa"])
+                     ->set("proddisponible",  $data["proddisponible"])
+                     ->set("fechactualizado", $data["fechactualizado"])
+                     ->set("usuarioID",       $data["usuarioID"])
+                     ->where("precioAreaID",  $precioAreaID)
+                     ->where("precioAreaStatus",  1)
+                     ->update("precioproductoarea");
+            return $this->db->affected_rows();*/
+
     }
 
     //  funcion para actualizar el  precio de costo y precio de  venta fechactualizado

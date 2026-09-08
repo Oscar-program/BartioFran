@@ -641,7 +641,34 @@
                  ->update("ordenpedido");
                  return $this->db->affected_rows();  
 
-        }
+    }
+    //  resumen  de venta  por mesa 
+    public function  resumenProductosMesa($mesaID){
+      $query = $this->db->select("depp.productoID, trim(upper(prod.prodDescripcion)) as prodDescripcion, sum(depp.detcantidad) as cantidad, depp.detprecioNormal as precioUnidad, 
+                                  sum(depp.dettotal) as total,  depp.detstatus, depp.ordenPedidoID, ordp.ordPpenditeCobro")
+                         ->join('ordenpedido ordp',  'ordp.ordenPedidoID = depp.ordenPedidoID', 'inner')
+                         ->join('producto prod',  'prod.productoID = depp.productoID', 'inner')
+                         ->where("depp.detstatus",  1)
+                         ->where("ordp.ordPpenditeCobro",  1)
+                         ->where("ordp.mesaID",  $mesaID)
+                         ->group_by("ordp.mesaID, depp.productoID")
+                         ->order_by("prod.prodDescripcion", "ASC")
+                         ->get("nuevoestablo.detordenpedido depp")
+                         ->result();
+        return  $query;
+    }
+    // FUNCION ANULA TODO DEL DETALLE DE LA ORDEN CUANDO SE EJECUTA ANULAR ORDEN
+   public function anularAllDetPedido($ordenPedidoID){
+     $this->db->set("detstatus", 0) 
+                 ->where("ordenPedidoID", $ordenPedidoID)
+                 ->update("detordenpedido");
+        return $this->db->affected_rows();  
+    }
+
+
+
+
+
     
     
 

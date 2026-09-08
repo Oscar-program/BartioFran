@@ -69,6 +69,7 @@ $saldomesa    = $totalmesa - $abonomesa ;
                             <i class="fa fa-calculator" aria-hidden="true"></i>
                             COBRAR TODA LA MESA
                         </button>
+                        <button type="button" class="btn btn-info"  onclick="mostrarResumenMesa(<?php echo $mesaIdCobro;?>)"> <i class="fa fa-bars" aria-hidden="true"></i> </button>
                     <?php } ?>
                 </div>
             </div>
@@ -81,7 +82,7 @@ $saldomesa    = $totalmesa - $abonomesa ;
 <table  class=" tabla  tabla-estiloOrdn">
    <?php 
       $ultimo = count($lstPendDespCabecera);
-   if( isset($lstPendDespCabecera)){
+    if( isset($lstPendDespCabecera)){
       foreach( $lstPendDespCabecera as  $row){       
              $estado     = "(Despachado)";   
              $comentario = "";
@@ -173,7 +174,7 @@ $saldomesa    = $totalmesa - $abonomesa ;
 				<form>
 				
 					<input type="hidden" class="form-control text-right" id="ordenPedidoID" name="ordenPedidoID" readonly>
-                 <div class="form-group">
+                    <div class="form-group">
 						<input type="number" class="form-control text-right" id="ordPAbono"  name="ordPAbono"  value ="" step="any">
 					  </div> 
 					  <div class="form-group text-right">
@@ -186,7 +187,11 @@ $saldomesa    = $totalmesa - $abonomesa ;
 			
 		    </div> 
 		   </div> 
-	  </div>
+	    </div>
+     </div>
+     <!-- modal para  resumen de venta   por mesa -->
+      <div id="divResumenPorMesa"> </div>
+      <!-- modal para  resumen de venta   por mesa --> 
 
 <script>
     //  arranca  el  contador  activo  del  tiempo  de  espera

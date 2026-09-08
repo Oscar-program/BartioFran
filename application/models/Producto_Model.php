@@ -60,8 +60,9 @@ class Producto_Model extends CI_Model {
         }
         $this->db->where('prod.famProdID',$famProdID)
                  ->where('prod.prodStatus',1)
-                 //->where('prec.proddisponible',1)
-                 ->where('prcarea.precioventa > 0');
+                 
+                 ->where('prcarea.precioventa > 0')
+                 ->where('prec.proddisponible',1);
                   
 
 

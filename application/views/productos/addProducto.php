@@ -252,13 +252,13 @@
 
 
           
-          <?php   }else { ?>
-           <label class="switch-container">
-              <input type="checkbox" id="prodctucocina" name  ="prodctucocina" >
-              <span class="slider"></span>
-              <span class="texto">Producto de cocina</span>
-          </label>
-          <?php  } ?>
+            <?php   }else { ?>
+            <label class="switch-container">
+                <input type="checkbox" id="prodctucocina" name  ="prodctucocina" >
+                <span class="slider"></span>
+                <span class="texto">Producto de cocina</span>
+            </label>
+            <?php  } ?>
 
       <div class="modal-footer">
         <button  type="submit" class="btn btn-danger"> Enviar </button>

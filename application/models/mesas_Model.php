@@ -24,15 +24,35 @@ class mesas_Model extends CI_Model {
         return  $query;
     }
 
-    // funcion que muestra las mesas que tienen  ordenes pendientes de cobro
-    public function listaMesasPendienteCobro(){
-        //  echo  "llegando al modelo" . "<br>" ;
+    // funcion que muestra las MESAS que tienen  ordenes pendientes de DESPACHO
+    public function listaMesasPendienteDespacho(){
+        
+        $query = $this->db->select("msa.mesaID, msa.mesNombre ")
+                    ->join('ordenpedido as  ordenp',  'ordenp.mesaID = msa.mesaID', 'inner')
+                    ->join('detordenpedido dt',  'dt.ordenPedidoID =  ordenp. ordenPedidoID', 'inner')                    
+                    ->join('producto prod',  'prod.productoID =  dt.productoID', 'inner')                   
+                    ->where("dt.despachar", 0)                 
+                    ->where("dt.detstatus",1)                
+                    ->where("prod.prodctucocina", 1)
+                    ->group_by("msa.mesaID")
+                    ->order_by("ordenp.ordPFecha", "DESC")
+                    ->get("mesa as  msa")
+                    ->result();
+        return  $query;
+
+    }
+    
+     // funcion que muestra las MESAS que tienen  ordenes pendientes de COBRO
+     public function listaMesasPendienteCobro(){
+         //echo  "llegando al modelo" . "<br>" ;
        //  $this->db->distinct();         
         $query = $this->db->select("msa.mesaID, msa.mesNombre ")
                     ->join('ordenpedido as  ordenp',  'ordenp.mesaID = msa.mesaID', 'inner')
-                     ->join('detordenpedido dt',  'dt.ordenPedidoID =  ordenp. ordenPedidoID', 'inner')
-                   
-                 ->where("ordenp.ordPpenditeDespacho",  1)
+                    ->join('detordenpedido dt',  'dt.ordenPedidoID =  ordenp. ordenPedidoID', 'inner')
+                    ->join('producto prod',  'prod.productoID =  dt.productoID', 'inner')
+                  ->where("dt.detstatus",1)
+                  ->where("ordenp.ordPpenditeCobro",1)
+                  ->where("ordenp.ordPanulado",  0)           
                  ->group_by("msa.mesaID")
                 ->order_by("ordenp.ordPFecha", "DESC")
                  ->get("mesa as  msa")
@@ -40,6 +60,10 @@ class mesas_Model extends CI_Model {
         return  $query;
 
     }
+
+
+   
+
     // funcion para listar todas las ordenes que estan pendientes de cobro  por mesa 
     // diseñando para ordenes  por mesas  
      public function listaOrdenesPendienteDespacho1($mesaID){

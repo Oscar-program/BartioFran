@@ -75,6 +75,20 @@ class  PrecioArea_Model extends CI_Model{
             return $this->db->affected_rows();
         }
     }
+    /*producto disponible */
+     public function  addDisponible($data, $precioAreaID){
+        
+            $this->db->set("precioventa",     $data["precioventa"])
+                     ->set("proddisponible",  $data["proddisponible"])
+                     ->set("fechactualizado", $data["fechactualizado"])
+                     ->set("usuarioID",       $data["usuarioID"])
+                     ->where("precioAreaID",  $precioAreaID)
+                     ->where("precioAreaStatus",  1)
+                     ->update("precioproductoarea");
+            return $this->db->affected_rows();
+        }
+    
+
 
     //  funcion para actualizar  el precio de venta  del producto  en  el  area , si  no existe lo crea
     public function  updatePrecioArea($data, $productoID, $areaEstablecimientoID){

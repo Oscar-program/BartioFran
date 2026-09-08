@@ -64,6 +64,7 @@ class PrecioArea_Controller extends CI_Controller{
                                   'fechactualizado' => date("Y-m-d H:i:s"),
                                   'usuarioID'       => $_SESSION["usuarioID"]
                                 );
+                    var_dump($data ) ;           
                     $this->PrecioArea_Model->updatePrecioArea($data, $productoID, $areaEstablecimientoID);
                     $guardados += 1;
                 }
