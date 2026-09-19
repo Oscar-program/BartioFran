@@ -58,3 +58,56 @@ function insertarMesaEstablecimiento(){
         });	
 
 }
+
+ //   muestra las mesas q
+ function listasMesasIntercambiar(){
+    console.log("LISTANDO LAS MESAS QUE VAN HACER INTERCAMBIADAS");
+    var url = base_url('index.php/mesa_Controller/listasMesasIntercambiar');
+   
+    $.get(url, function (data) {
+        $("#principal").html(data);
+            
+    });
+
+}
+// funcion para  realizar el proceso  de traslado 
+function ProcesarTraslado(){
+  
+  var mesaRemplar =  $('#MesasConOrdenes').val();
+  var nuevaMesa   =  $('#MesasDisponibles').val();
+   console.log("mesa1" +mesaRemplar );
+  if(mesaRemplar=='0'|| nuevaMesa =='0') {
+      alertify.set("notifier", "position", "top-right");
+      alertify.error("Tiene que seleccionar una mesa en ambas opciones");
+
+  }else{
+  var obJson = {mesaRemplar:mesaRemplar, nuevaMesa:nuevaMesa};
+  url_destino = "index.php/mesa_Controller/ProcesarTraslado/";
+		
+	$.ajax({
+          url: base_url(url_destino),
+          type: "POST",
+          data: obJson,
+          //cache: false,
+          //contentType: false,
+          //processData: false,
+          beforeSend: function () {
+          
+          },
+          success: function (data) {
+          
+            alertify.set("notifier", "position", "top-right");
+            alertify.success("Dato cambiados correctamente");
+          },
+          complete: function () {
+            $('#MesasConOrdenes').val('0');
+            $("#MesasConOrdenes").change();
+            $('#MesasDisponibles').val('0');
+            $("#MesasDisponibles").change();
+            
+          }
+        });	
+   
+}
+}
+

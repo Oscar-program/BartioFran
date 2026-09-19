@@ -61,7 +61,7 @@
     //   funcion para listar  el  detalle  de la orden de pedido del  cliente  
     public function get_listDetOrden($ordenPedidoID){
         //  echo  "la orden del pedido es  " . $ordenPedidoID ;
-        $query =  $this->db->select("detOr.detPedID, detOr.ordenPedidoID, detOr.productoID, detOr.detprecioNormal, detOr.detcantidad, prod.prodDescripcion, detOr.dettotal, prod.famProdID, prod.prodctucocina")
+        $query =  $this->db->select("detOr.detPedID, detOr.ordenPedidoID, detOr.productoID, detOr.detprecioNormal, detOr.detcantidad, prod.prodDescripcion, detOr.dettotal, prod.famProdID, prod.prodctucocina, ordp.ordPcomentario")
                            ->join('producto prod',  'detOr.productoID =  prod.productoID', 'inner')        
                            ->join('ordenpedido ordp',  'detOr.ordenPedidoID =  ordp.ordenPedidoID', 'inner')
                 ->where("detOr.ordenPedidoID",  $ordenPedidoID) 
@@ -393,7 +393,8 @@
     //  Devuelve  la  cantidad  de  ordenes  actualizadas.
     // =====================================================================
     public function cobrarTodaLaMesa($mesaID){
-
+          $fechaHoraActual = date("Y-m-d H:i:s");
+           
         //  1)  el  detalle  de  esas  ordenes  queda  marcado  como  procesado.
         //     Va  primero  porque  se  apoya  en  ordPpenditeCobro = 1 , que  el  paso  2  apaga.
         $sqlDetalle = "UPDATE detordenpedido d
@@ -411,11 +412,13 @@
                            SET o.ordPpenditeCobro    = 0,
                                o.ordPpenditeDespacho = 0,
                                o.ordPAbono           = coalesce(o.ordPtotalcancelar,0),
-                               o.ordPAcobrar         = 0
-                         WHERE o.mesaID = ?
+                               o.ordPAcobrar         = 0,
+                               o.usuarioIDliquida    = ?,
+                               ordFechaliquida       = ?,
+                          WHERE o.mesaID = ?
                            AND o.ordPpenditeCobro = 1
                            AND (o.ordPanulado IS NULL OR o.ordPanulado = 0)";
-        $this->db->query($sqlCabecera, array($mesaID));
+        $this->db->query($sqlCabecera, array($_SESSION['usuario'],$fechaHoraActual,$mesaID ));
 
         return $this->db->affected_rows();
     }
@@ -554,7 +557,7 @@
     // funcionn marca como procesado todas las  ordenes 
     
         public function  procesarCobro($ordenPedidoID, $ordPtotalcancelar ){  
-            
+           
             // identificamos si no hay ningun elemento seleccionado 
            // echo  "poniendo procesados" ;     
                $this->db->set("procesado", 1) 
@@ -567,9 +570,10 @@
           $this->db->set("ordPAbono", $ordPtotalcancelar) 
                     ->set("ordPAcobrar", 0.0)
                      ->set("ordPpenditeDespacho", 0)
-                     ->set("ordPpenditeCobro", 0)
-                     
-                         ->where("ordenPedidoID",  $ordenPedidoID)
+                     ->set("ordPpenditeCobro", 0),    
+                     ->set("usuarioIDliquida", $_SESSION["usuario"])
+                     ->set("ordFechaliquida",date("Y-m-d H:i:s"))                     
+                     ->where("ordenPedidoID",  $ordenPedidoID)
                                         
                  ->update("ordenpedido");
                  return $this->db->affected_rows();  

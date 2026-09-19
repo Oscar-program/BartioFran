@@ -202,9 +202,57 @@ class mesas_Model extends CI_Model {
                  ->result();
         return  $query;          
     }
-
-
-
-
-
+    // funcion lista las mesas que estan utilizadas 
+    public function get_listMesasConOrdenes(){
+        $condicion ="(ordp.ordPpenditeCobro = 1 
+                    and ordp.ordPanulado = 0) and  detp.detstatus = 1"; 
+                     $this->db->distinct();
+        $query =  $this->db->select("ordp.mesaID, m.mesNombre")
+  
+             ->join("detordenpedido  detp",  "detp.ordenPedidoID = ordp.ordenPedidoID", "inner")
+             ->join("mesa  m",  "m.mesaID = ordp.mesaID", "inner") 
+             ->where($condicion)    
+             
+        ->get("ordenpedido ordp")
+        ->result();
+        return  $query;          
+    }
+    // funcion lista las mesas  disponibles
+    public function get_listMesasDisponibles(){
+         $condicion="m.mesaID not  in  (
+										 select  ordp.mesaID
+									     from ordenpedido ordp
+											   inner  join   detordenpedido  detp 
+											   on detp.ordenPedidoID = ordp.ordenPedidoID 
+									     where  (ordp.ordPpenditeCobro = 1 
+											    and ordp.ordPanulado = 0) and  detp.detstatus = 1
+										 group by ordp.mesaID 
+										 )";
+         $query =  $this->db->select("m.*")
+                      ->where($condicion)
+                      ->where("m.mestatus = 1" ) 
+                      ->get("mesa  m")
+                      ->result();
+        return  $query;     
+     }     
+    
+    //  funcion para procesar el  traslado  
+    public function ProcesarTraslado($mesaRemplar, $nuevaMesa){
+                 $this->db->set("mesaID",$nuevaMesa)
+                 ->where("mesaID",$mesaRemplar) 
+                 ->where("ordPpenditeCobro",1)
+                 ->where("ordPanulado",0)        
+                 ->update("ordenpedido");                 
+        return  $this->db->affected_rows();      
+       
+    }
 }
+   
+
+
+
+
+
+
+
+

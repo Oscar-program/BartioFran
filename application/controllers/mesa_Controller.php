@@ -59,6 +59,21 @@ class mesa_Controller extends CI_Controller{
 
     }
 
+    // funcion lista las mesas  utilizadas   y  disponibles para proceder con cambios de mesa  
+    public function listasMesasIntercambiar(){
+        $datos["MesasUtilizadas"]  = $this->mesas_Model->get_listMesasConOrdenes();
+        $datos["MesasDisponibles"] =  $this->mesas_Model->get_listMesasDisponibles();
+        $this->load->view('mesas/trasladarOrdenes',$datos);
+       
+    }
+    public function ProcesarTraslado(){
+    
+     $mesaRemplar = $_REQUEST['mesaRemplar'];
+     $nuevaMesa   = $_REQUEST['nuevaMesa'];
+     $result = $this->mesas_Model->ProcesarTraslado($mesaRemplar, $nuevaMesa);
+     //  echo $result ;
+    }
+
 
      
 

@@ -234,7 +234,26 @@ defined('BASEPATH') or exit('No direct script access allowed');
                             </li>
                           </ul>
                         </li>
-                 <?php  }else {?>
+                 <?php  } else if( $_SESSION["nivelUsuaio"] =="3"){?>
+                 <li class="nav-item menu-open">
+                          <a href="#" class="nav-link active">
+                            <i class="nav-icon fas  fa-cart-arrow-down"></i>
+                            <p>
+                            Ordenes 
+                              <i class="right fas fa-angle-left"></i>
+                            </p>
+                          </a>
+                          <ul class="nav nav-treeview">                  
+                            <li class="nav-item">
+                              <a href="javaScript:get_listAreasEstablecimiento(<?php  echo $_SESSION["establecimientoID"]  ?>);" class="nav-link ">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Toma de Ordenes  <span class="right badge badge-warning">New</span> </p>
+                              </a>
+                            </li>
+                          </ul>
+                        </li>
+
+                 <?php }else {?>
                           <li class="nav-item menu-open">
                           <a href="#" class="nav-link active">
                             <i class="nav-icon fas  fa-cart-arrow-down"></i>
@@ -268,6 +287,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                 <p>Prod. Vendidos</p>
                               </a>
                             </li>
+                            <li class="nav-item">
+                              <a href="javaScript:listasMesasIntercambiar();" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Mover ordenes</p>
+                              </a>
+                            </li>
+
+                            
+
                           </ul>
                         </li>
                  <?php  } ?>
@@ -276,7 +304,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
           
            
             
-        <?php if( $_SESSION["nivelUsuaio"] !="2" ){?> 
+        <?php if( $_SESSION["nivelUsuaio"] !="2" and  $_SESSION["nivelUsuaio"] !="3" ){?> 
             <li class="nav-item menu-open">
               <a href="#" class="nav-link ">
                 <i class="nav-icon fas fa-tachometer-alt"></i>

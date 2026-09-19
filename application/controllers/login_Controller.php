@@ -71,7 +71,7 @@ class   login_Controller extends CI_Controller{
 
         foreach ($datosUser as $row) {
 
-            echo  $row->usrLogin . ' '. $aes_encrypt->aes_encryptAcceso($row->usrPwd ,"decrypt") .  ' #'.  '<br>';
+            echo  $row->usrLogin . ' '. $aes_encrypt->aes_encryptAcceso($row->usrPwd ,"decrypt") .  ' Nivel'.   $row->nivelUsuarioID  .'<br>';
 
             # code...
         }

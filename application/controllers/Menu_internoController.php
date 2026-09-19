@@ -131,6 +131,7 @@ class Menu_internoController extends CI_Controller {
 
         $data['listFamiliaProducto']   = $this->familiaProducto_Model->get_listFamiliaProducto();
         $data['detalleOrden']          = $this->ordenesPedido_Model->get_listDetOrden($ordenPedidoID);
+        //var_dump( $data['detalleOrden'] );
         $Rdettotal                     = $this->ordenesPedido_Model->get_TotalDetOrden($ordenPedidoID);
         $data['datTotal']              = (!empty($Rdettotal)) ? (float) $Rdettotal->dettotal : 0 ;
         $data['familia']               = $mesaID;

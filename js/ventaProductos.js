@@ -297,14 +297,14 @@ function  crear_pdf_ticket(){
     ordenPedidoID =  $("#ordenID").val();
   }
 
-  /*if(document.getElementById('txAcomentario')){
+  if(document.getElementById('txAcomentario')){
     
-   // ordPcomentario =  $("#txAcomentario").val();
-  //   if($("#txAcomentario").val().leng){
-    //  ordPcomentario =  $("#txAcomentario").val();
-    // }
+    ordPcomentario =  $("#txAcomentario").val();
+     if($("#txAcomentario").val().length > 0){
+    ordPcomentario =  $("#txAcomentario").val();
+   }
    
-  }*/
+  }
 
     //  ordPcomentario =  $("#txAcomentario").val();
     // }

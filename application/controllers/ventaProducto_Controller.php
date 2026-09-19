@@ -320,7 +320,7 @@ class ventaProducto_Controller extends CI_Controller {
         
 
         
-        $data  =  array( 'ordPcomentario'=>$ordPcomentario,
+        $data  =  array( 'ordPcomentario'=> str_replace( "%20"," ",$ordPcomentario),
                           'ordPCantidadPrd'=> $RVntaTotal->cantProd, 
                           'ordPtotalcancelar'=>  round($RVntaTotal->ventatotal,2),
                           'ordPAbono'=>round($ordPAbono,2),
@@ -330,7 +330,7 @@ class ventaProducto_Controller extends CI_Controller {
 
                          
                         
-                   // var_dump(   $data );
+           // var_dump(   $data );
         $this->ordenesPedido_Model->addOrdenPedido($data, $ordenPedidoID);
        
 

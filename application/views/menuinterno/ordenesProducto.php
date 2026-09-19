@@ -10,6 +10,11 @@ $areaEstablecimientoID = isset($areaEstablecimientoID) ? $areaEstablecimientoID 
 $area                  = isset($area) ? $area : "" ;
 //  1 =  la  lista  de  productos  muestra  solo  los  marcados  como  producto  de  cocina
 $soloCocina            = isset($soloCocina) ? $soloCocina : 0 ;
+//var_dump($detalleOrden);
+$comentario   = isset($detalleOrden)? $detalleOrden[0]->ordPcomentario: "" ; 
+if(strlen($comentario)==0 ){
+    $comentario = "Sin Comentario" ;
+}
 ?>
 
 
@@ -30,6 +35,7 @@ $soloCocina            = isset($soloCocina) ? $soloCocina : 0 ;
         <input type="hidden" class="text-left text-warning border-0" name="ctrlmesaID" id="ctrlmesaID" value="<?php  echo $mesaID; ?>" readonly>
         <input type="hidden" name="ctrlAreaID"     id="ctrlAreaID"     value="<?php echo $areaEstablecimientoID; ?>" readonly>
         <input type="hidden" name="ctrlSoloCocina" id="ctrlSoloCocina" value="<?php echo $soloCocina; ?>" readonly>
+        <input type="hidden" name="ComentarioOrden" id="ComentarioOrden" value="<?php echo $soloCocina; ?>" readonly>
     </div>
     <div class="row"> 
           <!-- carga las categorias de los productos style ="width:15%;" -->           
@@ -105,7 +111,7 @@ $soloCocina            = isset($soloCocina) ? $soloCocina : 0 ;
                             <label id ="lbTotal" > Total a cancelar $<?php echo number_format($datTotal,2) ; ?>   </label>
                     
                             <div> 
-                                <textarea class="form-control" name="txAcomentario" id="txAcomentario" cols="30" rows="3"> Sin Comentario
+                                <textarea class="form-control" name="txAcomentario" id="txAcomentario" cols="30" rows="3"> <?= htmlspecialchars($comentario) ?>
                                 </textarea>
                             </div>
                         </div>
@@ -158,5 +164,9 @@ $(document).ready(function(){
        
 
      } 
+    
+    document.getElementById('txAcomentario').addEventListener('focus', function () {
+        this.select();
+    });
 
 </script>
