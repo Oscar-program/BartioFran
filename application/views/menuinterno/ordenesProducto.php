@@ -11,7 +11,7 @@ $area                  = isset($area) ? $area : "" ;
 //  1 =  la  lista  de  productos  muestra  solo  los  marcados  como  producto  de  cocina
 $soloCocina            = isset($soloCocina) ? $soloCocina : 0 ;
 //var_dump($detalleOrden);
-$comentario   = isset($detalleOrden)? $detalleOrden[0]->ordPcomentario: "" ; 
+$comentario   = (isset($detalleOrden) && $detalleOrden!= NULL ) ? $detalleOrden[0]->ordPcomentario: "" ; 
 if(strlen($comentario)==0 ){
     $comentario = "Sin Comentario" ;
 }

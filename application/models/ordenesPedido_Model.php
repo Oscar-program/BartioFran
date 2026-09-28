@@ -414,7 +414,7 @@
                                o.ordPAbono           = coalesce(o.ordPtotalcancelar,0),
                                o.ordPAcobrar         = 0,
                                o.usuarioIDliquida    = ?,
-                               ordFechaliquida       = ?,
+                               ordFechaliquida       = ?
                           WHERE o.mesaID = ?
                            AND o.ordPpenditeCobro = 1
                            AND (o.ordPanulado IS NULL OR o.ordPanulado = 0)";
@@ -469,18 +469,43 @@
     //  si  no  se  envia  ningun  filtro  muestra  TODO
     // =====================================================================
     public function detalleProductosVendidos($fechaIni = "", $fechaFin = "", $areaEstablecimientoID = 0, $usuarioID = 0, $soloCocina = ""){
-        $this->db->select("areEst.areaEstablecimientoID, areEst.area, msa.mesNombre as mesa,
-                           ordenp.ordenPedidoID, date_format(ordenp.ordPFecha,'%d-%m-%Y') as fecha,
-                           date_format(ordenp.ordPFecha,'%h:%i %p') as hora,
-                           upper(trim(coalesce(usr.usrNombre,'SIN USUARIO'))) as usuario,
-                           prod.productoID, upper(prod.prodDescripcion) as prodDescripcion,
-                           coalesce(prod.prodctucocina,0) as prodctucocina,
-                           fam.famProdDescripcion, ped.detcantidad as cantidad,
-                           (ped.detprecioNormal + coalesce(ped.detprecioEspecial,0)) as preciounit,
-                           ped.dettotal, ordenp.ordPpenditeCobro")
+        $this->db->select(" date_format(ordenp.ordPFecha,'%d-%m-%Y') as fecha, 
+                            date_format(ordenp.ordPFecha,'%h:%i %p') as hora,
+                            upper(trim(coalesce(usr.usrNombre,'SIN USUARIO'))) as usuario,
+                            date_format(ordenp.ordFechaliquida,'%h:%i %p') as hora_liqui,  
+                             upper(trim(coalesce(usrlq.usrNombre,'SIN USUARIO'))) as usuarioLiquidacion,
+                            CONCAT(
+                                    TIMESTAMPDIFF(
+                                        HOUR,
+                                        ordenp.ordPFecha,
+                                        ordenp.ordFechaliquida
+                                    ),
+                                    ' h ',
+                                    MOD(
+                                        TIMESTAMPDIFF(
+                                            MINUTE,
+                                            ordenp.ordPFecha,
+                                            ordenp.ordFechaliquida
+                                        ),
+                                        60
+                                    ),
+                                    ' min'
+                                ) as tiempoTotal,
+                            msa.mesNombre as mesa,
+                            ordenp.ordenPedidoID,
+                            prod.productoID,
+                            upper(prod.prodDescripcion) as prodDescripcion,
+                            fam.famProdDescripcion,
+                            coalesce(prod.prodctucocina,0) as prodctucocina,
+                            ped.detcantidad as cantidad,
+                            (ped.detprecioNormal + coalesce(ped.detprecioEspecial,0)) as preciounit,
+                             ped.dettotal,
+                            areEst.areaEstablecimientoID, areEst.area,                           
+                           ordenp.ordPpenditeCobro, ordenp.ordPcomentario")
                  ->join('mesa as  msa',  'msa.mesaID = ordenp.mesaID', 'inner')
                  ->join('areasestablecimiento areEst',  'areEst.areaEstablecimientoID =  msa.areaEstablecimientoID', 'inner')
                  ->join('usuario usr',  'usr.usuarioID = ordenp.usuarioID', 'left')
+                 ->join('usuario usrlq',  'usrlq.usuarioID = ordenp.usuarioIDliquida', 'left')
                  ->join('detordenpedido ped',  'ped.ordenPedidoID =  ordenp.ordenPedidoID', 'inner')
                  ->join('producto prod',  'prod.productoID =  ped.productoID', 'inner')
                  ->join('familiaproducto fam',  'fam.famProdID = prod.famProdID', 'left');
@@ -570,7 +595,7 @@
           $this->db->set("ordPAbono", $ordPtotalcancelar) 
                     ->set("ordPAcobrar", 0.0)
                      ->set("ordPpenditeDespacho", 0)
-                     ->set("ordPpenditeCobro", 0),    
+                     ->set("ordPpenditeCobro", 0)    
                      ->set("usuarioIDliquida", $_SESSION["usuario"])
                      ->set("ordFechaliquida",date("Y-m-d H:i:s"))                     
                      ->where("ordenPedidoID",  $ordenPedidoID)

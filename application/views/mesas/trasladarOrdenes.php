@@ -8,9 +8,10 @@
      <div class="row">   
         <div class="col-6">
              <h5 class="card-title" style="font-weight:bold; ">Mesas con ordenes:</h5>
-             <select class="form-control" name="MesasConOrdenes" id="MesasConOrdenes">
+              <br>
+             <select class="form-control" name="MesasConOrdenes" id="MesasConOrdenes" style ="text-align: left;">
                
-            <option value="0">Seleccione una mesa</option>
+            <option value="0">Seleccione mesa origen</option>
             <?php  foreach( $MesasUtilizadas as  $row): ?>
                 <option value="<?php  echo  $row->mesaID ?>"> <?php echo  $row->mesNombre;  ?></option>
         <?php endforeach; ?>
@@ -18,8 +19,9 @@
         </div>     
         <div class="col-6">
              <h5 class="card-title" style="font-weight:bold; ">Mesas Disponibles:</h5> 
-              <select  class="form-control" name="MesasDisponibles" id="MesasDisponibles">
-             <option value="0">Seleccione una mesa</option>
+             <br>
+              <select  class="form-control" name="MesasDisponibles" id="MesasDisponibles" style ="text-align: left;">
+             <option value="0">Seleccione mesa destino</option>
              <?php  foreach( $MesasDisponibles as  $row): ?>
                 <option value="<?php  echo  $row->mesaID ?>"> <?php echo  $row->mesNombre;  ?></option>
         <?php endforeach; ?>
@@ -31,6 +33,27 @@
   <button type="button" class="form-control"  style=" color:#243458; font-weight:bold; "  onclick="ProcesarTraslado();">Traladar ordenes <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
   </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $("#MesasConOrdenes").select2({
+        theme: 'bootstrap4',
+        placeholder: "Select mesa Origen",
+        allowClear: true,
+        width: 'resolve',
+    });
+
+     $("#MesasDisponibles").select2({
+        theme: 'bootstrap4',
+        placeholder: "Select mesa destino",
+        allowClear: true,
+        width: 'resolve',
+    });
+	
+	
+});
+  </script>
 
 
 

@@ -79,35 +79,44 @@ function ProcesarTraslado(){
   if(mesaRemplar=='0'|| nuevaMesa =='0') {
       alertify.set("notifier", "position", "top-right");
       alertify.error("Tiene que seleccionar una mesa en ambas opciones");
-
   }else{
-  var obJson = {mesaRemplar:mesaRemplar, nuevaMesa:nuevaMesa};
-  url_destino = "index.php/mesa_Controller/ProcesarTraslado/";
-		
-	$.ajax({
-          url: base_url(url_destino),
-          type: "POST",
-          data: obJson,
-          //cache: false,
-          //contentType: false,
-          //processData: false,
-          beforeSend: function () {
-          
-          },
-          success: function (data) {
-          
-            alertify.set("notifier", "position", "top-right");
-            alertify.success("Dato cambiados correctamente");
-          },
-          complete: function () {
-            $('#MesasConOrdenes').val('0');
-            $("#MesasConOrdenes").change();
-            $('#MesasDisponibles').val('0');
-            $("#MesasDisponibles").change();
-            
-          }
-        });	
+        var obJson = {mesaRemplar:mesaRemplar, nuevaMesa:nuevaMesa};
+        url_destino = "index.php/mesa_Controller/ProcesarTraslado/";
+        swal({
+          title: "Esta seguro de mover las ordenes a la nueva mesa ?",
+          text: "Este proceso movera las ordenes de la mesa origen a mesa destino",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        }).then((Delete) => {
+                            if (Delete) {
+                              $.ajax({
+                                  url: base_url(url_destino),
+                                  type: "POST",
+                                  data: obJson,          
+                                  beforeSend: function () {
+                                  
+                                  },
+                                  success: function (data) {          
+                                    alertify.set("notifier", "position", "top-right");
+                                    alertify.success("Dato cambiados correctamente");
+                                  },
+                                  complete: function () {
+                                    $('#MesasConOrdenes').val('0');
+                                    $("#MesasConOrdenes").change();
+                                    $('#MesasDisponibles').val('0');
+                                    $("#MesasDisponibles").change();
+                                    listasMesasIntercambiar();            
+                                  }
+                                });	 		
+                            } else {
+                                  swal("Operacion  cancelada",{
+                                    icon: "success",
+                                  });
+                                  listasMesasIntercambiar();
+                            }
+                          });
    
-}
+       }
 }
 

@@ -149,8 +149,8 @@ class Ordenes_Controller extends CI_Controller{
 
       //  funcion que  lee  los  filtros  del  request , sirve  para  la  vista , la  busqueda  y  el  Excel
       private function filtrosVendidos(){
-         $fechaIni   = (isset($_REQUEST['fechaIni']) AND strlen($_REQUEST['fechaIni'])>0) ? $_REQUEST['fechaIni'] : "" ;
-         $fechaFin   = (isset($_REQUEST['fechaFin']) AND strlen($_REQUEST['fechaFin'])>0) ? $_REQUEST['fechaFin'] : "" ;
+         $fechaIni   = (isset($_REQUEST['fechaIni']) AND strlen($_REQUEST['fechaIni'])>0) ? $_REQUEST['fechaIni'] : date("Y-m-d") ;
+         $fechaFin   = (isset($_REQUEST['fechaFin']) AND strlen($_REQUEST['fechaFin'])>0) ? $_REQUEST['fechaFin'] : date("Y-m-d");
          $areaID     = (isset($_REQUEST['areaEstablecimientoID']) AND $_REQUEST['areaEstablecimientoID']>0) ? $_REQUEST['areaEstablecimientoID'] : 0 ;
          $usuarioID  = (isset($_REQUEST['usuarioID']) AND $_REQUEST['usuarioID']>0) ? $_REQUEST['usuarioID'] : 0 ;
          //  "" = todos ,  "1" = solo  cocina ,  "0" = sin  cocina
@@ -233,24 +233,30 @@ class Ordenes_Controller extends CI_Controller{
 
          //  hoja  1 :  detalle  linea  por  linea
          $csv .= $this->lineaCsv(array("DETALLE DE VENTAS"));
-         $csv .= $this->lineaCsv(array("#","FECHA","HORA","AREA","MESA","ORDEN #","USUARIO","PRODUCTO","FAMILIA","COCINA","CANTIDAD","PRECIO UNIT","TOTAL","ESTADO"));
+         $csv .= $this->lineaCsv(array("#","FECHA","HORA","USUARIO_CREACION", "HORA_PAGO", 'USUARIO_LIQUIDACION', 'TIEMPO TOTAL' ,
+                                       "AREA","MESA","ORDEN #","PRODUCTO","FAMILIA","COCINA","CANTIDAD","PRECIO UNIT","TOTAL","ESTADO", "DESCRIPCION"));
          $c = 1;
          if(!empty($detalle)){
             foreach($detalle as $row){
                $csv .= $this->lineaCsv(array($c,
                                              $row->fecha,
                                              $row->hora,
+                                             $row->usuario,
+                                             $row->hora_liqui,
+                                             $row->usuarioLiquidacion,
+                                             $row->tiempoTotal,
                                              strtoupper($row->area),
                                              strtoupper($row->mesa),
                                              $row->ordenPedidoID,
-                                             $row->usuario,
+                                            
                                              $row->prodDescripcion,
                                              $row->famProdDescripcion,
                                              ($row->prodctucocina == 1 ? "SI" : "NO"),
                                              $row->cantidad,
                                              number_format($row->preciounit,2,'.',''),
                                              number_format($row->dettotal,2,'.',''),
-                                             ($row->ordPpenditeCobro == 1 ? "PENDIENTE DE COBRO" : "COBRADO")));
+                                             ($row->ordPpenditeCobro == 1 ? "PENDIENTE DE COBRO" : "COBRADO"),
+                                            str_replace(['Sin%20Comentario','Sin Comentario'],'',$row->ordPcomentario)));
                $c += 1;
             }
          }

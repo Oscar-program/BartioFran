@@ -96,17 +96,22 @@ $totalLineas  = (isset($detProductosVendidos) && !empty($detProductosVendidos)) 
                 <tr>
                     <th id="titulos">#</th>
                     <th id="titulos">FECHA</th>
-                    <th id="titulos">HORA</th>
+                    <th id="titulos">HORA CREACION</th>
+                    <th id="titulos">USUARIO CREACION</th>
+                    <th id="titulos">HORA DE PAGO</th>
+                    <th id="titulos">USUARIO LIQUIDACION</th>
+                    <th id="titulos">TIEMPO TOTAL</th>
                     <th id="titulos">AREA</th>
                     <th id="titulos">MESA</th>
                     <th id="titulos">ORDEN #</th>
-                    <th id="titulos">USUARIO</th>
                     <th id="titulos">PRODUCTO</th>
+                    <th id="titulos">FAMILIA</th>                  
                     <th id="titulos">COCINA</th>
                     <th id="titulos" class="text-right">CANT.</th>
                     <th id="titulos" class="text-right">P/U</th>
                     <th id="titulos" class="text-right">TOTAL</th>
                     <th id="titulos">ESTADO</th>
+                    <th id="titulos">COMENTARIO</th>
                 </tr>
             </thead>
             <tbody>
@@ -119,16 +124,22 @@ $totalLineas  = (isset($detProductosVendidos) && !empty($detProductosVendidos)) 
                     <td data-label="#"><?php echo $c; ?></td>
                     <td data-label="Fecha"><?php echo $row->fecha; ?></td>
                     <td data-label="Hora"><?php echo $row->hora; ?></td>
+                    <td data-label="Usuario"><?php echo $row->usuario; ?></td>
+                     <td data-label="Usuario"><?php echo $row->hora_liqui; ?></td>
+                     <td data-label="Usuario"><?php echo $row->usuarioLiquidacion; ?></td>
+                      <td data-label="Usuario"><?php echo $row->tiempoTotal; ?></td>
                     <td data-label="Area"><?php echo strtoupper($row->area); ?></td>
                     <td data-label="Mesa"><?php echo strtoupper($row->mesa); ?></td>
                     <td data-label="Orden"><?php echo $row->ordenPedidoID; ?></td>
-                    <td data-label="Usuario"><?php echo $row->usuario; ?></td>
+                    
                     <td data-label="Producto"><?php echo $row->prodDescripcion; ?></td>
+                    <td data-label="Producto"><?php echo $row->famProdDescripcion; ?></td> 
                     <td data-label="Cocina"><?php echo ($row->prodctucocina == 1) ? 'SI' : 'NO' ; ?></td>
                     <td data-label="Cantidad" class="text-right"><?php echo number_format($row->cantidad,0); ?></td>
                     <td data-label="Precio" class="text-right"><?php echo '$ '.number_format($row->preciounit,2); ?></td>
                     <td data-label="Total" class="text-right"><?php echo '$ '.number_format($row->dettotal,2); ?></td>
                     <td data-label="Estado"><?php echo $estado; ?></td>
+                     <td data-label="Estado"><?php echo str_replace(['Sin%20Comentario','Sin Comentario'],'',$row->ordPcomentario) ; ?></td>
                 </tr>
             <?php   $c += 1;
                     }

@@ -201,17 +201,23 @@ function addVentaProducto(famProdID, idProducto, detPedID, prodDescripcion,  pre
      // funcion  para  retornar la sumatoria del  detalle de la ord3en de cliente  
   function calculaTotalVenta(ordenID){
         //get_TotalDetOrden($ordenPedidoID)
+        var total  ="0.0";
+
+
 
        // var valorid  = 0;   
         var url = base_url('index.php/ventaProducto_Controller/get_TotalDetOrden/' + ordenID);   
         //var url = base_url("index.php/BancosController/bancos");
           $.get(url, function (data) {
+             if(parseFloat(data)>0){
+                total= data;
+             }
              console.log("El nuevo total a cancelar es  " +  data ) ;
 
            // $("#addVenta").html(data);
             console.log("EL total a cancelar es  "+ data   +" sdnlksd");
             document.getElementById('lbTotal').innerHTML= "";
-            document.getElementById('lbTotal').innerHTML= "Total a cancelar $" + parseFloat(data);
+            document.getElementById('lbTotal').innerHTML= "Total a cancelar $" + parseFloat(total);
           //  $('#addVentaProducto').modal('show');
             // ponemos el  precio  de  costo del producto 
             //$("#totalOrden").val(data);

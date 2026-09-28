@@ -207,11 +207,13 @@ class mesas_Model extends CI_Model {
         $condicion ="(ordp.ordPpenditeCobro = 1 
                     and ordp.ordPanulado = 0) and  detp.detstatus = 1"; 
                      $this->db->distinct();
-        $query =  $this->db->select("ordp.mesaID, m.mesNombre")
+        $query =  $this->db->select("ordp.mesaID, concat(upper(are.area), '-', m.mesNombre) as mesNombre")
   
              ->join("detordenpedido  detp",  "detp.ordenPedidoID = ordp.ordenPedidoID", "inner")
              ->join("mesa  m",  "m.mesaID = ordp.mesaID", "inner") 
-             ->where($condicion)    
+             ->join("areasestablecimiento are","are.areaEstablecimientoID  = m.areaEstablecimientoID ","inner") 
+             ->where($condicion) 
+             ->order_by("are.area,m.mesNombre ")   
              
         ->get("ordenpedido ordp")
         ->result();
@@ -228,9 +230,11 @@ class mesas_Model extends CI_Model {
 											    and ordp.ordPanulado = 0) and  detp.detstatus = 1
 										 group by ordp.mesaID 
 										 )";
-         $query =  $this->db->select("m.*")
+         $query =  $this->db->select("m.mesaID, concat(upper(are.area), '-', m.mesNombre) as mesNombre ")
+                      ->join("areasestablecimiento are","are.areaEstablecimientoID  = m.areaEstablecimientoID ","inner")          
                       ->where($condicion)
                       ->where("m.mestatus = 1" ) 
+                      ->order_by("are.area")  
                       ->get("mesa  m")
                       ->result();
         return  $query;     
